@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "real-estate-management",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
