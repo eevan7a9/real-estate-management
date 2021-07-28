@@ -8,5 +8,17 @@
 </ion-header>
 
 <ion-content>
-  <div>Map content here</div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" sizeLg="8" class="map-section">
+        <h1>Map</h1>
+      </ion-col>
+
+      <ion-col size="0" sizeLg="4" class="extra-section ion-hide-lg-down">
+        <div>
+          <h1 *ngFor="let item of [].constructor(20)">Extra</h1>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

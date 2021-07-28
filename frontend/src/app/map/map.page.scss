@@ -1,0 +1,15 @@
+ion-grid {
+  height: 100%;
+}
+ion-row {
+  height: 100%;
+}
+.map-section {
+  background-color: var(--ion-color-light-shade);
+}
+.extra-section {
+  background-color: var(--ion-color-light);
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
+}
