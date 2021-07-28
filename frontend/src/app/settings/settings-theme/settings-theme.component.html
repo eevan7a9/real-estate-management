@@ -1,0 +1,12 @@
+<div class="ion-margin-top">
+  <div class="heading ion-padding">
+    <ion-text color="light">Change Application Theme</ion-text>
+  </div>
+  <ion-item lines="none">
+    <ion-label color="dark">Dark Theme {{ darkTheme }}</ion-label>
+    <ion-toggle
+      [(ngModel)]="darkTheme"
+      (ionChange)="switchDarkMode($event)"
+    ></ion-toggle>
+  </ion-item>
+</div>
