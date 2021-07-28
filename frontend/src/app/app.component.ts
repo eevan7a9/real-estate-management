@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { StorageService } from './services/storage/storage.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   public appPages = [
     { title: 'Map', url: '/map', icon: 'map' },
     { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
@@ -14,5 +18,16 @@ export class AppComponent {
     { title: 'Settings', url: '/settings', icon: 'cog' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() { }
+
+  constructor(private platform: Platform, private storage: StorageService) { }
+
+  async ngOnInit() {
+
+    await this.platform.ready();
+    await this.storage.init();
+    const isDark = await this.storage.get('isDark');
+    if (isDark) {
+      document.body.classList.add('dark');
+    }
+  }
 }
