@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Properties Page</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="properties-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          size="12"
+          sizeMd="6"
+          sizeLg="4"
+          sizeXl="3"
+          *ngFor="let item of [].constructor(20)"
+        >
+          <ion-card>
+            <img src="assets/images/madison.jpeg" />
+            <ion-card-header>
+              <ion-card-subtitle>Destination</ion-card-subtitle>
+              <ion-card-title>Madison, WI</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Founded in 1829 on an isthmus between Lake Monona and Lake
+              Mendota, Madison was named the capital of the Wisconsin Territory
+              in 1836.
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

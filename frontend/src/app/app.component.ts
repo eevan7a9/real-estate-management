@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 
   public appPages = [
     { title: 'Map', url: '/map', icon: 'map' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
+    { title: 'Properties', url: '/properties', icon: 'home' },
     { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
