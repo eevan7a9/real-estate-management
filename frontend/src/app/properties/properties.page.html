@@ -1,6 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Properties Page</ion-title>
+    <ion-title> Properties Page </ion-title>
+
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -14,7 +15,7 @@
     ></ion-searchbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="6" sizeXl="4">
+        <ion-col size="12" sizeMd="6" sizeXl="4">
           <ion-item lines="none">
             <ion-label>Filter by:</ion-label>
             <ion-select multiple="true" [value]="[]">
@@ -28,7 +29,7 @@
           </ion-item>
         </ion-col>
 
-        <ion-col size="6" sizeXl="4">
+        <ion-col size="12" sizeMd="6" sizeXl="4">
           <ion-item lines="none">
             <ion-label>Sort by:</ion-label>
             <ion-select value="date-new" okText="Okay" cancelText="Dismiss">
@@ -47,6 +48,22 @@
 <ion-content>
   <div class="properties-container">
     <ion-grid>
+      <ion-row class="ion-align-items-center ion-margin-top">
+        <ion-col class="heading ion-padding-horizontal">
+          List of Properties
+        </ion-col>
+        <ion-col class="ion-padding-horizontal">
+          <ion-button
+            color="success"
+            class="ion-float-right"
+            (click)="presentModal()"
+          >
+            Add New Property
+            <ion-icon name="add-circle-outline"></ion-icon
+          ></ion-button>
+        </ion-col>
+      </ion-row>
+      <!-- Lists of Propertis Cards -->
       <ion-row>
         <ion-col
           size="12"
