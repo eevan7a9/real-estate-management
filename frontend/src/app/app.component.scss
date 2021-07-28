@@ -118,6 +118,8 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
-.max-w-400 {
-  max-width: 400px;
+@media (min-width: 992px) {
+  .max-w-400 {
+    max-width: 400px;
+  }
 }
