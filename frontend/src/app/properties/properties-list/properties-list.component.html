@@ -7,7 +7,7 @@
     sizeXl="3"
     *ngFor="let item of properties"
   >
-    <ion-card routerLink="id">
+    <ion-card (click)="selectProperty(item)">
       <img src="assets/images/madison.jpeg" />
       <ion-card-header>
         <ion-card-subtitle>{{ item.type }}</ion-card-subtitle>

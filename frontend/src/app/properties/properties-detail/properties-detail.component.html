@@ -9,6 +9,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="form ion-padding">
-  <h1>Heello</h1>
+<ion-content class="form ion-padding" *ngIf="property">
+  <h1>Heello {{ property.name }}</h1>
 </ion-content>

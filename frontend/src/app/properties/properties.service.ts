@@ -6,11 +6,15 @@ import { Property } from '../shared/interface/property';
   providedIn: 'root'
 })
 export class PropertiesService {
+
   public readonly properties$: Observable<Property[]>;
+  public readonly property$: Observable<Property>;
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
+  private readonly propertySub = new BehaviorSubject<Property>(null);
 
   constructor() {
     this.properties$ = this.propertiesSub.asObservable();
+    this.property$ = this.propertySub.asObservable();
   }
 
   public get properties(): Property[] {
@@ -19,6 +23,15 @@ export class PropertiesService {
 
   public set properties(property: Property[]) {
     this.propertiesSub.next(property);
+  }
+
+
+  public get property(): Property | null {
+    return this.propertySub.getValue();
+  }
+
+  public set property(property: Property) {
+    this.propertySub.next(property);
   }
 
   public addProperty(property: Property) {

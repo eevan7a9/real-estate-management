@@ -1,5 +1,8 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Property } from 'src/app/shared/interface/property';
+import { PropertiesService } from '../properties.service';
 
 @Component({
   selector: 'app-properties-detail',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./properties-detail.component.scss'],
 })
 export class PropertiesDetailComponent implements OnInit {
+  public property: Property | undefined;
+  constructor(
+    public location: Location,
+    private router: Router,
+    private propertiesService: PropertiesService
+  ) { }
 
-  constructor(public location: Location) { }
-
-  ngOnInit() { }
-
+  async ngOnInit() {
+    this.propertiesService.property$.subscribe(property => {
+      this.property = property;
+      if (!this.property) {
+        this.router.navigate(['/properties']);
+      }
+    });
+  }
 }
