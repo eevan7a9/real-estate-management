@@ -8,6 +8,7 @@ import { PropertiesPageRoutingModule } from './properties-routing.module';
 import { PropertiesPage } from './properties.page';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
+import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
   declarations: [
     PropertiesPage,
     PropertiesNewComponent,
-    PropertiesListComponent
+    PropertiesListComponent,
+    PropertiesDetailComponent
   ]
 })
 export class PropertiesPageModule { }
