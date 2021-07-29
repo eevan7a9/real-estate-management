@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { StorageService } from 'src/app/services/storage/storage.service';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
   selector: 'app-settings-theme',
