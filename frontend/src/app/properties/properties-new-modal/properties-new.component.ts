@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { PropertyType } from 'src/app/shared/enums/Property';
+import { PropertyType } from 'src/app/shared/enums/property';
 
 @Component({
   selector: 'app-properties-new',
