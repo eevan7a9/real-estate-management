@@ -16,6 +16,9 @@ export class PropertiesPage implements OnInit {
   constructor(public modalController: ModalController, private propertiesService: PropertiesService) { }
 
   async ngOnInit() {
+    this.propertiesService.properties$.subscribe(v => {
+      this.properties = v;
+    });
     this.propertiesService.properties = [
       {
         name: 'Property A',

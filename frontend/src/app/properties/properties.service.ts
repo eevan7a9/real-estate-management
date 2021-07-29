@@ -1,27 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Property } from '../shared/interface/property';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertiesService {
-  // private properties: Property[] = [];
+  public readonly properties$: Observable<Property[]>;
+  private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
 
-  readonly $properties = new BehaviorSubject<Property[]>([]);
-
-  constructor() { }
+  constructor() {
+    this.properties$ = this.propertiesSub.asObservable();
+  }
 
   public get properties(): Property[] {
-    return this.$properties.getValue();
+    return this.propertiesSub.getValue();
   }
 
   public set properties(property: Property[]) {
-    this.$properties.next(property);
-  }
-
-  public _properties() {
-    return this.$properties.asObservable();
+    this.propertiesSub.next(property);
   }
 
   public addProperty(property: Property) {

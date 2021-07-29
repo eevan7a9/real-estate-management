@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { PropertyType } from 'src/app/shared/enums/property';
+import { PropertiesService } from '../properties.service';
 
 @Component({
   selector: 'app-properties-new',
@@ -10,7 +11,7 @@ import { PropertyType } from 'src/app/shared/enums/property';
   styleUrls: ['./properties-new.component.scss'],
 })
 export class PropertiesNewComponent implements OnInit {
-  public property: FormGroup;
+  public propertyForm: FormGroup;
   public propertyTypes = [
     {
       label: 'House',
@@ -31,9 +32,10 @@ export class PropertiesNewComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private propertiesService: PropertiesService
   ) {
-    this.property = this.formBuilder.group({
+    this.propertyForm = this.formBuilder.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
       description: [''],
@@ -44,7 +46,11 @@ export class PropertiesNewComponent implements OnInit {
   ngOnInit() { }
 
   public submit() {
-    console.log(this.property.value);
+    if (!this.propertyForm.valid) {
+      return;
+    }
+    console.log(this.propertyForm.value);
+    this.propertiesService.addProperty(this.propertyForm.value);
   }
 
   public dismissModal() {
