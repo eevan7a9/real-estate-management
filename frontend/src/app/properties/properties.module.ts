@@ -7,6 +7,7 @@ import { PropertiesPageRoutingModule } from './properties-routing.module';
 
 import { PropertiesPage } from './properties.page';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
+import { PropertiesListComponent } from './properties-list/properties-list.component';
 
 
 @NgModule({
@@ -16,6 +17,10 @@ import { PropertiesNewComponent } from './properties-new-modal/properties-new.co
     PropertiesPageRoutingModule,
     SharedModule
   ],
-  declarations: [PropertiesPage, PropertiesNewComponent]
+  declarations: [
+    PropertiesPage,
+    PropertiesNewComponent,
+    PropertiesListComponent
+  ]
 })
 export class PropertiesPageModule { }
