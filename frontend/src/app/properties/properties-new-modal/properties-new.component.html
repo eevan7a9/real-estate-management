@@ -9,6 +9,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h1>Content</h1>
+<ion-content class="form ion-padding">
+  <form [formGroup]="property">
+    <ion-item>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Address:</ion-label>
+      <ion-input type="text" formControlName="address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea
+        formControlName="description"
+        placeholder="..."
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-list>
+      <ion-radio-group formControlName="type">
+        <ion-list-header>
+          <ion-label>Type</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let type of propertyTypes">
+          <ion-label>{{ type.label }}</ion-label>
+          <ion-radio slot="start" [value]="type.value"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-button
+      expand="block"
+      size="large"
+      (click)="submit()"
+      class="ion-margin"
+      color="success"
+    >
+      Submit
+    </ion-button>
+  </form>
 </ion-content>

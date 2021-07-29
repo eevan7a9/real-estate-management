@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
+import { SharedModule } from '../shared/shared.module';
 import { PropertiesPageRoutingModule } from './properties-routing.module';
 
 import { PropertiesPage } from './properties.page';
+import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
-    PropertiesPageRoutingModule
+    PropertiesPageRoutingModule,
+    SharedModule
   ],
-  declarations: [PropertiesPage]
+  declarations: [PropertiesPage, PropertiesNewComponent]
 })
-export class PropertiesPageModule {}
+export class PropertiesPageModule { }
