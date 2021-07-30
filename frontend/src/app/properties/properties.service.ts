@@ -37,4 +37,9 @@ export class PropertiesService {
   public addProperty(property: Property) {
     this.properties = [...this.properties, property];
   }
+
+  public removeProperty(propId: string) {
+    const properties = this.properties.filter(property => property.propId !== propId);
+    this.properties = properties;
+  }
 }

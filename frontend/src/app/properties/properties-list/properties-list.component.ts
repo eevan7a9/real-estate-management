@@ -19,44 +19,51 @@ export class PropertiesListComponent implements OnInit {
   ngOnInit() {
     this.propertiesService.properties$.subscribe(v => {
       this.properties = v;
-    });
-    this.propertiesService.properties = [
-      {
-        name: 'Property A',
-        address: 'Some place free',
-        description: 'And this is nice',
-        type: 'house'
-      },
-      {
-        name: 'Property B',
-        address: 'Some place free',
-        description: 'And this is nice',
-        type: 'apartment'
-      },
-      {
-        name: 'Property C',
-        address: 'Some place free',
-        description: 'And this is nice',
-        type: 'pad'
-      },
-      {
-        name: 'Property D',
-        address: 'Some place free',
-        description: 'And this is nice',
-        type: 'pad'
-      },
-      {
-        name: 'Property E',
-        address: 'Some place free',
-        description: 'And this is nice',
-        type: 'boardingHouse'
+      if (!this.properties.length) {
+        this.propertiesService.properties = [
+          {
+            address: 'Some place free',
+            description: 'And this is nice',
+            name: 'Property A',
+            propId: '01',
+            type: 'house'
+          },
+          {
+            address: 'Some place free',
+            description: 'And this is nice',
+            name: 'Property B',
+            propId: '02',
+            type: 'apartment'
+          },
+          {
+            address: 'Some place free',
+            description: 'And this is nice',
+            name: 'Property C',
+            propId: '03',
+            type: 'pad'
+          },
+          {
+            address: 'Some place free',
+            description: 'And this is nice',
+            name: 'Property D',
+            propId: '04',
+            type: 'pad'
+          },
+          {
+            address: 'Some place free',
+            description: 'And this is nice',
+            name: 'Property E',
+            propId: '05',
+            type: 'boardingHouse'
+          }
+        ];
+        this.properties = this.propertiesService.properties;
       }
-    ];
-    this.properties = this.propertiesService.properties;
+    });
   }
 
   public selectProperty(property: Property) {
     this.propertiesService.property = property;
-    this.router.navigate(['/properties', 'id']);
+    this.router.navigate(['/properties', property.propId]);
   }
 }

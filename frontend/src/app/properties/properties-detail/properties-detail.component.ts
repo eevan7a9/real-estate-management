@@ -39,5 +39,9 @@ export class PropertiesDetailComponent implements OnInit {
 
     const { data } = await popover.onDidDismiss();
     console.log(data);
+    if (data.action === 'delete') {
+      this.propertiesService.removeProperty(this.property.propId);
+      this.router.navigate(['/properties']);
+    }
   }
 }
