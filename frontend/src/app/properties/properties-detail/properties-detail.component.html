@@ -35,13 +35,22 @@
 
           <app-property-gallery></app-property-gallery>
 
-          <section class="description">
-            <h2>Description: {{ property.description }}</h2>
-          </section>
+          <ion-card class="property-description">
+            <ion-card-header> Description </ion-card-header>
+            <ion-card-content>
+              {{ property.description }}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
+              impedit alias laborum corrupti magnam in repellat! Corrupti
+              temporibus ut eos.
+            </ion-card-content>
+          </ion-card>
 
-          <section class="address">
-            <h2>Address: {{ property.address }}</h2>
-          </section>
+          <ion-card class="property-address">
+            <ion-card-header> Address </ion-card-header>
+            <ion-card-content>
+              {{ property.address }}
+            </ion-card-content>
+          </ion-card>
         </ion-col>
 
         <ion-col size="12" sizeXl="4">
