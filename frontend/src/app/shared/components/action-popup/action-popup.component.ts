@@ -12,7 +12,7 @@ export class ActionPopupComponent implements OnInit {
 
   ngOnInit() { }
 
-  close(data = null) {
-    this.popupCtrl.dismiss({ data });
+  close(action = null) {
+    this.popupCtrl.dismiss({ action });
   }
 }
