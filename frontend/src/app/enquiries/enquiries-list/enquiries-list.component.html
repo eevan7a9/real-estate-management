@@ -4,7 +4,7 @@
       <ion-grid>
         <ion-row>
           <ion-col size="5">
-            <ion-text class="label-text">Message Title</ion-text>
+            <ion-text class="label-text">Message</ion-text>
           </ion-col>
           <ion-col size="1">
             <ion-text class="label-text">Type</ion-text>
@@ -20,26 +20,26 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngFor="let item of [].constructor(21)" class="ion-margin-vertical">
+  <ion-card *ngFor="let item of enquiries" class="ion-margin-vertical">
     <ion-card-header>
       <!-- <ion-card-subtitle>{{ date }}</ion-card-subtitle> -->
-      <ion-card-title>Building A, 456</ion-card-title>
+      <ion-card-title>{{ item.property }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <ion-grid class="ion-no-padding ion-no-margin">
         <ion-row>
           <ion-col size="12" sizeLg="5">
-            <ion-text class="item-text">Message Title here...</ion-text>
+            <ion-text class="item-text">{{ item.title }}</ion-text>
           </ion-col>
           <ion-col size="12" sizeLg="1">
-            <ion-badge color="warning">House</ion-badge>
+            <ion-badge color="warning">{{ item.type }}</ion-badge>
           </ion-col>
           <ion-col size="12" sizeLg="4" class="ion-text-center">
-            <ion-text class="item-text">user@email.com</ion-text>
+            <ion-text class="item-text">{{ item.email }}</ion-text>
           </ion-col>
           <ion-col size="12" sizeLg="2">
-            <ion-text>{{ date | date }}</ion-text>
+            <ion-text>{{ item.date | date }}</ion-text>
           </ion-col>
         </ion-row>
       </ion-grid>
