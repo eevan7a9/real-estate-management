@@ -1,0 +1,19 @@
+<ion-list>
+  <ion-list-header class="heading-popup">Select Action:</ion-list-header>
+  <ion-item>
+    <ion-button expand="block" color="primary" (click)="close('edit')">
+      <ion-icon name="pencil-outline" style="margin: 0 8px 0 0"></ion-icon>
+      Edit
+    </ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button expand="block" color="danger" (click)="close('delete')">
+      <ion-icon name="trash-outline" style="margin: 0 8px 0 0"></ion-icon>
+      Delete
+    </ion-button>
+  </ion-item>
+
+  <ion-item lines="none" detail="false" button (click)="close()">
+    Close
+  </ion-item>
+</ion-list>
