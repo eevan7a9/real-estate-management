@@ -1,0 +1,22 @@
+ion-card {
+  box-shadow: none;
+}
+
+.labels-card {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-light);
+}
+
+.label-text {
+  font-size: 19px;
+  font-weight: bold;
+}
+.item-text {
+  font-size: 18px;
+}
+
+@media (max-width: 920px) {
+  .item-text {
+    font-size: 14px;
+  }
+}
