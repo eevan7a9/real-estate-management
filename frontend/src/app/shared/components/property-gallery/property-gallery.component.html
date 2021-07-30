@@ -1,0 +1,15 @@
+<ion-card class="ion-no-padding ion-no-margin">
+  <ion-card-content class="gallery-container ion-padding">
+    <div class="selected-image ion-padding-vertical">
+      <img [src]="imagePresented" alt="image" />
+    </div>
+    <ion-slides pager="true" [options]="slideOpts">
+      <ion-slide
+        *ngFor="let image of images"
+        [style.backgroundImage]="getImage(image.src)"
+        (click)="setSelected(image.src)"
+      >
+      </ion-slide>
+    </ion-slides>
+  </ion-card-content>
+</ion-card>

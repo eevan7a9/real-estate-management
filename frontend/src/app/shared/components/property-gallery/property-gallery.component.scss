@@ -1,0 +1,44 @@
+ion-card {
+  box-shadow: none;
+  .gallery-container {
+    // background-color: var(--ion-color-medium-shade);
+    .selected-image {
+      display: flex;
+      justify-content: center;
+      height: 450px;
+      img {
+        width: 100%;
+        background-color: var(--ion-color-light-tint);
+        object-fit: contain;
+      }
+    }
+    ion-slides {
+      ion-slide {
+        height: 190px;
+        width: 200px;
+
+        // background-image: url("../../../../assets/images/no-image.jpeg");
+        background-size: cover;
+        background-position: center;
+        img {
+          user-select: none;
+          -moz-user-select: none;
+          -webkit-user-drag: none;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  ion-card {
+    box-shadow: none;
+    .gallery-container {
+      .selected-image {
+        height: 350px;
+      }
+    }
+  }
+}

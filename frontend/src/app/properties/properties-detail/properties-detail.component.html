@@ -9,6 +9,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="form ion-padding" *ngIf="property">
-  <h1>Heello {{ property.name }}</h1>
+<ion-content class="ion-padding" *ngIf="property">
+  <div class="details-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" sizeXl="8">
+          <h1>Name : {{ property.name }}</h1>
+          <h2>Type: {{ property.type }}</h2>
+
+          <app-property-gallery></app-property-gallery>
+
+          <section class="description">
+            <h2>Description: {{ property.description }}</h2>
+          </section>
+
+          <section class="address">
+            <h2>Address: {{ property.address }}</h2>
+          </section>
+        </ion-col>
+
+        <ion-col size="12" sizeXl="4">
+          <div class="enquire-container">
+            <h1>Hello</h1>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
