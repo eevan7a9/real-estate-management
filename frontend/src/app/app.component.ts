@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Map', url: '/map', icon: 'map' },
     { title: 'Properties', url: '/properties', icon: 'home' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
+    { title: 'Enquiries', url: '/enquiries', icon: 'reader' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
     { title: 'Settings', url: '/settings', icon: 'cog' },
@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   constructor(private platform: Platform, private storage: StorageService) { }
 
   async ngOnInit() {
-
     await this.platform.ready();
     await this.storage.init();
     const isDark = await this.storage.get('isDark');
