@@ -14,8 +14,24 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeXl="8">
-          <h1>Name : {{ property.name }}</h1>
-          <h2>Type: {{ property.type }}</h2>
+          <ion-card class="property-identity">
+            <ion-card-content>
+              <div class="name">
+                <ion-text color="dark">{{ property.name }}</ion-text>
+
+                <ion-button
+                  class="action-btn"
+                  color="light"
+                  (click)="actionPopup()"
+                >
+                  <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </ion-button>
+              </div>
+              <div class="type">
+                <ion-badge color="warning">{{ property.type }}</ion-badge>
+              </div>
+            </ion-card-content>
+          </ion-card>
 
           <app-property-gallery></app-property-gallery>
 

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
+import { PopoverController } from '@ionic/angular';
+import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 
 @Component({
   selector: 'app-properties-detail',
@@ -14,7 +16,8 @@ export class PropertiesDetailComponent implements OnInit {
   constructor(
     public location: Location,
     private router: Router,
-    private propertiesService: PropertiesService
+    private propertiesService: PropertiesService,
+    private popoverCtrl: PopoverController
   ) { }
 
   async ngOnInit() {
@@ -24,5 +27,17 @@ export class PropertiesDetailComponent implements OnInit {
         this.router.navigate(['/properties']);
       }
     });
+  }
+
+  public async actionPopup(ev: any) {
+    const popover = await this.popoverCtrl.create({
+      component: ActionPopupComponent,
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    const { data } = await popover.onDidDismiss();
+    console.log(data);
   }
 }

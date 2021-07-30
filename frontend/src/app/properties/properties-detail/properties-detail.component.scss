@@ -20,3 +20,23 @@ ion-row {
   height: 100%;
   width: 100%;
 }
+
+.property-identity {
+  box-shadow: none;
+  margin: 16px 0;
+  .name {
+    font-size: 24px;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .action-btn {
+      --box-shadow: none;
+    }
+  }
+  .type {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+}
