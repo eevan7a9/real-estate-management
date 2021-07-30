@@ -42,4 +42,13 @@ export class PropertiesService {
     const properties = this.properties.filter(property => property.propId !== propId);
     this.properties = properties;
   }
+
+  public updateProperty(updated: Property) {
+    let findProperty = this.properties.find((property: Property) => property.propId === updated.propId);
+    findProperty = { ...findProperty, ...updated };
+
+    this.properties = this.properties.map(property => (property.propId === updated.propId) ?
+      findProperty : property);
+    this.property = findProperty;
+  }
 }

@@ -9,6 +9,7 @@ import { PropertiesPage } from './properties.page';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
+import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PropertiesDetailComponent } from './properties-detail/properties-detail
     PropertiesPage,
     PropertiesNewComponent,
     PropertiesListComponent,
-    PropertiesDetailComponent
+    PropertiesDetailComponent,
+    PropertiesEditComponent
   ]
 })
 export class PropertiesPageModule { }

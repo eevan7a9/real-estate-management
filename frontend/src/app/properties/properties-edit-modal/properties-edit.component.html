@@ -1,0 +1,55 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Add new property</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline" style="font-size: 28px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="form ion-padding">
+  <form [formGroup]="propertyForm">
+    <ion-item>
+      <ion-label position="floating">Name:</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Address:</ion-label>
+      <ion-input type="text" formControlName="address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea
+        formControlName="description"
+        placeholder="..."
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-list>
+      <ion-radio-group formControlName="type">
+        <ion-list-header>
+          <ion-label>Type</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let type of propertyTypes">
+          <ion-label>{{ type.label }}</ion-label>
+          <ion-radio slot="start" [value]="type.value"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+
+    <ion-button
+      expand="block"
+      size="large"
+      (click)="update()"
+      class="ion-margin"
+      color="success"
+    >
+      Update
+    </ion-button>
+  </form>
+</ion-content>
