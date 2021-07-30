@@ -24,22 +24,13 @@ export class PropertyGalleryComponent implements OnInit {
     { src: '' },
   ];
 
-  constructor(private platform: Platform) {
-    console.log();
-  }
+  constructor() { }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    console.log(this.platform.width());
-    if (this.platform.width() < 560) {
-      console.log('s');
+  ngOnInit() {
+    if (this.images[0].src) {
+      this.imagePresented = this.images[0].src;
     }
   }
-
-
-
-
-  ngOnInit() { }
 
   public getImage(image: string) {
     image = image || 'assets/images/no-image.jpeg';
