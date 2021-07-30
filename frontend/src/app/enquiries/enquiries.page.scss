@@ -8,3 +8,11 @@ ion-content {
   margin: 0 auto;
   height: 100%;
 }
+
+ion-searchbar {
+  --box-shadow: none;
+}
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+}
