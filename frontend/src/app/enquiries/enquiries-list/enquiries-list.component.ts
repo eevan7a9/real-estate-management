@@ -38,7 +38,7 @@ export class EnquiriesListComponent implements OnInit {
             date: new Date('2020/4/3'),
             property: 'Dart Apartment A, 34-b',
             propId: '03',
-            title: 'Hello World some.',
+            title: 'Hello Zworld some.',
             type: 'house'
           }
         ];
@@ -47,7 +47,7 @@ export class EnquiriesListComponent implements OnInit {
   }
 
   public selectEnquiry(enquiry: Enquiry) {
-
+    this.enquiriesService.enquiry = enquiry;
     this.router.navigate(['/enquiries', enquiry.enqId]);
   }
 }
