@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
     { title: 'Map', url: '/map', icon: 'map' },
     { title: 'Properties', url: '/properties', icon: 'home' },
     { title: 'Enquiries', url: '/enquiries', icon: 'reader' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
+    { title: 'Mortgage Calc', url: '/mortgage-calc', icon: 'calculator' },
     { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
     { title: 'Settings', url: '/settings', icon: 'cog' },
   ];

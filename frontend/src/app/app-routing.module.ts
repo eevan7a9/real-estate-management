@@ -26,6 +26,10 @@ const routes: Routes = [
   {
     path: 'enquiries',
     loadChildren: () => import('./enquiries/enquiries.module').then( m => m.EnquiriesPageModule)
+  },
+  {
+    path: 'mortgage-calc',
+    loadChildren: () => import('./mortgage-calc/mortgage-calc.module').then( m => m.MortgageCalcPageModule)
   }
 ];
 
