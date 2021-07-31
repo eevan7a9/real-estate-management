@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
 import { Enquiry } from 'src/app/shared/interface/enquiries';
+import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class EnquiriesDetailComponent implements OnInit {
     private router: Router,
     private enquiriesService: EnquiriesService,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -68,5 +70,12 @@ export class EnquiriesDetailComponent implements OnInit {
       color: 'success'
     });
     toast.present();
+  }
+
+  async createEnquiryModal() {
+    const modal = await this.modalCtrl.create({
+      component: EnquiriesNewComponent
+    });
+    return await modal.present();
   }
 }
