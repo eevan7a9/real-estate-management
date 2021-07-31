@@ -4,11 +4,16 @@
       <img [src]="imagePresented" alt="image" />
     </div>
     <ion-slides pager="true" [options]="slideOpts">
-      <ion-slide
-        *ngFor="let image of images"
-        [style.backgroundImage]="getImage(image.src)"
-        (click)="setSelected(image.src)"
-      >
+      <ion-slide *ngFor="let image of images" (click)="setSelected(image.src)">
+        <img
+          [style.backgroundImage]="getImage(image.src)"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          alt="image"
+        />
+        <div
+          class="cover-img"
+          [ngClass]="{ selected: imagePresented === image.src }"
+        ></div>
       </ion-slide>
     </ion-slides>
   </ion-card-content>
