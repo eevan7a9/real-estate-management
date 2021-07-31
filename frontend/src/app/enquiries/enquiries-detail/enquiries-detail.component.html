@@ -9,8 +9,53 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" *ngIf="enquiry">
   <div class="details-container">
-    <h1>Hello</h1>
+    <ion-card class="ion-no-padding">
+      <ion-card-header>
+        <ion-card-title color="dark">
+          {{ enquiry.property }}
+        </ion-card-title>
+        <ion-card-subtitle>
+          <ion-badge color="warning">{{ enquiry.type }}</ion-badge>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          {{ enquiry.title }}
+        </ion-card-title>
+        <ion-card-subtitle> {{ enquiry.date | date }}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="ion-padding-vertical">
+          <p>
+            {{ enquiry.content }} Lorem, ipsum dolor sit amet consectetur
+            adipisicing elit. Quae sint dolor iste cumque beatae saepe ducimus
+            omnis culpa, vitae quaerat, explicabo quia voluptates alias
+            reprehenderit nam iure ad sit similique?
+          </p>
+        </div>
+
+        <div class="ion-padding-vertical">
+          {{ enquiry.email }}
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <div style="margin-left: 8px">
+      <ion-button color="light">
+        <ion-icon name="create-outline"></ion-icon>
+        Reply
+      </ion-button>
+
+      <ion-button color="light">
+        <ion-icon name="trash-outline" color="danger"></ion-icon>
+        <ion-text color="danger"> Delete </ion-text>
+      </ion-button>
+    </div>
   </div>
 </ion-content>

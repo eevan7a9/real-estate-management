@@ -8,3 +8,7 @@ ion-content {
   margin: 0 auto;
   height: 100%;
 }
+
+ion-button {
+  --box-shadow: none;
+}
