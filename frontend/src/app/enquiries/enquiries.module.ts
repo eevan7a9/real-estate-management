@@ -10,6 +10,7 @@ import { EnquiriesPage } from './enquiries.page';
 import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
 import { EnquiriesDetailComponent } from './enquiries-detail/enquiries-detail.component';
 import { SharedModule } from '../shared/shared.module';
+import { EnquiriesNewComponent } from './enquiries-new-modal/enquiries-new.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     EnquiriesPage,
     EnquiriesListComponent,
-    EnquiriesDetailComponent
+    EnquiriesDetailComponent,
+    EnquiriesNewComponent
   ]
 })
 export class EnquiriesPageModule { }

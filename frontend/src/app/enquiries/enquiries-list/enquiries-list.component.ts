@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiries';
+import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 
 @Component({
@@ -19,7 +20,8 @@ export class EnquiriesListComponent implements OnInit {
     private router: Router,
     private popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -91,8 +93,8 @@ export class EnquiriesListComponent implements OnInit {
     if (data.action === 'delete') {
       this.delete(enqId);
     }
-    if (data.action === 'reply') {
-      console.log('reply');
+    if (data.action === 'message') {
+      this.createEnquiryModal();
     }
   }
 
@@ -125,5 +127,12 @@ export class EnquiriesListComponent implements OnInit {
       color: 'success'
     });
     toast.present();
+  }
+
+  async createEnquiryModal() {
+    const modal = await this.modalCtrl.create({
+      component: EnquiriesNewComponent
+    });
+    return await modal.present();
   }
 }
