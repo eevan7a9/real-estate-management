@@ -1,12 +1,21 @@
 <ion-list>
   <ion-list-header class="heading-popup">Select Action:</ion-list-header>
-  <ion-item>
+  <ion-item *ngIf="message">
+    <ion-button expand="block" color="success" (click)="close('message')">
+      <ion-icon
+        name="chatbubble-ellipses-outline"
+        style="margin: 0 8px 0 0"
+      ></ion-icon>
+      Message
+    </ion-button>
+  </ion-item>
+  <ion-item *ngIf="edit">
     <ion-button expand="block" color="primary" (click)="close('edit')">
       <ion-icon name="pencil-outline" style="margin: 0 8px 0 0"></ion-icon>
       Edit
     </ion-button>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="delete">
     <ion-button expand="block" color="danger" (click)="close('delete')">
       <ion-icon name="trash-outline" style="margin: 0 8px 0 0"></ion-icon>
       Delete

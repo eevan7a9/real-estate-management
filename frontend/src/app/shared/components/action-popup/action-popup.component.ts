@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 
 @Component({
@@ -7,6 +7,9 @@ import { PopoverController } from '@ionic/angular';
   styleUrls: ['./action-popup.component.scss'],
 })
 export class ActionPopupComponent implements OnInit {
+  @Input() message = true;
+  @Input() edit = true;
+  @Input() delete = true;
 
   constructor(private popupCtrl: PopoverController) { }
 
