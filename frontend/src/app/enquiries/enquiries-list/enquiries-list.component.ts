@@ -24,22 +24,36 @@ export class EnquiriesListComponent implements OnInit {
           {
             content: 'lorem20',
             email: 'hello_user@email.com',
-            enqId: '01',
+            id: '01',
             date: new Date('2020/3/3'),
-            property: 'Building A, 34-b',
-            propId: '02',
             title: 'Hello World some.',
-            type: 'apartment'
+            topic: 'schedule',
+            read: true,
+            property: {
+              name: 'Building A, 34-b',
+              id: '02',
+            },
+            user: {
+              from: '1',
+              to: '2'
+            }
           },
           {
             content: 'lorem43 32sad',
             email: 'naruto_zua@email.com',
-            enqId: '02',
+            id: '02',
             date: new Date('2020/4/3'),
-            property: 'Dart Apartment A, 34-b',
-            propId: '03',
             title: 'Hello Zworld some.',
-            type: 'house'
+            topic: 'payment',
+            read: false,
+            property: {
+              name: 'Dart Apartment A, 34-b',
+              id: '03',
+            },
+            user: {
+              from: '1',
+              to: '2'
+            }
           }
         ];
       }
@@ -48,6 +62,6 @@ export class EnquiriesListComponent implements OnInit {
 
   public selectEnquiry(enquiry: Enquiry) {
     this.enquiriesService.enquiry = enquiry;
-    this.router.navigate(['/enquiries', enquiry.enqId]);
+    this.router.navigate(['/enquiries', enquiry.id]);
   }
 }

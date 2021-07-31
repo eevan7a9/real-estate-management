@@ -34,6 +34,6 @@ export class EnquiriesService {
   }
 
   public removeEnquiry(enqId: string) {
-    this.enquiries = this.enquiries.filter(enquiry => enquiry.enqId !== enqId);
+    this.enquiries = this.enquiries.filter(enquiry => enquiry.id !== enqId);
   }
 }

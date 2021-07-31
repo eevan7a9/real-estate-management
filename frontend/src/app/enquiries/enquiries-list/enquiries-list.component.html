@@ -7,7 +7,7 @@
             <ion-text class="label-text">Message</ion-text>
           </ion-col>
           <ion-col size="1">
-            <ion-text class="label-text">Type</ion-text>
+            <ion-text class="label-text">Status</ion-text>
           </ion-col>
           <ion-col size="4" class="ion-text-center">
             <ion-text class="label-text">Email Address</ion-text>
@@ -27,7 +27,7 @@
   >
     <ion-card-header>
       <!-- <ion-card-subtitle>{{ date }}</ion-card-subtitle> -->
-      <ion-card-title>{{ item.property }}</ion-card-title>
+      <ion-card-title>{{ item.property.name }}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
@@ -37,7 +37,8 @@
             <ion-text class="item-text">{{ item.title }}</ion-text>
           </ion-col>
           <ion-col size="12" sizeLg="1">
-            <ion-badge color="warning">{{ item.type }}</ion-badge>
+            <ion-badge color="success" *ngIf="item.read">Read</ion-badge>
+            <ion-badge color="warning" *ngIf="!item.read">Unread</ion-badge>
           </ion-col>
           <ion-col size="12" sizeLg="4" class="ion-text-center">
             <ion-text class="item-text">{{ item.email }}</ion-text>

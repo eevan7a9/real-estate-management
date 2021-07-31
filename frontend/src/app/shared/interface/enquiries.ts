@@ -1,10 +1,18 @@
 export interface Enquiry {
+  id: string;
   content: string;
-  email: string;
-  enqId: string;
   date: Date;
-  property: string;
-  propId: string;
+  email: string;
   title: string;
-  type: string;
+  topic: string;
+  read: boolean;
+  property: {
+    name: string;
+    id: string;
+  };
+  user: {
+    from: string;
+    to: string;
+  };
+
 }

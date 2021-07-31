@@ -22,38 +22,38 @@ export class PropertiesListComponent implements OnInit {
       if (!this.properties.length) {
         this.propertiesService.properties = [
           {
+            id: '01',
             address: 'Some place free',
             description: 'And this is nice',
             name: 'Property A',
-            propId: '01',
             type: 'house'
           },
           {
+            id: '02',
             address: 'Some place free',
             description: 'And this is nice',
             name: 'Property B',
-            propId: '02',
             type: 'apartment'
           },
           {
+            id: '03',
             address: 'Some place free',
             description: 'And this is nice',
             name: 'Property C',
-            propId: '03',
             type: 'pad'
           },
           {
+            id: '04',
             address: 'Some place free',
             description: 'And this is nice',
             name: 'Property D',
-            propId: '04',
             type: 'pad'
           },
           {
+            id: '05',
             address: 'Some place free',
             description: 'And this is nice',
             name: 'Property E',
-            propId: '05',
             type: 'boardingHouse'
           }
         ];
@@ -64,6 +64,6 @@ export class PropertiesListComponent implements OnInit {
 
   public selectProperty(property: Property) {
     this.propertiesService.property = property;
-    this.router.navigate(['/properties', property.propId]);
+    this.router.navigate(['/properties', property.id]);
   }
 }
