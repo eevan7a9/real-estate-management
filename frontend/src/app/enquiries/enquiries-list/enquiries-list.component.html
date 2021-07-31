@@ -3,11 +3,8 @@
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col size="5">
+          <ion-col size="6">
             <ion-text class="label-text">Message</ion-text>
-          </ion-col>
-          <ion-col size="1">
-            <ion-text class="label-text">Status</ion-text>
           </ion-col>
           <ion-col size="4" class="ion-text-center">
             <ion-text class="label-text">Email Address</ion-text>
@@ -26,22 +23,34 @@
     (click)="selectEnquiry(item)"
   >
     <ion-card-header>
-      <!-- <ion-card-subtitle>{{ date }}</ion-card-subtitle> -->
       <ion-card-title>{{ item.property.name }}</ion-card-title>
+
+      <ion-button
+        class="action-btn"
+        color="light"
+        (click)="actionPopup($event, item.id)"
+      >
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
     </ion-card-header>
 
     <ion-card-content>
       <ion-grid class="ion-no-padding ion-no-margin">
         <ion-row>
-          <ion-col size="12" sizeLg="5">
-            <ion-text class="item-text">{{ item.title }}</ion-text>
+          <ion-col size="12" sizeLg="6">
+            <ion-row size="auto">
+              <ion-col>
+                <ion-text>{{ item.title }}</ion-text>
+              </ion-col>
+              <ion-col size="*" sizeLg="1">
+                <ion-badge color="success" *ngIf="item.read">Read</ion-badge>
+                <ion-badge color="warning" *ngIf="!item.read">Unread</ion-badge>
+              </ion-col>
+            </ion-row>
           </ion-col>
-          <ion-col size="12" sizeLg="1">
-            <ion-badge color="success" *ngIf="item.read">Read</ion-badge>
-            <ion-badge color="warning" *ngIf="!item.read">Unread</ion-badge>
-          </ion-col>
-          <ion-col size="12" sizeLg="4" class="ion-text-center">
-            <ion-text class="item-text">{{ item.email }}</ion-text>
+
+          <ion-col size="12" sizeLg="4" class="ion-text-lg-center">
+            <ion-text>{{ item.email }}</ion-text>
           </ion-col>
           <ion-col size="12" sizeLg="2">
             <ion-text>{{ item.date | date }}</ion-text>

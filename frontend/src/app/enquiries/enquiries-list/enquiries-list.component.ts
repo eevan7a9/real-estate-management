@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController, PopoverController, ToastController } from '@ionic/angular';
+import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiries';
 import { EnquiriesService } from '../enquiries.service';
 
@@ -14,7 +16,11 @@ export class EnquiriesListComponent implements OnInit {
 
   constructor(
     private enquiriesService: EnquiriesService,
-    private router: Router) { }
+    private router: Router,
+    private popoverCtrl: PopoverController,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
+  ) { }
 
   ngOnInit() {
     this.enquiriesService.enquiries$.subscribe(enquiries => {
@@ -63,5 +69,61 @@ export class EnquiriesListComponent implements OnInit {
   public selectEnquiry(enquiry: Enquiry) {
     this.enquiriesService.enquiry = enquiry;
     this.router.navigate(['/enquiries', enquiry.id]);
+  }
+
+  public async actionPopup(ev: Event, enqId: string) {
+    ev.stopPropagation();
+    const popover = await this.popoverCtrl.create({
+      component: ActionPopupComponent,
+      event: ev,
+      componentProps: {
+        edit: false
+      },
+      translucent: true
+    });
+    await popover.present();
+
+    const { data } = await popover.onDidDismiss();
+
+    if (!data) {
+      return;
+    }
+    if (data.action === 'delete') {
+      this.delete(enqId);
+    }
+    if (data.action === 'reply') {
+      console.log('reply');
+    }
+  }
+
+  public async delete(enqId: string) {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-alert-class',
+      header: 'Delete Enquiry',
+      // subHeader: 'Subtitle',
+      message: 'Are you sure you want to delete this Enquiry?',
+      buttons: [
+        {
+          text: 'Cancel'
+        }, {
+          text: 'DELETE',
+          cssClass: 'alert-danger-text',
+          handler: () => {
+            this.enquiriesService.removeEnquiry(enqId);
+            this.presentToast('Enquiry is deleted successfully.');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentToast(message: string, duration = 3000) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration,
+      color: 'success'
+    });
+    toast.present();
   }
 }
