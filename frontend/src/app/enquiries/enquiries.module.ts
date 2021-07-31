@@ -8,6 +8,7 @@ import { EnquiriesPageRoutingModule } from './enquiries-routing.module';
 
 import { EnquiriesPage } from './enquiries.page';
 import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
+import { EnquiriesDetailComponent } from './enquiries-detail/enquiries-detail.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,10 @@ import { EnquiriesListComponent } from './enquiries-list/enquiries-list.componen
     IonicModule,
     EnquiriesPageRoutingModule
   ],
-  declarations: [EnquiriesPage, EnquiriesListComponent]
+  declarations: [
+    EnquiriesPage,
+    EnquiriesListComponent,
+    EnquiriesDetailComponent
+  ]
 })
 export class EnquiriesPageModule { }

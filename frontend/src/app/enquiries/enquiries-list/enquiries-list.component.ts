@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Enquiry } from 'src/app/shared/interface/enquiries';
 import { EnquiriesService } from '../enquiries.service';
 
@@ -11,7 +12,9 @@ export class EnquiriesListComponent implements OnInit {
   public date = new Date();
   public enquiries: Enquiry[];
 
-  constructor(private enquiriesService: EnquiriesService) { }
+  constructor(
+    private enquiriesService: EnquiriesService,
+    private router: Router) { }
 
   ngOnInit() {
     this.enquiriesService.enquiries$.subscribe(enquiries => {
@@ -43,4 +46,8 @@ export class EnquiriesListComponent implements OnInit {
     });
   }
 
+  public selectEnquiry(enquiry: Enquiry) {
+
+    this.router.navigate(['/enquiries', enquiry.enqId]);
+  }
 }

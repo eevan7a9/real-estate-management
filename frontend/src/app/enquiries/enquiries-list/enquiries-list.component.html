@@ -20,7 +20,11 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngFor="let item of enquiries" class="ion-margin-vertical">
+  <ion-card
+    *ngFor="let item of enquiries"
+    class="ion-margin-vertical"
+    (click)="selectEnquiry(item)"
+  >
     <ion-card-header>
       <!-- <ion-card-subtitle>{{ date }}</ion-card-subtitle> -->
       <ion-card-title>{{ item.property }}</ion-card-title>
