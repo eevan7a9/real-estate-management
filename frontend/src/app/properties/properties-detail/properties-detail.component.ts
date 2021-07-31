@@ -36,11 +36,17 @@ export class PropertiesDetailComponent implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: ActionPopupComponent,
       event: ev,
+      componentProps: {
+        message: false
+      },
       translucent: true
     });
     await popover.present();
 
     const { data } = await popover.onDidDismiss();
+    if (!data) {
+      return;
+    }
     if (data.action === 'delete') {
       this.propertiesService.removeProperty(this.property.id);
       this.router.navigate(['/properties']);
