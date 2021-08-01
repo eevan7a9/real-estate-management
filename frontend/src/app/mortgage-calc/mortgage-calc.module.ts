@@ -8,6 +8,7 @@ import { MortgageCalcPageRoutingModule } from './mortgage-calc-routing.module';
 
 import { MortgageCalcPage } from './mortgage-calc.page';
 import { SharedModule } from '../shared/shared.module';
+import { MortgageCoreCalcComponent } from './mortgage-core-calc/mortgage-core-calc.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     MortgageCalcPageRoutingModule,
     SharedModule
   ],
-  declarations: [MortgageCalcPage]
+  declarations: [MortgageCalcPage, MortgageCoreCalcComponent]
 })
 export class MortgageCalcPageModule { }

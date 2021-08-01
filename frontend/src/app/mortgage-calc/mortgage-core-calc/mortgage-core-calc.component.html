@@ -1,0 +1,65 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title color="light">
+      Check to see Monthly & Lifetime payments
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content *ngIf="isReady">
+    <form [formGroup]="mortgageForm">
+      <ion-item>
+        <ion-label position="stacked">Price:</ion-label>
+        <ion-input
+          clearInput
+          debounce="1000"
+          value="mortgageForm.get('price').value"
+          formControlName="price"
+          (ionChange)="formatValue($event.target.value, 'price')"
+        >
+          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>₱
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Down Payment :</ion-label>
+        <ion-input
+          clearInput
+          debounce="1000"
+          value="mortgageForm.get('downPayment').value"
+          formControlName="downPayment"
+          (ionChange)="formatValue($event.target.value, 'downPayment')"
+        >
+          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>₱
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Interest Rate :</ion-label>
+        <ion-input
+          type="number"
+          min="0"
+          formControlName="interest"
+          inputmode="numeric"
+        >
+          <ion-icon class="ion-margin-end" name="trending-up-outline"></ion-icon
+          >%
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Loan Term :</ion-label>
+        <ion-input
+          type="number"
+          min="0"
+          formControlName="term"
+          inputmode="numeric"
+        >
+          <ion-icon class="ion-margin-end" name="calendar-outline"></ion-icon>
+        </ion-input>
+      </ion-item>
+      <br />
+      <ion-item lines="none">
+        <ion-label position="stacked">Your monthly payment :</ion-label>
+        <ion-input value="$1,067" readonly>
+          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+        </ion-input>
+      </ion-item>
+    </form>
+  </ion-card-content>
+</ion-card>
