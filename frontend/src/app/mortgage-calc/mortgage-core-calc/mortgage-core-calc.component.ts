@@ -8,10 +8,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class MortgageCoreCalcComponent implements AfterViewInit {
   @Input() payPerYear = 12;
+  @Input() boxShadow = true;
 
   public mortgageForm: FormGroup;
   public monthlyPayment = '0';
-  public isReady = false;
 
   constructor(
     private formBuilder: FormBuilder
@@ -25,8 +25,9 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.isReady = true;
-    this.monthlyPayCalculate();
+    setTimeout(() => {
+      this.monthlyPayCalculate();
+    }, 1000);
   }
 
   public formatValue(value = 0, property: string) {

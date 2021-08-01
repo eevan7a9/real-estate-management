@@ -1,10 +1,10 @@
-<ion-card>
+<ion-card [style.box-shadow]="!boxShadow ? 'none' : ''">
   <ion-card-header>
     <ion-card-title color="light">
       Check to see Monthly & Lifetime payments
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content *ngIf="isReady">
+  <ion-card-content>
     <form [formGroup]="mortgageForm">
       <ion-item>
         <ion-label position="stacked">Price:</ion-label>
