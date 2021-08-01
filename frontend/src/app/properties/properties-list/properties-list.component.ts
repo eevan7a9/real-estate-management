@@ -9,6 +9,7 @@ import { PropertiesService } from '../properties.service';
   styleUrls: ['./properties-list.component.scss'],
 })
 export class PropertiesListComponent implements OnInit {
+  @Input() singleCol = false;
   public properties: Property[];
 
   constructor(

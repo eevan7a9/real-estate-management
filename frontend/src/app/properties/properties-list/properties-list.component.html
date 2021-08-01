@@ -2,9 +2,9 @@
 <ion-row>
   <ion-col
     size="12"
-    sizeMd="6"
-    sizeLg="4"
-    sizeXl="3"
+    [sizeMd]="singleCol ? 12 : 6"
+    [sizeLg]="singleCol ? 12 : 4"
+    [sizeXl]="singleCol ? 12 : 3"
     *ngFor="let item of properties"
   >
     <ion-card (click)="selectProperty(item)">
