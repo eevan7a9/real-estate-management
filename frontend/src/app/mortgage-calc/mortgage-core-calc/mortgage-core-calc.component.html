@@ -15,7 +15,8 @@
           formControlName="price"
           (ionChange)="formatValue($event.target.value, 'price')"
         >
-          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>₱
+          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+          ₱
         </ion-input>
       </ion-item>
       <ion-item>
@@ -27,7 +28,8 @@
           formControlName="downPayment"
           (ionChange)="formatValue($event.target.value, 'downPayment')"
         >
-          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>₱
+          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+          ₱
         </ion-input>
       </ion-item>
       <ion-item>
@@ -37,6 +39,7 @@
           min="0"
           formControlName="interest"
           inputmode="numeric"
+          (ionChange)="monthlyPayCalculate()"
         >
           <ion-icon class="ion-margin-end" name="trending-up-outline"></ion-icon
           >%
@@ -49,6 +52,7 @@
           min="0"
           formControlName="term"
           inputmode="numeric"
+          (ionChange)="monthlyPayCalculate()"
         >
           <ion-icon class="ion-margin-end" name="calendar-outline"></ion-icon>
         </ion-input>
@@ -56,8 +60,9 @@
       <br />
       <ion-item lines="none">
         <ion-label position="stacked">Your monthly payment :</ion-label>
-        <ion-input value="$1,067" readonly>
+        <ion-input [value]="monthlyPayment" readonly>
           <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+          ₱
         </ion-input>
       </ion-item>
     </form>

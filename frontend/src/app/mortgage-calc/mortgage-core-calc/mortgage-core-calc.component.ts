@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -7,10 +7,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./mortgage-core-calc.component.scss']
 })
 export class MortgageCoreCalcComponent implements AfterViewInit {
+  @Input() payPerYear = 12;
 
   public mortgageForm: FormGroup;
-  public monthlyPayment = 0;
+  public monthlyPayment = '0';
   public isReady = false;
+
   constructor(
     private formBuilder: FormBuilder
   ) {
@@ -24,6 +26,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.isReady = true;
+    this.monthlyPayCalculate();
   }
 
   public formatValue(value = 0, property: string) {
@@ -32,8 +35,25 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     }
     let myString = value.toString().replace(/\D/g, '');
     myString = myString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    console.log(myString);
     this.mortgageForm.patchValue({ [property]: myString });
+    this.monthlyPayCalculate();
   }
 
+  private monthlyPayCalculate() {
+    const { term } = this.mortgageForm.value;
+    const payPerTotal = term * this.payPerYear;
+    let { price, downPayment, interest } = this.mortgageForm.value;
+
+    price = Number(price.toString().replace(/\,/g, ''));
+    downPayment = Number(downPayment.toString().replace(/\,/g, ''));
+    interest = interest / 100;
+
+    const topA = (price - downPayment) * (interest / this.payPerYear);
+    const topB = Math.pow(1 + (interest / this.payPerYear), payPerTotal);
+    const bottom = Math.pow(1 + (interest / this.payPerYear), payPerTotal) - 1;
+    const top = topA * topB;
+    const total = Math.round(top / bottom);
+
+    this.monthlyPayment = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 }
