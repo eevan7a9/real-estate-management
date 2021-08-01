@@ -10,6 +10,7 @@ import { PropertiesNewComponent } from './properties-new-modal/properties-new.co
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
 import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
+import { MortgageCoreCalcComponent } from '../mortgage-calc/mortgage-core-calc/mortgage-core-calc.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { PropertiesEditComponent } from './properties-edit-modal/properties-edit
     PropertiesNewComponent,
     PropertiesListComponent,
     PropertiesDetailComponent,
-    PropertiesEditComponent
+    PropertiesEditComponent,
+    MortgageCoreCalcComponent
   ]
 })
 export class PropertiesPageModule { }
