@@ -12,4 +12,8 @@ ion-row {
   overflow: hidden;
   overflow-y: scroll;
   height: 100%;
+  width: 100%;
+  .properties-list {
+    max-width: 500px;
+  }
 }
