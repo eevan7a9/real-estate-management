@@ -8,6 +8,7 @@ import { MapPageRoutingModule } from './map-routing.module';
 
 import { MapPage } from './map.page';
 import { PropertiesListComponent } from '../properties/properties-list/properties-list.component';
+import { MapLeafletComponent } from './map-leaflet/map-leaflet.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { PropertiesListComponent } from '../properties/properties-list/propertie
     IonicModule,
     MapPageRoutingModule
   ],
-  declarations: [MapPage, PropertiesListComponent]
+  declarations: [MapPage, PropertiesListComponent, MapLeafletComponent]
 })
 export class MapPageModule { }
