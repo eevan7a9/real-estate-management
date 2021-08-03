@@ -2,7 +2,7 @@
   <div *ngIf="property; else noProperty">
     <div class="name">{{ property.name }}</div>
     <div class="type">
-      <ion-badge color="warning">{{ property.type }}</ion-badge>
+      <app-property-badge [type]="property.type"></app-property-badge>
     </div>
     <div class="address">
       {{ property.address }}
