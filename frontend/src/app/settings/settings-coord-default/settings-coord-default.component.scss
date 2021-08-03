@@ -1,0 +1,19 @@
+.heading {
+  font-size: 24px;
+  line-height: 150%;
+  margin-top: 50px;
+  background-color: var(--ion-color-primary);
+}
+
+ion-button {
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 16px;
+  --padding-bottom: 16px;
+  &.reset {
+    --background: transparent;
+    --background-hover: transparent;
+    --box-shadow: none;
+    --color: var(--ion-color-dark);
+  }
+}
