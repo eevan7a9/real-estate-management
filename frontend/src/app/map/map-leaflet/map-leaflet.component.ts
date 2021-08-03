@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { PropertiesService } from 'src/app/properties/properties.service';
+import { PropertyType } from 'src/app/shared/enums/property';
 import { Coord } from 'src/app/shared/interface/map';
 import { Property } from 'src/app/shared/interface/property';
 import { MapPopupComponent } from '../map-popup/map-popup.component';
@@ -72,8 +73,28 @@ export class MapLeafletComponent implements OnInit {
     component.instance.property = property;
     component.instance.changeDetector.detectChanges();
 
-    const icon = L.icon({
-      iconUrl: '../../../assets/images/map/marker-red-house.svg',
+    const icon = this.setMarkerIcon(property.type);
+    this.mapService.addMarker(this.map, property.position, icon, component);
+  }
+
+  private setMarkerIcon(type: string): L.Icon {
+    let icon = '';
+    switch (type) {
+      case PropertyType.house:
+        icon = 'marker-red-house.svg';
+        break;
+      case PropertyType.apartment:
+        icon = 'marker-green-apartment.svg';
+        break;
+      case PropertyType.pad:
+        icon = 'marker-orange-pad.svg';
+        break;
+      case PropertyType.boardingHouse:
+        icon = 'marker-purple-boarding.svg';
+        break;
+    }
+    return L.icon({
+      iconUrl: '../../../assets/images/map/' + icon,
       shadowUrl: '../../../assets/images/map/marker-shadow.svg',
 
       iconSize: [40, 45], // size of the icon
@@ -82,7 +103,5 @@ export class MapLeafletComponent implements OnInit {
       shadowAnchor: [5, 40],  // the same for the shadow
       popupAnchor: [-3, -46] // point from which the popup should open relative to the iconAnchor
     });
-
-    this.mapService.addMarker(this.map, property.position, icon, component);
   }
 }
