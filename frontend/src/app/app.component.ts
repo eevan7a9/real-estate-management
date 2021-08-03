@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { PropertiesService } from './properties/properties.service';
+import { properties } from './shared/dummy-data';
 import { StorageService } from './shared/services/storage/storage.service';
 
 @Component({
@@ -19,14 +21,23 @@ export class AppComponent implements OnInit {
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
-  constructor(private platform: Platform, private storage: StorageService) { }
+  constructor(
+    private platform: Platform,
+    private storage: StorageService,
+    private propertiesService: PropertiesService
+  ) { }
 
   async ngOnInit() {
     await this.platform.ready();
     await this.storage.init();
     const isDark = await this.storage.get('isDark');
+    // SET THEME
     if (isDark) {
       document.body.classList.add('dark');
+    }
+    // SET DATA PROPERTIES
+    if (!this.propertiesService.properties.length) {
+      this.propertiesService.properties = properties;
     }
   }
 }
