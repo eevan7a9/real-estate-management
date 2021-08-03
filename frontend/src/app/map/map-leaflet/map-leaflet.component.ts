@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { PropertiesService } from 'src/app/properties/properties.service';
 import { Coord } from 'src/app/shared/interface/map';
+import { MapService } from '../map.service';
+
 @Component({
   selector: 'app-map-leaflet',
   templateUrl: './map-leaflet.component.html',
@@ -8,11 +11,17 @@ import { Coord } from 'src/app/shared/interface/map';
 })
 export class MapLeafletComponent implements OnInit {
 
+  @Input() clickAddMarker = false;
+  @Input() showPropertyMarkers = true;
+
   public markers = [];
   private map: L.Map;
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
 
-  constructor() { }
+  constructor(
+    private mapService: MapService,
+    private propertiesService: PropertiesService
+  ) { }
 
   ngOnInit() {
     this.initMap();
@@ -21,50 +30,35 @@ export class MapLeafletComponent implements OnInit {
   initMap(): void {
     this.map = L.map('mapId', {
       center: [this.center.lat, this.center.lng],
-      zoom: 17
+      zoom: 18
     });
     this.map.whenReady(() => {
       setTimeout(() => {
         this.map.invalidateSize();
       }, 1000);
     });
+    this.mapService.addTiles(this.map);
 
-    const tiles = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
-      maxZoom: 20,
-      attribution: `
-      '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>,
-      &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>
-      &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-      `
-    });
-    tiles.addTo(this.map);
-    // set click event handler
-    this.map.on('click', (e: L.LeafletMouseEvent) => {
-      this.clickEvent(e.latlng);
-    });
-  }
+    if (this.clickAddMarker) {
+      // set click event handler
+      this.map.on('click', (e: L.LeafletMouseEvent) => {
+        this.clickEvent(e.latlng);
+      });
+    }
 
-  private addMarker(coord: Coord): void {
-    const icon = L.icon({
-      iconUrl: '../../../assets/images/map/marker-red-house.svg',
-      shadowUrl: '../../../assets/images/map/marker-shadow.svg',
-
-      iconSize: [40, 45], // size of the icon
-      shadowSize: [40, 55], // size of the shadow
-      iconAnchor: [22, 50], // point of the icon which will correspond to marker's location
-      shadowAnchor: [5, 40],  // the same for the shadow
-      popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-    });
-
-    const marker = L.marker([coord.lat, coord.lng], { icon }).addTo(this.map);
-    marker.on('click', () => {
-      console.log('Marker is clicked');
-    });
-    this.markers.push(marker);
-    console.log('Marker is Added.');
+    if (this.showPropertyMarkers) {
+      // set Properties Markers
+      this.propertiesService.properties$.subscribe(properties => {
+        this.markers = properties;
+        properties.forEach(property => {
+          this.mapService.addMarker(this.map, property.position);
+        });
+      });
+    }
   }
 
   private clickEvent(coord: Coord): void {
-    this.addMarker(coord);
+    const marker = this.mapService.addMarker(this.map, coord);
+    this.markers.push(marker);
   }
 }
