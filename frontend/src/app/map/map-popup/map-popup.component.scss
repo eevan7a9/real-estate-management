@@ -1,0 +1,25 @@
+.popup-container {
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.name {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.address {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ion-color-dark);
+  padding: 8px;
+}
+
+::ng-deep .leaflet-popup-content-wrapper,
+.leaflet-popup.tip {
+  background: var(--ion-color-light-tint);
+  color: var(--ion-color-dark);
+}
+::ng-deep .leaflet-popup-tip-container .leaflet-popup-tip {
+  background: var(--ion-color-light-tint);
+}

@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import { PropertiesService } from 'src/app/properties/properties.service';
 import { Coord } from 'src/app/shared/interface/map';
+import { Property } from 'src/app/shared/interface/property';
+import { MapPopupComponent } from '../map-popup/map-popup.component';
 import { MapService } from '../map.service';
 
 @Component({
@@ -20,7 +22,9 @@ export class MapLeafletComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private propertiesService: PropertiesService
+    private propertiesService: PropertiesService,
+    private resolver: ComponentFactoryResolver,
+    private injector: Injector,
   ) { }
 
   ngOnInit() {
@@ -51,7 +55,7 @@ export class MapLeafletComponent implements OnInit {
       this.propertiesService.properties$.subscribe(properties => {
         this.markers = properties;
         properties.forEach(property => {
-          this.mapService.addMarker(this.map, property.position);
+          this.addPropertyMarker(property);
         });
       });
     }
@@ -60,5 +64,25 @@ export class MapLeafletComponent implements OnInit {
   private clickEvent(coord: Coord): void {
     const marker = this.mapService.addMarker(this.map, coord);
     this.markers.push(marker);
+  }
+
+  private addPropertyMarker(property: Property) {
+    // Dynamicaly Add Component to Popup
+    const component = this.resolver.resolveComponentFactory(MapPopupComponent).create(this.injector);
+    component.instance.property = property;
+    component.instance.changeDetector.detectChanges();
+
+    const icon = L.icon({
+      iconUrl: '../../../assets/images/map/marker-red-house.svg',
+      shadowUrl: '../../../assets/images/map/marker-shadow.svg',
+
+      iconSize: [40, 45], // size of the icon
+      shadowSize: [40, 55], // size of the shadow
+      iconAnchor: [22, 50], // point of the icon which will correspond to marker's location
+      shadowAnchor: [5, 40],  // the same for the shadow
+      popupAnchor: [-3, -46] // point from which the popup should open relative to the iconAnchor
+    });
+
+    this.mapService.addMarker(this.map, property.position, icon, component);
   }
 }

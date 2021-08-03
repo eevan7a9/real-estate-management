@@ -1,0 +1,23 @@
+<div class="popup-container">
+  <div *ngIf="property; else noProperty">
+    <div class="name">{{ property.name }}</div>
+    <div class="type">
+      <ion-badge color="warning">{{ property.type }}</ion-badge>
+    </div>
+    <div class="address">
+      {{ property.address }}
+    </div>
+    <ion-button
+      color="primary"
+      expand="block"
+      size="small"
+      (click)="viewMore()"
+    >
+      View More
+    </ion-button>
+  </div>
+
+  <ng-template #noProperty>
+    <strong>No Property Data</strong>
+  </ng-template>
+</div>
