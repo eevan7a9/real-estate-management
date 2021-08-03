@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropertyGalleryComponent } from './components/property-gallery/property-gallery.component';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
+import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
 
 
 @NgModule({
-  declarations: [PropertyGalleryComponent, ActionPopupComponent],
+  declarations: [PropertyGalleryComponent, ActionPopupComponent, PropertyBadgeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -16,7 +17,8 @@ import { ActionPopupComponent } from './components/action-popup/action-popup.com
     FormsModule,
     ReactiveFormsModule,
     PropertyGalleryComponent,
-    ActionPopupComponent
+    ActionPopupComponent,
+    PropertyBadgeComponent
   ]
 })
 export class SharedModule { }
