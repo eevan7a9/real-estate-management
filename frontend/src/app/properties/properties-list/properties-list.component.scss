@@ -1,0 +1,25 @@
+ion-slides {
+  height: 100%;
+}
+
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  .card-slider {
+    flex: 0 0 auto;
+    max-width: 250px;
+    height: 100%;
+    .top-img {
+      position: relative;
+      .overlay-container {
+        background-color: transparent;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+      }
+    }
+  }
+}

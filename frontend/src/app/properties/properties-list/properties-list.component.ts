@@ -1,26 +1,37 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
-import { properties } from '../../shared/dummy-data';
+
 @Component({
   selector: 'app-properties-list',
   templateUrl: './properties-list.component.html',
   styleUrls: ['./properties-list.component.scss'],
 })
-export class PropertiesListComponent implements OnInit {
+export class PropertiesListComponent implements OnInit, OnDestroy {
   @Input() singleCol = false;
+  @Input() horizontalSlide = false;
   public properties: Property[];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private propertiesService: PropertiesService,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.propertiesService.properties$.subscribe(v => {
+    this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
       this.properties = v;
     });
+    this.changeDetector.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public selectProperty(property: Property) {

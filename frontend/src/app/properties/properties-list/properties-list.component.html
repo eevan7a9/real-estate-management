@@ -1,5 +1,5 @@
 <!-- Lists of Propertis Cards -->
-<ion-row>
+<ion-row *ngIf="!horizontalSlide">
   <ion-col
     size="12"
     [sizeMd]="singleCol ? 12 : 6"
@@ -20,3 +20,22 @@
     </ion-card>
   </ion-col>
 </ion-row>
+
+<div class="scrolling-wrapper-flexbox" *ngIf="horizontalSlide">
+  <div *ngFor="let item of properties" class="card-slider ion-margin-vertical">
+    <ion-card (click)="selectProperty(item)">
+      <div class="top-img">
+        <img src="assets/images/madison.jpeg" />
+        <div class="overlay-container"></div>
+      </div>
+      <ion-card-header>
+        <ion-card-subtitle>{{ item.type }}</ion-card-subtitle>
+        <ion-card-title>{{ item.name }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{ item.description }} Lorem ipsum, dolor sit amet consectetur
+        adipisicing elit. Labore, illum!
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
