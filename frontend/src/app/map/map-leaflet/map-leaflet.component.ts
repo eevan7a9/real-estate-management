@@ -4,6 +4,7 @@ import { PropertiesService } from 'src/app/properties/properties.service';
 import { PropertyType } from 'src/app/shared/enums/property';
 import { Coord } from 'src/app/shared/interface/map';
 import { Property } from 'src/app/shared/interface/property';
+import { StorageService } from 'src/app/shared/services/storage/storage.service';
 import { MapPopupComponent } from '../map-popup/map-popup.component';
 import { MapService } from '../map.service';
 
@@ -26,13 +27,14 @@ export class MapLeafletComponent implements OnInit {
     private propertiesService: PropertiesService,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
+    private storage: StorageService
   ) { }
 
   ngOnInit() {
     this.initMap();
   }
 
-  initMap(): void {
+  async initMap(): Promise<void> {
     this.map = L.map('mapId', {
       center: [this.center.lat, this.center.lng],
       zoom: 18
@@ -42,7 +44,8 @@ export class MapLeafletComponent implements OnInit {
         this.map.invalidateSize();
       }, 1000);
     });
-    this.mapService.addTiles(this.map);
+    const isDark = await this.storage.getDartTheme();
+    this.mapService.addTiles(this.map, isDark);
 
     if (this.clickAddMarker) {
       // set click event handler

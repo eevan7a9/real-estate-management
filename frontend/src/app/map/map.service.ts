@@ -1,17 +1,20 @@
 import { Injectable, } from '@angular/core';
 import * as L from 'leaflet';
 import { Coord } from 'src/app/shared/interface/map';
+
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
 
-  constructor(
+  constructor() { }
 
-  ) { }
-
-  addTiles(map: L.Map) {
-    const tiles = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png', {
+  addTiles(map: L.Map, isDark = false) {
+    let mapTiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
+    if (isDark) {
+      mapTiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+    }
+    const tiles = L.tileLayer(mapTiles, {
       maxZoom: 20,
       attribution: `
       '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>,
