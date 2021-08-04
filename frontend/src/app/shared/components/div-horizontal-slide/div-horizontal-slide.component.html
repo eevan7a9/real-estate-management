@@ -1,0 +1,10 @@
+<div
+  class="scrolling-wrapper-flexbox"
+  #elemt
+  (mousedown)="startDragging($event, false, elemt)"
+  (mouseup)="stopDragging($event, false)"
+  (mouseleave)="stopDragging($event, false)"
+  (mousemove)="moveEvent($event, elemt)"
+>
+  <ng-content></ng-content>
+</div>

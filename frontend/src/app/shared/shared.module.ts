@@ -4,10 +4,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropertyGalleryComponent } from './components/property-gallery/property-gallery.component';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
 import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
+import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/div-horizontal-slide.component';
 
 
 @NgModule({
-  declarations: [PropertyGalleryComponent, ActionPopupComponent, PropertyBadgeComponent],
+  declarations: [
+    PropertyGalleryComponent,
+    ActionPopupComponent,
+    PropertyBadgeComponent,
+    DivHorizontalSlideComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +24,8 @@ import { PropertyBadgeComponent } from './components/property-badge/property-bad
     ReactiveFormsModule,
     PropertyGalleryComponent,
     ActionPopupComponent,
-    PropertyBadgeComponent
+    PropertyBadgeComponent,
+    DivHorizontalSlideComponent
   ]
 })
 export class SharedModule { }
