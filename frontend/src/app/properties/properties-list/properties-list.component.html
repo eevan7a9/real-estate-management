@@ -7,7 +7,7 @@
     [sizeXl]="singleCol ? 12 : 3"
     *ngFor="let item of properties"
   >
-    <ion-card (click)="selectProperty(item)">
+    <ion-card>
       <img src="assets/images/madison.jpeg" />
       <ion-card-header>
         <ion-card-subtitle>{{ item.type }}</ion-card-subtitle>
@@ -16,14 +16,22 @@
       <ion-card-content>
         {{ item.description }} Lorem ipsum, dolor sit amet consectetur
         adipisicing elit. Labore, illum!
+        <ion-button
+          (click)="selectProperty(item)"
+          expand="block"
+          class="ion-margin-top"
+          color="primary"
+        >
+          View property
+        </ion-button>
       </ion-card-content>
     </ion-card>
   </ion-col>
 </ion-row>
 
-<div class="scrolling-wrapper-flexbox" *ngIf="horizontalSlide">
+<app-div-horizontal-slide *ngIf="horizontalSlide">
   <div *ngFor="let item of properties" class="card-slider ion-margin-vertical">
-    <ion-card (click)="selectProperty(item)">
+    <ion-card>
       <div class="top-img">
         <img src="assets/images/madison.jpeg" />
         <div class="overlay-container"></div>
@@ -35,7 +43,15 @@
       <ion-card-content>
         {{ item.description }} Lorem ipsum, dolor sit amet consectetur
         adipisicing elit. Labore, illum!
+        <ion-button
+          (click)="selectProperty(item)"
+          expand="block"
+          class="ion-margin-top"
+          color="primary"
+        >
+          View property
+        </ion-button>
       </ion-card-content>
     </ion-card>
   </div>
-</div>
+</app-div-horizontal-slide>
