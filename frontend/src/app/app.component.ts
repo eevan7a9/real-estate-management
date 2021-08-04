@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.platform.ready();
     await this.storage.init();
-    const isDark = await this.storage.get('isDark');
+    const isDark = await this.storage.getDartTheme();
     // SET THEME
     if (isDark) {
       document.body.classList.add('dark');

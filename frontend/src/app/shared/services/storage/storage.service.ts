@@ -26,6 +26,14 @@ export class StorageService {
     return await this.ionStorage.get(key);
   }
 
+  public async setDarkTheme(value: boolean) {
+    await this.ionStorage?.set('isDark', value);
+  }
+
+  public async getDartTheme(): Promise<boolean> {
+    return await this.ionStorage.get('isDark');
+  }
+
   public async setCoord(coord: Coord) {
     await this.ionStorage.set('coord', coord);
   }

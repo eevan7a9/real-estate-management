@@ -14,17 +14,16 @@ export class SettingsThemeComponent implements AfterViewInit {
 
   async ngAfterViewInit() {
     await this.storage.init();
-    this.darkTheme = await this.storage.get('isDark');
+    this.darkTheme = await this.storage.getDartTheme();
   }
 
   switchDarkMode(event) {
     if (event.detail.checked) {
       document.body.classList.add('dark');
-      this.storage.set('isDark', true);
+      this.storage.setDarkTheme(true);
     } else {
       document.body.classList.remove('dark');
-      this.storage.set('isDark', false);
+      this.storage.setDarkTheme(false);
     }
-
   }
 }
