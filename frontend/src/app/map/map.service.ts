@@ -25,15 +25,10 @@ export class MapService {
     tiles.addTo(map);
   }
 
-  addMarker(
-    map: L.Map,
-    coord: Coord,
-    icon: L.Icon | null = null,
-    popupComponent = null
-  ): L.Marker {
-    const marker = L.marker([coord.lat, coord.lng], { icon }).addTo(map);
-    if (popupComponent) {
-      marker.bindPopup(popupComponent.location.nativeElement);
+  addMarker(map: L.Map, coord: Coord, options = { icon: null, popup: null }): L.Marker {
+    const marker = L.marker([coord.lat, coord.lng], { ...(options.icon ? { icon: options.icon } : '') });
+    if (options.popup) {
+      marker.bindPopup(options.popup.location.nativeElement);
     }
     // add click event
     marker.on('click', () => {
