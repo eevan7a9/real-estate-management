@@ -1,0 +1,11 @@
+<ion-list class="map-marker-info">
+  <ion-item
+    lines="none"
+    *ngFor="let marker of markers"
+    (click)="markerSelected(marker)"
+  >
+    <img [src]="'./assets/images/map/' + marker.icon" alt="marker" srcset="" />
+    <ion-checkbox color="primary" [(ngModel)]="marker.isChecked"></ion-checkbox>
+    {{ marker.label }}
+  </ion-item>
+</ion-list>

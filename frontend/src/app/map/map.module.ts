@@ -11,6 +11,7 @@ import { PropertiesListComponent } from '../properties/properties-list/propertie
 import { MapLeafletComponent } from './map-leaflet/map-leaflet.component';
 import { MapPopupComponent } from './map-popup/map-popup.component';
 import { SharedModule } from '../shared/shared.module';
+import { MapMarkersLegendComponent } from './map-markers-legend/map-markers-legend.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,12 @@ import { SharedModule } from '../shared/shared.module';
     MapPageRoutingModule,
     SharedModule
   ],
-  declarations: [MapPage, PropertiesListComponent, MapLeafletComponent, MapPopupComponent]
+  declarations: [
+    MapPage,
+    PropertiesListComponent,
+    MapLeafletComponent,
+    MapPopupComponent,
+    MapMarkersLegendComponent
+  ]
 })
 export class MapPageModule { }

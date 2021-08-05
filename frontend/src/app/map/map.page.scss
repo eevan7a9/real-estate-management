@@ -10,11 +10,15 @@ ion-row {
 .map-section {
   background-color: var(--ion-color-light-shade);
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
+
 .horizontal-slides-container {
   margin-bottom: 60px;
   width: 100%;
 }
+
 .extra-section {
   background-color: var(--ion-color-light);
   overflow: hidden;

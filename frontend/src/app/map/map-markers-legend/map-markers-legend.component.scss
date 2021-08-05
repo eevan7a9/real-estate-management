@@ -1,0 +1,28 @@
+.map-marker-info {
+  z-index: 400;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  padding: 4px;
+  ion-item {
+    --background: rgba(255, 255, 255, 0.185);
+    --inner-padding-top: 0;
+    --inner-padding-bottom: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 4px;
+    --padding-end: 0;
+    --color: var(--ion-color-dark);
+    -webkit-text-stroke: 1px var(--ion-color-dark);
+    font-size: 13px;
+    line-height: 15px;
+    img {
+      height: 30px;
+      width: 30px;
+    }
+    ion-checkbox {
+      margin-right: 6px;
+    }
+  }
+}
