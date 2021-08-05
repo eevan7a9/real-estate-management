@@ -7,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapPage implements OnInit {
 
+  public visibleType = [
+    'house',
+    'apartment',
+    'pad',
+    'boardingHouse'
+  ];
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  setVisibleMarkerType(event: { type: string; isChecked: boolean }) {
+    if (!event.isChecked) {
+      this.visibleType = this.visibleType.filter(v => v !== event.type);
+    } else {
+      this.visibleType = [...this.visibleType, event.type];
+    }
+  }
 }

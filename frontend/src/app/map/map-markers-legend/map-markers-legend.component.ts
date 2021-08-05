@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PropertyType } from 'src/app/shared/enums/property';
 
 interface Markers {
@@ -14,6 +14,7 @@ interface Markers {
   styleUrls: ['./map-markers-legend.component.scss'],
 })
 export class MapMarkersLegendComponent implements OnInit {
+  @Output() toggledMarker = new EventEmitter<{ type: string; isChecked: boolean }>();
 
   public markers: Markers[] = [
     {
@@ -46,6 +47,6 @@ export class MapMarkersLegendComponent implements OnInit {
   ngOnInit() { }
 
   markerSelected(marker: Markers) {
-    console.log(marker.isChecked, marker.icon);
+    this.toggledMarker.emit({ type: marker.value, isChecked: marker.isChecked });
   }
 }
