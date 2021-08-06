@@ -6,6 +6,6 @@
   >
     <img [src]="'./assets/images/map/' + marker.icon" alt="marker" srcset="" />
     <ion-checkbox color="primary" [(ngModel)]="marker.isChecked"></ion-checkbox>
-    {{ marker.label }}
+    <span class="text">{{ marker.label }}</span>
   </ion-item>
 </ion-list>
