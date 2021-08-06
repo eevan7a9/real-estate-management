@@ -1,0 +1,32 @@
+.search-container {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.185);
+  z-index: 500;
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  right: 4px;
+  width: calc(100% - 8px);
+  ion-icon {
+    position: absolute;
+    padding: 6px;
+    min-width: 40px;
+    color: rgba(51, 51, 51, 0.726);
+    font-size: 20px;
+  }
+  input {
+    color: #333;
+    width: 100%;
+    padding-left: 36px;
+    &::placeholder {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+}
+@media (max-width: 992px) {
+  .search-container {
+    opacity: 0.7;
+    padding: 6px;
+  }
+}
