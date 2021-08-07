@@ -17,8 +17,8 @@
       spellcheck
       animated
       debounce="1000"
-      [(ngModel)]="searchField"
-      (ngModelChange)="searching($event)"
+      #SearchField
+      (ionChange)="searching($event.target.value)"
       [placeholder]="placeholder"
     ></ion-searchbar>
   </ion-toolbar>

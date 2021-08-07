@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,15 +6,15 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './modal-search.component.html',
   styleUrls: ['./modal-search.component.scss'],
 })
-export class ModalSearchComponent implements OnInit {
+export class ModalSearchComponent implements OnInit, AfterViewInit {
 
   @Input() title = 'Search';
   @Input() placeholder = 'Search...';
   @Input() items = [];
   @Input() displayProperty = null;
   @Input() searchFunction: (text: string) => Promise<[]>;
+  @ViewChild('SearchField') searchField;
 
-  public searchField = '';
   public itemsDisplayed = [];
   public progress = false;
 
@@ -22,6 +22,11 @@ export class ModalSearchComponent implements OnInit {
 
   ngOnInit() {
     this.itemsDisplayed = this.items;
+  }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.searchField.setFocus();
+    }, 2000);
   }
 
   close() {
