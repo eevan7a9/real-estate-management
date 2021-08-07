@@ -1,0 +1,40 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title color="light">{{ title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon
+          name="close-outline"
+          color="light"
+          style="font-size: 28px"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      inputmode="text"
+      spellcheck
+      animated
+      debounce="500"
+      [(ngModel)]="searchField"
+      (ngModelChange)="searching($event)"
+      [placeholder]="placeholder"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item
+      button
+      lines="full"
+      *ngFor="let item of itemsDisplayed"
+      (click)="selected(item)"
+    >
+      <ion-label>
+        {{ displayProperty ? item[displayProperty] : item }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

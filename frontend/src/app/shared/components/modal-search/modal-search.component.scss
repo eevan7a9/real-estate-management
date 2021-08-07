@@ -1,0 +1,11 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+ion-searchbar {
+  --box-shadow: none;
+  border-top: 1px solid rgba(12, 12, 12, 0.096);
+}
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-dark);
+}
