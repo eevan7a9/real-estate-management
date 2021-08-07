@@ -1,4 +1,5 @@
 import { Property } from './interface/property';
+import { PropertyType } from './enums/property';
 
 export const properties: Property[] = [
   {
@@ -6,7 +7,7 @@ export const properties: Property[] = [
     address: 'Some place free',
     description: 'And this is nice',
     name: 'Property A',
-    type: 'house',
+    type: PropertyType.residential,
     position: {
       lat: 8.948677279926585,
       lng: 125.5470567303216
@@ -17,7 +18,7 @@ export const properties: Property[] = [
     address: 'Some place free',
     description: 'And this is nice',
     name: 'Property B',
-    type: 'apartment',
+    type: PropertyType.commercial,
     position: {
       lat: 8.948603092201049,
       lng: 125.54424652989282
@@ -28,7 +29,7 @@ export const properties: Property[] = [
     address: 'Some place free',
     description: 'And this is nice',
     name: 'Property C',
-    type: 'pad',
+    type: PropertyType.industrial,
     position: {
       lat: 8.947998991587234,
       lng: 125.5430559487951
@@ -39,7 +40,7 @@ export const properties: Property[] = [
     address: 'Some place free',
     description: 'And this is nice',
     name: 'Property D',
-    type: 'pad',
+    type: PropertyType.industrial,
     position: {
       lat: 8.947055744763734,
       lng: 125.5442679818045
@@ -49,8 +50,8 @@ export const properties: Property[] = [
     id: '05',
     address: 'Some place free',
     description: 'And this is nice',
-    name: 'Property E',
-    type: 'boardingHouse',
+    name: 'Green Planes 45 E',
+    type: PropertyType.land,
     position: {
       lat: 8.946536428053331,
       lng: 125.54334554960266

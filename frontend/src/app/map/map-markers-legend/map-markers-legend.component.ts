@@ -18,28 +18,28 @@ export class MapMarkersLegendComponent implements OnInit {
 
   public markers: Markers[] = [
     {
-      label: 'Household',
-      value: PropertyType.house,
+      label: 'Residential',
+      value: PropertyType.residential,
       isChecked: true,
-      icon: 'marker-red-house.svg'
+      icon: 'marker-residential.svg'
     },
     {
-      label: 'Apartment',
-      value: PropertyType.apartment,
+      label: 'Rommercial',
+      value: PropertyType.commercial,
       isChecked: true,
-      icon: 'marker-green-apartment.svg',
+      icon: 'marker-commercial.svg',
 
     }, {
-      label: 'Pad',
-      value: PropertyType.pad,
+      label: 'Industrial',
+      value: PropertyType.industrial,
       isChecked: true,
-      icon: 'marker-orange-pad.svg'
+      icon: 'marker-industrial.svg'
     }
     , {
-      label: 'Boarding House',
-      value: PropertyType.boardingHouse,
+      label: 'Land',
+      value: PropertyType.land,
       isChecked: true,
-      icon: 'marker-purple-boarding.svg'
+      icon: 'marker-land.svg'
     }
   ];
   constructor() { }

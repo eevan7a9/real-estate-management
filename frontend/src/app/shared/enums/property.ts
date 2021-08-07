@@ -1,6 +1,6 @@
 export enum PropertyType {
-  house = 'house',
-  apartment = 'apartment',
-  pad = 'pad',
-  boardingHouse = 'boardingHouse'
+  residential = 'residential',
+  commercial = 'commercial',
+  industrial = 'industrial',
+  land = 'land'
 }

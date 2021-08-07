@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PropertyType } from '../shared/enums/property';
 
 @Component({
   selector: 'app-map',
@@ -8,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class MapPage implements OnInit {
 
   public visibleType = [
-    'house',
-    'apartment',
-    'pad',
-    'boardingHouse'
+    PropertyType.residential.toString(),
+    PropertyType.commercial.toString(),
+    PropertyType.industrial.toString(),
+    PropertyType.land.toString()
   ];
 
   constructor() { }

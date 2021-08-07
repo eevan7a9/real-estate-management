@@ -14,19 +14,19 @@ export class PropertiesNewComponent implements OnInit {
   public propertyForm: FormGroup;
   public propertyTypes = [
     {
-      label: 'House',
-      value: PropertyType.house
+      label: 'residential',
+      value: PropertyType.residential
     },
     {
-      label: 'Apartment',
-      value: PropertyType.apartment
+      label: 'commercial',
+      value: PropertyType.commercial
     },
     {
-      label: 'Pad',
-      value: PropertyType.pad
+      label: 'industrial',
+      value: PropertyType.industrial
     }, {
-      label: 'Boarding house',
-      value: PropertyType.boardingHouse
+      label: 'land',
+      value: PropertyType.land
     }
   ];
 
@@ -39,7 +39,7 @@ export class PropertiesNewComponent implements OnInit {
       name: ['', Validators.required],
       address: ['', Validators.required],
       description: [''],
-      type: [PropertyType.house],
+      type: [PropertyType.residential],
     });
   }
 

@@ -22,10 +22,10 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   private properties: Property[] = [];
   private map: L.Map;
   private mapGroupMarkers = {
-    house: null,
-    apartment: null,
-    pad: null,
-    boardingHouse: null
+    [PropertyType.residential]: null,
+    [PropertyType.commercial]: null,
+    [PropertyType.industrial]: null,
+    [PropertyType.land]: null
   };
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
 
@@ -53,22 +53,22 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   ngOnChanges() {
     if (this.map) {
       // remove all
-      this.map.removeLayer(this.mapGroupMarkers.house);
-      this.map.removeLayer(this.mapGroupMarkers.apartment);
-      this.map.removeLayer(this.mapGroupMarkers.pad);
-      this.map.removeLayer(this.mapGroupMarkers.boardingHouse);
+      this.map.removeLayer(this.mapGroupMarkers.residential);
+      this.map.removeLayer(this.mapGroupMarkers.commercial);
+      this.map.removeLayer(this.mapGroupMarkers.industrial);
+      this.map.removeLayer(this.mapGroupMarkers.land);
       // add included
-      if (this.visibleMarkerType.includes(PropertyType.house)) {
-        this.map.addLayer(this.mapGroupMarkers.house);
+      if (this.visibleMarkerType.includes(PropertyType.residential)) {
+        this.map.addLayer(this.mapGroupMarkers.residential);
       }
-      if (this.visibleMarkerType.includes(PropertyType.apartment)) {
-        this.map.addLayer(this.mapGroupMarkers.apartment);
+      if (this.visibleMarkerType.includes(PropertyType.commercial)) {
+        this.map.addLayer(this.mapGroupMarkers.commercial);
       }
-      if (this.visibleMarkerType.includes(PropertyType.pad)) {
-        this.map.addLayer(this.mapGroupMarkers.pad);
+      if (this.visibleMarkerType.includes(PropertyType.industrial)) {
+        this.map.addLayer(this.mapGroupMarkers.industrial);
       }
-      if (this.visibleMarkerType.includes(PropertyType.boardingHouse)) {
-        this.map.addLayer(this.mapGroupMarkers.boardingHouse);
+      if (this.visibleMarkerType.includes(PropertyType.land)) {
+        this.map.addLayer(this.mapGroupMarkers.land);
       }
     }
   }
@@ -109,41 +109,41 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   }
 
   private setMapMarkers() {
-    let house = [];
-    let apartment = [];
-    let pad = [];
-    let boardingHouse = [];
+    let residential = [];
+    let commercial = [];
+    let industrial = [];
+    let land = [];
 
     const group = this.properties.reduce((arr, acc): any => {
       arr[acc.type] = [...arr[acc.type] || [], acc];
       return arr;
     }, {});
 
-    if (group.house && group.house.length) {
-      house = group.house.map((property: Property) => this.addPropertyMarker(property));
+    if (group.residential && group.residential.length) {
+      residential = group.residential.map((property: Property) => this.addPropertyMarker(property));
     }
-    if (group.apartment && group.apartment.length) {
-      apartment = group.apartment.map((property: Property) => this.addPropertyMarker(property));
+    if (group.commercial && group.commercial.length) {
+      commercial = group.commercial.map((property: Property) => this.addPropertyMarker(property));
     }
-    if (group.pad && group.pad.length) {
-      pad = group.pad.map((property: Property) => this.addPropertyMarker(property));
+    if (group.industrial && group.industrial.length) {
+      industrial = group.industrial.map((property: Property) => this.addPropertyMarker(property));
     }
-    if (group.boardingHouse && group.boardingHouse.length) {
-      boardingHouse = group.boardingHouse.map((property: Property) => this.addPropertyMarker(property));
+    if (group.land && group.land.length) {
+      land = group.land.map((property: Property) => this.addPropertyMarker(property));
     }
     this.mapGroupMarkers = {
-      house: L.layerGroup(house),
-      apartment: L.layerGroup(apartment),
-      pad: L.layerGroup(pad),
-      boardingHouse: L.layerGroup(boardingHouse)
+      residential: L.layerGroup(residential),
+      commercial: L.layerGroup(commercial),
+      industrial: L.layerGroup(industrial),
+      land: L.layerGroup(land)
     };
     const ctrl = L.control.layers(this.mapGroupMarkers);
     ctrl.addTo(this.map);
     ctrl.remove();
-    this.map.addLayer(this.mapGroupMarkers.house);
-    this.map.addLayer(this.mapGroupMarkers.apartment);
-    this.map.addLayer(this.mapGroupMarkers.pad);
-    this.map.addLayer(this.mapGroupMarkers.boardingHouse);
+    this.map.addLayer(this.mapGroupMarkers.residential);
+    this.map.addLayer(this.mapGroupMarkers.commercial);
+    this.map.addLayer(this.mapGroupMarkers.industrial);
+    this.map.addLayer(this.mapGroupMarkers.land);
   }
 
 
@@ -164,17 +164,17 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   private setMarkerIcon(type: string): L.Icon {
     let icon = '';
     switch (type) {
-      case PropertyType.house:
-        icon = 'marker-red-house.svg';
+      case PropertyType.residential:
+        icon = 'marker-residential.svg';
         break;
-      case PropertyType.apartment:
-        icon = 'marker-green-apartment.svg';
+      case PropertyType.commercial:
+        icon = 'marker-commercial.svg';
         break;
-      case PropertyType.pad:
-        icon = 'marker-orange-pad.svg';
+      case PropertyType.industrial:
+        icon = 'marker-industrial.svg';
         break;
-      case PropertyType.boardingHouse:
-        icon = 'marker-purple-boarding.svg';
+      case PropertyType.land:
+        icon = 'marker-land.svg';
         break;
     }
     return L.icon({

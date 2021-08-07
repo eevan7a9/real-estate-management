@@ -8,21 +8,21 @@ import { PropertyType } from '../../enums/property';
 })
 export class PropertyBadgeComponent implements OnInit {
 
-  @Input() type = 'house';
+  @Input() type = 'residential';
   constructor() { }
 
   ngOnInit() { }
 
   typeColor() {
     switch (this.type) {
-      case PropertyType.house:
+      case PropertyType.residential:
         return 'danger';
-      case PropertyType.pad:
+      case PropertyType.commercial:
+        return 'tertiary';
+      case PropertyType.industrial:
         return 'warning';
-      case PropertyType.apartment:
+      case PropertyType.land:
         return 'success';
-      case PropertyType.boardingHouse:
-        return 'secondary';
       default:
         break;
     }
@@ -30,14 +30,14 @@ export class PropertyBadgeComponent implements OnInit {
 
   typeLabel() {
     switch (this.type) {
-      case PropertyType.house:
-        return 'Household';
-      case PropertyType.pad:
-        return 'Pad';
-      case PropertyType.apartment:
-        return 'Apartment';
-      case PropertyType.boardingHouse:
-        return 'Boarding House';
+      case PropertyType.residential:
+        return 'Residential Real Estate';
+      case PropertyType.commercial:
+        return 'Commercial Real Estate';
+      case PropertyType.industrial:
+        return 'Industrial Real Estate';
+      case PropertyType.land:
+        return 'Land Real Estate';
       default:
         break;
     }
