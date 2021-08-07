@@ -120,16 +120,20 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     }, {});
 
     if (group.residential && group.residential.length) {
-      residential = group.residential.map((property: Property) => this.addPropertyMarker(property));
+      residential = group.residential.map((property: Property) => property.position
+        ? this.addPropertyMarker(property) : undefined).filter(property => property !== undefined);
     }
     if (group.commercial && group.commercial.length) {
-      commercial = group.commercial.map((property: Property) => this.addPropertyMarker(property));
+      commercial = group.commercial.map((property: Property) => property.position
+        ? this.addPropertyMarker(property) : undefined).filter(property => property !== undefined);
     }
     if (group.industrial && group.industrial.length) {
-      industrial = group.industrial.map((property: Property) => this.addPropertyMarker(property));
+      industrial = group.industrial.map((property: Property) => property.position
+        ? this.addPropertyMarker(property) : undefined).filter(property => property !== undefined);
     }
     if (group.land && group.land.length) {
-      land = group.land.map((property: Property) => this.addPropertyMarker(property));
+      land = group.land.map((property: Property) => property.position
+        ? this.addPropertyMarker(property) : undefined).filter(property => property !== undefined);
     }
     this.mapGroupMarkers = {
       residential: L.layerGroup(residential),
