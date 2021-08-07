@@ -13,6 +13,7 @@ import { MapPopupComponent } from './map-popup/map-popup.component';
 import { SharedModule } from '../shared/shared.module';
 import { MapMarkersLegendComponent } from './map-markers-legend/map-markers-legend.component';
 import { MapSearchFieldComponent } from './map-search-field/map-search-field.component';
+import { ModalSearchComponent } from '../shared/components/modal-search/modal-search.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { MapSearchFieldComponent } from './map-search-field/map-search-field.com
     MapLeafletComponent,
     MapPopupComponent,
     MapMarkersLegendComponent,
-    MapSearchFieldComponent
+    MapSearchFieldComponent,
+    ModalSearchComponent
   ]
 })
 export class MapPageModule { }
