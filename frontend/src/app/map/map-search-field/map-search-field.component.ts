@@ -14,6 +14,7 @@ import { Coord } from 'src/app/shared/interface/map';
 export class MapSearchFieldComponent implements OnInit {
 
   @Output() selectedLocation = new EventEmitter<Coord>();
+  public field = '';
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -31,6 +32,7 @@ export class MapSearchFieldComponent implements OnInit {
       }
     });
     await modal.present();
+    this.field = '';
     const { data } = await modal.onDidDismiss();
     if (data) {
       const { lat, lng } = data;
