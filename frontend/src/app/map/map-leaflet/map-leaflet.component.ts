@@ -41,7 +41,13 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     this.propertiesService.properties$.subscribe(properties => {
       this.properties = properties;
     });
-    this.initMap();
+    this.initMap().then(() => {
+      const center = this.map.getCenter();
+      console.log(center);
+      this.map.on('dragend', () => {
+        console.log('drag ended.');
+      });
+    });
   }
 
   ngOnChanges() {
@@ -67,11 +73,20 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     }
   }
 
+  public setMapCenter(coord: Coord) {
+    this.map.flyTo([coord.lat, coord.lng], 19);
+  }
+
   private async initMap(): Promise<void> {
     this.map = L.map('mapId', {
       center: [this.center.lat, this.center.lng],
-      zoom: 18
+      zoom: 18,
+      minZoom: 16,
+      zoomControl: false
     });
+    L.control.zoom({
+      position: 'bottomleft'
+    }).addTo(this.map);
     this.map.whenReady(() => {
       setTimeout(() => {
         this.map.invalidateSize();
