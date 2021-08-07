@@ -12,9 +12,11 @@ export class ModalSearchComponent implements OnInit {
   @Input() placeholder = 'Search...';
   @Input() items = [];
   @Input() displayProperty = null;
+  @Input() searchFunction: (text: string) => Promise<[]>;
 
   public searchField = '';
   public itemsDisplayed = [];
+  public progress = false;
 
   constructor(private modalCtrl: ModalController) { }
 
@@ -30,15 +32,26 @@ export class ModalSearchComponent implements OnInit {
     this.modalCtrl.dismiss(data);
   }
 
-  searching(event) {
-    console.log(event);
-    const results = [];
-    this.items.forEach(item => {
-      const found = (this.displayProperty ? item[this.displayProperty] : item).toLowerCase().indexOf(event) > -1;
-      if (found) {
-        results.push(item);
-      }
-    });
-    this.itemsDisplayed = results;
+  async searching(text: string) {
+    this.itemsDisplayed = [];
+    this.progress = true;
+    if (this.searchFunction && text.length > 3) {
+      this.itemsDisplayed = await this.searchFunction(text);
+      this.progress = false;
+    } else {
+      const results = [];
+      this.items.forEach(item => {
+        const found = (this.displayProperty ? item[this.displayProperty] : item)
+          .toLowerCase().indexOf(text.toLowerCase()) > -1;
+        if (found) {
+          results.push(item);
+        }
+      });
+      setTimeout(() => {
+        this.itemsDisplayed = results;
+        this.progress = false;
+      }, 1000);
+    }
+
   }
 }

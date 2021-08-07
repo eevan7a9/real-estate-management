@@ -16,7 +16,7 @@
       inputmode="text"
       spellcheck
       animated
-      debounce="500"
+      debounce="1000"
       [(ngModel)]="searchField"
       (ngModelChange)="searching($event)"
       [placeholder]="placeholder"
@@ -25,7 +25,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-progress-bar
+    class="ion-margin-top"
+    type="indeterminate"
+    *ngIf="progress"
+  ></ion-progress-bar>
+
+  <ion-list *ngIf="!progress">
     <ion-item
       button
       lines="full"
