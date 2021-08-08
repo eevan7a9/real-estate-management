@@ -11,7 +11,9 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
 import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
 import { MortgageCoreCalcComponent } from '../mortgage-calc/mortgage-core-calc/mortgage-core-calc.component';
-
+import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
+import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
+import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
 
 @NgModule({
   imports: [
@@ -26,7 +28,10 @@ import { MortgageCoreCalcComponent } from '../mortgage-calc/mortgage-core-calc/m
     PropertiesListComponent,
     PropertiesDetailComponent,
     PropertiesEditComponent,
-    MortgageCoreCalcComponent
+    MortgageCoreCalcComponent,
+    PropertiesCoordinatesComponent,
+    MapLeafletComponent,
+    MapSearchFieldComponent
   ]
 })
 export class PropertiesPageModule { }

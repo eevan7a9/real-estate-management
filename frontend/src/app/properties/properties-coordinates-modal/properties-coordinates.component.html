@@ -1,0 +1,38 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Set Property Marker</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-outline" style="font-size: 28px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-container">
+    <app-map-search-field
+      (selectedLocation)="mapLeaflet.setMapCenter($event)"
+    ></app-map-search-field>
+    <app-map-leaflet
+      #mapLeaflet
+      [showPropertyMarkers]="false"
+    ></app-map-leaflet>
+  </div>
+
+  <div class="btn-contianer">
+    <ion-button color="success">Confirm</ion-button>
+  </div>
+
+  <ion-fab horizontal="end" vertical="top" slot="fixed">
+    <ion-fab-button color="primary">
+      <ion-icon name="help-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <div class="notice-container">
+        Click/Tap at the map to place the marker.
+        <ion-icon name="close-outline"></ion-icon>
+      </div>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

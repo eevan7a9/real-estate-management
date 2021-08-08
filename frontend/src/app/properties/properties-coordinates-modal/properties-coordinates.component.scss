@@ -1,0 +1,36 @@
+ion-fab {
+  margin-top: 90px;
+}
+.notice-container {
+  width: 200px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  color: var(--ion-color-dark);
+  background: var(--ion-color-primary);
+
+  display: flex;
+  align-items: center;
+  ion-icon {
+    font-size: 24px;
+    margin-left: 8px;
+  }
+}
+
+.page-container {
+  background-color: var(--ion-color-light-tint);
+  height: 100%;
+}
+.btn-contianer {
+  z-index: 400;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  ion-button {
+    --padding-end: 24px;
+    --padding-start: 24px;
+    margin: 0 0 32px 0;
+  }
+}
