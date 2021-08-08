@@ -17,11 +17,13 @@
     <app-map-leaflet
       #mapLeaflet
       [showPropertyMarkers]="false"
+      [clickAddMarker]="true"
+      (clickedAt)="setCoord($event)"
     ></app-map-leaflet>
   </div>
 
-  <div class="btn-contianer">
-    <ion-button color="success">Confirm</ion-button>
+  <div class="btn-contianer" *ngIf="coord">
+    <ion-button color="success" (click)="confirmed()">Confirm</ion-button>
   </div>
 
   <ion-fab horizontal="end" vertical="top" slot="fixed">

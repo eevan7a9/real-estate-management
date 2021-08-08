@@ -15,6 +15,14 @@ export class PropertiesCoordinatesComponent implements OnInit {
 
   ngOnInit() { }
 
+  public setCoord(event: Coord) {
+    this.coord = event;
+  }
+
+  public confirmed() {
+    this.modalCtrl.dismiss(this.coord);
+  }
+
   public dismissModal() {
     this.modalCtrl.dismiss();
   }

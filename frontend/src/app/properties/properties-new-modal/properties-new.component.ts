@@ -4,6 +4,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { PropertyType } from 'src/app/shared/enums/property';
 import { PropertiesService } from '../properties.service';
+import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 
 @Component({
   selector: 'app-properties-new',
@@ -38,6 +39,7 @@ export class PropertiesNewComponent implements OnInit {
     private toastCtrl: ToastController,
   ) {
     this.propertyForm = this.formBuilder.group({
+      id: 'test',
       // Step 1
       name: ['', Validators.required],
       address: ['', Validators.required],
@@ -71,6 +73,18 @@ export class PropertiesNewComponent implements OnInit {
 
   public dismissModal() {
     this.modalCtrl.dismiss();
+  }
+
+  public async openMap() {
+    const modal = await this.modalCtrl.create({
+      component: PropertiesCoordinatesComponent
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      const { lat, lng } = data;
+      this.propertyForm.patchValue({ lat, lng });
+    }
   }
 
   private validateStepOne() {
