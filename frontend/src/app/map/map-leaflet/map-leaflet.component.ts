@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, Injector, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnChanges, OnInit, Output } from '@angular/core';
 import * as L from 'leaflet';
 import { PropertiesService } from 'src/app/properties/properties.service';
 import { PropertyType } from 'src/app/shared/enums/property';
@@ -18,6 +18,7 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   @Input() clickAddMarker = false;
   @Input() showPropertyMarkers = true;
   @Input() visibleMarkerType: string[] = [];
+  @Output() clickedAt = new EventEmitter<Coord>();
 
   private properties: Property[] = [];
   private map: L.Map;
@@ -28,6 +29,7 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     [PropertyType.land]: null
   };
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
+  private pendingMarker = [];
 
   constructor(
     private mapService: MapService,
@@ -42,10 +44,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
       this.properties = properties;
     });
     this.initMap().then(() => {
-      const center = this.map.getCenter();
-      console.log(center);
       this.map.on('dragend', () => {
-        console.log('drag ended.');
+        const center = this.map.getCenter();
+        console.log('drag ended.', center);
       });
     });
   }
@@ -98,7 +99,13 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     if (this.clickAddMarker) {
       // set click event handler
       this.map.on('click', (e: L.LeafletMouseEvent) => {
-        this.clickEvent(e.latlng);
+        if (this.pendingMarker.length) {
+          this.pendingMarker.forEach(marker => {
+            this.map.removeLayer(marker);
+          });
+        }
+        this.pinMarker(e.latlng);
+        this.clickedAt.emit(e.latlng);
       });
     }
 
@@ -151,8 +158,11 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   }
 
 
-  private clickEvent(coord: Coord): void {
-    this.mapService.addMarker(this.map, coord);
+  private pinMarker(coord: Coord): void {
+    const icon = this.setMarkerIcon();
+    const marker = this.mapService.addMarker(this.map, coord, { icon, popup: '' });
+    marker.addTo(this.map);
+    this.pendingMarker.push(marker);
   }
 
   private addPropertyMarker(property: Property) {
@@ -165,7 +175,7 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     return this.mapService.addMarker(this.map, property.position, { icon, popup: component });
   }
 
-  private setMarkerIcon(type: string): L.Icon {
+  private setMarkerIcon(type: string = ''): L.Icon {
     let icon = '';
     switch (type) {
       case PropertyType.residential:
@@ -179,6 +189,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
         break;
       case PropertyType.land:
         icon = 'marker-land.svg';
+        break;
+      default:
+        icon = 'default-marker.svg';
         break;
     }
     return L.icon({
