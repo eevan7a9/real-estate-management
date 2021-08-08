@@ -11,36 +11,78 @@
 
 <ion-content class="form ion-padding">
   <form [formGroup]="propertyForm">
-    <ion-item>
-      <ion-label position="floating">Name:</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+    <!-- STEP ONE -->
+    <section *ngIf="step === 1">
+      <ion-item>
+        <ion-label position="floating">Name:</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Address:</ion-label>
-      <ion-input type="text" formControlName="address"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Address:</ion-label>
+        <ion-input type="text" formControlName="address"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Description</ion-label>
-      <ion-textarea
-        formControlName="description"
-        placeholder="..."
-      ></ion-textarea>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-textarea
+          formControlName="description"
+          placeholder="..."
+        ></ion-textarea>
+      </ion-item>
 
-    <ion-list>
-      <ion-radio-group formControlName="type">
-        <ion-list-header>
-          <ion-label>Type</ion-label>
-        </ion-list-header>
+      <ion-list>
+        <ion-radio-group formControlName="type">
+          <ion-list-header>
+            <ion-label>Type</ion-label>
+          </ion-list-header>
 
-        <ion-item *ngFor="let type of propertyTypes">
-          <ion-label>{{ type.label }}</ion-label>
-          <ion-radio slot="start" [value]="type.value"></ion-radio>
+          <ion-item *ngFor="let type of propertyTypes">
+            <ion-label>{{ type.label }}</ion-label>
+            <ion-radio slot="start" [value]="type.value"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </section>
+    <!-- STEP TWO -->
+    <section *ngIf="step === 2">
+      <ion-item>
+        <ion-label position="floating">Price:</ion-label>
+        <ion-input type="number" formControlName="price"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Currency:</ion-label>
+        <ion-note slot="end"> USD, PHP, SGD </ion-note>
+        <ion-input type="text" formControlName="currency"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Features:</ion-label>
+        <ion-note slot="end">
+          For multiple features separate with comma( , )
+        </ion-note>
+        <ion-textarea
+          formControlName="features"
+          placeholder="bedroom, kitchen, ..."
+        ></ion-textarea>
+      </ion-item>
+
+      <div class="coord-heading">
+        <ion-text color="dark">Set Marker Position:</ion-text>
+        <ion-button size="small" color="primary"> Open Map </ion-button>
+      </div>
+      <div class="coord-input">
+        <ion-item>
+          <ion-label position="floating">Latitude:</ion-label>
+          <ion-input type="text" placeholder="Latitude"></ion-input>
         </ion-item>
-      </ion-radio-group>
-    </ion-list>
+        <ion-item>
+          <ion-label position="floating">Longitude:</ion-label>
+          <ion-input type="text" placeholder="Longitude"></ion-input>
+        </ion-item>
+      </div>
+    </section>
 
     <ion-button
       expand="block"
@@ -49,7 +91,7 @@
       class="ion-margin"
       color="success"
     >
-      Submit
+      {{ step === 2 ? "Submit" : "Next" }}
     </ion-button>
   </form>
 </ion-content>

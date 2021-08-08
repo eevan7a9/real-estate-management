@@ -1,0 +1,16 @@
+.coord-heading {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  ion-text {
+    text-transform: capitalize;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+}
+.coord-input {
+  display: flex;
+  ion-item {
+    width: 100%;
+  }
+}
