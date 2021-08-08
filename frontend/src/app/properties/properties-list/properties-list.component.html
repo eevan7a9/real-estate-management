@@ -10,7 +10,7 @@
     <ion-card>
       <img src="assets/images/madison.jpeg" />
       <ion-card-header>
-        <ion-card-subtitle>{{ item.type }}</ion-card-subtitle>
+        <app-property-badge [type]="item.type"></app-property-badge>
         <ion-card-title>{{ item.name }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
@@ -37,7 +37,7 @@
         <div class="overlay-container"></div>
       </div>
       <ion-card-header>
-        <ion-card-subtitle>{{ item.type }}</ion-card-subtitle>
+        <app-property-badge [type]="item.type"></app-property-badge>
         <ion-card-title>{{ item.name }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
