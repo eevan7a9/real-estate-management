@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { PropertyType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
+import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class PropertiesEditComponent implements OnInit {
       value: PropertyType.land
     }
   ];
-  private property: Property;
+  public property: Property;
 
   constructor(
     private modalCtrl: ModalController,
@@ -41,18 +42,33 @@ export class PropertiesEditComponent implements OnInit {
       address: ['', Validators.required],
       description: [''],
       type: [PropertyType.residential],
+
+      price: ['',],
+      currency: ['', Validators.maxLength(3)],
+      features: [''],
+      lat: ['0', Validators.required],
+      lng: ['0', Validators.required],
     });
   }
 
   ngOnInit() {
     this.propertiesService.property$.subscribe(property => {
       this.property = property;
+      const {
+        name, address, description, type, price, currency, features, position
+      } = property;
+
       this.propertyForm.patchValue(
         {
-          name: property.name,
-          address: property.address,
-          description: property.description,
-          type: property.type
+          name,
+          address,
+          description,
+          type,
+          price,
+          currency,
+          features: features ? features.join(', ').trim() : '',
+          lat: position.lat,
+          lng: position.lng
         }
       );
     });
@@ -62,12 +78,36 @@ export class PropertiesEditComponent implements OnInit {
     if (!this.propertyForm.valid) {
       return;
     }
-    const property = { ...this.property, ... this.propertyForm.value };
+    const { name, address, description, type, price, currency, features, lat, lng } = this.propertyForm.value;
+    const editedProperty: Property = {
+      id: this.property.id,
+      name,
+      address,
+      description,
+      type,
+      price,
+      currency,
+      features: features.split(',').filter((item: string) => item.trim() !== ''),
+      position: { lat, lng }
+    };
+    const property = { ...this.property, ...editedProperty };
     this.propertiesService.updateProperty(property);
     this.modalCtrl.dismiss();
   }
 
   public close() {
     this.modalCtrl.dismiss();
+  }
+
+  public async openMap() {
+    const modal = await this.modalCtrl.create({
+      component: PropertiesCoordinatesComponent
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      const { lat, lng } = data;
+      this.propertyForm.patchValue({ lat, lng });
+    }
   }
 }

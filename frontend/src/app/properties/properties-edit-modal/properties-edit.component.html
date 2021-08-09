@@ -12,35 +12,89 @@
 <ion-content class="form ion-padding">
   <form [formGroup]="propertyForm">
     <ion-item>
-      <ion-label position="floating">Name:</ion-label>
+      <ion-label color="primary" position="floating">Name:</ion-label>
       <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Address:</ion-label>
+      <ion-label color="primary" position="floating">Address:</ion-label>
       <ion-input type="text" formControlName="address"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Description</ion-label>
+      <ion-label color="primary" position="floating">Description</ion-label>
       <ion-textarea
         formControlName="description"
         placeholder="..."
       ></ion-textarea>
     </ion-item>
 
+    <div class="divider"></div>
+
     <ion-list>
       <ion-radio-group formControlName="type">
         <ion-list-header>
-          <ion-label>Type</ion-label>
+          <ion-label color="primary">Type</ion-label>
         </ion-list-header>
 
         <ion-item *ngFor="let type of propertyTypes">
-          <ion-label>{{ type.label }}</ion-label>
+          <ion-label color="dark">{{ type.label }}</ion-label>
           <ion-radio slot="start" [value]="type.value"></ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-list>
+
+    <div class="divider"></div>
+
+    <ion-item>
+      <ion-label color="primary" position="floating">Price:</ion-label>
+      <ion-input type="text" formControlName="price"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" position="floating">Currency:</ion-label>
+      <ion-input type="text" formControlName="currency"></ion-input>
+    </ion-item>
+
+    <div class="divider"></div>
+
+    <ion-item>
+      <ion-label color="primary" position="floating"> Features: </ion-label>
+      <ion-textarea
+        formControlName="features"
+        placeholder="bedroom, kitchen, ..."
+      ></ion-textarea>
+      <span class="note-helper">
+        For multiple features separate with comma( , )
+      </span>
+    </ion-item>
+
+    <div class="divider"></div>
+
+    <div class="coord-heading">
+      <ion-text color="dark">Set Marker Position:</ion-text>
+      <ion-button size="small" color="primary" (click)="openMap()">
+        Open Map
+      </ion-button>
+    </div>
+    <div class="coord-input">
+      <ion-item>
+        <ion-label color="primary" position="floating">Latitude:</ion-label>
+        <ion-input
+          type="text"
+          formControlName="lat"
+          placeholder="Latitude"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary" position="floating">Longitude:</ion-label>
+        <ion-input
+          type="text"
+          formControlName="lng"
+          placeholder="Longitude"
+        ></ion-input>
+      </ion-item>
+    </div>
 
     <ion-button
       expand="block"
