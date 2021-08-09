@@ -49,11 +49,41 @@ ion-row {
   }
 }
 
+.property-features {
+  box-shadow: none;
+  margin: 16px 0;
+  ion-card-content {
+    .item {
+      font-size: 14px;
+      font-weight: 400;
+      margin-right: 8px;
+      --padding-start: 4px;
+      --padding-end: 4px;
+      --padding-top: 6px;
+      --padding-bottom: 6px;
+      div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
 .property-address {
   box-shadow: none;
   margin: 16px 0;
   ion-card-content {
     font-size: 18px;
-    font-weight: bold;
+    font-weight: normal;
+  }
+}
+
+.property-price {
+  box-shadow: none;
+  margin: 16px 0;
+  .price {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
   }
 }

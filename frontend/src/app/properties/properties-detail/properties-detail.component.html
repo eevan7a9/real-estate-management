@@ -28,8 +28,11 @@
                 </ion-button>
               </div>
               <div class="type">
-                <ion-badge color="warning">{{ property.type }}</ion-badge>
+                <app-property-badge color="warning">
+                  {{ property.type }}
+                </app-property-badge>
               </div>
+              <div class="price"></div>
             </ion-card-content>
           </ion-card>
 
@@ -45,10 +48,36 @@
             </ion-card-content>
           </ion-card>
 
+          <ion-card
+            class="property-features"
+            *ngIf="property.features && property.features.length"
+          >
+            <ion-card-header> Features </ion-card-header>
+            <ion-card-content>
+              <ion-badge
+                color="success"
+                class="item"
+                *ngFor="let item of property.features"
+              >
+                <div>
+                  <ion-icon name="bookmark-outline"></ion-icon>
+                  {{ item }}
+                </div>
+              </ion-badge>
+            </ion-card-content>
+          </ion-card>
+
           <ion-card class="property-address">
             <ion-card-header> Address </ion-card-header>
             <ion-card-content>
               {{ property.address }}
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="property-price" *ngIf="property.price">
+            <ion-card-header> Price </ion-card-header>
+            <ion-card-content class="price">
+              {{ property.price | currency: property.currency:"symbol" }}
             </ion-card-content>
           </ion-card>
         </ion-col>
