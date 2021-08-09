@@ -28,9 +28,7 @@
                 </ion-button>
               </div>
               <div class="type">
-                <app-property-badge color="warning">
-                  {{ property.type }}
-                </app-property-badge>
+                <app-property-badge [type]="property.type"></app-property-badge>
               </div>
               <div class="price"></div>
             </ion-card-content>
