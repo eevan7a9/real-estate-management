@@ -48,7 +48,7 @@ export class PropertiesNewComponent implements OnInit {
       // Step 2
       price: ['',],
       currency: ['', Validators.maxLength(3)],
-      features: [''],
+      features: [['']],
       lat: ['0', Validators.required],
       lng: ['0', Validators.required],
     });
@@ -62,6 +62,10 @@ export class PropertiesNewComponent implements OnInit {
       return;
     }
     if (this.step === 2 && this.validateStepTwo()) {
+      this.propertyForm.patchValue({
+        features: this.propertyForm.get('features').value
+          .split(',').filter((item: string) => item.trim() !== '')
+      });
       console.log(this.propertyForm.value);
       this.propertiesService.addProperty(this.propertyForm.value);
       this.modalCtrl.dismiss();
