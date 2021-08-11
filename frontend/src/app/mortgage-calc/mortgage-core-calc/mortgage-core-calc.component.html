@@ -1,70 +1,145 @@
 <ion-card [style.box-shadow]="!boxShadow ? 'none' : ''">
   <ion-card-header>
     <ion-card-title color="light">
-      Check to see Monthly & Lifetime payments
+      Check to see Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <form [formGroup]="mortgageForm">
-      <ion-item>
-        <ion-label position="stacked">Price:</ion-label>
-        <ion-input
-          clearInput
-          debounce="1000"
-          value="mortgageForm.get('price').value"
-          formControlName="price"
-          (ionChange)="formatValue($event.target.value, 'price')"
-        >
-          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-          ₱
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Down Payment :</ion-label>
-        <ion-input
-          clearInput
-          debounce="1000"
-          value="mortgageForm.get('downPayment').value"
-          formControlName="downPayment"
-          (ionChange)="formatValue($event.target.value, 'downPayment')"
-        >
-          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-          ₱
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Interest Rate :</ion-label>
-        <ion-input
-          type="number"
-          min="0"
-          formControlName="interest"
-          inputmode="numeric"
-          (ionChange)="monthlyPayCalculate()"
-        >
-          <ion-icon class="ion-margin-end" name="trending-up-outline"></ion-icon
-          >%
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Loan Term :</ion-label>
-        <ion-input
-          type="number"
-          min="0"
-          formControlName="term"
-          inputmode="numeric"
-          (ionChange)="monthlyPayCalculate()"
-        >
-          <ion-icon class="ion-margin-end" name="calendar-outline"></ion-icon>
-        </ion-input>
-      </ion-item>
-      <br />
-      <ion-item lines="none">
-        <ion-label position="stacked">Your monthly payment :</ion-label>
-        <ion-input [value]="monthlyPayment" readonly>
-          <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-          ₱
-        </ion-input>
-      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="stacked">Price:</ion-label>
+              <ion-input
+                clearInput
+                debounce="1000"
+                value="mortgageForm.get('price').value"
+                formControlName="price"
+                (ionChange)="formatValue($event.target.value, 'price')"
+              >
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="stacked">Down Payment :</ion-label>
+              <ion-input
+                clearInput
+                debounce="1000"
+                value="mortgageForm.get('downPayment').value"
+                formControlName="downPayment"
+                (ionChange)="formatValue($event.target.value, 'downPayment')"
+              >
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Interest Rate :</ion-label>
+              <ion-input
+                type="number"
+                min="0"
+                formControlName="interest"
+                inputmode="numeric"
+                (ionChange)="monthlyPayCalculate()"
+              >
+                <ion-icon
+                  class="ion-margin-end"
+                  name="trending-up-outline"
+                ></ion-icon
+                >%
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="stacked">Loan Term :</ion-label>
+              <ion-input
+                type="number"
+                min="0"
+                formControlName="term"
+                inputmode="numeric"
+                (ionChange)="monthlyPayCalculate()"
+              >
+                <ion-icon
+                  class="ion-margin-end"
+                  name="calendar-outline"
+                ></ion-icon>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="!simpleMode">
+          <ion-col>
+            <ion-item>
+              <ion-label position="stacked">Property tax :</ion-label>
+              <ion-input
+                clearInput
+                debounce="1000"
+                value="mortgageForm.get('propertyTax').value"
+                formControlName="propertyTax"
+                (ionChange)="formatValue($event.target.value, 'propertyTax')"
+              >
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Property Insurance :</ion-label>
+              <ion-input
+                clearInput
+                debounce="1000"
+                value="mortgageForm.get('insurance').value"
+                formControlName="insurance"
+                (ionChange)="formatValue($event.target.value, 'insurance')"
+              >
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="ion-align-items-center">
+          <ion-col size="12" [sizeMd]="simpleMode ? 12 : 6">
+            <ion-item
+              lines="none"
+              class="total-month"
+              [class]="simpleMode ? 'simple' : ''"
+            >
+              <ion-label position="stacked">Your monthly payment</ion-label>
+              <ion-input [value]="monthlyPayment" readonly>
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">
+            <ion-item lines="none" class="total-lifetime">
+              <ion-label position="stacked">Total lifetime payment</ion-label>
+              <ion-input [value]="lifetimePayment" readonly>
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                ₱
+              </ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col class="view-more" *ngIf="simpleMode">
+            <a routerLink="/mortgage-calc">Mortgage Calculator</a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </form>
   </ion-card-content>
 </ion-card>

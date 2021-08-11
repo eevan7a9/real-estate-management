@@ -9,9 +9,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class MortgageCoreCalcComponent implements AfterViewInit {
   @Input() payPerYear = 12;
   @Input() boxShadow = true;
+  @Input() simpleMode = false;
 
   public mortgageForm: FormGroup;
   public monthlyPayment = '0';
+  public lifetimePayment = '0';
 
   constructor(
     private formBuilder: FormBuilder
@@ -21,6 +23,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       downPayment: ['100,000', [Validators.required]],
       interest: [5, [Validators.required, Validators.pattern('^[0-9]*$')]],
       term: [30, [Validators.required, Validators.pattern('^[0-9]*$')]],
+      propertyTax: [(this.simpleMode ? '0' : '180')],
+      insurance: [(this.simpleMode ? '0' : '250')],
     });
   }
 
@@ -41,7 +45,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   }
 
   private monthlyPayCalculate() {
-    const { term } = this.mortgageForm.value;
+    const { term, propertyTax, insurance } = this.mortgageForm.value;
     const payPerTotal = term * this.payPerYear;
     let { price, downPayment, interest } = this.mortgageForm.value;
 
@@ -53,8 +57,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const topB = Math.pow(1 + (interest / this.payPerYear), payPerTotal);
     const bottom = Math.pow(1 + (interest / this.payPerYear), payPerTotal) - 1;
     const top = topA * topB;
-    const total = Math.round(top / bottom);
-
+    let total = Math.round(top / bottom);
+    if (!this.simpleMode) {
+      console.log('calculate', total);
+      total = propertyTax ? total + Number(propertyTax) : total;
+      console.log(total);
+      total = insurance ? total + Number(insurance) : total;
+      console.log(total);
+    }
     this.monthlyPayment = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    this.lifetimePayment = (total * payPerTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');;
   }
 }
