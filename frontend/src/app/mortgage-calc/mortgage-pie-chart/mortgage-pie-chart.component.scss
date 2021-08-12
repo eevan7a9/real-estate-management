@@ -1,0 +1,13 @@
+ion-card {
+  --background: var(--ion-color-light-tint);
+  box-shadow: none;
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+}
+#myChart {
+  height: 100%;
+  width: 100%;
+}
