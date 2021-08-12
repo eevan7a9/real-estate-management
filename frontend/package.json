@@ -27,6 +27,7 @@
     "@capacitor/status-bar": "1.0.2",
     "@ionic/angular": "^5.5.2",
     "@ionic/storage-angular": "^3.0.6",
+    "chart.js": "^3.5.0",
     "leaflet": "^1.7.1",
     "leaflet-geosearch": "^3.3.2",
     "rxjs": "~6.6.0",
