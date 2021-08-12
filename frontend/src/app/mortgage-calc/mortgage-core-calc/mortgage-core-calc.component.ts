@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -10,10 +10,16 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   @Input() payPerYear = 12;
   @Input() boxShadow = true;
   @Input() simpleMode = false;
+  @Output() formValue = new EventEmitter<{
+    totalMonth: number;
+    interest: number;
+    tax: number;
+    insurance: number;
+  }>();
 
   public mortgageForm: FormGroup;
-  public monthlyPayment = '0';
   public lifetimePayment = '0';
+  public monthlyPayment = '0';
 
   constructor(
     private formBuilder: FormBuilder
@@ -49,6 +55,10 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const payPerTotal = term * this.payPerYear;
     let { price, downPayment, interest } = this.mortgageForm.value;
 
+    if (!price || !downPayment) {
+      return;
+    }
+
     price = Number(price.toString().replace(/\,/g, ''));
     downPayment = Number(downPayment.toString().replace(/\,/g, ''));
     interest = interest / 100;
@@ -66,6 +76,13 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       console.log(total);
     }
     this.monthlyPayment = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    this.lifetimePayment = (total * payPerTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');;
+    this.lifetimePayment = (total * payPerTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    this.formValue.emit({
+      totalMonth: total,
+      interest: topA,
+      tax: propertyTax,
+      insurance
+    });
   }
 }

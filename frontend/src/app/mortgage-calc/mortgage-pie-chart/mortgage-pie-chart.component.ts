@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -11,39 +11,45 @@ Chart.register(...registerables);
 })
 export class MortgagePieChartComponent implements OnInit {
 
+  private pieChart: Chart;
   constructor(private storage: StorageService) { }
 
-  ngOnInit() {
-
-    this.setChart();
-  }
-
-  async setChart() {
+  ngOnInit() { }
+  async setChart(event) {
+    const { totalMonth, interest, tax, insurance } = event;
+    if (this.pieChart) {
+      this.pieChart.destroy();
+    }
     await this.storage.init();
     const isDark = await this.storage.getDartTheme();
     const fontColor = isDark ? '#fff' : '#333';
     const data = {
-      labels: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+      labels: ['Principal', 'Interest', 'Property Tax', 'Insurance'],
       datasets: [
         {
           label: 'Dataset 1',
-          data: [3, 4, 5, 6, 7],
-          backgroundColor: ['Red', 'Orange', 'Yellow', 'Green', 'Blue'],
+          data: [
+            (totalMonth - interest),
+            interest,
+            tax || 0,
+            insurance || 0
+          ],
+          backgroundColor: ['#e0bb2e ', '#428cff', '#e04055', '#29c467',],
           borderWidth: 0, //this will hide border
         }
       ]
     };
     const canvas = document.getElementById('myChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
-    const myChart = new Chart(ctx,
+    this.pieChart = new Chart(ctx,
       {
-        type: 'pie',
+        type: 'doughnut',
         data,
         options: {
           responsive: true,
           plugins: {
             legend: {
-              position: 'top',
+              position: 'right',
               labels: {
                 color: fontColor,
                 font: {
@@ -53,7 +59,7 @@ export class MortgagePieChartComponent implements OnInit {
             },
             title: {
               display: true,
-              text: 'How is my monthly payment calculated?',
+              text: 'Monthly Payment Graph',
               color: fontColor,
               font: {
                 size: 18

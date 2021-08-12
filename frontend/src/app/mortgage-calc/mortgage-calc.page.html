@@ -23,10 +23,22 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" sizeXl="7">
-          <app-mortgage-core-calc></app-mortgage-core-calc>
+          <app-mortgage-core-calc
+            (formValue)="pieChart.setChart($event)"
+          ></app-mortgage-core-calc>
         </ion-col>
         <ion-col size="12" sizeXl="5">
-          <app-mortgage-pie-chart></app-mortgage-pie-chart>
+          <app-mortgage-pie-chart #pieChart></app-mortgage-pie-chart>
+        </ion-col>
+        <ion-col size="12" class="ion-padding">
+          <div class="note-container">
+            <ion-text color="danger">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              Your monthly mortgage payment will depend on your Property price,
+              Down payment, Loan term, Property taxes,Insurance, and Interest
+              rate.
+            </ion-text>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

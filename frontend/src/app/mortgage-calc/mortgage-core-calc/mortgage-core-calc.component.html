@@ -83,8 +83,9 @@
             <ion-item>
               <ion-label position="stacked">Property tax :</ion-label>
               <ion-input
-                clearInput
                 debounce="1000"
+                type="number"
+                min="0"
                 value="mortgageForm.get('propertyTax').value"
                 formControlName="propertyTax"
                 (ionChange)="formatValue($event.target.value, 'propertyTax')"
@@ -97,7 +98,8 @@
             <ion-item>
               <ion-label position="stacked">Property Insurance :</ion-label>
               <ion-input
-                clearInput
+                type="number"
+                min="0"
                 debounce="1000"
                 value="mortgageForm.get('insurance').value"
                 formControlName="insurance"

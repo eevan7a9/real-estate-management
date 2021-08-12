@@ -9,3 +9,16 @@ ion-content {
   max-width: 1600px;
   margin: 0 auto;
 }
+
+.note-container {
+  background: var(--ion-color-light-shade);
+  border-radius: 6px;
+  padding: 16px;
+  ion-text {
+    display: flex;
+    align-items: center;
+  }
+  ion-icon {
+    font-size: 24px;
+  }
+}
