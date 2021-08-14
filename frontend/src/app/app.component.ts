@@ -16,10 +16,14 @@ export class AppComponent implements OnInit {
     { title: 'Properties', url: '/properties', icon: 'home' },
     { title: 'Enquiries', url: '/enquiries', icon: 'reader' },
     { title: 'Mortgage Calc', url: '/mortgage-calc', icon: 'calculator' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
     { title: 'Settings', url: '/settings', icon: 'cog' },
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
+  public appLowerPages = [
+    { title: 'About', url: '/about', icon: 'help-circle' },
+    { title: 'Account', url: '/account', icon: 'person' },
+    { title: 'Sign In', url: '/signin', icon: 'log-in' },
+  ];
 
   constructor(
     private platform: Platform,
