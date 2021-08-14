@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'mortgage-calc',
     loadChildren: () => import('./mortgage-calc/mortgage-calc.module').then( m => m.MortgageCalcPageModule)
+  },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
   }
 ];
 
