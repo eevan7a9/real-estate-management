@@ -11,11 +11,14 @@
       <img src="assets/images/madison.jpeg" />
       <ion-card-header>
         <app-property-badge [type]="item.type"></app-property-badge>
-        <ion-card-title>{{ item.name }}</ion-card-title>
+        <ion-card-title class="name">
+          {{ item.name }}
+        </ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        {{ item.description }} Lorem ipsum, dolor sit amet consectetur
-        adipisicing elit. Labore, illum!
+        <div class="desc">
+          {{ item.description }}
+        </div>
         <ion-button
           (click)="selectProperty(item)"
           expand="block"
@@ -38,11 +41,12 @@
       </div>
       <ion-card-header>
         <app-property-badge [type]="item.type"></app-property-badge>
-        <ion-card-title>{{ item.name }}</ion-card-title>
+        <ion-card-title class="name">{{ item.name }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        {{ item.description }} Lorem ipsum, dolor sit amet consectetur
-        adipisicing elit. Labore, illum!
+        <div class="desc">
+          {{ item.description }}
+        </div>
         <ion-button
           (click)="selectProperty(item)"
           expand="block"

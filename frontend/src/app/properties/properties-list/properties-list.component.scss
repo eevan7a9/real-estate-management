@@ -1,3 +1,22 @@
+.name {
+  overflow: hidden;
+  width: 100%;
+  font-size: 24px;
+  height: 28px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+.desc {
+  overflow: hidden;
+  width: 100%;
+  min-height: 100px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
 .card-slider {
   flex: 0 0 auto;
   max-width: 250px;
