@@ -34,7 +34,7 @@ export class MortgagePieChartComponent implements OnInit {
             tax || 0,
             insurance || 0
           ],
-          backgroundColor: ['#e0bb2e ', '#428cff', '#e04055', '#29c467',],
+          backgroundColor: ['#428cff', '#e0bb2e', '#e04055', '#29c467',],
           borderWidth: 0, //this will hide border
         }
       ]
