@@ -10,6 +10,7 @@ import { MortgageCalcPage } from './mortgage-calc.page';
 import { SharedModule } from '../shared/shared.module';
 import { MortgageCoreCalcComponent } from './mortgage-core-calc/mortgage-core-calc.component';
 import { MortgagePieChartComponent } from './mortgage-pie-chart/mortgage-pie-chart.component';
+import { MortgageLineChartComponent } from './mortgage-line-chart/mortgage-line-chart.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { MortgagePieChartComponent } from './mortgage-pie-chart/mortgage-pie-cha
   declarations: [
     MortgageCalcPage,
     MortgageCoreCalcComponent,
-    MortgagePieChartComponent
+    MortgagePieChartComponent,
+    MortgageLineChartComponent
   ]
 })
 export class MortgageCalcPageModule { }

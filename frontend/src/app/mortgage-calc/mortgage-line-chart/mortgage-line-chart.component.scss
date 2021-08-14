@@ -1,0 +1,9 @@
+ion-card {
+  height: 100%;
+  box-shadow: none;
+  --background: var(--ion-color-light-tint);
+  padding: 0 0 50px 0;
+  ion-card-content {
+    padding: 0;
+  }
+}

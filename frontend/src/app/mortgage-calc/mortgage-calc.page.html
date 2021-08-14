@@ -25,6 +25,7 @@
         <ion-col size="12" sizeXl="7">
           <app-mortgage-core-calc
             (formValue)="pieChart.setChart($event)"
+            (amortizationSchedule)="lineChart.setChart($event)"
           ></app-mortgage-core-calc>
         </ion-col>
         <ion-col size="12" sizeXl="5">
@@ -39,6 +40,11 @@
               rate.
             </ion-text>
           </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-padding-top">
+          <app-mortgage-line-chart #lineChart></app-mortgage-line-chart>
         </ion-col>
       </ion-row>
     </ion-grid>
