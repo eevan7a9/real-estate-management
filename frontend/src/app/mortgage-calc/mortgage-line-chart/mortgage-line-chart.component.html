@@ -3,5 +3,12 @@
     <div class="chart-container">
       <canvas id="lineChart"></canvas>
     </div>
+
+    <div class="overlay-cover" *ngIf="showReCalculate">
+      <ion-button (click)="requestAmortizationSchedule()">
+        Re-Calculate
+        <ion-icon name="trending-up-outline"></ion-icon>
+      </ion-button>
+    </div>
   </ion-card-content>
 </ion-card>

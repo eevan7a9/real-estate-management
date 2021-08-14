@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -10,9 +10,13 @@ Chart.register(...registerables);
   styleUrls: ['./mortgage-line-chart.component.scss'],
 })
 export class MortgageLineChartComponent implements OnInit {
-  private lineChart: Chart;
-  constructor(private storage: StorageService) { }
 
+  @Output() generateSchedule = new EventEmitter<boolean>();
+  public showReCalculate = false;
+  private isChanged = false;
+  private lineChart: Chart;
+
+  constructor(private storage: StorageService) { }
 
   ngOnInit() { }
 
@@ -25,7 +29,6 @@ export class MortgageLineChartComponent implements OnInit {
     accPrincipal: number;
     date: string;
   }[] = []) {
-
     if (schedule.length > 151) {
       schedule = schedule.filter((v, i) => {
         if (i === schedule.length - 1) {
@@ -34,7 +37,6 @@ export class MortgageLineChartComponent implements OnInit {
         return i % 2 === 0;
       });
     }
-    console.log(schedule);
     const dates = schedule.map(item => item.date);
     const balance = schedule.map(item => item.balance);
     const principal = schedule.map(item => item.accPrincipal);
@@ -113,5 +115,19 @@ export class MortgageLineChartComponent implements OnInit {
         },
       }
     );
+  }
+
+  requestAmortizationSchedule() {
+    this.showReCalculate = false;
+    this.generateSchedule.emit(true);
+  }
+
+  scheduleIsChanged() {
+    if (!this.isChanged) {
+      this.showReCalculate = false;
+      this.isChanged = true;
+      return;
+    }
+    this.showReCalculate = true;
   }
 }

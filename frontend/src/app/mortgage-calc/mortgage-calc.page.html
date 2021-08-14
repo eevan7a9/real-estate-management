@@ -24,8 +24,10 @@
       <ion-row>
         <ion-col size="12" sizeXl="7">
           <app-mortgage-core-calc
+            #calc
             (formValue)="pieChart.setChart($event)"
             (amortizationSchedule)="lineChart.setChart($event)"
+            (scheduleChanged)="lineChart.scheduleIsChanged()"
           ></app-mortgage-core-calc>
         </ion-col>
         <ion-col size="12" sizeXl="5">
@@ -44,7 +46,10 @@
       </ion-row>
       <ion-row>
         <ion-col class="ion-padding-top">
-          <app-mortgage-line-chart #lineChart></app-mortgage-line-chart>
+          <app-mortgage-line-chart
+            #lineChart
+            (generateSchedule)="calc.getAmortizationSchedule()"
+          ></app-mortgage-line-chart>
         </ion-col>
       </ion-row>
     </ion-grid>

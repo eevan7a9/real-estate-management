@@ -25,6 +25,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     accPrincipal: number;
     date: string;
   }[]>();
+  @Output() scheduleChanged = new EventEmitter<boolean>();
 
   public mortgageForm: FormGroup;
   public lifetimePayment = '0';
@@ -46,7 +47,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.getMonthlyCalculate();
-      this.getLifeTime();
+      this.getAmortizationSchedule();
     }, 1000);
   }
 
@@ -79,45 +80,10 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       tax: Number(r.monthTax),
       insurance: Number(r.monthInsurance)
     });
+    this.scheduleChanged.emit(true);
   }
 
-  private monthlyPayCalculate(
-    price: number,
-    interest: number,
-    term: number,
-    propertyTax: string,
-    insurance: string,
-    payPerYear = 12,
-    simpleMode = true
-  ) {
-    const payPerTotal = term * payPerYear;
-    if (!price) {
-      return;
-    }
-    interest = interest / 100;
-    const monthInterest = price * (interest / payPerYear);
-    const topB = Math.pow(1 + (interest / payPerYear), payPerTotal);
-    const bottom = Math.pow(1 + (interest / payPerYear), payPerTotal) - 1;
-    const top = monthInterest * topB;
-    const monthPayment = Number(Math.floor((top / bottom)).toFixed(4));
-    let total = Math.round(top / bottom);
-    if (!simpleMode) {
-      total = propertyTax ? total + Number(propertyTax) : total;
-      total = insurance ? total + Number(insurance) : total;
-    }
-    return {
-      monthPayment,
-      monthAllPayment: total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-      monthInterest,
-      monthTax: propertyTax,
-      monthInsurance: insurance,
-      monthPrincipal: (monthPayment - monthInterest),
-      monthBalance: price - (monthPayment - monthInterest),
-      lifetimeTotal: (total * payPerTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    };
-  }
-
-  private getLifeTime() {
+  public getAmortizationSchedule() {
     const { price, downPayment, interest, term, propertyTax, insurance } = this.mortgageForm.value;
     const numPrice = Number(price.toString().replace(/\,/g, ''));
     const numDownPayment = Number(downPayment.toString().replace(/\,/g, ''));
@@ -166,5 +132,41 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       amortization.push(report);
     }
     this.amortizationSchedule.emit(amortization);
+  }
+
+  private monthlyPayCalculate(
+    price: number,
+    interest: number,
+    term: number,
+    propertyTax: string,
+    insurance: string,
+    payPerYear = 12,
+    simpleMode = true
+  ) {
+    const payPerTotal = term * payPerYear;
+    if (!price) {
+      return;
+    }
+    interest = interest / 100;
+    const monthInterest = price * (interest / payPerYear);
+    const topB = Math.pow(1 + (interest / payPerYear), payPerTotal);
+    const bottom = Math.pow(1 + (interest / payPerYear), payPerTotal) - 1;
+    const top = monthInterest * topB;
+    const monthPayment = Number(Math.floor((top / bottom)).toFixed(4));
+    let total = Math.round(top / bottom);
+    if (!simpleMode) {
+      total = propertyTax ? total + Number(propertyTax) : total;
+      total = insurance ? total + Number(insurance) : total;
+    }
+    return {
+      monthPayment,
+      monthAllPayment: total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      monthInterest,
+      monthTax: propertyTax,
+      monthInsurance: insurance,
+      monthPrincipal: (monthPayment - monthInterest),
+      monthBalance: price - (monthPayment - monthInterest),
+      lifetimeTotal: (total * payPerTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    };
   }
 }
