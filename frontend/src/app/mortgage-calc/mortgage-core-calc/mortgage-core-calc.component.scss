@@ -1,7 +1,9 @@
 ion-card-header {
   background-color: var(--ion-color-primary);
 }
-
+ion-item {
+  --background: var(--ion-color-light);
+}
 .total-month {
   ion-label {
     font-weight: 600;
