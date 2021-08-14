@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Sign In Page</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="signin-container">
+    <ion-card class="signin-card">
+      <ion-card-header class="ion-text-center">
+        <h1>LOGO</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="signinForm" (submit)="submit()">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+            <ion-button
+              size="large"
+              class="ion-margin-top"
+              expand="full"
+              color="primary"
+              type="submit"
+            >
+              Sign In
+            </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

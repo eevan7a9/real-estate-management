@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   public appLowerPages = [
     { title: 'About', url: '/about', icon: 'help-circle' },
     { title: 'Account', url: '/user/account', icon: 'person' },
-    { title: 'Sign In', url: '/signin', icon: 'log-in' },
+    { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
   ];
 
   constructor(
