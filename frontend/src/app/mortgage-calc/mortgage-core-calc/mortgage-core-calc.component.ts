@@ -21,6 +21,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     principal: number;
     interest: number;
     balance: number;
+    accInterest: number;
+    accPrincipal: number;
     date: string;
   }[]>();
 
@@ -32,12 +34,12 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     private formBuilder: FormBuilder
   ) {
     this.mortgageForm = this.formBuilder.group({
-      price: [300000, [Validators.required]],
+      price: ['300,000', [Validators.required]],
       downPayment: ['100,000', [Validators.required]],
-      interest: [5, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      term: [30, [Validators.required, Validators.pattern('^[0-9]*$')]],
-      propertyTax: [(this.simpleMode ? '0' : '180')],
-      insurance: [(this.simpleMode ? '0' : '250')],
+      interest: [5, [Validators.max(20), Validators.required]],
+      term: [30, [Validators.max(30), Validators.required]],
+      propertyTax: [(this.simpleMode ? '0' : '150')],
+      insurance: [(this.simpleMode ? '0' : '300')],
     });
   }
 
@@ -59,6 +61,9 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   }
 
   public getMonthlyCalculate() {
+    if (!this.mortgageForm.valid) {
+      return;
+    }
     const { price, downPayment, interest, term, propertyTax, insurance } = this.mortgageForm.value;
     const numPrice = Number(price.toString().replace(/\,/g, ''));
     const numDownPayment = Number(downPayment.toString().replace(/\,/g, ''));
@@ -122,17 +127,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     );
 
     const numberOfPayments = this.payPerYear * term;
-    const monthPayment = r.monthPayment;
-    const monthPrincipal = r.monthPrincipal;
-    const monthBalance = r.monthBalance;
-    const monthInterest = r.monthInterest;
 
     const date = new Date();
     let report = {
-      payment: monthPayment,
-      principal: monthPrincipal,
-      interest: monthInterest,
-      balance: monthBalance,
+      payment: r.monthPayment,
+      principal: r.monthPrincipal,
+      interest: r.monthInterest,
+      balance: r.monthBalance,
+      accInterest: r.monthInterest,
+      accPrincipal: r.monthPrincipal,
       date: date.toLocaleDateString()
     };
     const amortization = [report];
@@ -144,7 +147,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
         0 : Number((Number(report.balance.toFixed(2)) - Number(report.principal.toFixed(2))).toFixed(2));
       const int = Number((Number(report.balance.toFixed(2)) * ((interest / 100) / this.payPerYear)).toFixed(2));
       const principal = Number((Number(report.payment.toFixed(2)) - int).toFixed(2));
-
+      const accPrincipal = report.accPrincipal + principal;
+      const accInterest = report.accInterest + int;
       date.setMonth(date.getMonth() + 1);
 
       report = {
@@ -152,14 +156,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
         ...{
           payment,
           principal,
-          balance,
           interest: int,
+          balance,
+          accInterest,
+          accPrincipal,
           date: date.toLocaleDateString()
         }
       };
       amortization.push(report);
     }
     this.amortizationSchedule.emit(amortization);
-    console.log(amortization);
   }
 }

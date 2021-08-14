@@ -44,8 +44,11 @@
             <ion-item>
               <ion-label position="stacked">Interest Rate :</ion-label>
               <ion-input
+                debounce="500"
                 type="number"
                 min="0"
+                max="20"
+                step=".1"
                 formControlName="interest"
                 inputmode="numeric"
                 (ionChange)="getMonthlyCalculate()"
@@ -63,8 +66,11 @@
             <ion-item>
               <ion-label position="stacked">Loan Term :</ion-label>
               <ion-input
+                debounce="500"
                 type="number"
                 min="0"
+                max="30"
+                step=".5"
                 formControlName="term"
                 inputmode="numeric"
                 (ionChange)="getMonthlyCalculate()"
