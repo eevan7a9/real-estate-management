@@ -25,6 +25,7 @@
         <ion-col size="12" sizeXl="7">
           <app-mortgage-core-calc
             #calc
+            [boxShadow]="false"
             (formValue)="pieChart.setChart($event)"
             (amortizationSchedule)="lineChart.setChart($event)"
             (scheduleChanged)="lineChart.scheduleIsChanged()"
@@ -35,23 +36,51 @@
         </ion-col>
         <ion-col size="12" class="ion-padding">
           <div class="note-container">
-            <ion-text color="danger">
+            <div class="icon-container">
               <ion-icon name="alert-circle-outline"></ion-icon>
-              Your monthly mortgage payment will depend on your Property price,
-              Down payment, Loan term, Property taxes,Insurance, and Interest
-              rate.
-            </ion-text>
+            </div>
+            Your monthly mortgage payment will depend on your Property price,
+            Down payment, Loan term, Property taxes,Insurance, and Interest
+            rate.
           </div>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col class="ion-padding-top">
+        <ion-col size="12">
           <app-mortgage-line-chart
             #lineChart
             (generateSchedule)="calc.getAmortizationSchedule()"
           ></app-mortgage-line-chart>
         </ion-col>
+        <ion-col size="12" class="ion-padding">
+          <h4 class="ion-padding-top">What is Amortization Schedule Graph?</h4>
+          <p>
+            <ion-text color="dark">
+              showing the amount of principal and the amount of interest that
+              comprise each payment until the loan is paid off at the end of its
+              term.
+            </ion-text>
+          </p>
+          <p>
+            <ion-text color="dark">
+              Initially, most of your payment goes toward the interest rather
+              than the principal. The loan amortization schedule will show as
+              the term of your loan progresses, a larger share of your payment
+              goes toward paying down the principal until the loan is paid in
+              full at the end of your term.
+            </ion-text>
+          </p>
+          <h4 class="ion-margin-top">Understanding an Amortization Schedule</h4>
+          <p>
+            <ion-text color="dark">
+              In an amortization schedule, the percentage of each payment that
+              goes toward interest diminishes a bit with each payment and the
+              percentage that goes toward principal increases.
+            </ion-text>
+          </p>
+        </ion-col>
       </ion-row>
     </ion-grid>
   </div>
+  <div class="extra-spacer"></div>
 </ion-content>

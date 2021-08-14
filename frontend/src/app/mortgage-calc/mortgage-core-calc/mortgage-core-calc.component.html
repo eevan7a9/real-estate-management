@@ -1,7 +1,7 @@
 <ion-card [style.box-shadow]="!boxShadow ? 'none' : ''">
   <ion-card-header>
     <ion-card-title color="light">
-      Check to see Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
+      Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
     </ion-card-title>
   </ion-card-header>
   <ion-card-content>
@@ -125,7 +125,7 @@
               class="total-month"
               [class]="simpleMode ? 'simple' : ''"
             >
-              <ion-label position="stacked">Your monthly payment</ion-label>
+              <ion-label position="stacked">Monthly</ion-label>
               <ion-input [value]="monthlyPayment" readonly>
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱
@@ -135,7 +135,7 @@
 
           <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">
             <ion-item lines="none" class="total-lifetime">
-              <ion-label position="stacked">Total lifetime payment</ion-label>
+              <ion-label position="stacked">Total lifetime</ion-label>
               <ion-input [value]="lifetimePayment" readonly>
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱

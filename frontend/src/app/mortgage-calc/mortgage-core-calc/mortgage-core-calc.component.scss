@@ -1,6 +1,3 @@
-// ion-card {
-//   box-shadow: none;
-// }
 ion-card-header {
   background-color: var(--ion-color-primary);
 }
@@ -42,5 +39,26 @@ ion-card-header {
   a {
     cursor: pointer;
     font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  ion-card {
+    padding: 0 0 8px 0;
+    margin: 16px 0 0 0;
+  }
+  icon-card-content {
+    padding: 0;
+  }
+  .total-month {
+    ion-label {
+      font-weight: normal;
+      font-size: 18px;
+      --color: var(--ion-color-dark);
+    }
+    ion-input {
+      font-weight: normal;
+      font-size: 18px;
+    }
   }
 }

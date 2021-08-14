@@ -49,7 +49,7 @@ export class MortgagePieChartComponent implements OnInit {
           responsive: true,
           plugins: {
             legend: {
-              position: 'right',
+              position: 'top',
               labels: {
                 color: fontColor,
                 font: {

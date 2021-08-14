@@ -1,11 +1,14 @@
 ion-card {
-  height: 100%;
+  min-height: 100%;
   box-shadow: none;
-  --background: var(--ion-color-light-tint);
-  padding: 0 0 50px 0;
+  padding: 18px 16px 24px 16px;
   ion-card-content {
-    padding: 0;
     position: relative;
+    padding: 0;
+
+    .line-chart {
+      scroll-margin: 130px;
+    }
     .overlay-cover {
       background-color: rgba(0, 0, 0, 0.253);
       height: 100%;
@@ -24,5 +27,12 @@ ion-card {
         --padding-bottom: 12px;
       }
     }
+  }
+}
+
+@media (max-width: 600px) {
+  ion-card {
+    margin: 24px 0 0 0;
+    padding: 8px 0 8px 0;
   }
 }

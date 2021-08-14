@@ -90,8 +90,11 @@ export class MortgageLineChartComponent implements OnInit {
             },
             title: {
               display: true,
-              text: 'Chart.js Line Chart',
+              text: 'Amortization schedule ',
               color: fontColor,
+              font: {
+                size: 18
+              }
             }
           },
           scales: {
@@ -120,6 +123,10 @@ export class MortgageLineChartComponent implements OnInit {
   requestAmortizationSchedule() {
     this.showReCalculate = false;
     this.generateSchedule.emit(true);
+    const chart = document.getElementById('lineChart');
+    setTimeout(() => {
+      chart.scrollIntoView({ behavior: 'smooth' });
+    }, 600);
   }
 
   scheduleIsChanged() {

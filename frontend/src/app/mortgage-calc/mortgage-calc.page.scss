@@ -2,10 +2,9 @@ ion-content {
   --background: var(--ion-color-light-tint);
   --height: 100%;
   margin: 0;
-  padding: 0;
 }
 .mortgage-calc-container {
-  height: 100%;
+  min-height: 100%;
   max-width: 1600px;
   margin: 0 auto;
 }
@@ -14,11 +13,26 @@ ion-content {
   background: var(--ion-color-light-shade);
   border-radius: 6px;
   padding: 16px;
-  ion-text {
-    display: flex;
-    align-items: center;
+  display: flex;
+  color: var(--ion-color-danger);
+  .icon-container {
+    height: 100%;
+    padding-top: 2px;
   }
   ion-icon {
-    font-size: 24px;
+    font-size: 18px;
+    margin-right: 6px;
+  }
+}
+
+.extra-spacer {
+  height: 200px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  ion-col {
+    margin: 0;
+    padding: 4px;
   }
 }

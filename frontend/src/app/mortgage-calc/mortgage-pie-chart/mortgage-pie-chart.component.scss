@@ -11,3 +11,11 @@ ion-card {
   height: 100%;
   width: 100%;
 }
+
+@media (max-width: 600px) {
+  ion-card,
+  ion-card-content {
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+}
