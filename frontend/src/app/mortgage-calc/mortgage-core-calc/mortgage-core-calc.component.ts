@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 
 @Component({
   selector: 'app-mortgage-core-calc',
@@ -31,17 +32,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   public lifetimePayment = '0';
   public monthlyPayment = '0';
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
+  constructor(private formBuilder: FormBuilder, private customValidator: CustomValidatorsDirective) {
     this.mortgageForm = this.formBuilder.group({
-      price: ['300,000', [Validators.required]],
-      downPayment: ['100,000', [Validators.required]],
+      price: ['300,000', [Validators.required, Validators.min(1)]],
+      downPayment: ['100,000', [Validators.required, Validators.min(1)]],
       interest: [5, [Validators.max(20), Validators.required]],
       term: [30, [Validators.max(30), Validators.required]],
       propertyTax: [(this.simpleMode ? '0' : '150')],
       insurance: [(this.simpleMode ? '0' : '300')],
-    });
+    }, { validators: this.customValidator.isGreaterValidator('price', 'downPayment', 'paymentIsGreater') });
   }
 
   ngAfterViewInit() {
@@ -72,6 +71,9 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       (numPrice - numDownPayment), interest, term, propertyTax,
       insurance, this.payPerYear, this.simpleMode
     );
+    if (!r) {
+      return;
+    }
     this.monthlyPayment = r.monthAllPayment;
     this.lifetimePayment = r.lifetimeTotal;
     this.formValue.emit({

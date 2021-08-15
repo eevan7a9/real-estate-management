@@ -38,6 +38,15 @@
                 ₱
               </ion-input>
             </ion-item>
+
+            <div
+              style="margin: 6px 0 0 0"
+              *ngIf="!mortgageForm.errors?.paymentIsGreater"
+            >
+              <app-alert-card
+                content="Down payment must be less than the Price"
+              ></app-alert-card>
+            </div>
           </ion-col>
 
           <ion-col size="6">
