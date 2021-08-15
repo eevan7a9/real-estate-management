@@ -5,6 +5,8 @@ import { PropertyGalleryComponent } from './components/property-gallery/property
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
 import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
 import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/div-horizontal-slide.component';
+import { CustomValidatorsDirective } from './directives/custom-validators.directive';
+import { AlertCardComponent } from './components/alert-card/alert-card.component';
 
 
 @NgModule({
@@ -12,7 +14,9 @@ import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/d
     PropertyGalleryComponent,
     ActionPopupComponent,
     PropertyBadgeComponent,
-    DivHorizontalSlideComponent
+    DivHorizontalSlideComponent,
+    CustomValidatorsDirective,
+    AlertCardComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,10 @@ import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/d
     PropertyGalleryComponent,
     ActionPopupComponent,
     PropertyBadgeComponent,
-    DivHorizontalSlideComponent
-  ]
+    DivHorizontalSlideComponent,
+    CustomValidatorsDirective,
+    AlertCardComponent
+  ],
+  providers: [CustomValidatorsDirective]
 })
 export class SharedModule { }
