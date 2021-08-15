@@ -8,9 +8,14 @@ ion-card {
 
     .line-chart {
       scroll-margin: 130px;
+      &.blur {
+        /* Add the blur effect */
+        filter: blur(4px);
+        -webkit-filter: blur(4px);
+      }
     }
     .overlay-cover {
-      background-color: rgba(0, 0, 0, 0.253);
+      background-color: rgba(0, 0, 0, 0.027);
       height: 100%;
       width: 100%;
       position: absolute;

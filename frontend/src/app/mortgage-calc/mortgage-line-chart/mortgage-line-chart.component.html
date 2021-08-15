@@ -1,7 +1,11 @@
 <ion-card>
   <ion-card-content class="no-pads" style="height: 100%">
     <div class="chart-container">
-      <canvas id="lineChart" class="line-chart"></canvas>
+      <canvas
+        id="lineChart"
+        class="line-chart"
+        [class]="{ blur: showReCalculate }"
+      ></canvas>
     </div>
 
     <div class="overlay-cover" *ngIf="showReCalculate">
