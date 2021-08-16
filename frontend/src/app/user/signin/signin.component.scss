@@ -2,11 +2,41 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  min-height: 100%;
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .signin-card {
   width: 100%;
   max-width: 400px;
-  margin: 250px auto;
+  ion-item {
+    margin-top: 8px;
+    --background: var(--ion-color-light);
+  }
+}
+
+.alert-errors {
+  width: 100%;
+  margin: 6px 0 0 0;
+}
+
+.ask-register {
+  width: 100%;
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  a {
+    margin-left: 6px;
+  }
+}
+@media (max-width: 600px) {
+  .signin-card {
+    box-shadow: none;
+    min-height: 100%;
+    width: 100%;
+    max-width: 400px;
+  }
 }

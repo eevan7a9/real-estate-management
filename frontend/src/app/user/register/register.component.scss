@@ -23,6 +23,16 @@
   margin: 6px 0 0 0;
 }
 
+.ask-signin {
+  width: 100%;
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  a {
+    margin-left: 6px;
+  }
+}
 @media (max-width: 600px) {
   .register-card {
     box-shadow: none;

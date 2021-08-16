@@ -20,10 +20,22 @@
               <ion-label position="floating">Email</ion-label>
               <ion-input type="email" formControlName="email"></ion-input>
             </ion-item>
+            <div
+              class="alert-errors"
+              *ngIf="error && signinForm.get('email').errors"
+            >
+              <app-alert-card content="Email is not valid."></app-alert-card>
+            </div>
             <ion-item>
               <ion-label position="floating">Password</ion-label>
               <ion-input type="password" formControlName="password"></ion-input>
             </ion-item>
+            <div class="alert-errors" *ngIf="authFailed">
+              <app-alert-card
+                content="Wrong Email or Password."
+              ></app-alert-card>
+            </div>
+
             <ion-button
               size="large"
               class="ion-margin-top"
@@ -33,6 +45,10 @@
             >
               Sign In
             </ion-button>
+
+            <div class="ask-register">
+              First time here? <a [routerLink]="['/user/register']">Register</a>
+            </div>
           </ion-list>
         </form>
       </ion-card-content>

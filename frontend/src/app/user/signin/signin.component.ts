@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SigninComponent implements OnInit {
   public error = false;
+  public authFailed = false;
   public signinForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
