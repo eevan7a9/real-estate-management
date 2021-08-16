@@ -12,12 +12,13 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card class="ion-margin-top pb-32">
-            <ion-card-header color="primary">
-              <ion-card-title>Application</ion-card-title>
+          <ion-card color="light" class="ion-margin-top pb-32">
+            <ion-card-header>
+              <ion-card-title class="heading-card">Application</ion-card-title>
             </ion-card-header>
+            <div class="separator-line"></div>
             <ion-card-content class="ion-padding-horizontal">
-              <p class="text pt-32">
+              <p class="text">
                 <ion-text color="dark">
                   A online property management solution for real estate and
                   physical property management. This can include residential,
@@ -41,12 +42,13 @@
           <img src="assets/images/about/about-map.svg" alt="map image" />
         </ion-col>
         <ion-col size="12" sizeLg="6">
-          <ion-card class="pb-32">
-            <ion-card-header color="primary">
-              <ion-card-title>MAP VIEW</ion-card-title>
+          <ion-card color="light" class="pb-32">
+            <ion-card-header>
+              <ion-card-title class="heading-card">MAP VIEW</ion-card-title>
             </ion-card-header>
+            <div class="separator-line short"></div>
             <ion-card-content class="ion-padding-bottom">
-              <p class="text pt-32">
+              <p class="text">
                 <ion-text color="dark">
                   Maps can be a useful tool for viewing properties location &
                   filter them by types. this also help us to know distances so
@@ -68,17 +70,50 @@
       </ion-row>
     </ion-grid>
   </div>
-  <div class="contact-section">
-    <ion-button color="success" size="large">CONTACT US</ion-button>
+  <div class="try-us-section">
+    <ion-button color="success" size="large" routerLink="/user/register"
+      >TRY US NOW</ion-button
+    >
   </div>
   <div class="about-container">
     <ion-grid class="feature-section">
+      <ion-row>
+        <ion-col>
+          <ion-card color="light" class="pb-32">
+            <ion-card-header>
+              <ion-card-title class="heading-card"> PROPERTIES </ion-card-title>
+            </ion-card-header>
+            <div class="separator-line"></div>
+            <ion-card-content class="ion-padding-bottom">
+              <p class="text">
+                <ion-text color="dark">
+                  <strong>
+                    Do you spend way too much time looking for a Real Estate
+                    Property to buy?
+                  </strong>
+                  dont worry we have you covered, We have hundreds of high
+                  quality properties ready to sell. you can use the search field
+                  to find properties and to see basic information(price,
+                  address, types, etc...) about the desired property.
+                </ion-text>
+              </p>
+              <p class="text ion-padding-top">
+                <ion-text color="dark">
+                  <strong>Do you own a property you wanted to sell?</strong>
+                  Our application will help advertise your property to potential
+                  buyers.
+                </ion-text>
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col size="12" sizeLg="4">
           <ion-card>
             <ion-card-header>
               <ion-card-title>
-                <ion-text color="primary">Connect</ion-text> with realtors
+                <ion-text color="primary">Connect</ion-text> with people
               </ion-card-title>
             </ion-card-header>
             <ion-card-content class="features">
@@ -117,7 +152,7 @@
 
   <div class="status-section">
     <div class="status">
-      Development is <ion-text color="warning">Ongoing</ion-text>
+      Development is <ion-text color="danger">Ongoing</ion-text>
     </div>
     <div>
       Currently being developed:

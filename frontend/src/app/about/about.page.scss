@@ -21,13 +21,18 @@ p.text {
   margin: 0 auto;
 }
 
-.sparator-line {
-  margin-top: 8px;
+.heading-card {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.separator-line {
   padding: 3px;
   width: 250px;
   border-radius: 2px;
+  background: var(--ion-color-primary);
   &.short {
-    width: 100px;
+    width: 150px;
   }
 }
 .map-container {
@@ -35,7 +40,7 @@ p.text {
   justify-content: center;
 }
 
-.contact-section {
+.try-us-section {
   display: flex;
   justify-content: center;
   padding: 100px 0;
@@ -50,6 +55,10 @@ p.text {
 .feature-section {
   ion-card-title {
     font-size: 18px;
+    &.heading-card {
+      font-size: 24px;
+      font-weight: bold;
+    }
     ion-text {
       font-weight: bold;
       font-size: 32px;
@@ -63,12 +72,17 @@ p.text {
 }
 
 .status-section {
-  height: 100px;
+  height: 200px;
   display: flex;
+  background-color: var(--ion-color-light-shade);
+  color: var(--ion-color-dark);
   flex-direction: column;
   justify-content: center;
   align-items: center;
   .status {
     font-weight: 700;
+  }
+  a {
+    color: var(--ion-color-dark);
   }
 }
