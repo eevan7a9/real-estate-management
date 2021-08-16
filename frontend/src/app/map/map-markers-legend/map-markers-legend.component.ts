@@ -24,7 +24,7 @@ export class MapMarkersLegendComponent implements OnInit {
       icon: 'marker-residential.svg'
     },
     {
-      label: 'Rommercial',
+      label: 'Commercial',
       value: PropertyType.commercial,
       isChecked: true,
       icon: 'marker-commercial.svg',
