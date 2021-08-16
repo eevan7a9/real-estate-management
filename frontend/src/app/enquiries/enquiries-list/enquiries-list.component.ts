@@ -5,6 +5,7 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { Enquiry } from 'src/app/shared/interface/enquiries';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
+import { enquiries } from '../../shared/dummy-data';
 
 @Component({
   selector: 'app-enquiries-list',
@@ -25,45 +26,10 @@ export class EnquiriesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.enquiriesService.enquiries$.subscribe(enquiries => {
-      this.enquiries = enquiries;
+    this.enquiriesService.enquiries$.subscribe(items => {
+      this.enquiries = items;
       if (!this.enquiries.length) {
-        this.enquiriesService.enquiries = [
-          {
-            content: 'lorem20',
-            email: 'hello_user@email.com',
-            id: '01',
-            date: new Date('2020/3/3'),
-            title: 'Hello World some.',
-            topic: 'schedule',
-            read: true,
-            property: {
-              name: 'Building A, 34-b',
-              id: '02',
-            },
-            user: {
-              from: '1',
-              to: '2'
-            }
-          },
-          {
-            content: 'lorem43 32sad',
-            email: 'naruto_zua@email.com',
-            id: '02',
-            date: new Date('2020/4/3'),
-            title: 'Hello Zworld some.',
-            topic: 'payment',
-            read: false,
-            property: {
-              name: 'Dart Apartment A, 34-b',
-              id: '03',
-            },
-            user: {
-              from: '1',
-              to: '2'
-            }
-          }
-        ];
+        this.enquiriesService.enquiries = enquiries;
       }
     });
   }

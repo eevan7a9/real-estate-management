@@ -10,7 +10,7 @@ export interface Enquiry {
     name: string;
     id: string;
   };
-  user: {
+  user?: {
     from: string;
     to: string;
   };
