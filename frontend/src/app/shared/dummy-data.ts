@@ -85,7 +85,8 @@ export const properties: Property[] = [
     },
     price: 210000,
     currency: 'PHP',
-    features: ['Item 1', 'Item 2', 'Item 3', 'Item 4']
+    features: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
+    userId: '0002'
   },
   {
     id: '02',
@@ -100,7 +101,8 @@ export const properties: Property[] = [
     price: 50000,
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8',
-      'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8']
+      'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8'],
+    userId: '0002'
   },
   {
     id: '03',
@@ -114,7 +116,8 @@ export const properties: Property[] = [
     },
     price: 30000,
     currency: 'PHP',
-    features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8']
+    features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8'],
+    userId: '0002'
   },
   {
     id: '04',
@@ -129,7 +132,8 @@ export const properties: Property[] = [
     },
     price: 29995,
     currency: 'PHP',
-    features: ['Item 1', 'Item 2', 'Item 3']
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '05',
@@ -143,7 +147,8 @@ export const properties: Property[] = [
     },
     price: 410000,
     currency: 'PHP',
-    features: []
+    features: [],
+    userId: '0001'
   },
   {
     id: '06',
@@ -157,6 +162,8 @@ export const properties: Property[] = [
     },
     price: 210000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '07',
@@ -170,6 +177,8 @@ export const properties: Property[] = [
     },
     price: 20000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '08',
@@ -183,6 +192,8 @@ export const properties: Property[] = [
     },
     price: 20000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '09',
@@ -196,6 +207,8 @@ export const properties: Property[] = [
     },
     price: 210000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '10',
@@ -209,6 +222,8 @@ export const properties: Property[] = [
     },
     price: 301500,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '11',
@@ -222,6 +237,8 @@ export const properties: Property[] = [
     },
     price: 200000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '12',
@@ -235,6 +252,8 @@ export const properties: Property[] = [
     },
     price: 4200000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '13',
@@ -248,6 +267,8 @@ export const properties: Property[] = [
     },
     price: 200000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '13.5',
@@ -261,6 +282,8 @@ export const properties: Property[] = [
     },
     price: 200000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '13.6',
@@ -274,6 +297,8 @@ export const properties: Property[] = [
     },
     price: 200000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '14',
@@ -287,6 +312,8 @@ export const properties: Property[] = [
     },
     price: 5000000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '15',
@@ -300,6 +327,8 @@ export const properties: Property[] = [
     },
     price: 5000000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '16',
@@ -313,6 +342,8 @@ export const properties: Property[] = [
     },
     price: 5000000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '17',
@@ -326,6 +357,8 @@ export const properties: Property[] = [
     },
     price: 3400000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '18',
@@ -339,6 +372,8 @@ export const properties: Property[] = [
     },
     price: 3400000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '19',
@@ -352,6 +387,8 @@ export const properties: Property[] = [
     },
     price: 1400000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '20',
@@ -365,6 +402,8 @@ export const properties: Property[] = [
     },
     price: 6400000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '21',
@@ -378,6 +417,8 @@ export const properties: Property[] = [
     },
     price: 120000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '22',
@@ -391,6 +432,8 @@ export const properties: Property[] = [
     },
     price: 320000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '23',
@@ -404,6 +447,8 @@ export const properties: Property[] = [
     },
     price: 120000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '24',
@@ -417,6 +462,8 @@ export const properties: Property[] = [
     },
     price: 120000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '25',
@@ -430,6 +477,8 @@ export const properties: Property[] = [
     },
     price: 920000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '26',
@@ -443,6 +492,8 @@ export const properties: Property[] = [
     },
     price: 990000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '26.6',
@@ -456,6 +507,8 @@ export const properties: Property[] = [
     },
     price: 1990000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '27',
@@ -469,6 +522,8 @@ export const properties: Property[] = [
     },
     price: 1990000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '27.5',
@@ -482,6 +537,8 @@ export const properties: Property[] = [
     },
     price: 1990000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '28',
@@ -495,6 +552,8 @@ export const properties: Property[] = [
     },
     price: 1990000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '28.5',
@@ -508,6 +567,8 @@ export const properties: Property[] = [
     },
     price: 130000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '29',
@@ -521,6 +582,8 @@ export const properties: Property[] = [
     },
     price: 130000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '29.5',
@@ -534,6 +597,8 @@ export const properties: Property[] = [
     },
     price: 730000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '30',
@@ -547,6 +612,8 @@ export const properties: Property[] = [
     },
     price: 730000,
     currency: 'PHP',
+    features: ['Item 1', 'Item 2', 'Item 3'],
+    userId: '0001'
   },
   {
     id: '30.5',
@@ -560,5 +627,6 @@ export const properties: Property[] = [
     },
     price: 730000,
     currency: 'PHP',
+    userId: '0001'
   }
 ];

@@ -7,10 +7,10 @@ export interface Property {
   description?: string;
   type: string;
   position: Coord;
-
   features?: string[];
   currency?: string;
   price?: number;
   contactNumber?: string;
   contactEmail?: string;
+  userId: string;
 }

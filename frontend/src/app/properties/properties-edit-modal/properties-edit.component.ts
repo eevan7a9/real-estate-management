@@ -88,7 +88,8 @@ export class PropertiesEditComponent implements OnInit {
       price,
       currency,
       features: features.split(',').filter((item: string) => item.trim() !== ''),
-      position: { lat, lng }
+      position: { lat, lng },
+      userId: this.property.userId
     };
     const property = { ...this.property, ...editedProperty };
     this.propertiesService.updateProperty(property);
