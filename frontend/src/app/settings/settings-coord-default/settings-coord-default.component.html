@@ -1,23 +1,26 @@
 <div class="ion-margin-top">
-  <div class="heading ion-padding">
-    <ion-text color="light">Change Default Coordinance</ion-text>
-  </div>
-
   <ion-grid>
     <ion-row class="ion-align-items-center">
-      <ion-col size="12"> </ion-col>
+      <ion-col size="12" class="ion-no-padding">
+        <div class="heading ion-padding">
+          <ion-text color="dark">Change Default Coordinance</ion-text>
+        </div>
+      </ion-col>
+
       <ion-col size="12" sizeLg="6">
         <ion-item>
           <ion-label position="fixed">Latitude:</ion-label>
           <ion-input [(ngModel)]="coord.lat"></ion-input>
         </ion-item>
       </ion-col>
+
       <ion-col size="12" sizeLg="6">
         <ion-item>
           <ion-label position="fixed">Longitude:</ion-label>
           <ion-input [(ngModel)]="coord.lng"></ion-input>
         </ion-item>
       </ion-col>
+
       <ion-col size="12">
         <ion-button color="primary" (click)="setCoord()">
           set Coordinance</ion-button

@@ -1,12 +1,31 @@
 <div class="ion-margin-top">
-  <div class="heading ion-padding">
-    <ion-text color="light">Change Application Theme</ion-text>
-  </div>
-  <ion-item lines="none">
-    <ion-label color="dark">Dark Theme</ion-label>
-    <ion-toggle
-      [(ngModel)]="darkTheme"
-      (ionChange)="switchDarkMode($event)"
-    ></ion-toggle>
-  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <div class="heading ion-padding">
+          <ion-text color="dark">Change Application Theme -</ion-text>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <ion-item>
+          <ion-icon
+            style="margin: 0 6px 0 0"
+            name="moon"
+            color="dark"
+            *ngIf="darkTheme; else sunny"
+          ></ion-icon>
+          <ion-label color="dark"> Theme Switcher</ion-label>
+
+          <ion-toggle
+            [(ngModel)]="darkTheme"
+            (ionChange)="switchDarkMode($event)"
+          ></ion-toggle>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </div>
+
+<ng-template #sunny>
+  <ion-icon style="margin: 0 6px 0 0" name="sunny" color="warning"></ion-icon
+></ng-template>
