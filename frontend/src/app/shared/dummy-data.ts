@@ -5,7 +5,8 @@ export const properties: Property[] = [
   {
     id: '01',
     address: 'Some place free',
-    description: 'And this is nice',
+    description: `And this is nice Right padding if direction is left-to-right, and left
+      padding if direction is right- to - left of the item inner`,
     name: 'Property A',
     type: PropertyType.residential,
     position: {
@@ -19,7 +20,8 @@ export const properties: Property[] = [
   {
     id: '02',
     address: 'Some place free',
-    description: 'And this is nice',
+    description: `And this is nice Right padding if direction is left-to-right, and left
+      padding if direction is right- to - left of the item inner`,
     name: 'Property B',
     type: PropertyType.commercial,
     position: {
@@ -48,7 +50,8 @@ export const properties: Property[] = [
   {
     id: '04',
     address: 'Some place free',
-    description: 'And this is nice',
+    description: `And this is nice Right padding if direction is left-to-right, and left
+      padding if direction is right- to - left of the item inner`,
     name: 'Property D',
     type: PropertyType.industrial,
     position: {
@@ -63,7 +66,7 @@ export const properties: Property[] = [
     id: '05',
     address: 'Some place free',
     description: 'And this is nice',
-    name: 'Green Planes 45 E',
+    name: 'Green Planes 45 E of Green Planes 45 E',
     type: PropertyType.land,
     position: {
       lat: 8.946536428053331,

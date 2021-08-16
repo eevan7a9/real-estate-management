@@ -1,3 +1,74 @@
 ion-content {
   --background: var(--ion-color-light);
+  padding: 0;
+  margin: 0;
+}
+ion-card {
+  box-shadow: none;
+  &.pb-32 {
+    padding-bottom: 32px;
+  }
+}
+p.text {
+  font-size: 17px;
+  letter-spacing: 0.4px;
+  &.pt-32 {
+    padding-top: 32px;
+  }
+}
+.about-container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.sparator-line {
+  margin-top: 8px;
+  padding: 3px;
+  width: 250px;
+  border-radius: 2px;
+  &.short {
+    width: 100px;
+  }
+}
+.map-container {
+  display: flex;
+  justify-content: center;
+}
+
+.contact-section {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+  margin: 52px 0 0 0;
+
+  background: url(../../assets/images/about/about-bg-contact.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.feature-section {
+  ion-card-title {
+    font-size: 18px;
+    ion-text {
+      font-weight: bold;
+      font-size: 32px;
+    }
+  }
+  .features {
+    display: flex;
+    justify-content: center;
+    height: 300px;
+  }
+}
+
+.status-section {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .status {
+    font-weight: 700;
+  }
 }
