@@ -75,6 +75,22 @@ p.text {
   background: var(--ion-color-primary);
   max-width: 1600px;
   margin: 0 auto;
+  padding: 16px 0;
+  .left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .heading {
+      font-size: 32px;
+      color: aliceblue;
+      font-weight: 700;
+    }
+    .sub-heading {
+      color: rgb(201, 204, 206);
+      letter-spacing: 0.8px;
+    }
+  }
 }
 
 .status-section {
