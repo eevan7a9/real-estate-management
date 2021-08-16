@@ -1,0 +1,33 @@
+.register-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  ion-item {
+    margin-top: 8px;
+    --background: var(--ion-color-light);
+  }
+}
+
+.alert-errors {
+  width: 100%;
+  margin: 6px 0 0 0;
+}
+
+@media (max-width: 600px) {
+  .register-card {
+    box-shadow: none;
+    min-height: 100%;
+    width: 100%;
+    max-width: 400px;
+  }
+}

@@ -1,0 +1,93 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Register Page</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="register-container">
+    <ion-card class="register-card">
+      <ion-card-header class="ion-text-center">
+        <h1>LOGO</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="registerForm" (submit)="submit()">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Full Name</ion-label>
+              <ion-input type="text" formControlName="fullName"></ion-input>
+            </ion-item>
+
+            <div
+              class="alert-errors"
+              *ngIf="error && registerForm.get('fullName').errors"
+            >
+              <app-alert-card
+                content="Full Name is too short."
+              ></app-alert-card>
+            </div>
+
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+
+            <div
+              class="alert-errors"
+              *ngIf="error && registerForm.get('email').errors"
+            >
+              <app-alert-card content="Email is not valid."></app-alert-card>
+            </div>
+
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+
+            <div
+              class="alert-errors"
+              *ngIf="error && registerForm.get('password').errors"
+            >
+              <app-alert-card
+                content="Length needs to be 8+ long & contain a
+                (number, special characters, small case & capitalize)."
+              ></app-alert-card>
+            </div>
+
+            <ion-item>
+              <ion-label position="floating">Confirm Password</ion-label>
+              <ion-input type="password" formControlName="confirm"></ion-input>
+            </ion-item>
+
+            <div
+              class="alert-errors"
+              *ngIf="error && registerForm.errors?.notConfirmed"
+            >
+              <app-alert-card
+                content="Password not confirmed."
+              ></app-alert-card>
+            </div>
+
+            <div class="ion-padding-vertical">
+              By continuing, you agree to our <a>User Agreement</a> and
+              <a>Privacy Policy</a>.
+            </div>
+
+            <ion-button
+              size="large"
+              class="ion-margin-top"
+              expand="full"
+              color="primary"
+              type="submit"
+            >
+              Sign Up
+            </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

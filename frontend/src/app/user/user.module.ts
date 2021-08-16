@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { UserPageRoutingModule } from './user-routing.module';
-
+import { SharedModule } from '../shared/shared.module';
 import { UserPage } from './user.page';
 import { SigninComponent } from './signin/signin.component';
-import { SharedModule } from '../shared/shared.module';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   imports: [
@@ -18,6 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     UserPageRoutingModule,
     SharedModule
   ],
-  declarations: [UserPage, SigninComponent]
+  declarations: [UserPage, RegisterComponent, SigninComponent]
 })
 export class UserPageModule { }
