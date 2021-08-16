@@ -1,4 +1,5 @@
 <div class="alert" [class]="color">
   <div><ion-icon name="alert-circle-outline"></ion-icon></div>
-  {{ content }}
+  <div #ngContent><ng-content></ng-content></div>
+  <span *ngIf="!ngContent.innerHTML.trim()">{{ content }}</span>
 </div>
