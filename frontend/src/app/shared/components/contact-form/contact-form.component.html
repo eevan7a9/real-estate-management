@@ -1,0 +1,55 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title class="ion-text-capitalize"> Contact Form </ion-card-title>
+  </ion-card-header>
+  {{ contactForm.errors }}
+  <ion-card-content>
+    <form [formGroup]="contactForm" (submit)="submit()">
+      <ion-item>
+        <ion-label color="primary" position="floating">Email:</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
+      </ion-item>
+
+      <div
+        class="alert-errors"
+        *ngIf="error && contactForm.get('email').errors"
+      >
+        <app-alert-card> Email is invalid. </app-alert-card>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" position="floating">Name:</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+
+      <div class="alert-errors" *ngIf="error && contactForm.get('name').errors">
+        <app-alert-card> Name must be filled correctly. </app-alert-card>
+      </div>
+
+      <ion-item>
+        <ion-label color="primary" position="floating">Message</ion-label>
+        <ion-textarea
+          formControlName="message"
+          placeholder="Must be atleast 10 charters long"
+        ></ion-textarea>
+      </ion-item>
+      <div
+        class="alert-errors"
+        *ngIf="error && contactForm.get('message').errors"
+      >
+        <app-alert-card>
+          Make sure the message are filled correctly.
+        </app-alert-card>
+      </div>
+      <ion-button
+        expand="block"
+        size="large"
+        class="ion-margin-top"
+        type="submit"
+        [disabled]="sent"
+      >
+        {{ sent ? "Message Sent" : "Send message" }}
+      </ion-button>
+    </form>
+  </ion-card-content>
+</ion-card>

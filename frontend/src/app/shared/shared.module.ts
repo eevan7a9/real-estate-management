@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PropertyGalleryComponent } from './components/property-gallery/property-gallery.component';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
@@ -7,6 +8,7 @@ import { PropertyBadgeComponent } from './components/property-badge/property-bad
 import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/div-horizontal-slide.component';
 import { CustomValidatorsDirective } from './directives/custom-validators.directive';
 import { AlertCardComponent } from './components/alert-card/alert-card.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 
 @NgModule({
@@ -16,12 +18,14 @@ import { AlertCardComponent } from './components/alert-card/alert-card.component
     PropertyBadgeComponent,
     DivHorizontalSlideComponent,
     CustomValidatorsDirective,
-    AlertCardComponent
+    AlertCardComponent,
+    ContactFormComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    IonicModule
   ],
   exports: [
     FormsModule,
@@ -31,7 +35,8 @@ import { AlertCardComponent } from './components/alert-card/alert-card.component
     PropertyBadgeComponent,
     DivHorizontalSlideComponent,
     CustomValidatorsDirective,
-    AlertCardComponent
+    AlertCardComponent,
+    ContactFormComponent
   ],
   providers: [CustomValidatorsDirective]
 })

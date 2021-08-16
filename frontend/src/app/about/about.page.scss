@@ -71,6 +71,12 @@ p.text {
   }
 }
 
+.contact-section {
+  background: var(--ion-color-primary);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
 .status-section {
   height: 200px;
   display: flex;
