@@ -94,7 +94,7 @@
         </ion-row>
 
         <ion-row *ngIf="!simpleMode">
-          <ion-col>
+          <ion-col size="12">
             <ion-item>
               <ion-label position="stacked">Property tax :</ion-label>
               <ion-input
@@ -109,7 +109,9 @@
                 ₱
               </ion-input>
             </ion-item>
+          </ion-col>
 
+          <ion-col size="12">
             <ion-item>
               <ion-label position="stacked">Property Insurance :</ion-label>
               <ion-input
@@ -135,20 +137,14 @@
               [class]="simpleMode ? 'simple' : ''"
             >
               <ion-label position="stacked">Monthly</ion-label>
-              <ion-input [value]="monthlyPayment" readonly>
-                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-                ₱
-              </ion-input>
+              <ion-input [value]="monthlyPayment" readonly> ₱ </ion-input>
             </ion-item>
           </ion-col>
 
           <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">
             <ion-item lines="none" class="total-lifetime">
               <ion-label position="stacked">Total lifetime</ion-label>
-              <ion-input [value]="lifetimePayment" readonly>
-                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-                ₱
-              </ion-input>
+              <ion-input [value]="lifetimePayment" readonly> ₱ </ion-input>
             </ion-item>
           </ion-col>
 
