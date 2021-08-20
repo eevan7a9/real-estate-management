@@ -5,7 +5,7 @@
     [sizeMd]="singleCol ? 12 : 6"
     [sizeLg]="singleCol ? 12 : 4"
     [sizeXl]="singleCol ? 12 : 3"
-    *ngFor="let item of properties"
+    *ngFor="let item of displayedItems"
   >
     <ion-card>
       <img src="assets/images/madison.jpeg" />
@@ -59,6 +59,16 @@
       </ion-card-header>
     </ion-card>
   </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-row>
 
 <app-div-horizontal-slide *ngIf="horizontalSlide">
