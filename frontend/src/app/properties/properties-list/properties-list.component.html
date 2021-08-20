@@ -61,7 +61,7 @@
   </ion-col>
 </ion-row>
 
-<ion-row>
+<ion-row *ngIf="!horizontalSlide">
   <ion-infinite-scroll threshold="80px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
