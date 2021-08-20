@@ -1,0 +1,24 @@
+ion-item {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  margin: 0 0 16px 0;
+  ion-label {
+    --color: #8794a4;
+  }
+  ion-input,
+  ion-textarea {
+    --padding-start: 12px;
+    padding: 16px;
+    border: 1px solid rgba(0, 56, 100, 0.2);
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+}
+
+.alert-errors {
+  width: 100%;
+  margin: 6px 0 0 0;
+}

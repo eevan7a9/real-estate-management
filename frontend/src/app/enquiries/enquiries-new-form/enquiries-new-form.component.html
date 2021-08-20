@@ -1,0 +1,51 @@
+<form [formGroup]="enquiryForm">
+  <ion-item lines="none">
+    <ion-label position="stacked">Title :</ion-label>
+    <ion-input type="text" formControlName="title"></ion-input>
+  </ion-item>
+
+  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.title">
+    <app-alert-card content="Title is too short."></app-alert-card>
+  </div>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Email :</ion-label>
+    <ion-input type="text" formControlName="email"></ion-input>
+  </ion-item>
+
+  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.email">
+    <app-alert-card content="Email is invalid."></app-alert-card>
+  </div>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Content :</ion-label>
+    <ion-textarea formControlName="content" placeholder="..."></ion-textarea>
+  </ion-item>
+
+  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.content">
+    <app-alert-card content="Message content is too short."></app-alert-card>
+  </div>
+  <ion-item>
+    <ion-label>Topic :</ion-label>
+    <ion-select
+      interface="popover"
+      formControlName="topic"
+      placeholder="Select One"
+    >
+      <ion-select-option value="schedule">Schedule Visit</ion-select-option>
+      <ion-select-option value="payment">Payment</ion-select-option>
+      <ion-select-option value="sales">Sales</ion-select-option>
+      <ion-select-option value="information">Information</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button
+    expand="block"
+    size="large"
+    (click)="submit()"
+    class="ion-margin"
+    color="success"
+  >
+    Submit
+  </ion-button>
+</form>

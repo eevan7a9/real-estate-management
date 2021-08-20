@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>Create Enquiry</ion-title>
+    <ion-title>{{ title }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
         <ion-icon name="close-outline" style="font-size: 28px"></ion-icon>
@@ -10,44 +10,5 @@
 </ion-header>
 
 <ion-content class="form ion-padding">
-  <form [formGroup]="enquiryForm">
-    <ion-item>
-      <ion-label position="floating">Title :</ion-label>
-      <ion-input type="text" formControlName="title"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Email :</ion-label>
-      <ion-input type="text" formControlName="email"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Content :</ion-label>
-      <ion-textarea formControlName="content" placeholder="..."></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Topic :</ion-label>
-      <ion-select
-        interface="popover"
-        formControlName="topic"
-        placeholder="Select One"
-      >
-        <ion-select-option value="schedule">Schedule Visit</ion-select-option>
-        <ion-select-option value="payment">Payment</ion-select-option>
-        <ion-select-option value="sales">Sales</ion-select-option>
-        <ion-select-option value="information">Information</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-button
-      expand="block"
-      size="large"
-      (click)="submit()"
-      class="ion-margin"
-      color="success"
-    >
-      Submit
-    </ion-button>
-  </form>
+  <app-enquiries-new-form></app-enquiries-new-form>
 </ion-content>
