@@ -33,6 +33,33 @@ export class EnquiriesDetailComponent implements OnInit {
     });
   }
 
+  public async report(enqId: string) {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'my-custom-alert-class',
+      header: 'Report Message',
+      // subHeader: 'Subtitle',
+      message: 'Are you sure you want to Report this Message?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            // console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'REPORT',
+          cssClass: 'alert-danger-text',
+          role: 'delete',
+          handler: () => {
+            this.presentToast('Enquiry will be place for investigation.');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   public async delete(enqId: string) {
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-alert-class',
@@ -74,7 +101,10 @@ export class EnquiriesDetailComponent implements OnInit {
 
   async createEnquiryModal() {
     const modal = await this.modalCtrl.create({
-      component: EnquiriesNewComponent
+      component: EnquiriesNewComponent,
+      componentProps: {
+        title: 'Reply Enquiry'
+      }
     });
     return await modal.present();
   }

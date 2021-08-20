@@ -47,15 +47,27 @@
     </ion-card>
 
     <div style="margin-left: 8px">
-      <ion-button color="light" (click)="createEnquiryModal()">
-        <ion-icon name="create-outline"></ion-icon>
-        Reply
-      </ion-button>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button color="light" (click)="createEnquiryModal()">
+              <ion-icon name="create-outline"></ion-icon>
+              Reply
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-text-right">
+            <ion-button color="light" (click)="report(enquiry.id)">
+              <ion-icon name="flag-outline" color="danger"></ion-icon>
+              <ion-text color="danger"> Report </ion-text>
+            </ion-button>
 
-      <ion-button color="light" (click)="delete(enquiry.id)">
-        <ion-icon name="trash-outline" color="danger"></ion-icon>
-        <ion-text color="danger"> Delete </ion-text>
-      </ion-button>
+            <ion-button color="light" (click)="delete(enquiry.id)">
+              <ion-icon name="trash-outline" color="danger"></ion-icon>
+              <ion-text color="danger"> Delete </ion-text>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
 </ion-content>
