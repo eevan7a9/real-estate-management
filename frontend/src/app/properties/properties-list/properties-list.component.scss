@@ -36,5 +36,26 @@
       height: 100%;
       top: 0;
     }
+    img {
+      height: 150px;
+      width: 100%;
+      object-fit: cover;
+      border: 0;
+    }
+  }
+}
+
+.card-view-more {
+  ion-card {
+    background: var(--ion-color-light-shade);
+  }
+}
+.view-more {
+  --background: var(--ion-color-dark);
+  display: flex;
+  justify-content: center;
+  span {
+    color: var(--ion-color-light);
+    text-transform: capitalize;
   }
 }

@@ -13,6 +13,7 @@ import { PropertiesService } from '../properties.service';
 export class PropertiesListComponent implements OnInit, OnDestroy {
   @Input() singleCol = false;
   @Input() horizontalSlide = false;
+  @Input() limit = 0;
   public properties: Property[];
   private unsubscribe$ = new Subject<void>();
 
@@ -24,7 +25,7 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
-      this.properties = v;
+      this.properties = this.limit ? v.slice(0, this.limit) : v;
     });
     this.changeDetector.detectChanges();
   }
