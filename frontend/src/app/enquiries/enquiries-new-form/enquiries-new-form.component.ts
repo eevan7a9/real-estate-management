@@ -9,6 +9,7 @@ import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
   styleUrls: ['./enquiries-new-form.component.scss'],
 })
 export class EnquiriesNewFormComponent implements OnInit {
+  public error = false;
   public enquiryForm: FormGroup;
 
   constructor(
@@ -28,6 +29,7 @@ export class EnquiriesNewFormComponent implements OnInit {
 
   public submit() {
     if (!this.enquiryForm.valid) {
+      this.error = true;
       return;
     }
     console.log(this.enquiryForm.value);

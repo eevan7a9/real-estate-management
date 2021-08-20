@@ -4,7 +4,7 @@
     <ion-input type="text" formControlName="title"></ion-input>
   </ion-item>
 
-  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.title">
+  <div class="alert-errors" *ngIf="error && enquiryForm.get('title').errors">
     <app-alert-card content="Title is too short."></app-alert-card>
   </div>
 
@@ -13,7 +13,7 @@
     <ion-input type="text" formControlName="email"></ion-input>
   </ion-item>
 
-  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.email">
+  <div class="alert-errors" *ngIf="error && enquiryForm.get('email').errors">
     <app-alert-card content="Email is invalid."></app-alert-card>
   </div>
 
@@ -22,7 +22,7 @@
     <ion-textarea formControlName="content" placeholder="..."></ion-textarea>
   </ion-item>
 
-  <div class="alert-errors" *ngIf="error && enquiryForm.errors?.content">
+  <div class="alert-errors" *ngIf="error && enquiryForm.get('content').errors">
     <app-alert-card content="Message content is too short."></app-alert-card>
   </div>
   <ion-item>
