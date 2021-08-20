@@ -1,5 +1,5 @@
 .coord-heading {
-  padding: 8px;
+  padding: 24px 0 0 0;
   display: flex;
   align-items: center;
   ion-text {
@@ -11,6 +11,41 @@
 .coord-input {
   display: flex;
   ion-item {
-    width: 100%;
+    width: 95%;
   }
+}
+ion-list-header {
+  --color: #8794a4;
+}
+.notes {
+  font-size: 14px;
+  letter-spacing: 0.4;
+  color: #8794a4;
+}
+ion-item {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  margin: 0 0 16px 0;
+  ion-label {
+    --color: #8794a4;
+  }
+  ion-input,
+  ion-textarea {
+    --padding-start: 12px;
+    padding: 6px;
+    border: 1px solid rgba(0, 56, 100, 0.2);
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin-top: 8px;
+    &::placeholder {
+      font-size: 15px;
+    }
+  }
+}
+
+.alert-errors {
+  width: 100%;
+  margin: 6px 0 0 0;
 }
