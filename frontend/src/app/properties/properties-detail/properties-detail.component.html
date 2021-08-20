@@ -78,6 +78,18 @@
               {{ property.price | currency: property.currency:"symbol" }}
             </ion-card-content>
           </ion-card>
+
+          <ion-card class="enquiry-section">
+            <ion-card-header>
+              <ion-card-title color="dark">
+                Enquire for more Information
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <app-enquiries-new-form></app-enquiries-new-form>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
 
         <ion-col size="12" sizeXl="4">

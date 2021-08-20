@@ -14,13 +14,14 @@ import { MortgageCoreCalcComponent } from '../mortgage-calc/mortgage-core-calc/m
 import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
 import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
 import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
+import { EnquiriesNewFormComponent } from '../enquiries/enquiries-new-form/enquiries-new-form.component';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
     PropertiesPageRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [
     PropertiesPage,
@@ -31,7 +32,8 @@ import { MapSearchFieldComponent } from '../map/map-search-field/map-search-fiel
     MortgageCoreCalcComponent,
     PropertiesCoordinatesComponent,
     MapLeafletComponent,
-    MapSearchFieldComponent
+    MapSearchFieldComponent,
+    EnquiriesNewFormComponent
   ]
 })
 export class PropertiesPageModule { }
