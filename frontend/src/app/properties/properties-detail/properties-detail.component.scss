@@ -94,3 +94,23 @@ ion-row {
   box-shadow: none;
   border-top: 3px solid var(--ion-color-primary);
 }
+
+.find-map-card {
+  margin-top: 24px;
+  box-shadow: none;
+  ion-card-header {
+    background: var(--ion-color-primary);
+  }
+  ion-card-content {
+    p {
+      padding: 24px 16px 16px;
+    }
+    ion-button {
+      text-transform: capitalize;
+      --color: var(--ion-color-light);
+      ion-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

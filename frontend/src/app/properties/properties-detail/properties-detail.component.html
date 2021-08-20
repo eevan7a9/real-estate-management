@@ -53,7 +53,7 @@
             <ion-card-header> Features </ion-card-header>
             <ion-card-content>
               <ion-badge
-                color="success"
+                color="primary"
                 class="item"
                 *ngFor="let item of property.features"
               >
@@ -93,11 +93,30 @@
         </ion-col>
 
         <ion-col size="12" sizeXl="4">
-          <div class="enquire-container">
+          <div class="mortgage-container">
             <app-mortgage-core-calc
               [simpleMode]="true"
               [boxShadow]="false"
             ></app-mortgage-core-calc>
+
+            <ion-card class="find-map-card">
+              <ion-card-header>
+                <ion-card-title color="light">Map View</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p>
+                  Maps can be a useful tool for viewing properties location &
+                  filter them by types. this also help us to know distances so
+                  that we know how far away one thing is from another.
+                </p>
+
+                <ion-button expand="block" size="large" (click)="findInMap()">
+                  <ion-icon name="locate-outline"></ion-icon>
+                  Find in Map
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
           </div>
         </ion-col>
       </ion-row>

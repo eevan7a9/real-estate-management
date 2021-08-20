@@ -56,6 +56,11 @@ export class PropertiesDetailComponent implements OnInit {
     }
   }
 
+  public findInMap() {
+    const { lat, lng } = this.property.position;
+    this.router.navigate(['/map'], { queryParams: { lat, lng } });
+  }
+
   private async editModal() {
     const modal = await this.modalController.create({
       component: PropertiesEditComponent

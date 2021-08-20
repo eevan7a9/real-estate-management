@@ -1,4 +1,5 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
 import { PropertiesService } from 'src/app/properties/properties.service';
 import { PropertyType } from 'src/app/shared/enums/property';
@@ -29,6 +30,7 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     [PropertyType.land]: null
   };
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
+  private markers: L.Marker[] = [];
   private pendingMarker = [];
 
   constructor(
@@ -36,7 +38,8 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     private propertiesService: PropertiesService,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private storage: StorageService
+    private storage: StorageService,
+    private activatedRoutes: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -44,10 +47,16 @@ export class MapLeafletComponent implements OnInit, OnChanges {
       this.properties = properties;
     });
     this.initMap().then(() => {
+
       this.map.on('dragend', () => {
         const center = this.map.getCenter();
         console.log('drag ended.', center);
       });
+      const lat = this.activatedRoutes.snapshot.queryParamMap.get('lat');
+      const lng = this.activatedRoutes.snapshot.queryParamMap.get('lng');
+      if (lat && lng) {
+        this.findMarker(Number(lat), Number(lng));
+      }
     });
   }
 
@@ -76,6 +85,17 @@ export class MapLeafletComponent implements OnInit, OnChanges {
 
   public setMapCenter(coord: Coord) {
     this.map.flyTo([coord.lat, coord.lng], 19);
+  }
+
+  public findMarker(lat: number, lng: number) {
+    const foundMarker = this.markers.find(marker => {
+      const latLng = marker.getLatLng();
+      return latLng.lat === lat && latLng.lng === lng;
+    });
+    this.map.flyTo(foundMarker.getLatLng(), 19);
+    setTimeout(() => {
+      foundMarker.openPopup();
+    }, 1000);
   }
 
   private async initMap(): Promise<void> {
@@ -172,7 +192,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     component.instance.changeDetector.detectChanges();
 
     const icon = this.setMarkerIcon(property.type);
-    return this.mapService.addMarker(this.map, property.position, { icon, popup: component });
+    const marker = this.mapService.addMarker(this.map, property.position, { icon, popup: component });
+    this.markers.push(marker);
+    return marker;
   }
 
   private setMarkerIcon(type: string = ''): L.Icon {
