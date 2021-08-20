@@ -1,8 +1,10 @@
 ion-item {
   --inner-padding-end: 0;
   --inner-padding-start: 0;
-  --padding-end: 0;
-  --padding-start: 0;
+  --padding-end: 8px;
+  --padding-start: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
   margin: 0 0 16px 0;
   ion-label {
     --color: #8794a4;
