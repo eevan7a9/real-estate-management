@@ -21,9 +21,27 @@ ion-card {
     margin-left: auto;
     margin-right: auto;
   }
-  .image-input {
-    background-color: var(--ion-color-primary);
-    color: var(--ion-colo-light);
+}
+.image-input {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-colo-light);
+}
+.app-use-info {
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ion-icon {
+      font-size: 24px;
+      margin-right: 4px;
+    }
+    ion-text {
+      font-size: 16px;
+      margin-right: 4px;
+    }
   }
 }
 .form-information {
@@ -69,8 +87,13 @@ ion-card {
     justify-content: center;
     align-items: center;
     h1 {
+      display: flex;
+      align-items: center;
       font-size: 35px;
       letter-spacing: 1.5px;
+      ion-icon {
+        font-size: 50px;
+      }
     }
   }
 }
