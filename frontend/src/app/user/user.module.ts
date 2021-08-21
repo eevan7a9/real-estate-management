@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserPage } from './user.page';
 import { SigninComponent } from './signin/signin.component';
 import { RegisterComponent } from './register/register.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,10 @@ import { RegisterComponent } from './register/register.component';
     UserPageRoutingModule,
     SharedModule
   ],
-  declarations: [UserPage, RegisterComponent, SigninComponent]
+  declarations: [
+    UserPage,
+    RegisterComponent,
+    SigninComponent,
+    ChangePasswordComponent]
 })
 export class UserPageModule { }

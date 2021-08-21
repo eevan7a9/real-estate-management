@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { RegisterComponent } from './register/register.component';
 import { SigninComponent } from './signin/signin.component';
 
@@ -13,7 +14,15 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    component: UserPage
+    component: UserPage,
+    children: [
+      {
+
+        path: 'change-password',
+        component: ChangePasswordComponent
+
+      }
+    ]
   },
   {
     path: 'register',

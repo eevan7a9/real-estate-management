@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-title>Account Page</ion-title>
     <ion-buttons slot="end">
@@ -8,5 +8,26 @@
 </ion-header>
 
 <ion-content>
-  <h1>My Account</h1>
+  <div>
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="speakers">
+        <ion-icon name="person-circle"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="change-password">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-label>Change Password</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="map">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>properties</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

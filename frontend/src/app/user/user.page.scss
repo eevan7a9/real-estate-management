@@ -1,0 +1,8 @@
+ion-tab-bar {
+  --border: 1px solid
+    var(
+      --ion-item-border-color,
+      var(--ion-border-color, var(--ion-color-step-250, rgba(0, 0, 0, 0.13)))
+    );
+  box-shadow: 2px 0px 2px rgba(0, 0, 0, 0.12);
+}
