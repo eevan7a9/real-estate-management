@@ -1,0 +1,79 @@
+<ion-content>
+  <div class="profile-container ion-padding-vertical">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" sizeMd="4">
+          <ion-card>
+            <ion-card-header class="ion-no-padding">
+              <ion-card-title class="ion-padding"> My Profile, </ion-card-title>
+              <div class="profile-img-container">
+                <img [src]="imgUrl" />
+              </div>
+            </ion-card-header>
+
+            <ion-card-content>
+              <input
+                type="file"
+                (change)="onSelectFile($event)"
+                accept="image/*"
+                [hidden]="true"
+                id="image-upload"
+              />
+              <ion-button
+                color="primary"
+                expand="block"
+                (click)="toggleUpload()"
+              >
+                Upload Image
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" sizeMd="8">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title> My Information </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <form class="form-information">
+                <ion-item lines="none">
+                  <ion-label position="stacked">Email *</ion-label>
+                  <ion-input type="email"></ion-input>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label position="stacked">Full Name *</ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label position="stacked">About Me:</ion-label>
+                  <ion-textarea placeholder="..."></ion-textarea>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label position="stacked">Location</ion-label>
+                  <ion-input type="text"></ion-input>
+                </ion-item>
+
+                <div class="ion-text-end ion-padding-vertical">
+                  <ion-button>SAVE CHANGES</ion-button>
+                </div>
+              </form>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="activities-section">
+          <div class="heading">Account Activities</div>
+          <div class="activities-empty">
+            <h1>EMPTY<ion-icon name="alert-circle-outline"></ion-icon></h1>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

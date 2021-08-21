@@ -10,6 +10,7 @@ import { UserPage } from './user.page';
 import { SigninComponent } from './signin/signin.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     UserPage,
     RegisterComponent,
     SigninComponent,
-    ChangePasswordComponent]
+    ChangePasswordComponent,
+    ProfileComponent
+  ]
 })
 export class UserPageModule { }

@@ -1,0 +1,78 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+ion-card {
+  box-shadow: none;
+}
+.profile-container {
+  min-height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.profile-img-container {
+  padding: 16px 0;
+  img {
+    border-radius: 16px;
+    height: auto;
+    width: 100%;
+    max-height: 300px;
+    max-width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .image-input {
+    background-color: var(--ion-color-primary);
+    color: var(--ion-colo-light);
+  }
+}
+.form-information {
+  ion-item {
+    --inner-padding-end: 0;
+    --inner-padding-start: 0;
+    --padding-end: 0;
+    --padding-start: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    margin: 0 0 16px 0;
+    ion-label {
+      --color: #8794a4;
+    }
+    ion-input,
+    ion-textarea {
+      --padding-start: 12px;
+      padding: 6px;
+      border: 1px solid rgba(0, 57, 100, 0.418);
+      box-sizing: border-box;
+      border-radius: 4px;
+      margin-top: 8px;
+      &::placeholder {
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+.activities-section {
+  margin: 90px 0 0 0;
+  .heading {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 0 24px 0;
+    border-bottom: 5px solid var(--ion-color-primary);
+  }
+  .activities-empty {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      font-size: 35px;
+      letter-spacing: 1.5px;
+    }
+  }
+}
+@media (max-width: 600px) {
+}

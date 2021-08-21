@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 import { SigninComponent } from './signin/signin.component';
 
@@ -17,11 +18,18 @@ const routes: Routes = [
     component: UserPage,
     children: [
       {
-
+        path: '',
+        redirectTo: '/user/account/profile',
+        pathMatch: 'full'
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
         path: 'change-password',
         component: ChangePasswordComponent
-
-      }
+      },
     ]
   },
   {
