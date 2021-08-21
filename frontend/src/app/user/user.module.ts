@@ -11,6 +11,7 @@ import { SigninComponent } from './signin/signin.component';
 import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { ProfileComponent } from './profile/profile.component';
     RegisterComponent,
     SigninComponent,
     ChangePasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    NotificationsComponent
   ]
 })
 export class UserPageModule { }

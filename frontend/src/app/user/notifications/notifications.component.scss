@@ -1,0 +1,16 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+ion-card {
+  box-shadow: none;
+}
+.notification-container {
+  min-height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+ion-item {
+  --inner-padding-bottom: 16px;
+  --inner-padding-top: 16px;
+}
