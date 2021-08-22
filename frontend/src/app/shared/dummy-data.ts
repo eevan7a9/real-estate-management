@@ -1,6 +1,6 @@
 import { Property } from './interface/property';
 import { PropertyType } from './enums/property';
-import { Enquiry } from './interface/enquiries';
+import { Enquiry } from './interface/enquiry';
 
 const longText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
   incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation

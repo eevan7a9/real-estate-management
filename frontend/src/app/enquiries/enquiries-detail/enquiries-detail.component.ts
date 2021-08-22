@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
-import { Enquiry } from 'src/app/shared/interface/enquiries';
+import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
-import { Enquiry } from 'src/app/shared/interface/enquiries';
+import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 import { enquiries } from '../../shared/dummy-data';
