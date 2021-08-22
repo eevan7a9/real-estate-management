@@ -99,6 +99,10 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   }
 
   private async initMap(): Promise<void> {
+    const coord = await this.storage.getCoord();
+    if (coord) {
+      this.center = coord;
+    }
     this.map = L.map('mapId', {
       center: [this.center.lat, this.center.lng],
       zoom: 18,
