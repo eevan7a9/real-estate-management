@@ -13,4 +13,12 @@ ion-card {
 ion-item {
   --inner-padding-bottom: 16px;
   --inner-padding-top: 16px;
+  .item-right-side {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    ion-badge {
+      margin: 0 8px 0 0;
+    }
+  }
 }

@@ -10,26 +10,18 @@
 
             <ion-card-content>
               <ion-list>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
-                </ion-item>
-                <ion-item button (click)="itemClicked()">
-                  <ion-label>Awesome Label</ion-label>
+                <ion-item
+                  *ngFor="let item of notifications"
+                  button
+                  (click)="itemClicked()"
+                >
+                  <ion-label>{{ item.title }}</ion-label>
+                  <div class="item-right-side">
+                    <ion-badge [color]="getItemBadge(item.type)">{{
+                      item.type
+                    }}</ion-badge>
+                    {{ item.date | date }}
+                  </div>
                 </ion-item>
               </ion-list>
             </ion-card-content>
