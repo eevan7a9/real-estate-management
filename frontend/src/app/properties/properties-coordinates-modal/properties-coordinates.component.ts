@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Coord } from 'src/app/shared/interface/map';
 
@@ -8,7 +8,7 @@ import { Coord } from 'src/app/shared/interface/map';
   styleUrls: ['./properties-coordinates.component.scss'],
 })
 export class PropertiesCoordinatesComponent implements OnInit {
-
+  @Input() title = 'Set Property Marker';
   public coord: Coord;
 
   constructor(private modalCtrl: ModalController) { }
