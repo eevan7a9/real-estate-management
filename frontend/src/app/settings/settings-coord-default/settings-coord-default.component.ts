@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { PropertiesCoordinatesComponent } from 'src/app/properties/properties-coordinates-modal/properties-coordinates.component';
 import { Coord } from 'src/app/shared/interface/map';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -14,7 +15,8 @@ export class SettingsCoordDefaultComponent implements OnInit {
 
   constructor(
     public toastController: ToastController,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private modalCtrl: ModalController,
   ) { }
 
   async ngOnInit() {
@@ -44,5 +46,20 @@ export class SettingsCoordDefaultComponent implements OnInit {
       duration: 2000
     });;
     toast.present();
+  }
+
+  public async openMap() {
+    const modal = await this.modalCtrl.create({
+      component: PropertiesCoordinatesComponent,
+      componentProps: {
+        title: 'Select desired location.'
+      }
+    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data) {
+      const { lat, lng } = data;
+      this.coord = { lat, lng };
+    }
   }
 }

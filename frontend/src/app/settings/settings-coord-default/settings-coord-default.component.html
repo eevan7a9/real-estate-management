@@ -3,7 +3,10 @@
     <ion-row class="ion-align-items-center">
       <ion-col size="12" class="ion-no-padding">
         <div class="heading ion-padding">
-          <ion-text color="dark">Change Default Coordinance</ion-text>
+          <ion-text color="dark">Change Default Coordinates</ion-text>
+          <ion-button size="small" class="ion-margin-start" (click)="openMap()">
+            open map <ion-icon name="map-outline"></ion-icon>
+          </ion-button>
         </div>
       </ion-col>
 
@@ -23,10 +26,10 @@
 
       <ion-col size="12">
         <ion-button color="primary" (click)="setCoord()">
-          set Coordinance</ion-button
+          set Coordinates</ion-button
         >
         <ion-button class="reset ion-margin-start" (click)="resetCoord()">
-          Reset Coordinance
+          Reset Coordinates
         </ion-button>
       </ion-col>
     </ion-row>
