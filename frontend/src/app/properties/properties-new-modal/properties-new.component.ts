@@ -67,7 +67,7 @@ export class PropertiesNewComponent implements OnInit {
         features: ft.split(',').filter((item: string) => item.trim() !== '')
       });
       const { lat, lng } = this.propertyForm.value;
-      const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng } } };
+      const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
       console.log(newProperty);
 
       this.propertiesService.addProperty(newProperty);

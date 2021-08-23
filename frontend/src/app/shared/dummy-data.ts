@@ -84,6 +84,8 @@ export const properties: Property[] = [
       lng: 125.5470567303216
     },
     price: 210000,
+    date: new Date(),
+    enquiries: ['12'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
     userId: '0002'
@@ -98,6 +100,8 @@ export const properties: Property[] = [
       lat: 8.948603092201049,
       lng: 125.54424652989282
     },
+    date: new Date(),
+    enquiries: [],
     price: 50000,
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8',
@@ -115,6 +119,8 @@ export const properties: Property[] = [
       lng: 125.5430559487951
     },
     price: 30000,
+    date: new Date('2021/08/25'),
+    enquiries: ['351'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8'],
     userId: '0002'
@@ -131,6 +137,8 @@ export const properties: Property[] = [
       lng: 125.5442679818045
     },
     price: 29995,
+    date: new Date('2021/08/13'),
+    enquiries: ['241'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -146,6 +154,8 @@ export const properties: Property[] = [
       lng: 125.54334554960266
     },
     price: 410000,
+    date: new Date('2021/08/13'),
+    enquiries: ['231'],
     currency: 'PHP',
     features: [],
     userId: '0001'
@@ -161,6 +171,9 @@ export const properties: Property[] = [
       lng: 125.5470567303216
     },
     price: 210000,
+    date: new Date('2021/08/13'),
+    enquiries: ['231'],
+
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -176,6 +189,8 @@ export const properties: Property[] = [
       lng: 125.54427401746118
     },
     price: 20000,
+    date: new Date('2021/07/23'),
+    enquiries: ['89'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -191,6 +206,8 @@ export const properties: Property[] = [
       lng: 125.54497120276352
     },
     price: 20000,
+    date: new Date('2021/07/23'),
+    enquiries: ['52'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -206,6 +223,8 @@ export const properties: Property[] = [
       lng: 125.54372735578022
     },
     price: 210000,
+    date: new Date('2021/07/23'),
+    enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -221,6 +240,8 @@ export const properties: Property[] = [
       lng: 125.54767413655091
     },
     price: 301500,
+    date: new Date('2021/07/23'),
+    enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -236,6 +257,8 @@ export const properties: Property[] = [
       lng: 125.5436626395807
     },
     price: 200000,
+    date: new Date('2021/07/23'),
+    enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -251,6 +274,8 @@ export const properties: Property[] = [
       lng: 125.54540560283647
     },
     price: 4200000,
+    date: new Date('2021/07/21'),
+    enquiries: ['442'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -266,6 +291,8 @@ export const properties: Property[] = [
       lng: 125.5448371286669
     },
     price: 200000,
+    date: new Date('2021/07/21'),
+    enquiries: ['22'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -281,6 +308,8 @@ export const properties: Property[] = [
       lng: 125.5421770985904
     },
     price: 200000,
+    date: new Date('2021/07/21'),
+    enquiries: ['142'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -296,6 +325,8 @@ export const properties: Property[] = [
       lng: 125.54482103977531
     },
     price: 200000,
+    date: new Date('2021/07/21'),
+    enquiries: ['402'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -311,6 +342,8 @@ export const properties: Property[] = [
       lng: 120.98252611694767
     },
     price: 5000000,
+    date: new Date('2021/07/21'),
+    enquiries: ['402'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -326,6 +359,9 @@ export const properties: Property[] = [
       lng: 120.98359334675658
     },
     price: 5000000,
+    date: new Date('2021/07/21'),
+    enquiries: ['402'],
+
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -341,6 +377,8 @@ export const properties: Property[] = [
       lng: 120.98355580600953
     },
     price: 5000000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -356,6 +394,9 @@ export const properties: Property[] = [
       lng: 120.98324743558737
     },
     price: 3400000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
+
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -371,6 +412,8 @@ export const properties: Property[] = [
       lng: 120.9808817025154
     },
     price: 3400000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -386,6 +429,8 @@ export const properties: Property[] = [
       lng: 120.98059210246676
     },
     price: 1400000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -401,6 +446,8 @@ export const properties: Property[] = [
       lng: 120.98209373234864
     },
     price: 6400000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -416,6 +463,8 @@ export const properties: Property[] = [
       lng: 120.98018455138599
     },
     price: 120000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -431,6 +480,8 @@ export const properties: Property[] = [
       lng: 123.89931574387101
     },
     price: 320000,
+    date: new Date('2021/06/17'),
+    enquiries: ['54'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -446,6 +497,8 @@ export const properties: Property[] = [
       lng: 123.89972064764271
     },
     price: 120000,
+    date: new Date('2021/06/12'),
+    enquiries: ['24'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -461,6 +514,9 @@ export const properties: Property[] = [
       lng: 123.89968846985951
     },
     price: 120000,
+    date: new Date('2021/06/12'),
+    enquiries: ['13'],
+
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -476,6 +532,9 @@ export const properties: Property[] = [
       lng: 123.90047414406557
     },
     price: 920000,
+    date: new Date('2021/06/12'),
+    enquiries: ['34'],
+
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -491,6 +550,8 @@ export const properties: Property[] = [
       lng: 123.89983620948021
     },
     price: 990000,
+    date: new Date('2021/06/12'),
+    enquiries: ['34'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -506,6 +567,8 @@ export const properties: Property[] = [
       lng: 123.89247079081703
     },
     price: 1990000,
+    date: new Date('2021/06/12'),
+    enquiries: ['34'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -521,6 +584,8 @@ export const properties: Property[] = [
       lng: 123.89238498339523
     },
     price: 1990000,
+    date: new Date('2021/06/12'),
+    enquiries: ['34'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -536,6 +601,8 @@ export const properties: Property[] = [
       lng: 123.89305526953659
     },
     price: 1990000,
+    date: new Date('2021/06/12'),
+    enquiries: ['134'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -551,6 +618,8 @@ export const properties: Property[] = [
       lng: 123.89305526953659
     },
     price: 1990000,
+    date: new Date('2021/06/12'),
+    enquiries: ['134'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -566,6 +635,8 @@ export const properties: Property[] = [
       lng: 123.84183562005497
     },
     price: 130000,
+    date: new Date('2021/04/23'),
+    enquiries: ['128'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -581,6 +652,8 @@ export const properties: Property[] = [
       lng: 125.60032146648845
     },
     price: 130000,
+    date: new Date('2021/04/23'),
+    enquiries: ['148'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -596,6 +669,8 @@ export const properties: Property[] = [
       lng: 125.59963500711387
     },
     price: 730000,
+    date: new Date('2021/04/23'),
+    enquiries: ['28'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -611,6 +686,8 @@ export const properties: Property[] = [
       lng: 125.60884816677601
     },
     price: 730000,
+    date: new Date('2021/04/23'),
+    enquiries: ['8'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
     userId: '0001'
@@ -626,6 +703,8 @@ export const properties: Property[] = [
       lng: 125.60793378143721
     },
     price: 730000,
+    date: new Date('2021/04/23'),
+    enquiries: ['8'],
     currency: 'PHP',
     userId: '0001'
   }

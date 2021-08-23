@@ -78,7 +78,7 @@ export class PropertiesEditComponent implements OnInit {
     if (!this.propertyForm.valid) {
       return;
     }
-    const { name, address, description, type, price, currency, features, lat, lng } = this.propertyForm.value;
+    const { name, address, description, type, date, price, currency, features, lat, lng } = this.propertyForm.value;
     const editedProperty: Property = {
       id: this.property.id,
       name,
@@ -87,6 +87,7 @@ export class PropertiesEditComponent implements OnInit {
       type,
       price,
       currency,
+      date,
       features: features.split(',').filter((item: string) => item.trim() !== ''),
       position: { lat, lng },
       userId: this.property.userId
