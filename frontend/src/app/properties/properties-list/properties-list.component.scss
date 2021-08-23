@@ -45,15 +45,19 @@
   }
 }
 
-.card-view-more {
+.card-view-all {
   ion-card {
     background: var(--ion-color-light-shade);
+    ion-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 415px;
+    }
   }
 }
-.view-more {
+.view-all {
   --background: var(--ion-color-dark);
-  display: flex;
-  justify-content: center;
   span {
     color: var(--ion-color-light);
     text-transform: capitalize;

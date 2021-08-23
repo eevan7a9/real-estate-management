@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonInfiniteScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Property } from 'src/app/shared/interface/property';
@@ -11,12 +12,15 @@ import { PropertiesService } from '../properties.service';
   styleUrls: ['./properties-list.component.scss'],
 })
 export class PropertiesListComponent implements OnInit, OnDestroy {
+  @ViewChild('IonInfiniteScroll', { static: false }) infinityScroll: IonInfiniteScroll;
+
   @Input() singleCol = false;
   @Input() horizontalSlide = false;
   @Input() limit = 0;
   public properties: Property[];
   public displayedItems: Property[] = [];
   public maxDisplayed = 8;
+  public filterBy: string[] = [];
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -26,16 +30,11 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
-      this.properties = this.limit ? v.slice(0, this.limit) : v;
-    });
-    this.displayedItems = this.properties.slice(0, this.maxDisplayed);
-    this.changeDetector.detectChanges();
+    this.getProperties();
   }
 
   ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.unSubscribed();
   }
 
   public selectProperty(property: Property) {
@@ -43,19 +42,48 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     this.router.navigate(['/properties', property.id]);
   }
 
-  loadData(event) {
+  public setFilters(filters: string[]) {
+    this.filterBy = filters;
+    this.getProperties();
+  }
+
+  public loadData() {
     this.maxDisplayed = this.maxDisplayed + 4;
     setTimeout(() => {
       this.displayedItems = this.properties.slice(0, this.maxDisplayed);
-      event.target.complete();
+      this.infinityScroll.complete();
 
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
       if (this.displayedItems.length >= this.properties.length) {
         console.log('everything is loaded');
-        event.target.disabled = true;
+        this.infinityScroll.disabled = true;
       }
     }, 1500);
+  }
+
+  private getProperties() {
+    this.unSubscribed();
+    this.maxDisplayed = 8;
+    this.displayedItems = [];
+    this.properties = [];
+    if (this.infinityScroll) {
+      // we enable infinity scroll
+      this.infinityScroll.disabled = false;
+    }
+    this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
+      this.properties = this.limit ? v.slice(0, this.limit) : v;
+      if (this.filterBy.length) {
+        this.properties = this.properties.filter(item => this.filterBy.includes(item.type));
+      }
+    });
+    this.displayedItems = this.properties.slice(0, this.maxDisplayed);
+    this.changeDetector.detectChanges();
+  }
+
+  private unSubscribed() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }
