@@ -17,6 +17,30 @@
   -webkit-box-orient: vertical;
 }
 
+.price {
+  margin: 16px 0 0 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+}
+
+.top-img {
+  position: relative;
+  .overlay-container {
+    background-color: transparent;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+  img {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+}
+
 .card-slider {
   flex: 0 0 auto;
   max-width: 250px;
@@ -27,22 +51,6 @@
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-pr */
-  .top-img {
-    position: relative;
-    .overlay-container {
-      background-color: transparent;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-    }
-    img {
-      height: 150px;
-      width: 100%;
-      object-fit: cover;
-      border: 0;
-    }
-  }
 }
 
 .card-view-all {

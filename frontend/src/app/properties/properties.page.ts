@@ -32,6 +32,21 @@ export class PropertiesPage implements OnInit {
       label: 'Land'
     },
   ];
+  public sortBy = 'latest';
+  public sorts = [
+    {
+      value: 'latest',
+      label: 'Latest'
+    },
+    {
+      value: 'name',
+      label: 'Name'
+    },
+    {
+      value: 'price',
+      label: 'Price'
+    }
+  ];
   constructor(public modalController: ModalController) { }
 
   async ngOnInit() { }

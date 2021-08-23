@@ -14,10 +14,18 @@
         <ion-card-title class="name">
           {{ item.name }}
         </ion-card-title>
+
+        <div>
+          {{ item.date | date }}
+        </div>
       </ion-card-header>
       <ion-card-content>
         <div class="desc">
           {{ item.description }}
+        </div>
+
+        <div class="price">
+          {{ item.price | currency: "PHP" }}
         </div>
         <ion-button
           (click)="selectProperty(item)"
@@ -79,6 +87,9 @@
       <ion-card-header>
         <app-property-badge [type]="item.type"></app-property-badge>
         <ion-card-title class="name">{{ item.name }}</ion-card-title>
+        <div>
+          {{ item.date | date }}
+        </div>
       </ion-card-header>
       <ion-card-content>
         <div class="desc">

@@ -36,11 +36,18 @@
         <ion-col size="12" sizeMd="6">
           <ion-item lines="none">
             <ion-label>Sort by:</ion-label>
-            <ion-select value="date-new" okText="Okay" cancelText="Dismiss">
-              <ion-select-option value="date-new">Latest</ion-select-option>
-              <ion-select-option value="views">Views</ion-select-option>
-              <ion-select-option value="name">Name</ion-select-option>
-              <ion-select-option value="price">Price</ion-select-option>
+            <ion-select
+              [(ngModel)]="sortBy"
+              okText="Okay"
+              cancelText="Dismiss"
+              (ionChange)="propertyLists.setSort(sortBy)"
+            >
+              <ion-select-option
+                *ngFor="let sort of sorts"
+                [value]="sort.value"
+              >
+                {{ sort.label}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
