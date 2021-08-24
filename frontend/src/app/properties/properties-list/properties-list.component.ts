@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -17,11 +17,13 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
   @Input() singleCol = false;
   @Input() horizontalSlide = false;
   @Input() limit = 0;
+  @Output() isLoading = new EventEmitter<boolean>();
   public properties: Property[];
   public displayedItems: Property[] = [];
   public maxDisplayed = 8;
-  public filterBy: string[] = [];
-  public sortBy = 'latest';
+  private filterBy: string[] = [];
+  private sortBy = 'latest';
+  private searchText = '';
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -35,16 +37,6 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unSubscribed();
-  }
-
-  public setFilters(filters: string[]) {
-    this.filterBy = filters;
-    this.getProperties();
-  }
-
-  public setSort(sort: string) {
-    this.sortBy = sort;
-    this.getProperties();
   }
 
   public loadData() {
@@ -62,6 +54,32 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     }, 1500);
   }
 
+  public setFilters(filters: string[]) {
+    this.filterBy = filters;
+    this.getProperties();
+  }
+
+  public setSort(sort: string) {
+    this.sortBy = sort;
+    this.getProperties();
+  }
+
+  public setSearch(text: string) {
+    text = text.trim().toLowerCase();
+    if (this.searchText !== text) {
+      this.searchText = text;
+      this.getProperties();
+    }
+  }
+
+  private searchProperties() {
+    this.properties = this.properties.filter((item: Property) => {
+      const name = item.name.toLowerCase();
+      const address = item.address.toLowerCase();
+      return name.includes(this.searchText) || address.includes(this.searchText);
+    });
+  }
+
   private sortProperties() {
     switch (this.sortBy) {
       case 'name':
@@ -75,8 +93,8 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
         break;
     }
   }
-
   private getProperties() {
+    this.isLoading.emit(true);
     this.unSubscribed();
     this.maxDisplayed = 8;
     this.displayedItems = [];
@@ -88,6 +106,7 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
       this.properties = this.limit ? v.slice(0, this.limit) : v;
       this.sortProperties();
+      if (this.searchText) { this.searchProperties(); };
       if (this.filterBy.length) {
         this.properties = this.properties.filter(item => this.filterBy.includes(item.type));
       }

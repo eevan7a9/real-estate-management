@@ -4,7 +4,6 @@ import { PropertyType } from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
-import { PropertiesService } from './properties.service';
 
 @Component({
   selector: 'app-properties',
@@ -12,6 +11,8 @@ import { PropertiesService } from './properties.service';
   styleUrls: ['./properties.page.scss'],
 })
 export class PropertiesPage implements OnInit {
+  public progressBar = false;
+  public search = '';
   public properties: Property[] = [];
   public filterBy: string[] = [];
   public filters = [
@@ -47,7 +48,9 @@ export class PropertiesPage implements OnInit {
       label: 'Price'
     }
   ];
-  constructor(public modalController: ModalController) { }
+  constructor(
+    public modalController: ModalController
+  ) { }
 
   async ngOnInit() { }
 
@@ -56,6 +59,11 @@ export class PropertiesPage implements OnInit {
       component: PropertiesNewComponent
     });
     return await modal.present();
+  }
+
+  public async presentLoading() {
+    this.progressBar = true;
+    setTimeout(() => this.progressBar = false, 1500);
   }
 
 }

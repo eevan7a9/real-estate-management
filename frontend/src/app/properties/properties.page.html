@@ -9,8 +9,11 @@
   <ion-toolbar>
     <ion-searchbar
       inputmode="text"
-      spellcheck
+      clearIcon
+      debounce="1300"
+      [(ngModel)]="search"
       animated
+      (ionChange)="propertyLists.setSearch(search)"
       placeholder="Search Property"
     ></ion-searchbar>
     <ion-grid>
@@ -58,11 +61,18 @@
 
 <ion-content>
   <div class="properties-container">
+    <ion-progress-bar
+      style="margin: 4px 0 0 0"
+      type="indeterminate"
+      [hidden]="!progressBar"
+    ></ion-progress-bar>
+
     <ion-grid>
       <ion-row class="ion-align-items-center ion-margin-top">
         <ion-col class="heading ion-padding-horizontal">
           List of Properties
         </ion-col>
+
         <ion-col class="ion-padding-horizontal">
           <ion-button
             color="success"
@@ -75,7 +85,10 @@
         </ion-col>
       </ion-row>
       <!-- Card List of Properties -->
-      <app-properties-list #propertyLists></app-properties-list>
+      <app-properties-list
+        #propertyLists
+        (isLoading)="presentLoading()"
+      ></app-properties-list>
     </ion-grid>
   </div>
 </ion-content>
