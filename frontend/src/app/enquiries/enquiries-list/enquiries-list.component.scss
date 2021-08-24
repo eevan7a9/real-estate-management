@@ -10,6 +10,13 @@ ion-card-header {
   .action-btn {
     --box-shadow: none;
   }
+  .property-name {
+    display: flex;
+    align-items: center;
+    ion-badge {
+      margin-left: 8px;
+    }
+  }
 }
 
 .label-text {
@@ -23,5 +30,18 @@ ion-card-header {
 @media (max-width: 920px) {
   .item-text {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  ion-card-header {
+    .property-name {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+      align-items: flex-start;
+      ion-badge {
+        margin: 0 0 8px 0;
+      }
+    }
   }
 }

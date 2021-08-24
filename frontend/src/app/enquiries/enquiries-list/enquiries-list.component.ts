@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
@@ -6,15 +6,19 @@ import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 import { enquiries } from '../../shared/dummy-data';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-enquiries-list',
   templateUrl: './enquiries-list.component.html',
   styleUrls: ['./enquiries-list.component.scss'],
 })
-export class EnquiriesListComponent implements OnInit {
+export class EnquiriesListComponent implements OnInit, OnDestroy {
   public date = new Date();
   public enquiries: Enquiry[];
+  public filterBy: string[] = [];
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private enquiriesService: EnquiriesService,
@@ -26,12 +30,11 @@ export class EnquiriesListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.enquiriesService.enquiries$.subscribe(items => {
-      this.enquiries = items;
-      if (!this.enquiries.length) {
-        this.enquiriesService.enquiries = enquiries;
-      }
-    });
+    this.getEnquiries();
+  }
+
+  ngOnDestroy() {
+    this.unSubscribed();
   }
 
   public selectEnquiry(enquiry: Enquiry) {
@@ -86,7 +89,7 @@ export class EnquiriesListComponent implements OnInit {
     await alert.present();
   }
 
-  async presentToast(message: string, duration = 3000) {
+  public async presentToast(message: string, duration = 3000) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
@@ -95,7 +98,7 @@ export class EnquiriesListComponent implements OnInit {
     toast.present();
   }
 
-  async createEnquiryModal() {
+  public async createEnquiryModal() {
     const modal = await this.modalCtrl.create({
       component: EnquiriesNewComponent,
       componentProps: {
@@ -104,4 +107,28 @@ export class EnquiriesListComponent implements OnInit {
     });
     return await modal.present();
   }
+
+  public setFilters(filter: string[]) {
+    this.filterBy = filter;
+    this.getEnquiries();
+  }
+
+  private getEnquiries() {
+    this.unSubscribed();
+    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe(items => {
+      this.enquiries = items;
+      if (this.filterBy.length) {
+        this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
+      }
+      if (!this.enquiries.length) {
+        this.enquiriesService.enquiries = enquiries;
+      }
+    });
+  }
+
+  private unSubscribed() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
 }

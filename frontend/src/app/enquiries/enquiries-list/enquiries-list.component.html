@@ -23,7 +23,13 @@
     (click)="selectEnquiry(item)"
   >
     <ion-card-header>
-      <ion-card-title>{{ item.property.name }}</ion-card-title>
+      <ion-card-title>
+        <div class="property-name">
+          {{ item.property.name }}
+          <ion-badge color="light" *ngIf="item.read">Read</ion-badge>
+          <ion-badge color="medium" *ngIf="!item.read">Unread</ion-badge>
+        </div>
+      </ion-card-title>
 
       <ion-button
         class="action-btn"
@@ -43,8 +49,7 @@
                 <ion-text>{{ item.title }}</ion-text>
               </ion-col>
               <ion-col size="*" sizeLg="1">
-                <ion-badge color="success" *ngIf="item.read">Read</ion-badge>
-                <ion-badge color="warning" *ngIf="!item.read">Unread</ion-badge>
+                <ion-badge color="primary">{{ item.topic }}</ion-badge>
               </ion-col>
             </ion-row>
           </ion-col>

@@ -14,26 +14,39 @@
     ></ion-searchbar>
     <ion-grid>
       <ion-row>
-        <ion-col size="12" sizeMd="6" sizeXl="4">
+        <ion-col size="12" sizeMd="6">
           <ion-item lines="none">
             <ion-label>Filter by:</ion-label>
-            <ion-select multiple="true" [value]="[]">
-              <ion-select-option value="house">House</ion-select-option>
-              <ion-select-option value="apartment">Apartment</ion-select-option>
-              <ion-select-option value="pad">Pad</ion-select-option>
-              <ion-select-option value="boarding-house">
-                Boarding house
+            <ion-select
+              multiple="true"
+              [(ngModel)]="filterBy"
+              (ionChange)="enquiriesList.setFilters(filterBy)"
+            >
+              <ion-select-option
+                *ngFor="let filter of filters"
+                [value]="filter.value"
+              >
+                {{filter.label}}
               </ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
 
-        <ion-col size="12" sizeMd="6" sizeXl="4">
+        <ion-col size="12" sizeMd="6">
           <ion-item lines="none">
             <ion-label>Sort by:</ion-label>
-            <ion-select value="date-new" okText="Okay" cancelText="Dismiss">
-              <ion-select-option value="date-new">Newest</ion-select-option>
-              <ion-select-option value="date-old">Oldest</ion-select-option>
+            <ion-select
+              [(ngModel)]="sortBy"
+              okText="Okay"
+              cancelText="Dismiss"
+              (ionChange)="enquiriesList.setSort(sortBy)"
+            >
+              <ion-select-option
+                *ngFor="let sort of sorts"
+                [value]="sort.value"
+              >
+                {{ sort.label}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -44,6 +57,6 @@
 
 <ion-content>
   <div class="enquiries-container">
-    <app-enquiries-list></app-enquiries-list>
+    <app-enquiries-list #enquiriesList></app-enquiries-list>
   </div>
 </ion-content>
