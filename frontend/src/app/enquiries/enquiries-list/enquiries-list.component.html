@@ -25,9 +25,9 @@
     <ion-card-header>
       <ion-card-title>
         <div class="property-name">
-          {{ item.property.name }}
           <ion-badge color="light" *ngIf="item.read">Read</ion-badge>
           <ion-badge color="medium" *ngIf="!item.read">Unread</ion-badge>
+          {{ item.title }}
         </div>
       </ion-card-title>
 
@@ -46,7 +46,7 @@
           <ion-col size="12" sizeLg="6">
             <ion-row size="auto">
               <ion-col>
-                <ion-text>{{ item.title }}</ion-text>
+                <ion-text>{{ item.property.name }}</ion-text>
               </ion-col>
               <ion-col size="*" sizeLg="1">
                 <ion-badge color="primary">{{ item.topic }}</ion-badge>

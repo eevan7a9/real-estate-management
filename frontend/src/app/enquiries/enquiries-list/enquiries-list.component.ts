@@ -8,6 +8,7 @@ import { EnquiriesService } from '../enquiries.service';
 import { enquiries } from '../../shared/dummy-data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { sortListByDate, sortListByName } from 'src/app/shared/utility';
 
 @Component({
   selector: 'app-enquiries-list',
@@ -18,6 +19,7 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   public date = new Date();
   public enquiries: Enquiry[];
   public filterBy: string[] = [];
+  public sortBy = 'latest';
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -111,6 +113,19 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   public setFilters(filter: string[]) {
     this.filterBy = filter;
     this.getEnquiries();
+  }
+
+  public setSort(sort: string) {
+    this.sortBy = sort;
+    switch (this.sortBy) {
+      case 'title':
+        this.enquiries = sortListByName(this.enquiries, { property: 'title' });
+        break;
+
+      default:
+        this.enquiries = sortListByDate(this.enquiries, { property: 'date' });
+        break;
+    }
   }
 
   private getEnquiries() {

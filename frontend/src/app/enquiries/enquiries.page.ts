@@ -27,7 +27,7 @@ export class EnquiriesPage implements OnInit {
       label: 'Payment'
     },
   ];
-  public sortBy = 'newest';
+  public sortBy = 'latest';
   public sorts = [
     {
       value: 'latest',
