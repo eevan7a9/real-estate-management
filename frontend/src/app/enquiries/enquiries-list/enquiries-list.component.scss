@@ -13,7 +13,7 @@ ion-card-header {
   .property-name {
     display: flex;
     align-items: center;
-    ion-badge {
+    .badge {
       margin-right: 8px;
     }
   }
@@ -36,10 +36,10 @@ ion-card-header {
 @media (max-width: 768px) {
   ion-card-header {
     .property-name {
-      flex-direction: column-reverse;
+      flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
-      ion-badge {
+      .badge {
         margin: 0 0 8px 0;
       }
     }

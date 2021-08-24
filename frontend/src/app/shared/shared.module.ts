@@ -10,6 +10,7 @@ import { CustomValidatorsDirective } from './directives/custom-validators.direct
 import { AlertCardComponent } from './components/alert-card/alert-card.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
+import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PropertyCardComponent } from './components/property-card/property-card.
     CustomValidatorsDirective,
     AlertCardComponent,
     ContactFormComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    EnquiryBadgeComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { PropertyCardComponent } from './components/property-card/property-card.
     CustomValidatorsDirective,
     AlertCardComponent,
     ContactFormComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    EnquiryBadgeComponent
   ],
   providers: [CustomValidatorsDirective]
 })
