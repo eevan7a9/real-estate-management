@@ -9,6 +9,7 @@ import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/d
 import { CustomValidatorsDirective } from './directives/custom-validators.directive';
 import { AlertCardComponent } from './components/alert-card/alert-card.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
+import { PropertyCardComponent } from './components/property-card/property-card.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
     DivHorizontalSlideComponent,
     CustomValidatorsDirective,
     AlertCardComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    PropertyCardComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +38,8 @@ import { ContactFormComponent } from './components/contact-form/contact-form.com
     DivHorizontalSlideComponent,
     CustomValidatorsDirective,
     AlertCardComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    PropertyCardComponent
   ],
   providers: [CustomValidatorsDirective]
 })

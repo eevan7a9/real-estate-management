@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -27,7 +26,6 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
 
   constructor(
     private propertiesService: PropertiesService,
-    private router: Router,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -37,11 +35,6 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.unSubscribed();
-  }
-
-  public selectProperty(property: Property) {
-    this.propertiesService.property = property;
-    this.router.navigate(['/properties', property.id]);
   }
 
   public setFilters(filters: string[]) {
