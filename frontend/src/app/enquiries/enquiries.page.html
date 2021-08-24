@@ -7,10 +7,12 @@
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar
-      inputmode="text"
-      spellcheck
+      clearIcon
+      debounce="1300"
+      [(ngModel)]="search"
       animated
-      placeholder="Search Property"
+      (ionChange)="enquiriesList.setSearch(search)"
+      placeholder="Search Enquiry"
     ></ion-searchbar>
     <ion-grid>
       <ion-row>
@@ -57,6 +59,15 @@
 
 <ion-content>
   <div class="enquiries-container">
-    <app-enquiries-list #enquiriesList></app-enquiries-list>
+    <ion-progress-bar
+      style="margin: 4px 0 0 0"
+      type="indeterminate"
+      [hidden]="!progressBar"
+    ></ion-progress-bar>
+
+    <app-enquiries-list
+      #enquiriesList
+      (isLoading)="presentLoading()"
+    ></app-enquiries-list>
   </div>
 </ion-content>

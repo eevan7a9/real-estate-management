@@ -8,6 +8,8 @@ import { PropertyType } from '../shared/enums/property';
   styleUrls: ['./enquiries.page.scss'],
 })
 export class EnquiriesPage implements OnInit {
+  public progressBar = false;
+  public search = '';
   public filterBy: string[] = [];
   public filters = [
     {
@@ -43,4 +45,8 @@ export class EnquiriesPage implements OnInit {
   ngOnInit() {
   }
 
+  public async presentLoading() {
+    this.progressBar = true;
+    setTimeout(() => this.progressBar = false, 1500);
+  }
 }

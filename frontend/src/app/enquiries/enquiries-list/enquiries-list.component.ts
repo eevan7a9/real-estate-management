@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
@@ -16,11 +16,15 @@ import { sortListByDate, sortListByName } from 'src/app/shared/utility';
   styleUrls: ['./enquiries-list.component.scss'],
 })
 export class EnquiriesListComponent implements OnInit, OnDestroy {
+
+  @Output() isLoading = new EventEmitter<boolean>();
   public date = new Date();
   public enquiries: Enquiry[];
   public filterBy: string[] = [];
   public sortBy = 'latest';
+  public searchText = '';
   private unsubscribe$ = new Subject<void>();
+
 
   constructor(
     private enquiriesService: EnquiriesService,
@@ -117,6 +121,18 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
 
   public setSort(sort: string) {
     this.sortBy = sort;
+    this.getEnquiries();
+  }
+
+  public setSearch(text: string) {
+    text = text.trim().toLowerCase();
+    if (this.searchText !== text) {
+      this.searchText = text;
+      this.getEnquiries();
+    }
+  }
+
+  private sortEnquiries() {
     switch (this.sortBy) {
       case 'title':
         this.enquiries = sortListByName(this.enquiries, { property: 'title' });
@@ -128,10 +144,21 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
     }
   }
 
+  private searchEnquiries() {
+    this.enquiries = this.enquiries.filter((item: Enquiry) => {
+      const title = item.title.toLowerCase();
+      const email = item.email.toLowerCase();
+      return title.includes(this.searchText) || email.includes(this.searchText);
+    });
+  }
+
   private getEnquiries() {
+    this.isLoading.emit(true);
     this.unSubscribed();
     this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe(items => {
       this.enquiries = items;
+      this.sortEnquiries();
+      if (this.searchText) { this.searchEnquiries(); };
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
       }
