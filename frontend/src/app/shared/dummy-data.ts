@@ -1,6 +1,7 @@
 import { Property } from './interface/property';
 import { PropertyType } from './enums/property';
 import { Enquiry } from './interface/enquiry';
+import { EnquiryTopic } from './enums/enquiry';
 
 const longText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
   incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation
@@ -13,18 +14,20 @@ const address1 = `BC-12 street. 45 gssto odio dignissimos ducimus 546-43-443 puo
 const address2 = `Cana P05 Fuc Street, Log Town fa 777-733-678-745 puos dolores et quas`;
 const address3 = `Road 34-43-45 gssto DDT dignissimos duc. Visit dolores et quas`;
 
+export const users = {};
+
 export const enquiries: Enquiry[] = [
   {
     content: longText,
-    email: 'user_batman@email.com',
+    email: 'test@email.com',
     id: '01',
     date: new Date('2021/3/3'),
     title: 'Sed ut perspiciatis unde omnis iste?',
-    topic: 'schedule',
+    topic: EnquiryTopic.schedule,
     read: true,
     property: {
-      name: 'Building A, 34-b',
-      id: '02',
+      name: 'Homemaker Grande A',
+      id: '01',
     },
   },
   {
@@ -33,11 +36,11 @@ export const enquiries: Enquiry[] = [
     id: '02',
     date: new Date('2021/4/3'),
     title: 'illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
-    topic: 'payment',
+    topic: EnquiryTopic.payment,
     read: false,
     property: {
-      name: 'Dart Apartment A, 34-b',
-      id: '03',
+      name: 'The Glass Grande Maison B',
+      id: '02',
     },
   },
   {
@@ -46,10 +49,10 @@ export const enquiries: Enquiry[] = [
     id: '03',
     date: new Date('2021/7/13'),
     title: 'Lorem ipsum dolor sit amet, consectetur!!!',
-    topic: 'information',
+    topic: EnquiryTopic.info,
     read: false,
     property: {
-      name: 'Garage Building 23, 34-b',
+      name: 'La Grande Maison Certy C',
       id: '03',
     },
     user: {
@@ -63,11 +66,11 @@ export const enquiries: Enquiry[] = [
     id: '04',
     date: new Date('2021/7/5'),
     title: 'Duis aute irure dolor in reprehenderit in voluptate?',
-    topic: 'sales',
+    topic: EnquiryTopic.sales,
     read: true,
     property: {
-      name: 'Garage Building 23, 34-b',
-      id: '03',
+      name: 'Green Planes 45 E Lorem ipsum',
+      id: '05',
     },
   }
 ];
@@ -88,7 +91,7 @@ export const properties: Property[] = [
     enquiries: ['12'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-    userId: '0002'
+    userId: '01'
   },
   {
     id: '02',
@@ -123,7 +126,7 @@ export const properties: Property[] = [
     enquiries: ['351'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6', 'Item 7', 'Item 8'],
-    userId: '0002'
+    userId: '01'
   },
   {
     id: '04',
@@ -158,7 +161,7 @@ export const properties: Property[] = [
     enquiries: ['231'],
     currency: 'PHP',
     features: [],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '06',
@@ -176,7 +179,7 @@ export const properties: Property[] = [
 
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '07',
@@ -193,7 +196,7 @@ export const properties: Property[] = [
     enquiries: ['89'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '08',
@@ -210,7 +213,7 @@ export const properties: Property[] = [
     enquiries: ['52'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '09',
@@ -227,7 +230,7 @@ export const properties: Property[] = [
     enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '10',
@@ -244,7 +247,7 @@ export const properties: Property[] = [
     enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '11',
@@ -261,7 +264,7 @@ export const properties: Property[] = [
     enquiries: ['13'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '12',
@@ -278,7 +281,7 @@ export const properties: Property[] = [
     enquiries: ['442'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '0201'
   },
   {
     id: '13',
@@ -364,7 +367,7 @@ export const properties: Property[] = [
 
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3'],
-    userId: '0001'
+    userId: '01'
   },
   {
     id: '16',
