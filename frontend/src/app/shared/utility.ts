@@ -1,3 +1,12 @@
+export const headerDict = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'Content-Type': 'application/json',
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  Accept: 'application/json',
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 export const sortListByName = (
   items: any[],
   { asc = true, property = null } = {}
