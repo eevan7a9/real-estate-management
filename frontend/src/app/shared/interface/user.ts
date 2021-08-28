@@ -1,8 +1,11 @@
 export interface User {
-  id: string;
+  id?: string;
   email: string;
   fullName: string;
+  password?: string;
   enquiries?: string[];
   properties?: string[];
   accessToken?: string;
+  aboutMe?: string;
+  location?: string;
 }
