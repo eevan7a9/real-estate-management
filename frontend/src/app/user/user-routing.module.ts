@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -39,11 +40,13 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'signin',
-    component: SigninComponent
+    component: SigninComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
