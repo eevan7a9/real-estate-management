@@ -51,22 +51,25 @@
               <form class="form-information">
                 <ion-item lines="none">
                   <ion-label position="stacked">Email *</ion-label>
-                  <ion-input type="email"></ion-input>
+                  <ion-input type="email" [value]="user?.email"></ion-input>
                 </ion-item>
 
                 <ion-item lines="none">
                   <ion-label position="stacked">Full Name *</ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-input type="text" [value]="user?.fullName"></ion-input>
                 </ion-item>
 
                 <ion-item lines="none">
                   <ion-label position="stacked">About Me:</ion-label>
-                  <ion-textarea placeholder="..."></ion-textarea>
+                  <ion-textarea
+                    placeholder="..."
+                    [value]="user?.aboutMe"
+                  ></ion-textarea>
                 </ion-item>
 
                 <ion-item lines="none">
                   <ion-label position="stacked">Location</ion-label>
-                  <ion-input type="text"></ion-input>
+                  <ion-input type="text" [value]="user?.location"></ion-input>
                 </ion-item>
 
                 <div class="ion-text-end ion-padding-vertical">

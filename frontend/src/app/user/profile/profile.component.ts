@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/shared/interface/user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileComponent implements OnInit {
 
   public imgUrl: any = './assets/images/avatar.png';
-  constructor() { }
+  public user: User;
+  constructor(private userService: UserService) {
+    this.userService.user$.subscribe(data => this.user = data);
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
 
   public toggleUpload() {
     const input = document.getElementById('image-upload');
