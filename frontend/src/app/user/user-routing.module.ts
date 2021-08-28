@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuestGuard } from './auth-guest.guard';
 import { AuthGuard } from './auth.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -36,7 +37,8 @@ const routes: Routes = [
         path: 'notifications',
         component: NotificationsComponent
       },
-    ]
+    ],
+    canActivate: [AuthGuestGuard]
   },
   {
     path: 'register',
