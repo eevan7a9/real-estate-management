@@ -20,6 +20,14 @@ export class UserService {
 
   constructor(private http: HttpClient, private storage: StorageService) {
     this.user$ = this.userSub.asObservable();
+    // Access Stored User
+    this.storage.init().then(() => {
+      this.storage.getUser().then(user => {
+        if (user) {
+          this.updateUser(user);
+        }
+      });
+    });
   }
 
   public get user(): User {
@@ -28,6 +36,11 @@ export class UserService {
 
   public token(): string {
     return this.userSub.getValue().accessToken;
+  }
+
+  public async signOut() {
+    this.userSub.next(null);
+    this.storage.removeUser();
   }
 
   public async signIn(email: string, password: string) {
@@ -49,6 +62,7 @@ export class UserService {
   }
 
   private async updateUser(user: User) {
+    this.userSub.next(user);
     await this.storage.setUser(user);
   }
 }

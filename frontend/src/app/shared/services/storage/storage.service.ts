@@ -50,4 +50,8 @@ export class StorageService {
   public async getUser(): Promise<User> {
     return await this.ionStorage.get('user');
   }
+
+  public async removeUser() {
+    await this.ionStorage.remove('user');
+  }
 }

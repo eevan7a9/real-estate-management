@@ -47,6 +47,17 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="signOut()" lines="none" bu detail="false">
+              <ion-icon
+                slot="start"
+                [ios]="'log-out' + '-outline'"
+                [md]="'log-out' + '-sharp'"
+              ></ion-icon>
+              <ion-label>Sign Out</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
         </ion-list>
       </ion-content>
     </ion-menu>

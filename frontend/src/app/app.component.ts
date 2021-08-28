@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { PropertiesService } from './properties/properties.service';
 import { properties } from './shared/dummy-data';
 import { StorageService } from './shared/services/storage/storage.service';
+import { UserService } from './user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,8 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private storage: StorageService,
-    private propertiesService: PropertiesService
+    private propertiesService: PropertiesService,
+    private user: UserService
   ) { }
 
   async ngOnInit() {
@@ -44,5 +46,9 @@ export class AppComponent implements OnInit {
     if (!this.propertiesService.properties.length) {
       this.propertiesService.properties = properties;
     }
+  }
+
+  public async signOut() {
+    await this.user.signOut();
   }
 }
