@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class PropertiesService {
   constructor() {
     this.properties$ = this.propertiesSub.asObservable();
     this.property$ = this.propertySub.asObservable();
+    this.properties = dummyData;
   }
 
   public get properties(): Property[] {
