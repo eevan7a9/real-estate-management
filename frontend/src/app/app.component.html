@@ -31,6 +31,7 @@
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appLowerPages; let i = index"
+            [hidden]="isHidden(p)"
           >
             <ion-item
               routerDirection="root"
@@ -48,7 +49,7 @@
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-menu-toggle auto-hide="false">
+          <ion-menu-toggle auto-hide="false" [hidden]="!user">
             <ion-item button (click)="signOut()" lines="none" bu detail="false">
               <ion-icon
                 slot="start"
