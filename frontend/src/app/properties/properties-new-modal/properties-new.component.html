@@ -18,10 +18,24 @@
         <ion-input type="text" formControlName="name"></ion-input>
       </ion-item>
 
+      <div
+        class="alert-errors"
+        *ngIf="error && propertyForm.get('name').errors"
+      >
+        <app-alert-card content="Name is not valid."></app-alert-card>
+      </div>
+
       <ion-item lines="none">
         <ion-label position="stacked">Address:</ion-label>
         <ion-input type="text" formControlName="address"></ion-input>
       </ion-item>
+
+      <div
+        class="alert-errors"
+        *ngIf="error && propertyForm.get('address').errors"
+      >
+        <app-alert-card content="Address is not valid."></app-alert-card>
+      </div>
 
       <ion-item lines="none">
         <ion-label position="stacked">Description</ion-label>
@@ -59,6 +73,13 @@
           formControlName="currency"
         ></ion-input>
       </ion-item>
+
+      <div
+        class="alert-errors"
+        *ngIf="error && propertyForm.get('currency').errors"
+      >
+        <app-alert-card content="Currency is not valid."></app-alert-card>
+      </div>
 
       <ion-item lines="none">
         <ion-label position="stacked">Features:</ion-label>

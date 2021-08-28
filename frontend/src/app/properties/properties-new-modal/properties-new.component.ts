@@ -31,6 +31,7 @@ export class PropertiesNewComponent implements OnInit {
     }
   ];
   public step = 1;
+  public error = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -47,7 +48,7 @@ export class PropertiesNewComponent implements OnInit {
       type: [PropertyType.residential],
       // Step 2
       price: ['',],
-      currency: ['', Validators.maxLength(3)],
+      currency: ['PHP', [Validators.maxLength(3), Validators.pattern('^[a-zA-Z ]*$')]],
       features: [''],
       lat: ['0', Validators.required],
       lng: ['0', Validators.required],
@@ -75,7 +76,7 @@ export class PropertiesNewComponent implements OnInit {
       this.presentToast('Property is Added');
       return;
     }
-    console.log('invlid');
+    this.presentToast('Error: Invalid, please fill the form properly', 'danger');
   }
 
   public dismissModal() {
@@ -103,6 +104,7 @@ export class PropertiesNewComponent implements OnInit {
     ) {
       return true;
     }
+    this.error = true;
   }
 
   private validateStepTwo() {
@@ -114,13 +116,14 @@ export class PropertiesNewComponent implements OnInit {
     ) {
       return true;
     }
+    this.error = true;
   }
 
-  private async presentToast(message: string, duration = 3000) {
+  private async presentToast(message: string, color = 'success', duration = 3000) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color: 'success'
+      color
     });
     toast.present();
   }
