@@ -14,10 +14,10 @@
         <app-map-search-field
           (selectedLocation)="mapLeaflet.setMapCenter($event)"
         ></app-map-search-field>
-        <app-map-leaflet
+        <!-- <app-map-leaflet
           #mapLeaflet
           [visibleMarkerType]="visibleType"
-        ></app-map-leaflet>
+        ></app-map-leaflet> -->
         <app-map-markers-legend
           (toggledMarker)="setVisibleMarkerType($event)"
         ></app-map-markers-legend>

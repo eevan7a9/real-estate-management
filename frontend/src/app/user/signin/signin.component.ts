@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { UserService } from '../user.service';
 
@@ -17,7 +18,8 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private user: UserService,
     private toastCtrl: ToastController,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private router: Router
   ) {
     this.signinForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -45,6 +47,7 @@ export class SigninComponent implements OnInit {
         return;
       }
       await this.showToast('Success, You are logged in');
+      this.router.navigateByUrl('/map');
     } catch (error) {
       await loading.dismiss();
       await this.showToast(errMssg, 'danger');
