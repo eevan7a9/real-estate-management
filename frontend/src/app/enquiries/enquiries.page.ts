@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EnquiryTopic } from '../shared/enums/enquiry';
 import { PropertyType } from '../shared/enums/property';
+import { User } from '../shared/interface/user';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-enquiries',
@@ -40,9 +42,12 @@ export class EnquiriesPage implements OnInit {
       label: 'Title'
     },
   ];
-  constructor() { }
+  public user: User;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.user$.subscribe(user => this.user = user);
   }
 
   public async presentLoading() {
