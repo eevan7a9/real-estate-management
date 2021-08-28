@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { headerDict } from '../shared/utility';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../shared/interface/user';
+import { StorageService } from '../shared/services/storage/storage.service';
 
 const url = environment.api.url;
 const requestOptions = {
@@ -17,7 +18,7 @@ export class UserService {
   public user$: Observable<User>;
   private readonly userSub = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: StorageService) {
     this.user$ = this.userSub.asObservable();
   }
 
@@ -47,8 +48,7 @@ export class UserService {
     console.log(user, 'register');
   }
 
-
   private async updateUser(user: User) {
-    console.log('update', user);
+    await this.storage.setUser(user);
   }
 }
