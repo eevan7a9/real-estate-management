@@ -57,8 +57,19 @@ export class UserService {
     }
   }
 
-  public register(user) {
-    console.log(user, 'register');
+  public async register(fullName: string, email: string, password: string) {
+    try {
+      const result = await this.http.post<User>(url + 'auth/register', {
+        fullName,
+        email,
+        password
+      }, requestOptions).toPromise();
+      await this.updateUser(result);
+      return result;
+    } catch (error) {
+      console.log('error', error);
+      return error;
+    }
   }
 
   private async updateUser(user: User) {
