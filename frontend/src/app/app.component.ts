@@ -54,12 +54,7 @@ export class AppComponent implements OnInit {
     if (isDark) {
       document.body.classList.add('dark');
     }
-
     this.userService.user$.subscribe(user => this.user = user);
-
-    setTimeout(() => {
-      console.log(this.user);
-    }, 2000);
   }
 
   public isHidden(link: NavLinks) {
