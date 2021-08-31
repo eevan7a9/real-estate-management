@@ -118,8 +118,20 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
+.logo-container {
+  margin: 0 auto;
+  max-width: 200px;
+  text-align: center;
+}
+.source {
+  margin: -10px 0 24px;
+  a {
+    font-size: 14px;
+    color: var(--ion-color-medium);
+  }
+}
 @media (min-width: 992px) {
   .max-w-400 {
-    max-width: 400px;
+    max-width: 350px;
   }
 }

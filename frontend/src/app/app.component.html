@@ -3,9 +3,15 @@
     <ion-menu class="max-w-400" contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Eevan7a9</ion-list-header>
-          <ion-note>https://github.com/eevan7a9</ion-note>
-
+          <ion-list-header>
+            <div class="logo-container">
+              <img src="../assets/images/logo.png" alt="logo" />
+              <div class="source">
+                <a href="https://github.com/eevan7a9"> github.com/eevan7a9 </a>
+              </div>
+            </div>
+          </ion-list-header>
+          <!-- <ion-note></ion-note> -->
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appPages; let i = index"
