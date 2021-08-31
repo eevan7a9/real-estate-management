@@ -110,8 +110,8 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
       if (this.filterBy.length) {
         this.properties = this.properties.filter(item => this.filterBy.includes(item.type));
       }
+      this.displayedItems = this.properties.slice(0, this.maxDisplayed);
     });
-    this.displayedItems = this.properties.slice(0, this.maxDisplayed);
     this.changeDetector.detectChanges();
   }
 
