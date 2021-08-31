@@ -45,7 +45,7 @@ export class UserService {
 
   public async signIn(email: string, password: string) {
     try {
-      const result = await this.http.post<User>(url + 'auth/login', {
+      const result = await this.http.post<User>(url + 'auth/signin', {
         email,
         password
       }, requestOptions).toPromise();
