@@ -9,12 +9,21 @@
       Message
     </ion-button>
   </ion-item>
+
   <ion-item *ngIf="edit">
     <ion-button expand="block" color="primary" (click)="close('edit')">
       <ion-icon name="pencil-outline" style="margin: 0 8px 0 0"></ion-icon>
       Edit
     </ion-button>
   </ion-item>
+
+  <ion-item>
+    <ion-button expand="block" color="warning" (click)="close('report')">
+      <ion-icon name="flag-outline" style="margin: 0 8px 0 0"></ion-icon>
+      Report
+    </ion-button>
+  </ion-item>
+
   <ion-item *ngIf="delete">
     <ion-button expand="block" color="danger" (click)="close('delete')">
       <ion-icon name="trash-outline" style="margin: 0 8px 0 0"></ion-icon>

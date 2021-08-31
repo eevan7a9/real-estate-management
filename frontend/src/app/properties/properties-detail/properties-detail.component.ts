@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
@@ -20,7 +20,8 @@ export class PropertiesDetailComponent implements OnInit {
     private router: Router,
     private propertiesService: PropertiesService,
     private popoverCtrl: PopoverController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private toastCtrl: ToastController,
   ) { }
 
   async ngOnInit() {
@@ -49,10 +50,14 @@ export class PropertiesDetailComponent implements OnInit {
     }
     if (data.action === 'delete') {
       this.propertiesService.removeProperty(this.property.id);
+      this.presentToast('Success,property deleted');
       this.router.navigate(['/properties']);
     }
     if (data.action === 'edit') {
       this.editModal();
+    }
+    if (data.action === 'report') {
+      this.presentToast('Success, we will take a look at this property.');
     }
   }
 
@@ -67,4 +72,14 @@ export class PropertiesDetailComponent implements OnInit {
     });
     return await modal.present();
   }
+
+  private async presentToast(message: string, color = 'success', duration = 3000) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration,
+      color
+    });
+    toast.present();
+  }
+
 }
