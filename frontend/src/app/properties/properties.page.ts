@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PropertyType } from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
@@ -53,7 +53,8 @@ export class PropertiesPage implements OnInit {
   constructor(
     public modalController: ModalController,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController,
   ) { }
 
   async ngOnInit() { }
@@ -62,6 +63,11 @@ export class PropertiesPage implements OnInit {
     const user = this.userService.user;
     if (!user) {
       this.router.navigateByUrl('/user/signin');
+      this.toastCtrl.create({
+        message: 'Please sign in, to continue',
+        duration: 3000,
+        color: 'danger'
+      }).then(toast => toast.present());
       return;
     }
     const modal = await this.modalController.create({

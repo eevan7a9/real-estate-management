@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ToastController } from '@ionic/angular';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -15,7 +15,8 @@ export class ActionPopupComponent implements OnInit {
   constructor(
     private popupCtrl: PopoverController,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private toastCtrl: ToastController,
   ) { }
 
   ngOnInit() { }
@@ -25,6 +26,11 @@ export class ActionPopupComponent implements OnInit {
     if (!user) {
       this.router.navigateByUrl('user/signin');
       this.popupCtrl.dismiss();
+      this.toastCtrl.create({
+        message: 'Please sign in, to continue',
+        duration: 3000,
+        color: 'danger'
+      }).then(toast => toast.present());
       return;
     }
     this.popupCtrl.dismiss({ action });
