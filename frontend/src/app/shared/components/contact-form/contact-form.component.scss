@@ -1,5 +1,12 @@
-ion-item {
-  --backorund: var(--ion-color-light);
+ion-card {
+  ion-card-title {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  ion-item {
+    --background: var(--ion-color-light);
+    margin: 0 0 8px;
+  }
 }
 
 .alert-errors {
