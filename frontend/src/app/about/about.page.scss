@@ -22,8 +22,15 @@ p.text {
 }
 
 .heading-card {
-  font-size: 24px;
+  font-size: 42px;
   font-weight: bold;
+
+  color: black;
+  -webkit-text-fill-color: var(
+    --ion-color-light-tint
+  ); /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--ion-color-primary-shade);
 }
 
 .separator-line {
@@ -31,9 +38,6 @@ p.text {
   width: 250px;
   border-radius: 2px;
   background: var(--ion-color-primary);
-  &.short {
-    width: 150px;
-  }
 }
 .map-container {
   display: flex;
@@ -56,7 +60,7 @@ p.text {
   ion-card-title {
     font-size: 18px;
     &.heading-card {
-      font-size: 24px;
+      font-size: 42px;
       font-weight: bold;
     }
     ion-text {
@@ -73,6 +77,11 @@ p.text {
 
 .contact-section {
   background: var(--ion-color-primary);
+  background: url(../../assets/images/about/about-bg-contact.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left;
+
   max-width: 1600px;
   margin: 0 auto;
   padding: 16px 0;
@@ -96,11 +105,11 @@ p.text {
 .status-section {
   height: 200px;
   display: flex;
-  background-color: var(--ion-color-light-shade);
   color: var(--ion-color-dark);
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .status {
     font-weight: 700;
   }
