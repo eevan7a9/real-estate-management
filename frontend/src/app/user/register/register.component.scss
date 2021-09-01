@@ -43,7 +43,11 @@ ion-content {
   }
 }
 @media (max-width: 600px) {
+  ion-content {
+    --background: var(--ion-color-dark-contrast);
+  }
   .register-card {
+    margin: 0;
     box-shadow: none;
     min-height: 100%;
     width: 100%;
