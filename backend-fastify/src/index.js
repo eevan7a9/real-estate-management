@@ -1,6 +1,8 @@
+import dotenv from "dotenv";
 import Fastify from "fastify";
 
-const PORT = 8000;
+dotenv.config();
+const PORT = process.env.PORT;
 
 export const fastify = await Fastify({ logger: true });
 
