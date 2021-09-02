@@ -6,7 +6,8 @@ const userProperties = {
   fullName: { type: "string" },
 };
 
-const getUsersOpts = {
+const getUsersOpts = (fastify) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       200: {
@@ -19,11 +20,11 @@ const getUsersOpts = {
     },
   },
   handler: getUsers,
-};
+});
 
 export const usersRoutes = function (fastify, opts, done) {
   // Routes for Register
-  fastify.get("/", getUsersOpts);
+  fastify.get("/", getUsersOpts(fastify));
 
   done();
 };
