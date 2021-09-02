@@ -1,4 +1,5 @@
 import { users } from "../dummy-data/users.js";
+import { fastify } from "../index.js";
 
 export const register = async function (req, res) {
   const { fullName, email, password } = req.body;
@@ -9,7 +10,7 @@ export const register = async function (req, res) {
     res.status(400).send({ message: "Error: User already exists" });
   }
   if (fullName && email && password) {
-    const hashedPassword = password + "hashed";
+    const hashedPassword = await fastify.bcrypt.hash(password);
     const user = {
       id: "newID",
       fullName,

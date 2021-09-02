@@ -17,7 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "fastify": "^3.20.2"
+    "fastify": "^3.20.2",
+    "fastify-bcrypt": "^0.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
