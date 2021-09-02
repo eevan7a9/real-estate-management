@@ -1,5 +1,7 @@
 import dotenv from "dotenv";
 import Fastify from "fastify";
+// Local Files
+import { usersRoutes } from "./routes/users.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -9,6 +11,7 @@ export const fastify = await Fastify({ logger: true });
 fastify.get("/", (_, res) => {
   res.send(true);
 });
+fastify.register(usersRoutes, { prefix: "/users" });
 
 const start = async () => {
   try {
