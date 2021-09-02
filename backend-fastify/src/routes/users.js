@@ -1,10 +1,9 @@
-import { users } from "../dummy-data/users.js";
+import { getUsers } from "../controllers/users.js";
 
 const userProperties = {
   id: { type: "string" },
   email: { type: "string" },
   fullName: { type: "string" },
-  accessToken: { type: "string" },
 };
 
 const getUsersOpts = {
@@ -19,13 +18,12 @@ const getUsersOpts = {
       },
     },
   },
+  handler: getUsers,
 };
 
 export const usersRoutes = function (fastify, opts, done) {
   // Routes for Register
-  fastify.get("/", getUsersOpts, (req, res) => {
-    res.status(200).send(users);
-  });
+  fastify.get("/", getUsersOpts);
 
   done();
 };
