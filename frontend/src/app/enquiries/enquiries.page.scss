@@ -22,42 +22,42 @@ ion-searchbar {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  margin: auto;
+  display: flex;
+  align-items: center;
   height: 100%;
   width: 100%;
-  max-height: 800px;
   max-width: 800px;
-
-  margin: 0 auto;
-
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  position: relative;
   .content {
     display: flex;
     flex-direction: column;
     text-align: center;
     position: absolute;
-    bottom: 50px;
+    bottom: 5%;
+    margin: 24px;
     h1 {
       font-size: 42px;
       font-weight: 900;
     }
     h4 {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
     }
     h1,
     h4 {
       color: black;
       -webkit-text-fill-color: var(
-        --ion-color-primary-shade
+        --ion-color-light-tint
       ); /* Will override color (regardless of order) */
-      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-width: 1.5px;
       -webkit-text-stroke-color: var(--ion-color-primary-shade);
     }
     ion-button {
-      --background: var(--ion-color-white-shade);
+      --background: var(--ion-color-primary);
     }
   }
 }
