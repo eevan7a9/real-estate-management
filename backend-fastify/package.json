@@ -1,0 +1,24 @@
+{
+  "name": "real-estate-management-backend",
+  "version": "1.0.0",
+  "description": "The server side for real-estate-management app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "fastify",
+    "real-estate-management"
+  ],
+  "author": "eevan7a9",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^3.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
