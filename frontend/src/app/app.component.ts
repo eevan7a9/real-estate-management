@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 import { User } from './shared/interface/user';
 
 import { StorageService } from './shared/services/storage/storage.service';
@@ -43,7 +45,8 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   async ngOnInit() {
@@ -55,6 +58,7 @@ export class AppComponent implements OnInit {
       document.body.classList.add('dark');
     }
     this.userService.user$.subscribe(user => this.user = user);
+    this.checkServer();
   }
 
   public isHidden(link: NavLinks) {
@@ -87,7 +91,7 @@ export class AppComponent implements OnInit {
           handler: async () => {
             await this.userService.signOut();
             this.showToast();
-            this.router.navigate(['/map']);
+            this.router.navigate(['/user/signin']);
           }
         }
       ]
@@ -104,5 +108,7 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
-
+  private checkServer() {
+    this.http.get(environment.api.url).toPromise().then(data => console.log(data));
+  }
 }
