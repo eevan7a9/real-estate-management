@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { users } from "../dummy-data/users.js";
 import { fastify } from "../index.js";
 
@@ -12,7 +13,7 @@ export const register = async function (req, res) {
   if (fullName && email && password) {
     const hashedPassword = await fastify.bcrypt.hash(password);
     const user = {
-      id: "newID",
+      id: uuidv4(),
       fullName,
       email,
       password: hashedPassword,
