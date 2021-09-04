@@ -115,6 +115,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     this.map.whenReady(() => {
       setTimeout(() => {
         this.map.invalidateSize();
+        setTimeout(() => {
+          this.map.invalidateSize();
+        }, 3000);
       }, 1000);
     });
     const isDark = await this.storage.getDartTheme();
