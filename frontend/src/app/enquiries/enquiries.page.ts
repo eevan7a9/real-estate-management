@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EnquiryTopic } from '../shared/enums/enquiry';
 import { PropertyType } from '../shared/enums/property';
 import { User } from '../shared/interface/user';
 import { UserService } from '../user/user.service';
+import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
 
 @Component({
   selector: 'app-enquiries',
@@ -10,6 +11,8 @@ import { UserService } from '../user/user.service';
   styleUrls: ['./enquiries.page.scss'],
 })
 export class EnquiriesPage implements OnInit {
+
+  @ViewChild(EnquiriesListComponent) enquiriesList: EnquiriesListComponent;
   public progressBar = false;
   public search = '';
   public filterBy: string[] = [];
@@ -43,6 +46,7 @@ export class EnquiriesPage implements OnInit {
     },
   ];
   public user: User;
+
 
   constructor(private userService: UserService) { }
 
