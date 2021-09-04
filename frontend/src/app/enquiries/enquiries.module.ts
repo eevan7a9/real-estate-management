@@ -27,6 +27,9 @@ import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-fo
     EnquiriesDetailComponent,
     EnquiriesNewComponent,
     EnquiriesNewFormComponent
+  ],
+  exports: [
+    EnquiriesNewFormComponent
   ]
 })
 export class EnquiriesPageModule { }
