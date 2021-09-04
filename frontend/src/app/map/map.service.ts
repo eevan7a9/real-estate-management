@@ -1,6 +1,7 @@
 import { Injectable, } from '@angular/core';
 import * as L from 'leaflet';
 import { Coord } from 'src/app/shared/interface/map';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,9 +11,10 @@ export class MapService {
   constructor() { }
 
   addTiles(map: L.Map, isDark = false) {
-    let mapTiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png';
+    const key = environment.api.mapKey;
+    let mapTiles = `https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=${key}`;
     if (isDark) {
-      mapTiles = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png';
+      mapTiles = `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${key}`;
     }
     const tiles = L.tileLayer(mapTiles, {
       maxZoom: 20,
