@@ -11,6 +11,9 @@ import { AlertCardComponent } from './components/alert-card/alert-card.component
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
 import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.component';
+// FROM MAP MODULE
+import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
+import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
 
 
 @NgModule({
@@ -23,7 +26,9 @@ import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.
     AlertCardComponent,
     ContactFormComponent,
     PropertyCardComponent,
-    EnquiryBadgeComponent
+    EnquiryBadgeComponent,
+    MapLeafletComponent,
+    MapSearchFieldComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +47,9 @@ import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.
     AlertCardComponent,
     ContactFormComponent,
     PropertyCardComponent,
-    EnquiryBadgeComponent
+    EnquiryBadgeComponent,
+    MapLeafletComponent,
+MapSearchFieldComponent
   ],
   providers: [CustomValidatorsDirective]
 })
