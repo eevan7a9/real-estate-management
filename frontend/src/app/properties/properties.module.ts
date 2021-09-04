@@ -10,11 +10,9 @@ import { PropertiesNewComponent } from './properties-new-modal/properties-new.co
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
 import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
-import { MortgageCoreCalcComponent } from '../mortgage-calc/mortgage-core-calc/mortgage-core-calc.component';
 import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
-import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
-import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
-import { EnquiriesNewFormComponent } from '../enquiries/enquiries-new-form/enquiries-new-form.component';
+import { EnquiriesPageModule } from '../enquiries/enquiries.module';
+import { MortgageCalcPageModule } from '../mortgage-calc/mortgage-calc.module';
 
 @NgModule({
   imports: [
@@ -22,6 +20,8 @@ import { EnquiriesNewFormComponent } from '../enquiries/enquiries-new-form/enqui
     IonicModule,
     PropertiesPageRoutingModule,
     SharedModule,
+    EnquiriesPageModule,
+    MortgageCalcPageModule
   ],
   declarations: [
     PropertiesPage,
@@ -29,11 +29,10 @@ import { EnquiriesNewFormComponent } from '../enquiries/enquiries-new-form/enqui
     PropertiesListComponent,
     PropertiesDetailComponent,
     PropertiesEditComponent,
-    MortgageCoreCalcComponent,
-    PropertiesCoordinatesComponent,
-    MapLeafletComponent,
-    MapSearchFieldComponent,
-    EnquiriesNewFormComponent
+    PropertiesCoordinatesComponent
+  ],
+  exports: [
+    PropertiesListComponent
   ]
 })
 export class PropertiesPageModule { }
