@@ -37,9 +37,11 @@ export class ModalSearchComponent implements OnInit, AfterViewInit {
     this.modalCtrl.dismiss(data);
   }
 
-  async searching(text: string) {
+  async searching(event: Event) {
+    const text = (event.target as HTMLTextAreaElement).value;
     this.itemsDisplayed = [];
     this.progress = true;
+
     if (this.searchFunction && text.length > 3) {
       this.itemsDisplayed = await this.searchFunction(text);
       this.progress = false;
