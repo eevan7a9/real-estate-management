@@ -33,10 +33,9 @@ export class PropertiesDetailComponent implements OnInit {
     });
   }
 
-  public async actionPopup(ev: any) {
+  public async actionPopup() {
     const popover = await this.popoverCtrl.create({
       component: ActionPopupComponent,
-      event: ev,
       componentProps: {
         message: false
       },
