@@ -16,7 +16,7 @@
                 debounce="1000"
                 value="mortgageForm.get('price').value"
                 formControlName="price"
-                (ionChange)="formatValue($event.target.value, 'price')"
+                (ionChange)="formatValue($event, 'price')"
               >
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱
@@ -32,7 +32,7 @@
                 debounce="1000"
                 value="mortgageForm.get('downPayment').value"
                 formControlName="downPayment"
-                (ionChange)="formatValue($event.target.value, 'downPayment')"
+                (ionChange)="formatValue($event, 'downPayment')"
               >
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱
@@ -103,7 +103,7 @@
                 min="0"
                 value="mortgageForm.get('propertyTax').value"
                 formControlName="propertyTax"
-                (ionChange)="formatValue($event.target.value, 'propertyTax')"
+                (ionChange)="formatValue($event, 'propertyTax')"
               >
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱
@@ -120,7 +120,7 @@
                 debounce="1000"
                 value="mortgageForm.get('insurance').value"
                 formControlName="insurance"
-                (ionChange)="formatValue($event.target.value, 'insurance')"
+                (ionChange)="formatValue($event, 'insurance')"
               >
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 ₱

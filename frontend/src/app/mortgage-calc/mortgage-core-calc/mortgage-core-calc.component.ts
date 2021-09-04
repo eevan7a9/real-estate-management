@@ -50,7 +50,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     }, 1000);
   }
 
-  public formatValue(value = 0, property: string) {
+  public formatValue(event: Event, property: string) {
+    const value = (event.target as HTMLTextAreaElement).value;
     if (!value) {
       return;
     }
