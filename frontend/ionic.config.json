@@ -1,7 +1,0 @@
-{
-  "name": "real-estate-management",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
