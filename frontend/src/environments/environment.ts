@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   api: {
     url: 'https://rem-db.glitch.me/',
+    mapKey: ''
   }
 };
 
