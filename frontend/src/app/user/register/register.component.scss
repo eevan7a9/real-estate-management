@@ -6,7 +6,7 @@ ion-content {
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  min-height: 100%;
+  min-height: calc(100% - 56px);
   display: flex;
   justify-content: center;
   align-items: center;
