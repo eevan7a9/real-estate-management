@@ -41,6 +41,23 @@ ion-content {
     margin-left: 6px;
   }
 }
+
+.try-user {
+  background-color: var(--ion-color-light-tint);
+  border-radius: 8px;
+  padding: 8px;
+  .try-heading {
+    font-size: 15px;
+  }
+  div {
+    font-size: 14px;
+    padding: 6px 0;
+    line-height: 100%;
+    strong {
+      margin-right: 8px;
+    }
+  }
+}
 @media (max-width: 600px) {
   ion-content {
     --background: var(--ion-color-dark-contrast);
