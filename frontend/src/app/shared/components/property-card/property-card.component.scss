@@ -23,20 +23,7 @@
   font-weight: bold;
   color: var(--ion-color-dark);
 }
-
-.top-img {
-  position: relative;
-  .overlay-container {
-    background-color: transparent;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-  }
-  img {
-    height: 150px;
-    width: 100%;
-    object-fit: cover;
-    border: 0;
-  }
+.profile-image {
+  height: 200px;
+  width: 100%;
 }

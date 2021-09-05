@@ -1,5 +1,8 @@
 <ion-card>
-  <img src="assets/images/madison.jpeg" />
+  <img
+    class="profile-image"
+    [src]="property.profileImage || 'assets/images/madison.jpeg'"
+  />
   <ion-card-header>
     <app-property-badge [type]="property.type"></app-property-badge>
     <ion-card-title class="name">

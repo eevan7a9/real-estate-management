@@ -1,5 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-property-gallery',
@@ -7,6 +6,7 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['./property-gallery.component.scss'],
 })
 export class PropertyGalleryComponent implements OnInit {
+  @Input() images: { src: string }[] = [];
   public imagePresented = 'assets/images/no-image.jpeg';
   public slideOpts = {
     initialSlide: 0,
@@ -16,19 +16,14 @@ export class PropertyGalleryComponent implements OnInit {
     freeModeSticky: false,
     slidesPerView: 'auto',
   };
-  public images = [
-    { src: 'https://cdn.pixabay.com/photo/2016/11/18/17/20/living-room-1835923__340.jpg' },
-    { src: 'https://cdn.pixabay.com/photo/2017/07/30/23/59/garlic-2556022__340.jpg' },
-    { src: 'https://cdn.pixabay.com/photo/2015/03/26/09/42/bedroom-690129__340.jpg' },
-    { src: '' },
-    { src: '' },
-  ];
-
   constructor() { }
 
   ngOnInit() {
-    if (this.images[0].src) {
+    if (this.images?.length) {
+      console.log(this.images, 'has images');
       this.imagePresented = this.images[0].src;
+    } else {
+      console.log('no images');
     }
   }
 
