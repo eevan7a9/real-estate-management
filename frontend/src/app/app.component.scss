@@ -123,11 +123,13 @@ ion-item.selected {
   max-width: 200px;
   text-align: center;
 }
-.source {
+.logo-title {
   margin: -10px 0 24px;
   a {
     font-size: 14px;
-    color: var(--ion-color-medium);
+    color: var(--ion-color-dark-tint);
+    line-height: 100%;
+    text-decoration: none;
   }
 }
 @media (min-width: 992px) {

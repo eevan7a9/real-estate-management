@@ -14,6 +14,7 @@ import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.
 // FROM MAP MODULE
 import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
 import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MapSearchFieldComponent } from '../map/map-search-field/map-search-fiel
     PropertyCardComponent,
     EnquiryBadgeComponent,
     MapLeafletComponent,
-    MapSearchFieldComponent
+    MapSearchFieldComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { MapSearchFieldComponent } from '../map/map-search-field/map-search-fiel
     PropertyCardComponent,
     EnquiryBadgeComponent,
     MapLeafletComponent,
-MapSearchFieldComponent
+    MapSearchFieldComponent,
+    FooterComponent
   ],
   providers: [CustomValidatorsDirective]
 })

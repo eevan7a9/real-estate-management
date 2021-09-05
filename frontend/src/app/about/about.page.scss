@@ -101,19 +101,3 @@ p.text {
     }
   }
 }
-
-.status-section {
-  height: 200px;
-  display: flex;
-  color: var(--ion-color-dark);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .status {
-    font-weight: 700;
-  }
-  a {
-    color: var(--ion-color-dark);
-  }
-}

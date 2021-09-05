@@ -9,15 +9,15 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
+    <ion-row class="h-100">
       <ion-col size="12" sizeLg="8" sizeXl="9" class="map-section">
         <app-map-search-field
           (selectedLocation)="mapLeaflet.setMapCenter($event)"
         ></app-map-search-field>
-        <app-map-leaflet
+        <!-- <app-map-leaflet
           #mapLeaflet
           [visibleMarkerType]="visibleType"
-        ></app-map-leaflet>
+        ></app-map-leaflet> -->
         <app-map-markers-legend
           (toggledMarker)="setVisibleMarkerType($event)"
         ></app-map-markers-legend>
@@ -42,6 +42,10 @@
             [limit]="10"
           ></app-properties-list>
         </div>
+      </ion-col>
+
+      <ion-col size="12" class="ion-no-padding ion-hide-lg-up">
+        <app-footer></app-footer>
       </ion-col>
     </ion-row>
   </ion-grid>
