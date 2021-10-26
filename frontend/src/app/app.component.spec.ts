@@ -1,5 +1,7 @@
+import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -13,7 +15,9 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [ RouterTestingModule.withRoutes([])],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        ReactiveFormsModule, HttpClientModule],
     }).compileComponents();
   }));
 

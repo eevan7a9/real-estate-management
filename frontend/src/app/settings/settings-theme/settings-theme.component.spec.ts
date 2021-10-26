@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 import { SettingsThemeComponent } from './settings-theme.component';
 
@@ -10,7 +11,8 @@ describe('SettingsThemeComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SettingsThemeComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [ Storage ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsThemeComponent);
