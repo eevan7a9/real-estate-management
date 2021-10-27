@@ -4,6 +4,7 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { RouterTestingModule } from '@angular/router/testing';
+import { Storage } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
 
@@ -18,6 +19,7 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([]),
         ReactiveFormsModule, HttpClientModule],
+      providers: [ Storage ]
     }).compileComponents();
   }));
 
@@ -32,9 +34,9 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-label');
-    expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].textContent).toContain('Inbox');
-    expect(menuItems[1].textContent).toContain('Outbox');
+    expect(menuItems.length).toEqual(10);
+    expect(menuItems[0].textContent).toContain('Map');
+    expect(menuItems[1].textContent).toContain('Properties');
   }));
 
   it('should have urls', waitForAsync(() => {
@@ -42,9 +44,9 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const app = fixture.nativeElement;
     const menuItems = app.querySelectorAll('ion-item');
-    expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/folder/Inbox');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/folder/Outbox');
+    expect(menuItems.length).toEqual(10);
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/map');
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/properties');
   }));
 
 });

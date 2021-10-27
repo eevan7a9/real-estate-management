@@ -54,23 +54,25 @@ export class PropertiesEditComponent implements OnInit {
   ngOnInit() {
     this.propertiesService.property$.subscribe(property => {
       this.property = property;
-      const {
-        name, address, description, type, price, currency, features, position
-      } = property;
+      if (property) {
+        const {
+          name, address, description, type, price, currency, features, position
+        } = property;
 
-      this.propertyForm.patchValue(
-        {
-          name,
-          address,
-          description,
-          type,
-          price,
-          currency,
-          features: features ? features.join(', ').trim() : '',
-          lat: position.lat,
-          lng: position.lng
-        }
-      );
+        this.propertyForm.patchValue(
+          {
+            name,
+            address,
+            description,
+            type,
+            price,
+            currency,
+            features: features ? features.join(', ').trim() : '',
+            lat: position.lat,
+            lng: position.lng
+          }
+        );
+      }
     });
   }
 

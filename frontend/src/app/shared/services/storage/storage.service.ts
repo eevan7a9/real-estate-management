@@ -24,7 +24,7 @@ export class StorageService {
   }
 
   public async get(key: string) {
-    return await this.ionStorage.get(key);
+    return await this.ionStorage?.get(key);
   }
 
   public async setDarkTheme(value: boolean) {
@@ -32,26 +32,26 @@ export class StorageService {
   }
 
   public async getDartTheme(): Promise<boolean> {
-    return await this.ionStorage.get('isDark');
+    return await this.ionStorage?.get('isDark');
   }
 
   public async setCoord(coord: Coord) {
-    await this.ionStorage.set('coord', coord);
+    await this.ionStorage?.set('coord', coord);
   }
 
   public async getCoord(): Promise<Coord> {
-    return await this.ionStorage.get('coord');
+    return await this.ionStorage?.get('coord');
   }
 
   public async setUser(user: User) {
-    await this.ionStorage.set('user', user);
+    await this.ionStorage?.set('user', user);
   }
 
   public async getUser(): Promise<User> {
-    return await this.ionStorage.get('user');
+    return await this.ionStorage?.get('user');
   }
 
   public async removeUser() {
-    await this.ionStorage.remove('user');
+    await this.ionStorage?.remove('user');
   }
 }

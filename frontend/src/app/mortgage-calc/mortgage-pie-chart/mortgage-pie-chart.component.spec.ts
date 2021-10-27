@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
+import { Storage } from '@ionic/storage-angular';
 import { MortgagePieChartComponent } from './mortgage-pie-chart.component';
 
 describe('MortgagePieChartComponent', () => {
@@ -10,7 +10,8 @@ describe('MortgagePieChartComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MortgagePieChartComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [Storage]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MortgagePieChartComponent);

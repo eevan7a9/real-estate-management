@@ -30,7 +30,7 @@
                 [ios]="p.icon + '-outline'"
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label>{{ p.title || "Menu Item" }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
@@ -53,7 +53,7 @@
                 [ios]="p.icon + '-outline'"
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label>{{ p.title || "Menu Item" }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
 

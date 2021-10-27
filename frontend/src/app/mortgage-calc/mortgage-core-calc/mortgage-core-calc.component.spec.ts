@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 
 import { MortgageCoreCalcComponent } from './mortgage-core-calc.component';
 
@@ -10,7 +12,8 @@ describe('MortgageCoreCalcComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MortgageCoreCalcComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), ReactiveFormsModule],
+      providers: [CustomValidatorsDirective]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MortgageCoreCalcComponent);

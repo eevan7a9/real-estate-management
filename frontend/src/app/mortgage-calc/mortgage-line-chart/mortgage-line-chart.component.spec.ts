@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 import { MortgageLineChartComponent } from './mortgage-line-chart.component';
 
@@ -10,7 +11,8 @@ describe('MortgageLineChartComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ MortgageLineChartComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [Storage]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MortgageLineChartComponent);

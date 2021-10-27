@@ -1,25 +1,25 @@
 <ion-card>
   <img
     class="profile-image"
-    [src]="property.profileImage || 'assets/images/madison.jpeg'"
+    [src]="property?.profileImage || 'assets/images/madison.jpeg'"
   />
   <ion-card-header>
-    <app-property-badge [type]="property.type"></app-property-badge>
+    <app-property-badge [type]="property?.type"></app-property-badge>
     <ion-card-title class="name">
-      {{ property.name }}
+      {{ property?.name }}
     </ion-card-title>
 
     <div>
-      {{ property.date | date }}
+      {{ property?.date | date }}
     </div>
   </ion-card-header>
   <ion-card-content>
     <div class="desc">
-      {{ property.description }}
+      {{ property?.description }}
     </div>
 
     <div class="price">
-      {{ property.price | currency: "PHP" }}
+      {{ property?.price | currency: "PHP" }}
     </div>
     <ion-button
       (click)="selectProperty(property)"
