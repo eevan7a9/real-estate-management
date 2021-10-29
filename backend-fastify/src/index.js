@@ -4,6 +4,7 @@ import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "fastify-jwt";
 import FastifyCors from "fastify-cors";
 import FastifySwagger from "fastify-swagger";
+import mongoose from "mongoose";
 // Local Files
 import { usersRoutes } from "./routes/users.js";
 import { authRoutes } from "./routes/auth.js";
@@ -29,16 +30,18 @@ fastify.register(FastifySwagger, {
     },
   },
 });
+// We add Secret Key
 fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
+// We add Salt
 fastify.register(FastifyBcrypt, {
   saltWorkFactor: Number(process.env.SALT) || 12,
 });
-// allowed cors
+// We allowed cors
 fastify.register(FastifyCors, {
   // put your options here
   origin: ["http://localhost:9000"],
 });
-// added authenticate
+// We register authenticate
 fastify.decorate("authenticate", async function (request, reply) {
   try {
     await request.jwtVerify();
@@ -46,7 +49,7 @@ fastify.decorate("authenticate", async function (request, reply) {
     reply.send(err);
   }
 });
-
+// We set the routes
 fastify.get("/", (_, res) => {
   res.send(true);
 });
@@ -63,5 +66,10 @@ const start = async () => {
     fastify.log.error(error);
   }
 };
-
-start();
+mongoose
+  .connect(process.env.DB_CONNECT, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => start())
+  .catch((e) => fastify.log.error(e));
