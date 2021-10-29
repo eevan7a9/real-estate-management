@@ -23,6 +23,7 @@ both **frontend/** & **backend-fastify/** are work in progress.😕
 ### **Backend**
 - Node
 - fastify 3+
+- mongoDB
 
 # **SETUP**
 
