@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import { users } from "../dummy-data/users.js";
 import { fastify } from "../index.js";
 import { User } from "../models/users.js";
 
@@ -11,12 +10,14 @@ export const register = async function (req, res) {
       const newUser = new User({
         user_id: uuidv4(),
         fullName,
-        email,
+        email: email.toLowerCase(),
         password: hashedPassword,
       });
       const { user_id } = await newUser.save();
       const accessToken = fastify.jwt.sign({ id: newUser.user_id });
-      res.status(201).send({ user_id, email, fullName, accessToken });
+      res
+        .status(201)
+        .send({ user_id, email: email.toLowerCase(), fullName, accessToken });
     } catch (error) {
       res.send(error);
     }
@@ -26,8 +27,15 @@ export const register = async function (req, res) {
 
 export const signIn = async function (req, res) {
   const { email, password } = req.body;
-  const foundUser = users.find((user) => user.email === email);
-  if (foundUser) {
+  try {
+    const foundUser = await User.findOne({ email: email.toLowerCase() });
+    if (!foundUser) {
+      res.status(404).send({
+        statusCode: 404,
+        error: "Internal Server Error",
+        message: "Error: We can't find a user with that e-mail address.",
+      });
+    }
     const validPassword = await fastify.bcrypt.compare(
       password,
       foundUser.password
@@ -46,6 +54,7 @@ export const signIn = async function (req, res) {
       email: foundUser.email,
       accessToken,
     });
+  } catch (error) {
+    res.status(404).send({ message: "Error: Something went wrong." });
   }
-  res.status(404).send({ message: "Error: Invalid email." });
 };

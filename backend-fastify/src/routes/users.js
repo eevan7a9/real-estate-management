@@ -1,7 +1,8 @@
 import { getUsers } from "../controllers/users.js";
 
 const userProperties = {
-  id: { type: "string" },
+  _id: { type: "string" },
+  user_id: { type: "string" },
   email: { type: "string" },
   fullName: { type: "string" },
 };
