@@ -1,19 +1,12 @@
 import { register, signIn } from "../controllers/auth.js";
-
-const userProperties = {
-  id: { type: "string" },
-  email: { type: "string" },
-  fullName: { type: "string" },
-  accessToken: { type: "string" },
-  password: { type: "string" },
-};
+import { userAuthResponse } from "../models/users.js";
 
 const registerOpts = {
   schema: {
     response: {
       201: {
         type: "object",
-        properties: userProperties,
+        properties: userAuthResponse,
       },
     },
   },
@@ -25,7 +18,7 @@ const signInOpts = {
     response: {
       200: {
         type: "object",
-        properties: userProperties,
+        properties: userAuthResponse,
       },
     },
   },
