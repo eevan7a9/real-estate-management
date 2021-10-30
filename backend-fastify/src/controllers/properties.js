@@ -33,3 +33,24 @@ export const createProperty = async function (req, res) {
     res.send(error);
   }
 };
+
+export const deleteProperty = async function (req, res) {
+  const { id } = req.params;
+  try {
+    const property = await Property.findOneAndDelete({ property_id: id });
+
+    if (property) {
+      console.log(property);
+      res
+        .status(200)
+        .send({
+          ...property.toObject(),
+          message: "Success: Property deleted!",
+        });
+      return;
+    }
+    res.status(404).send({ message: "Error: Can't find property." });
+  } catch (error) {
+    res.send(error);
+  }
+};
