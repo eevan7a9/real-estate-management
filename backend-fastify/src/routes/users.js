@@ -1,31 +1,7 @@
 import { getUsers } from "../controllers/users.js";
-
-const userProperties = {
-  _id: { type: "string" },
-  user_id: { type: "string" },
-  email: { type: "string" },
-  fullName: { type: "string" },
-};
-
-const getUsersOpts = (fastify) => ({
-  preValidation: [fastify.authenticate],
-  schema: {
-    response: {
-      200: {
-        type: "array",
-        items: {
-          type: "object",
-          properties: userProperties,
-        },
-      },
-    },
-  },
-  handler: getUsers,
-});
+import { getUsersOpts } from "./options/users.js";
 
 export const usersRoutes = function (fastify, opts, done) {
-  // Routes for Register
-  fastify.get("/", getUsersOpts(fastify));
-
+  fastify.get("/", getUsersOpts(getUsers, fastify));
   done();
 };
