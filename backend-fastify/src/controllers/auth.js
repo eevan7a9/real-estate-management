@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { fastify } from "../index.js";
-import { User } from "../models/users.js";
+import { User } from "../models/user.js";
 
 export const register = async function (req, res) {
   const { fullName, email, password } = req.body;

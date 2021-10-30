@@ -28,12 +28,3 @@ const userSchema = new mongoose.Schema(
 );
 
 export const User = mongoose.model("User", userSchema);
-
-export const authResponseProperties = {
-  id: { type: "string" },
-  user_id: { type: "string" },
-  email: { type: "string" },
-  fullName: { type: "string" },
-  accessToken: { type: "string" },
-  password: { type: "string" },
-};
