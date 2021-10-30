@@ -1,5 +1,5 @@
 import { register, signIn } from "../controllers/auth.js";
-import { authProperties } from "./response/auth.js";
+import { authProperties } from "./options/auth.js";
 
 const registerOpts = {
   schema: {
