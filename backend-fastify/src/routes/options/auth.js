@@ -9,3 +9,21 @@ export const authProperties = {
   },
 };
 Object.freeze(authProperties);
+
+export const registerOpts = (handler) => ({
+  schema: {
+    response: {
+      201: authProperties,
+    },
+  },
+  handler: handler,
+});
+
+export const signInOpts = (handler) => ({
+  schema: {
+    response: {
+      200: authProperties,
+    },
+  },
+  handler: handler,
+});
