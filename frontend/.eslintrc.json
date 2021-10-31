@@ -35,6 +35,21 @@
             "prefix": "app",
             "style": "camelCase"
           }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": [
+              "camelCase",
+              "strictCamelCase",
+              "PascalCase",
+              "StrictPascalCase",
+              "snake_case"
+            ],
+            "leadingUnderscore": "allow",
+            "trailingUnderscore": "allow"
+          }
         ]
       }
     },
