@@ -10,8 +10,10 @@ const propertySchema = new mongoose.Schema(
     position: { lat: Number, lng: Number },
     price: { type: Number },
     enquiries: { type: Array },
-    currency: { type: String },
     features: { type: Array },
+    currency: { type: String },
+    contactNumber: { type: String },
+    contactEmail: { type: String },
     user_id: { type: String },
   },
   {
