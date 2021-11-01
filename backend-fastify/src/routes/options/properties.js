@@ -13,6 +13,8 @@ const propertyProperties = {
     price: { type: "number" },
     enquiries: { type: "array" },
     features: { type: "array" },
+    profileImage: { type: "string" },
+    images: { type: "array" },
     currency: { type: "string" },
     contactNumber: { type: "string" },
     contactEmail: { type: "string" },

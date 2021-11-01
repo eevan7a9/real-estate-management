@@ -11,6 +11,8 @@ const propertySchema = new mongoose.Schema(
     price: { type: Number },
     enquiries: { type: Array },
     features: { type: Array },
+    profileImage: { type: String },
+    images: { type: Array },
     currency: { type: String },
     contactNumber: { type: String },
     contactEmail: { type: String },
