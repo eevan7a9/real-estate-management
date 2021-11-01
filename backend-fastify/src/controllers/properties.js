@@ -1,6 +1,11 @@
 import { Property } from "../models/property.js";
 import { v4 as uuidv4 } from "uuid";
 
+import fs from "fs";
+import util from "util";
+import { pipeline } from "stream";
+const pump = util.promisify(pipeline);
+
 export const getProperties = async function (_, res) {
   const properties = await Property.find();
   res.status(200).send(properties);
@@ -99,6 +104,19 @@ export const deleteProperty = async function (req, res) {
       return;
     }
     res.status(404).send({ message: "Error: Can't find property." });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const addImagesProperty = async function (req, res) {
+  try {
+    const data = await req.file();
+    data.fieldname;
+
+    fs.statSync("uploads/");
+    await pump(data.file, fs.createWriteStream(data.filename));
+    res.send({ message: data.filename + " is uploaded" });
   } catch (error) {
     res.send(error);
   }

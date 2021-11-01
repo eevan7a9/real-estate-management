@@ -2,8 +2,9 @@ import {
   getProperties,
   getProperty,
   createProperty,
-  deleteProperty,
   updateProperty,
+  deleteProperty,
+  addImagesProperty,
 } from "../controllers/properties.js";
 import {
   getPropertiesOpts,
@@ -19,5 +20,6 @@ export const propertiesRoutes = function (fastify, opts, done) {
   fastify.post("/", createPropertyOpts(createProperty));
   fastify.patch("/:id", updatePropertyOpts(updateProperty));
   fastify.delete("/:id", deletePropertyOpts(deleteProperty));
+  fastify.post("/upload/images/:id", addImagesProperty);
   done();
 };
