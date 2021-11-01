@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./property-gallery.component.scss'],
 })
 export class PropertyGalleryComponent implements OnInit {
-  @Input() images: { src: string }[] = [];
+  @Input() images: string[] = [];
   public imagePresented = 'assets/images/no-image.jpeg';
   public slideOpts = {
     initialSlide: 0,
@@ -20,10 +20,7 @@ export class PropertyGalleryComponent implements OnInit {
 
   ngOnInit() {
     if (this.images?.length) {
-      console.log(this.images, 'has images');
-      this.imagePresented = this.images[0].src;
-    } else {
-      console.log('no images');
+      this.imagePresented = this.images[0];
     }
   }
 
