@@ -4,6 +4,7 @@ import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "fastify-jwt";
 import FastifyCors from "fastify-cors";
 import FastifySwagger from "fastify-swagger";
+import FastifyMultipart from 'fastify-multipart';
 import mongoose from "mongoose";
 // Local Files
 import { usersRoutes } from "./routes/users.js";
@@ -30,6 +31,8 @@ fastify.register(FastifySwagger, {
     },
   },
 });
+// We allow Multi Part Form
+fastify.register(FastifyMultipart);
 // We add Secret Key
 fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
 // We add Salt
