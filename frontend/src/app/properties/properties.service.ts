@@ -41,15 +41,15 @@ export class PropertiesService {
   }
 
   public removeProperty(propId: string) {
-    const properties = this.properties.filter(property => property.id !== propId);
+    const properties = this.properties.filter(property => property.property_id !== propId);
     this.properties = properties;
   }
 
   public updateProperty(updated: Property) {
-    let findProperty = this.properties.find((property: Property) => property.id === updated.id);
+    let findProperty = this.properties.find((property: Property) => property.property_id === updated.property_id);
     findProperty = { ...findProperty, ...updated };
 
-    this.properties = this.properties.map(property => (property.id === updated.id) ?
+    this.properties = this.properties.map(property => (property.property_id === updated.property_id) ?
       findProperty : property);
     this.property = findProperty;
   }

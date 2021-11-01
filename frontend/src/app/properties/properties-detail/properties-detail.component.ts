@@ -48,7 +48,7 @@ export class PropertiesDetailComponent implements OnInit {
       return;
     }
     if (data.action === 'delete') {
-      this.propertiesService.removeProperty(this.property.id);
+      this.propertiesService.removeProperty(this.property.property_id);
       this.presentToast('Success,property deleted');
       this.router.navigate(['/properties']);
     }

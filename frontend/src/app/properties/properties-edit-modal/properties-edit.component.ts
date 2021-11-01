@@ -80,19 +80,30 @@ export class PropertiesEditComponent implements OnInit {
     if (!this.propertyForm.valid) {
       return;
     }
-    const { name, address, description, type, date, price, currency, features, lat, lng } = this.propertyForm.value;
+    const {
+      name,
+      address,
+      description,
+      type,
+      updatedAt,
+      price,
+      currency,
+      features,
+      lat,
+      lng,
+    } = this.propertyForm.value;
     const editedProperty: Property = {
-      id: this.property.id,
+      property_id: this.property.property_id,
       name,
       address,
       description,
       type,
       price,
       currency,
-      date,
+      updatedAt,
       features: features.split(',').filter((item: string) => item.trim() !== ''),
       position: { lat, lng },
-      userId: this.property.userId
+      user_id: this.property.user_id
     };
     const property = { ...this.property, ...editedProperty };
     this.propertiesService.updateProperty(property);

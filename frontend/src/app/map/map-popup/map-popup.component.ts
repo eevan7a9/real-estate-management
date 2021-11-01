@@ -13,12 +13,13 @@ export class MapPopupComponent implements OnInit {
   constructor(
     public changeDetector: ChangeDetectorRef,
     private router: Router,
-    private propertiesService: PropertiesService) { }
+    private propertiesService: PropertiesService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   viewMore() {
     this.propertiesService.property = this.property;
-    this.router.navigate(['/properties', this.property.id]);
+    this.router.navigate(['/properties', this.property.property_id]);
   }
 }

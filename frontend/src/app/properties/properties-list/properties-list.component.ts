@@ -89,7 +89,7 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
         this.properties = sortListByNumber(this.properties, { property: 'price' });
         break;
       default:
-        this.properties = sortListByDate(this.properties, { property: 'date' });
+        this.properties = sortListByDate(this.properties, { property: 'updatedAt' });
         break;
     }
   }
