@@ -4,8 +4,10 @@ import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "fastify-jwt";
 import FastifyCors from "fastify-cors";
 import FastifySwagger from "fastify-swagger";
-import FastifyMultipart from 'fastify-multipart';
+import FastifyMultipart from "fastify-multipart";
+import FastifyStatic from "fastify-static";
 import mongoose from "mongoose";
+import path from "path";
 // Local Files
 import { usersRoutes } from "./routes/users.js";
 import { authRoutes } from "./routes/auth.js";
@@ -33,6 +35,12 @@ fastify.register(FastifySwagger, {
 });
 // We allow Multi Part Form
 fastify.register(FastifyMultipart);
+// We serve uploaded files
+const __dirname = path.resolve(path.dirname(""));
+fastify.register(FastifyStatic, {
+  root: path.join(__dirname, "uploads"),
+  prefix: "/uploads",
+});
 // We add Secret Key
 fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
 // We add Salt

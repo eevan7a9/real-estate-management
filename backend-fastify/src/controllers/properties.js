@@ -111,15 +111,26 @@ export const deleteProperty = async function (req, res) {
 };
 
 export const addImagesProperty = async function (req, res) {
+  const property_id = req.params.id;
   try {
+    // We check if property exists
+    const foundProperty = await Property.findOne({ property_id });
+    if (!foundProperty) {
+      res.status(404).send({ message: "Error: Can't find property." });
+      return;
+    }
+    // If property do exist save uploaded files
     const parts = await req.files();
     for await (const data of parts) {
-      data.fieldname;
+      const imgName = new Date().getTime() + "-" + data.filename;
       fs.statSync("uploads/");
       await pump(
         data.file,
-        fs.createWriteStream(path.join(process.cwd(), "uploads", data.filename))
+        fs.createWriteStream(path.join(process.cwd(), "uploads", imgName))
       );
+      // We update Property images
+      foundProperty.images.push(req.headers.host + "/uploads/" + imgName);
+      foundProperty.save();
     }
     res.send({ message: "Files are uploaded." });
   } catch (error) {
