@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import fs from "fs";
 import util from "util";
+import path from "path";
 import { pipeline } from "stream";
 const pump = util.promisify(pipeline);
 
@@ -111,12 +112,16 @@ export const deleteProperty = async function (req, res) {
 
 export const addImagesProperty = async function (req, res) {
   try {
-    const data = await req.file();
-    data.fieldname;
-
-    fs.statSync("uploads/");
-    await pump(data.file, fs.createWriteStream(data.filename));
-    res.send({ message: data.filename + " is uploaded" });
+    const parts = await req.files();
+    for await (const data of parts) {
+      data.fieldname;
+      fs.statSync("uploads/");
+      await pump(
+        data.file,
+        fs.createWriteStream(path.join(process.cwd(), "uploads", data.filename))
+      );
+    }
+    res.send({ message: "Files are uploaded." });
   } catch (error) {
     res.send(error);
   }
