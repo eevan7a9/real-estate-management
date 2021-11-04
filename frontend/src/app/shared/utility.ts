@@ -23,8 +23,8 @@ export const sortListByDate = (
   items: any[],
   { latest = true, property = null } = {}
 ) => items.sort((a: any, b: any) => {
-  const aDate = property ? a[property].getTime() : a.getTime();
-  const bDate = property ? b[property].getTime() : b.getTime();
+  const aDate = property ? new Date(a[property]).getTime() : new Date(a).getTime();
+  const bDate = property ? new Date(b[property]).getTime() : new Date(b).getTime();
   if (!latest) {
     return aDate > bDate ? 1 : aDate < bDate ? -1 : 0;
   }
