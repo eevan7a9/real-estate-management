@@ -45,6 +45,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.propertiesService.properties$.subscribe(properties => {
       this.properties = properties;
+      if (this.map) {
+        this.setMapMarkers();
+      }
     });
     this.initMap().then(() => {
 
