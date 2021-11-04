@@ -10,7 +10,6 @@ export interface Property {
   price: number;
   enquiries?: string[];
   features?: string[];
-  profileImage?: string;
   images?: string[];
   currency?: string;
   contactNumber?: string;

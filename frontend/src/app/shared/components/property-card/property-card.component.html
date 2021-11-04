@@ -1,7 +1,13 @@
 <ion-card>
   <img
     class="profile-image"
-    [src]="property?.profileImage || 'assets/images/madison.jpeg'"
+    [src]="property?.images[0]"
+    *ngIf="property?.images?.length"
+  />
+  <img
+    class="profile-image"
+    [src]="'assets/images/madison.jpeg'"
+    *ngIf="!property?.images"
   />
   <ion-card-header>
     <app-property-badge [type]="property?.type"></app-property-badge>
