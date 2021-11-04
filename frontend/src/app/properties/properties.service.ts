@@ -1,7 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { properties as dummyData } from '../shared/dummy-data';
+import { environment } from 'src/environments/environment';
+// import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
+
+const propertyUrl = environment.api.url+'properties';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +17,10 @@ export class PropertiesService {
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
   private readonly propertySub = new BehaviorSubject<Property>(null);
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.properties$ = this.propertiesSub.asObservable();
     this.property$ = this.propertySub.asObservable();
-    this.properties = dummyData;
+    this.fetchProperties();
   }
 
   public get properties(): Property[] {
@@ -34,6 +38,12 @@ export class PropertiesService {
 
   public set property(property: Property) {
     this.propertySub.next(property);
+  }
+
+  public async fetchProperties(): Promise<void> {
+    this.http.get<Property[]>(propertyUrl).toPromise().then(data => {
+      this.properties = data;
+    });
   }
 
   public addProperty(property: Property) {
