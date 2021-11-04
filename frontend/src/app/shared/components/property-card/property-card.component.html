@@ -7,7 +7,7 @@
   <img
     class="profile-image"
     [src]="'assets/images/madison.jpeg'"
-    *ngIf="!property?.images"
+    *ngIf="!property?.images || !property?.images.length"
   />
   <ion-card-header>
     <app-property-badge [type]="property?.type"></app-property-badge>
