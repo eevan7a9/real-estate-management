@@ -1,11 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 // import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
+import { headerDict } from '../shared/utility';
 
 const propertyUrl = environment.api.url+'properties';
+const requestOptions = {
+  headers: new HttpHeaders(headerDict),
+};
 
 @Injectable({
   providedIn: 'root'
@@ -41,13 +45,22 @@ export class PropertiesService {
   }
 
   public async fetchProperties(): Promise<void> {
-    this.http.get<Property[]>(propertyUrl).toPromise().then(data => {
-      this.properties = data;
-    });
+    try {
+      this.properties = await this.http.get<Property[]>(propertyUrl).toPromise();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  public addProperty(property: Property) {
-    this.properties = [...this.properties, property];
+  public async addProperty(property: Property) {
+    try {
+      const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
+        .toPromise();
+      this.properties = [...this.properties, newProperty];
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   public removeProperty(propId: string) {

@@ -70,10 +70,10 @@ export class PropertiesPage implements OnInit {
       }).then(toast => toast.present());
       return;
     }
-    const modal = await this.modalController.create({
+    const modalPropertiesNew = await this.modalController.create({
       component: PropertiesNewComponent
     });
-    return await modal.present();
+    await modalPropertiesNew.present();
   }
 
   public async presentLoading() {

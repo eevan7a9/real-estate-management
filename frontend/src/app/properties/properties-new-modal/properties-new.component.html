@@ -1,6 +1,13 @@
 <ion-header translucent>
   <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="step === 2">
+      <ion-button (click)="step = 1">
+        <ion-icon name="arrow-back-outline" style="font-size: 24px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
     <ion-title>Add new property</ion-title>
+
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
         <ion-icon name="close-outline" style="font-size: 28px"></ion-icon>
