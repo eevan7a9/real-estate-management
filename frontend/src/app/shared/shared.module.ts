@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SwiperModule } from 'swiper/angular';
 import { PropertyGalleryComponent } from './components/property-gallery/property-gallery.component';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
 import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
@@ -16,7 +17,6 @@ import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
 import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-
 @NgModule({
   declarations: [
     PropertyGalleryComponent,
@@ -30,13 +30,14 @@ import { FooterComponent } from './components/footer/footer.component';
     EnquiryBadgeComponent,
     MapLeafletComponent,
     MapSearchFieldComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule
+    IonicModule,
+    SwiperModule,
   ],
   exports: [
     FormsModule,
@@ -52,8 +53,8 @@ import { FooterComponent } from './components/footer/footer.component';
     EnquiryBadgeComponent,
     MapLeafletComponent,
     MapSearchFieldComponent,
-    FooterComponent
+    FooterComponent,
   ],
-  providers: [CustomValidatorsDirective]
+  providers: [CustomValidatorsDirective],
 })
-export class SharedModule { }
+export class SharedModule {}

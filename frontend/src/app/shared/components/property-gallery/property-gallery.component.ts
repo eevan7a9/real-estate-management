@@ -1,22 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { SwiperOptions } from 'swiper';
 
 @Component({
   selector: 'app-property-gallery',
   templateUrl: './property-gallery.component.html',
   styleUrls: ['./property-gallery.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PropertyGalleryComponent implements OnInit {
   @Input() images: string[] = [];
   public imagePresented = 'assets/images/no-image.jpeg';
-  public slideOpts = {
+  public slideOpts: SwiperOptions = {
     initialSlide: 0,
     speed: 400,
-    spaceBetween: 25,
+    spaceBetween: 15,
     freeMode: true,
-    freeModeSticky: false,
     slidesPerView: 'auto',
   };
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (this.images?.length) {

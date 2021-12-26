@@ -1,3 +1,9 @@
+@import "~swiper/scss";
+@import "~@ionic/angular/css/ionic-swiper";
+.swiper .swiper-slide {
+  width: auto;
+}
+
 ion-card {
   box-shadow: none;
   .gallery-container {
@@ -12,8 +18,8 @@ ion-card {
         object-fit: contain;
       }
     }
-    ion-slides {
-      ion-slide {
+    swiper {
+      .slide-content {
         height: 190px;
         width: 200px;
         img {
@@ -30,6 +36,7 @@ ion-card {
         }
         .cover-img {
           position: absolute;
+          top: 0;
           width: 100%;
           height: 100%;
           background-color: rgba(51, 51, 51, 0.63);
@@ -42,7 +49,6 @@ ion-card {
     }
   }
 }
-
 @media (max-width: 500px) {
   ion-card {
     box-shadow: none;
