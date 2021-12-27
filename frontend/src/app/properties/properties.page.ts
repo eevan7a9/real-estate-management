@@ -6,6 +6,7 @@ import { PropertyType } from '../shared/enums/property';
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
+import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
 
 @Component({
   selector: 'app-properties',
@@ -74,6 +75,10 @@ export class PropertiesPage implements OnInit {
       component: PropertiesNewComponent
     });
     await modalPropertiesNew.present();
+    const { data } = await modalPropertiesNew.onDidDismiss();
+    if (data && data.success) {
+      this.presentUploadModal();
+    }
   }
 
   public async presentLoading() {
@@ -81,4 +86,10 @@ export class PropertiesPage implements OnInit {
     setTimeout(() => this.progressBar = false, 1500);
   }
 
+  private async presentUploadModal() {
+    const modalUploads = await this.modalController.create({
+      component: PropertiesUploadsComponent
+    });
+    await modalUploads.present();
+  }
 }

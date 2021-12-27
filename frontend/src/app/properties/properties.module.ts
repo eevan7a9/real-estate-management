@@ -13,6 +13,7 @@ import { PropertiesEditComponent } from './properties-edit-modal/properties-edit
 import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
 import { EnquiriesPageModule } from '../enquiries/enquiries.module';
 import { MortgageCalcPageModule } from '../mortgage-calc/mortgage-calc.module';
+import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { MortgageCalcPageModule } from '../mortgage-calc/mortgage-calc.module';
     PropertiesListComponent,
     PropertiesDetailComponent,
     PropertiesEditComponent,
-    PropertiesCoordinatesComponent
+    PropertiesCoordinatesComponent,
+    PropertiesUploadsComponent
   ],
   exports: [
     PropertiesListComponent

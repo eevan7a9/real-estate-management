@@ -72,7 +72,7 @@ export class PropertiesNewComponent implements OnInit {
       console.log(newProperty);
 
       this.propertiesService.addProperty(newProperty);
-      this.modalCtrl.dismiss();
+      this.modalCtrl.dismiss({ success: true });
       this.presentToast('Property is Added');
       return;
     }
