@@ -54,13 +54,27 @@ export class PropertiesService {
 
   public async addProperty(property: Property) {
     try {
-      const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
-        .toPromise();
-      this.properties = [...this.properties, newProperty];
+      // const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
+      //   .toPromise();
+      this.properties = [...this.properties, property];
     } catch (error) {
       console.log(error);
     }
+  }
 
+  public async addPropertyImage(fileList: FileList, id: string) {
+    const formData = new FormData();
+    const files = Array.from(fileList);
+    files.forEach(file => {
+      formData.append('images', file, file.name);
+    });
+    try {
+      return await this.http
+        .post(propertyUrl + '/upload/images/' + id, formData)
+        .toPromise();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   public removeProperty(propId: string) {
