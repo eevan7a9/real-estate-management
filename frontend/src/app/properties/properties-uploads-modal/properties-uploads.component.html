@@ -10,10 +10,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="form ion-padding">
-  <form>
-    <h1>Images Display here</h1>
-  </form>
+<ion-content class="ion-padding">
+  <div class="wrapper">
+    <section class="upload-form-container">
+      <img [src]="preview" class="preview-img" alt="preview" width="200px" />
+      <div class="input-contianer">
+        <label for="imageUpload">
+          <input
+            type="file"
+            name="imageUpload"
+            (change)="onSelectFile($event)"
+            id="imageUpload"
+            multiple
+          />
+        </label>
+        <button (click)="upload()">Upload Image</button>
+      </div>
+    </section>
+
+    <section class="uploaded-files-container">
+      <h1>Images Uploaded</h1>
+      <div class="uploaded-list">
+        <div class="file-item">item</div>
+        <div class="file-item">item</div>
+        <div class="file-item">item</div>
+        <div class="file-item">item</div>
+        <div class="file-item">item</div>
+      </div>
+    </section>
+  </div>
 </ion-content>
 
 <ion-footer translucent>
