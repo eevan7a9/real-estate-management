@@ -128,13 +128,13 @@ export const addImagesProperty = async function (req, res) {
         data.file,
         fs.createWriteStream(path.join(process.cwd(), "uploads", imgName))
       );
+      const image =
+        req.protocol + "://" + req.headers.host + "/uploads/" + imgName;
       // We update Property images
-      foundProperty.images.push(
-        req.protocol + "://" + req.headers.host + "/uploads/" + imgName
-      );
+      foundProperty.images.push(image);
       foundProperty.save();
     }
-    res.send({ message: "Files are uploaded." });
+    res.send({ message: "Files are uploaded.", images: foundProperty.images });
   } catch (error) {
     res.send(error);
   }
