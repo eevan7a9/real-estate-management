@@ -76,8 +76,8 @@ export class PropertiesPage implements OnInit {
     });
     await modalPropertiesNew.present();
     const { data } = await modalPropertiesNew.onDidDismiss();
-    if (data && data.success) {
-      this.presentUploadModal();
+    if (data) {
+      this.presentUploadModal(data);
     }
   }
 
@@ -86,9 +86,10 @@ export class PropertiesPage implements OnInit {
     setTimeout(() => this.progressBar = false, 1500);
   }
 
-  private async presentUploadModal() {
+  private async presentUploadModal(property: Property) {
     const modalUploads = await this.modalController.create({
-      component: PropertiesUploadsComponent
+      component: PropertiesUploadsComponent,
+      componentProps: { property }
     });
     await modalUploads.present();
   }

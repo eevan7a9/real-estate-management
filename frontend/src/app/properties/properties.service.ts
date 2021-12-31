@@ -54,9 +54,10 @@ export class PropertiesService {
 
   public async addProperty(property: Property) {
     try {
-      // const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
-      //   .toPromise();
-      this.properties = [...this.properties, property];
+      const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
+        .toPromise();
+      this.properties = [...this.properties, newProperty];
+      return newProperty;
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +71,7 @@ export class PropertiesService {
     });
     try {
       return await this.http
-        .post(propertyUrl + '/upload/images/' + id, formData)
+        .post<any>(propertyUrl + '/upload/images/' + id, formData)
         .toPromise();
     } catch (error) {
       console.log(error);

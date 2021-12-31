@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController, ToastController } from '@ionic/angular';
+import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
 
 @Component({
@@ -9,9 +10,14 @@ import { PropertiesService } from '../properties.service';
   styleUrls: ['./properties-uploads.component.scss'],
 })
 export class PropertiesUploadsComponent implements OnInit {
+  @Input() property: Property;
   public preview = '../../../assets/images/no-image.jpeg';
   private selectedFiles: FileList;
-  constructor(private modalCtrl: ModalController, private propertiesService: PropertiesService) { }
+  constructor(
+    private modalCtrl: ModalController,
+    private propertiesService: PropertiesService,
+    private toastCtrl: ToastController
+  ) { }
 
   ngOnInit() {}
 
@@ -33,9 +39,19 @@ export class PropertiesUploadsComponent implements OnInit {
   }
 
   public async upload() {
-    const res = await this.propertiesService.addPropertyImage(
-      this.selectedFiles, '2a5fd074-3846-49af-8611-9ee81cfa878c'
-    );
-    console.log(res);
+    const res = await this.propertiesService
+      .addPropertyImage(this.selectedFiles, this.property.property_id);
+
+    if (res.images.length) {
+      const toast = this.toastCtrl.create({
+        message: res.message,
+        color: 'success',
+        duration: 2500
+      });
+      this.property.images = res.images;
+      this.propertiesService.updateProperty(this.property);
+      (await toast).present();
+      this.modalCtrl.dismiss();
+    }
   }
 }

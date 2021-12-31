@@ -57,7 +57,7 @@ export class PropertiesNewComponent implements OnInit {
 
   ngOnInit() { }
 
-  public submit() {
+  public async submit() {
     if (this.step === 1 && this.validateStepOne()) {
       this.step = 2;
       return;
@@ -69,10 +69,8 @@ export class PropertiesNewComponent implements OnInit {
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
-      console.log(newProperty);
-
-      this.propertiesService.addProperty(newProperty);
-      this.modalCtrl.dismiss({ success: true });
+      const res = await this.propertiesService.addProperty(newProperty);
+      this.modalCtrl.dismiss(res);
       this.presentToast('Property is Added');
       return;
     }
