@@ -12,10 +12,23 @@
 
 <ion-content class="ion-padding">
   <div class="wrapper">
+    <section class="previews" *ngIf="previews.length">
+      <div
+        *ngFor="let preview of previews; let i = index"
+        class="preview-img"
+        (click)="removeFile(i)"
+      >
+        <img [src]="preview" class="" alt="preview" />
+        <div class="cover-hover">
+          <p>Click to remove!</p>
+          <small>{{ selectedFiles[i].name }}</small>
+        </div>
+      </div>
+    </section>
+
     <section class="upload-form-container">
-      <img [src]="preview" class="preview-img" alt="preview" width="200px" />
-      <div class="input-contianer">
-        <label for="imageUpload">
+      <div class="input-contianer" *ngIf="!previews.length">
+        <div>
           <input
             type="file"
             name="imageUpload"
@@ -23,24 +36,22 @@
             id="imageUpload"
             multiple
           />
-        </label>
-        <button (click)="upload()">Upload Image</button>
+          <p>Drag your files here or click in this area.</p>
+        </div>
       </div>
-    </section>
-
-    <section class="uploaded-files-container">
-      <h1>Images Uploaded</h1>
-      <div class="uploaded-list">
-        <div class="file-item">item</div>
-        <div class="file-item">item</div>
-        <div class="file-item">item</div>
-        <div class="file-item">item</div>
-        <div class="file-item">item</div>
-      </div>
+      <ion-button
+        color="primary"
+        size="large"
+        expand="block"
+        id="uploadBtn"
+        (click)="upload()"
+      >
+        Upload Image
+      </ion-button>
     </section>
   </div>
 </ion-content>
 
 <ion-footer translucent>
-  <ion-toolbar> Upload </ion-toolbar>
+  <ion-toolbar> </ion-toolbar>
 </ion-footer>

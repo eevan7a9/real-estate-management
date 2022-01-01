@@ -63,9 +63,8 @@ export class PropertiesService {
     }
   }
 
-  public async addPropertyImage(fileList: FileList, id: string) {
+  public async addPropertyImage(files: File[], id: string) {
     const formData = new FormData();
-    const files = Array.from(fileList);
     files.forEach(file => {
       formData.append('images', file, file.name);
     });
