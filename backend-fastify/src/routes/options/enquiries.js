@@ -48,3 +48,18 @@ export const createEnquiryOpts = (handler) => ({
   },
   handler,
 });
+
+export const deleteEnquiryOpts = (handler) => ({
+  schema: {
+    response: {
+      200: {
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          enquiry_id: { type: "string" },
+        },
+      },
+    },
+  },
+  handler: handler,
+});

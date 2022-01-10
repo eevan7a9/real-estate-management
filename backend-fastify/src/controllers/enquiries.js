@@ -24,3 +24,16 @@ export const createEnquiry = function (req, res) {
   enquiries.push(newEnquiry);
   res.status(201).send(newEnquiry);
 };
+
+export const deleteEnquiry = function (req, res) {
+  const { id } = req.params;
+  const foundEnquiry = enquiries.find((enq) => enq.enquiry_id === id);
+  if (foundEnquiry) {
+    res.send({
+      message: "Success: Enquiry deleted!",
+      enquiry_id: foundEnquiry.enquiry_id,
+    });
+    return;
+  }
+  res.status(404).send({ message: "Error: Can't find property." });
+};
