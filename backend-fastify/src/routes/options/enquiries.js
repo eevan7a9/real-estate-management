@@ -28,5 +28,14 @@ export const getEnquiriesOpts = (handler) => ({
       },
     },
   },
-  handler: handler,
+  handler,
+});
+
+export const getEnquiryOpts = (handler) => ({
+  schema: {
+    response: {
+      200: enquiryProperties,
+    },
+  },
+  handler,
 });
