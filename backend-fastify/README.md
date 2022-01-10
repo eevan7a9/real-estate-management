@@ -22,7 +22,9 @@ $ npm start `or` $ npm run dev
 
 ## Routes
 ```
-docs/
-users/
-auth/
+/docs/
+/users/
+/auth/
+/properties/
+/enquiries/
 ```
