@@ -25,6 +25,26 @@ export const createEnquiry = function (req, res) {
   res.status(201).send(newEnquiry);
 };
 
+export const updateEnquiry = function (req, res) {
+  const enquiry_id = req.params.id;
+  if (!enquiry_id) {
+    res.status(404).send({ message: "Error: Can't find property." });
+    return;
+  }
+  const { content, email, title, topic, read, property, user } = req.body;
+  const updatedEnquiry = {
+    // Fields to update
+    ...(content !== undefined && { content }),
+    ...(email !== undefined && { email: email.toLowerCase() }),
+    ...(title !== undefined && { title }),
+    ...(topic !== undefined && { topic }),
+    ...(read !== undefined && { read }),
+    ...(property !== undefined && { property }),
+    ...(user !== undefined && { user }),
+  };
+  res.status(201).send(updatedEnquiry);
+};
+
 export const deleteEnquiry = function (req, res) {
   const { id } = req.params;
   const foundEnquiry = enquiries.find((enq) => enq.enquiry_id === id);

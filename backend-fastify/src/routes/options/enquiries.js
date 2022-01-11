@@ -49,6 +49,15 @@ export const createEnquiryOpts = (handler) => ({
   handler,
 });
 
+export const updateEnquiryOpts = (handler) => ({
+  schema: {
+    response: {
+      201: enquiryProperties,
+    },
+  },
+  handler,
+});
+
 export const deleteEnquiryOpts = (handler) => ({
   schema: {
     response: {
