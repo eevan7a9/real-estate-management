@@ -1,38 +1,52 @@
-// DUMMY DATA
+import { Enquiry } from "../models/enquiry.js";
 import { v4 as uuidV4 } from "uuid";
-import { enquiries } from "../dummy-data/enquiries.js";
 
-export const getEnquiries = function (req, res) {
-  res.status(200).send(enquiries);
+export const getEnquiries = async function (req, res) {
+  const list = await Enquiry.find();
+  res.status(200).send(list);
 };
 
-export const getEnquiry = function (req, res) {
+export const getEnquiry = async function (req, res) {
   const { id } = req.params;
-  const foundEnquiry = enquiries.find((enq) => enq.enquiry_id === id);
-  if (foundEnquiry) {
-    res.status(200).send(foundEnquiry);
+  try {
+    const found = await Enquiry.findOne({ enquiry_id: id });
+    if (!found) {
+      res.status(404).send({ message: "Error: Can't find Enquiry." });
+      return;
+    }
+    res.status(200).send(found);
+  } catch (error) {
+    res.status(400).send(error);
   }
 };
 
-export const createEnquiry = function (req, res) {
+export const createEnquiry = async function (req, res) {
   const { title, topic, user } = req.body;
   if (!title || !topic || !user.from || !user.to) {
     res.status(400).send({ message: "Some fields are missing!." });
     return;
   }
-  const newEnquiry = { enquiry_id: uuidV4(), read: false, ...req.body };
-  enquiries.push(newEnquiry);
-  res.status(201).send(newEnquiry);
+  try {
+    const newEnquiry = new Enquiry({
+      enquiry_id: uuidV4(),
+      read: false,
+      ...req.body,
+    });
+    await newEnquiry.save();
+    res.status(201).send(newEnquiry);
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
-export const updateEnquiry = function (req, res) {
+export const updateEnquiry = async function (req, res) {
   const enquiry_id = req.params.id;
   if (!enquiry_id) {
-    res.status(404).send({ message: "Error: Can't find property." });
+    res.status(404).send({ message: "Error: Can't find Enquiry." });
     return;
   }
   const { content, email, title, topic, read, property, user } = req.body;
-  const updatedEnquiry = {
+  const $set = {
     // Fields to update
     ...(content !== undefined && { content }),
     ...(email !== undefined && { email: email.toLowerCase() }),
@@ -42,18 +56,35 @@ export const updateEnquiry = function (req, res) {
     ...(property !== undefined && { property }),
     ...(user !== undefined && { user }),
   };
-  res.status(201).send(updatedEnquiry);
+  const options = { new: true };
+  try {
+    const result = await Enquiry.findOneAndUpdate(
+      { enquiry_id },
+      { $set },
+      options
+    );
+    if (!result) {
+      res.status(404).send({ message: "Error: Can't find Enquiry." });
+      return;
+    }
+    res.status(201).send({ ...result.toObject() });
+  } catch (error) {
+    res.status(400).send(error);
+  }
 };
 
-export const deleteEnquiry = function (req, res) {
+export const deleteEnquiry = async function (req, res) {
   const { id } = req.params;
-  const foundEnquiry = enquiries.find((enq) => enq.enquiry_id === id);
-  if (foundEnquiry) {
-    res.send({
-      message: "Success: Enquiry deleted!",
-      enquiry_id: foundEnquiry.enquiry_id,
-    });
-    return;
+  try {
+    const found = await Enquiry.findOneAndDelete({ enquiry_id: id });
+    if (!found) {
+      res.status(404).send({ message: "Error: Can't find Enquiry." });
+      return;
+    }
+    res
+      .status(200)
+      .send({ ...found.toObject(), message: "Success: Enquiry deleted!" });
+  } catch (error) {
+    res.status(400).send(error);
   }
-  res.status(404).send({ message: "Error: Can't find property." });
 };
