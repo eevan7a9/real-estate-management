@@ -15,6 +15,8 @@ const enquiryProperties = {
       type: "object",
       properties: { from: { type: "string" }, to: { type: "string" } },
     },
+    createdAt: { type: "string" },
+    updatedAt: { type: "string" },
   },
 };
 Object.freeze(enquiryProperties);
@@ -66,6 +68,7 @@ export const deleteEnquiryOpts = (handler) => ({
         properties: {
           message: { type: "string" },
           enquiry_id: { type: "string" },
+          title: { type: "string" },
         },
       },
     },

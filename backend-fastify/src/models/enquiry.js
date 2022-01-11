@@ -14,7 +14,7 @@ const enquirySchema = new mongoose.Schema(
     },
     user: {
       from: { type: String, required: true },
-      to: { type: Boolean, required: true },
+      to: { type: String, required: true },
     },
   },
   {
