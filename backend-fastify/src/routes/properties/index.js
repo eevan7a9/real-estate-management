@@ -1,18 +1,18 @@
 import {
+  getPropertiesOpts,
+  getPropertyOpts,
+  createPropertyOpts,
+  updatePropertyOpts,
+  deletePropertyOpts,
+} from "./options/index.js";
+import {
   getProperties,
   getProperty,
   createProperty,
   updateProperty,
   deleteProperty,
   addImagesProperty,
-} from "../controllers/properties.js";
-import {
-  getPropertiesOpts,
-  getPropertyOpts,
-  createPropertyOpts,
-  updatePropertyOpts,
-  deletePropertyOpts,
-} from "./options/properties.js";
+} from "../../controllers/properties/index.js";
 
 export const propertiesRoutes = function (fastify, opts, done) {
   fastify.get("/", getPropertiesOpts(getProperties));

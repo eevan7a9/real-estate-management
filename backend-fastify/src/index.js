@@ -11,7 +11,7 @@ import path from "path";
 // Local Files
 import { usersRoutes } from "./routes/users.js";
 import { authRoutes } from "./routes/auth.js";
-import { propertiesRoutes } from "./routes/properties.js";
+import { propertiesRoutes } from "./routes/properties/index.js";
 import { enquiriesRoutes } from "./routes/enquiries.js";
 
 dotenv.config();
