@@ -101,17 +101,19 @@ export const deleteProperty = async function (req, res) {
       res.status(404).send({ message: "Error: Can't find property." });
     }
 
-    const images = property.images.map((img) => {
-      const imgSplt = img.split("/");
-      return imgSplt[imgSplt.length - 1];
-    })
-    images.forEach(img => {
-      const __dirname = path.resolve();
-      fs.unlink(__dirname + '/uploads/' + img, (err) => {
-        if (err) console.log(err);
-        console.log('Successfully deleted ' + img);
+    if (property.images?.length) {
+      const images = property.images.map((img) => {
+        const imgSplt = img.split("/");
+        return imgSplt[imgSplt.length - 1];
       });
-    });
+      images.forEach((img) => {
+        const __dirname = path.resolve();
+        fs.unlink(__dirname + "/uploads/" + img, (err) => {
+          if (err) console.log(err);
+          console.log("Successfully deleted " + img);
+        });
+      });
+    }
 
     res.status(200).send({
       ...property.toObject(),
