@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
 
-const propertyUrl = environment.api.url+'properties';
+const propertyUrl = environment.api.url + 'properties';
 const requestOptions = {
   headers: new HttpHeaders(headerDict),
 };
@@ -77,9 +77,13 @@ export class PropertiesService {
     }
   }
 
-  public removeProperty(propId: string) {
-    const properties = this.properties.filter(property => property.property_id !== propId);
-    this.properties = properties;
+  public async removeProperty(propId: string) {
+    try {
+      const res = await this.http.delete<any>(`${propertyUrl}/${propId}`).toPromise();
+      this.properties = this.properties.filter(property => property.property_id !== res.property_id);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   public updateProperty(updated: Property) {
