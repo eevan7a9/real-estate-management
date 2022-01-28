@@ -1,17 +1,17 @@
 import {
-  createEnquiry,
-  deleteEnquiry,
-  getEnquiries,
-  getEnquiry,
-  updateEnquiry,
-} from "../controllers/enquiries.js";
-import {
   createEnquiryOpts,
   deleteEnquiryOpts,
   getEnquiriesOpts,
   getEnquiryOpts,
   updateEnquiryOpts,
-} from "./options/enquiries.js";
+} from "./options/index.js";
+import {
+  createEnquiry,
+  deleteEnquiry,
+  getEnquiries,
+  getEnquiry,
+  updateEnquiry,
+} from "../../controllers/enquiries/index.js";
 
 export const enquiriesRoutes = function (fastify, opts, done) {
   fastify.get("/", getEnquiriesOpts(getEnquiries));

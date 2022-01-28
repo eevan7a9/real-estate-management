@@ -12,7 +12,7 @@ import path from "path";
 import { usersRoutes } from "./routes/users.js";
 import { authRoutes } from "./routes/auth.js";
 import { propertiesRoutes } from "./routes/properties/index.js";
-import { enquiriesRoutes } from "./routes/enquiries.js";
+import { enquiriesRoutes } from "./routes/enquiries/index.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
