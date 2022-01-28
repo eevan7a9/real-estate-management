@@ -52,6 +52,7 @@ fastify.register(FastifyBcrypt, {
 fastify.register(FastifyCors, {
   // put your options here
   origin: ["http://localhost:9000"],
+  origin: ["http://localhost:8100"],
 });
 // We register authenticate
 fastify.decorate("authenticate", async function (request, reply) {
