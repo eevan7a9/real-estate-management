@@ -9,10 +9,7 @@ import FastifyStatic from "fastify-static";
 import mongoose from "mongoose";
 import path from "path";
 // Local Files
-import { usersRoutes } from "./routes/users.js";
-import { authRoutes } from "./routes/auth/index.js";
-import { propertiesRoutes } from "./routes/properties/index.js";
-import { enquiriesRoutes } from "./routes/enquiries/index.js";
+import { registerRoutes } from "./routes/index.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -66,10 +63,7 @@ fastify.decorate("authenticate", async function (request, reply) {
 fastify.get("/", (_, res) => {
   res.send(true);
 });
-fastify.register(usersRoutes, { prefix: "/users" });
-fastify.register(authRoutes, { prefix: "/auth" });
-fastify.register(propertiesRoutes, { prefix: "/properties" });
-fastify.register(enquiriesRoutes, { prefix: "/enquiries" });
+registerRoutes(fastify);
 
 const start = async () => {
   try {
