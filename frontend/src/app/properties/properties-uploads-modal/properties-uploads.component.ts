@@ -56,13 +56,13 @@ export class PropertiesUploadsComponent implements OnInit {
     const res = await this.propertiesService
       .addPropertyImage(this.selectedFiles, this.property.property_id);
 
-    if (res.images.length) {
+    if (res.data.length) {
       const toast = this.toastCtrl.create({
         message: res.message,
         color: 'success',
         duration: 2500
       });
-      this.property.images = res.images;
+      this.property.images = res.data;
       this.propertiesService.updateProperty(this.property);
       (await toast).present();
       this.modalCtrl.dismiss();
