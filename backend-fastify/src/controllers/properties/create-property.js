@@ -13,7 +13,7 @@ export const createProperty = async function (req, res) {
       ...req.body,
     });
     await newProperty.save();
-    res.status(201).send(newProperty);
+    res.status(201).send({ data: newProperty });
   } catch (error) {
     res.send(error);
   }

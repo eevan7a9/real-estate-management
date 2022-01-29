@@ -3,7 +3,7 @@ import { Property } from "../../models/property.js";
 export const updateProperty = async function (req, res) {
   const property_id = req.params.id;
   if (!property_id) {
-    res.status(400).send({ message: "Error: Can't update unknown property" });
+    res.status(404).send({ message: "Error: Can't update unknown property" });
   }
   const {
     name,
@@ -40,11 +40,11 @@ export const updateProperty = async function (req, res) {
       options
     );
     if (!result) {
-      res.status(400).send({ message: "Error: Can't update unknown property" });
+      res.status(404).send({ message: "Error: Can't update unknown property" });
       return;
     }
     res.status(201).send({
-      ...result.toObject(),
+      data: { ...result.toObject() },
       message: "Success: Property is updated.",
     });
   } catch (error) {

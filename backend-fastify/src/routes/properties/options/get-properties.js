@@ -15,13 +15,8 @@ export const getPropertiesOpts = (handler) => ({
             default: "Success",
           },
           data: {
-            type: "object",
-            properties: {
-              properties: {
-                type: "array",
-                items: propertyProperties,
-              },
-            },
+            type: "array",
+            items: propertyProperties,
           },
         },
       },

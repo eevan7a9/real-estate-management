@@ -1,9 +1,25 @@
-import { propertyProperties } from "./schema.js";
+import { propertyNotFound, propertyProperties } from "./schema.js";
 
 export const getPropertyOpts = (handler) => ({
   schema: {
     response: {
-      200: propertyProperties,
+      // SUCCESS
+      200: {
+        type: "object",
+        properties: {
+          status: {
+            type: "number",
+            default: 200,
+          },
+          message: {
+            type: "string",
+            default: "Success",
+          },
+          data: propertyProperties,
+        },
+      },
+      // ERRORS
+      404: propertyNotFound,
     },
   },
   handler: handler,
