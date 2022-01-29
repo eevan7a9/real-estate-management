@@ -4,6 +4,7 @@ import {
   createPropertyOpts,
   updatePropertyOpts,
   deletePropertyOpts,
+  uploadImagesOpts,
 } from "./options/index.js";
 import {
   getProperties,
@@ -20,6 +21,6 @@ export const propertiesRoutes = function (fastify, opts, done) {
   fastify.post("/", createPropertyOpts(createProperty));
   fastify.patch("/:id", updatePropertyOpts(updateProperty));
   fastify.delete("/:id", deletePropertyOpts(deleteProperty));
-  fastify.post("/upload/images/:id", addImagesProperty);
+  fastify.post("/upload/images/:id", uploadImagesOpts(addImagesProperty));
   done();
 };

@@ -30,7 +30,7 @@ export const addImagesProperty = async function (req, res) {
       foundProperty.images.push(image);
       foundProperty.save();
     }
-    res.send({ message: "Files are uploaded.", images: foundProperty.images });
+    res.status(201).send({ data: foundProperty.images });
   } catch (error) {
     res.send(error);
   }
