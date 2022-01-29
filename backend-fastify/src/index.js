@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 import path from "path";
 // Local Files
 import { usersRoutes } from "./routes/users.js";
-import { authRoutes } from "./routes/auth.js";
+import { authRoutes } from "./routes/auth/index.js";
 import { propertiesRoutes } from "./routes/properties/index.js";
 import { enquiriesRoutes } from "./routes/enquiries/index.js";
 

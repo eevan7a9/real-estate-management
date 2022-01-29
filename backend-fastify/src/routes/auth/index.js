@@ -1,5 +1,5 @@
-import { register, signIn } from "../controllers/auth.js";
-import { registerOpts, signInOpts } from "./options/auth.js";
+import { registerOpts, signInOpts } from "./options/index.js";
+import { register, signIn } from "../../controllers/auth/index.js";
 
 export const authRoutes = function (fastify, opts, done) {
   fastify.post("/register", registerOpts(register));
