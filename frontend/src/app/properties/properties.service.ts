@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
@@ -46,7 +47,7 @@ export class PropertiesService {
 
   public async fetchProperties(): Promise<void> {
     try {
-      this.properties = await this.http.get<Property[]>(propertyUrl).toPromise();
+      this.properties = (await this.http.get<ApiResponse & { data: Property[] }>(propertyUrl).toPromise()).data;
     } catch (error) {
       console.log(error);
     }
@@ -54,10 +55,10 @@ export class PropertiesService {
 
   public async addProperty(property: Property) {
     try {
-      const newProperty = await this.http.post<Property>(propertyUrl, property, requestOptions)
+      const res = await this.http.post<ApiResponse & { data: Property }>(propertyUrl, property, requestOptions)
         .toPromise();
-      this.properties = [...this.properties, newProperty];
-      return newProperty;
+      this.properties = [...this.properties, res.data];
+      return res;
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +71,7 @@ export class PropertiesService {
     });
     try {
       return await this.http
-        .post<any>(propertyUrl + '/upload/images/' + id, formData)
+        .post<ApiResponse & { data: string[] }>(propertyUrl + '/upload/images/' + id, formData)
         .toPromise();
     } catch (error) {
       console.log(error);
@@ -79,8 +80,8 @@ export class PropertiesService {
 
   public async removeProperty(propId: string) {
     try {
-      const res = await this.http.delete<any>(`${propertyUrl}/${propId}`).toPromise();
-      this.properties = this.properties.filter(property => property.property_id !== res.property_id);
+      const res = await this.http.delete<ApiResponse & { data: Property }>(`${propertyUrl}/${propId}`).toPromise();
+      this.properties = this.properties.filter(property => property.property_id !== res.data.property_id);
     } catch (error) {
       console.error(error);
     }

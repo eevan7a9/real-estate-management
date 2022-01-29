@@ -1,18 +1,19 @@
 import {
+  getPropertiesOpts,
+  getPropertyOpts,
+  createPropertyOpts,
+  updatePropertyOpts,
+  deletePropertyOpts,
+  uploadImagesOpts,
+} from "./options/index.js";
+import {
   getProperties,
   getProperty,
   createProperty,
   updateProperty,
   deleteProperty,
   addImagesProperty,
-} from "../controllers/properties.js";
-import {
-  getPropertiesOpts,
-  getPropertyOpts,
-  createPropertyOpts,
-  updatePropertyOpts,
-  deletePropertyOpts,
-} from "./options/properties.js";
+} from "../../controllers/properties/index.js";
 
 export const propertiesRoutes = function (fastify, opts, done) {
   fastify.get("/", getPropertiesOpts(getProperties));
@@ -20,6 +21,6 @@ export const propertiesRoutes = function (fastify, opts, done) {
   fastify.post("/", createPropertyOpts(createProperty));
   fastify.patch("/:id", updatePropertyOpts(updateProperty));
   fastify.delete("/:id", deletePropertyOpts(deleteProperty));
-  fastify.post("/upload/images/:id", addImagesProperty);
+  fastify.post("/upload/images/:id", uploadImagesOpts(addImagesProperty));
   done();
 };
