@@ -1,5 +1,19 @@
 <ion-card class="ion-no-padding ion-no-margin">
-  <ion-card-content class="gallery-container ion-padding">
+  <div class="ion-text-right" *ngIf="showEdit">
+    <ion-button
+      size="small"
+      fill="clear"
+      class="edit-btn"
+      (click)="edit.emit(true)"
+    >
+      <ion-text>Edit</ion-text>
+      <ion-icon name="images-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-card-content
+    class="gallery-container ion-padding-horizontal ion-no-padding"
+  >
     <div class="selected-image ion-padding-vertical">
       <img [src]="imagePresented" alt="image" />
     </div>

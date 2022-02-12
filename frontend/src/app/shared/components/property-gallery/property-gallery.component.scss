@@ -6,6 +6,12 @@
 
 ion-card {
   box-shadow: none;
+  .edit-btn {
+    margin: 8px 16px 0px;
+    ion-text {
+      margin-right: 4px;
+    }
+  }
   .gallery-container {
     // background-color: var(--ion-color-medium-shade);
     .selected-image {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { SwiperOptions } from 'swiper';
 
 @Component({
@@ -9,6 +9,8 @@ import { SwiperOptions } from 'swiper';
 })
 export class PropertyGalleryComponent implements OnInit {
   @Input() images: string[] = [];
+  @Input() showEdit = false;
+  @Output() edit = new EventEmitter<boolean>();
   public imagePresented = 'assets/images/no-image.jpeg';
   public slideOpts: SwiperOptions = {
     initialSlide: 0,
