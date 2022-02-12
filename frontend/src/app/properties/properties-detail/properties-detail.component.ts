@@ -7,6 +7,7 @@ import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
+import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 
 @Component({
   selector: 'app-properties-detail',
@@ -65,6 +66,16 @@ export class PropertiesDetailComponent implements OnInit {
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }
 
+  public async editImages() {
+    const modal = await this.modalController.create({
+      component: PropertiesUploadsComponent,
+      componentProps:{
+        property: this.property
+      }
+    });
+    await modal.present();
+  }
+
   private async editModal() {
     const modal = await this.modalController.create({
       component: PropertiesEditComponent
@@ -80,5 +91,4 @@ export class PropertiesDetailComponent implements OnInit {
     });
     toast.present();
   }
-
 }

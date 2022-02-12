@@ -36,6 +36,8 @@
 
           <app-property-gallery
             [images]="property.images"
+            [showEdit]="true"
+            (edit)="editImages()"
             *ngIf="property.images"
           ></app-property-gallery>
 
