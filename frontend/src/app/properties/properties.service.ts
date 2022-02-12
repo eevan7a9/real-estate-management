@@ -49,7 +49,7 @@ export class PropertiesService {
     try {
       this.properties = (await this.http.get<ApiResponse & { data: Property[] }>(propertyUrl).toPromise()).data;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -60,7 +60,7 @@ export class PropertiesService {
       this.properties = [...this.properties, res.data];
       return res;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -74,7 +74,7 @@ export class PropertiesService {
         .post<ApiResponse & { data: string[] }>(propertyUrl + '/upload/images/' + id, formData)
         .toPromise();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -87,12 +87,23 @@ export class PropertiesService {
     }
   }
 
-  public updateProperty(updated: Property) {
-    let findProperty = this.properties.find((property: Property) => property.property_id === updated.property_id);
-    findProperty = { ...findProperty, ...updated };
+  public async updateProperty(updated: Property): Promise<ApiResponse & { data: Property }> {
+    try {
+      const res = await this.http.patch<ApiResponse & { data: Property }>
+        (`${propertyUrl}/${updated.property_id}`, updated, requestOptions).toPromise();
 
-    this.properties = this.properties.map(property => (property.property_id === updated.property_id) ?
-      findProperty : property);
-    this.property = findProperty;
+      if (res.status !== 200 && res.status !== 201) {
+        return;
+      }
+      // UPDATE CURRENT PROPERTIES
+      this.properties = this.properties.map(property =>
+        (property.property_id === updated.property_id) ? res.data : property);
+      this.property = res.data;
+
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 }

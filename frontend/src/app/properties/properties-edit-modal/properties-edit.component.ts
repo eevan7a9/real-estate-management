@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PropertyType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
@@ -35,7 +35,8 @@ export class PropertiesEditComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
-    private propertiesService: PropertiesService
+    private propertiesService: PropertiesService,
+    private toastCtrl: ToastController
   ) {
     this.propertyForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -76,7 +77,7 @@ export class PropertiesEditComponent implements OnInit {
     });
   }
 
-  public update() {
+  public async update(): Promise<void> {
     if (!this.propertyForm.valid) {
       return;
     }
@@ -92,6 +93,7 @@ export class PropertiesEditComponent implements OnInit {
       lat,
       lng,
     } = this.propertyForm.value;
+
     const editedProperty: Property = {
       property_id: this.property.property_id,
       name,
@@ -105,8 +107,17 @@ export class PropertiesEditComponent implements OnInit {
       position: { lat, lng },
       user_id: this.property.user_id
     };
-    const property = { ...this.property, ...editedProperty };
-    this.propertiesService.updateProperty(property);
+    const updatedProperty = { ...this.property, ...editedProperty };
+    const res = await this.propertiesService.updateProperty(updatedProperty);
+
+    if (res) {
+      const toast = await this.toastCtrl.create({
+        message: res.message,
+        duration: 3000,
+        color: 'success'
+      });
+      await toast.present();
+    }
     this.modalCtrl.dismiss();
   }
 
