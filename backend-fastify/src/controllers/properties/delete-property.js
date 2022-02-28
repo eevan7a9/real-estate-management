@@ -1,6 +1,5 @@
-import fs from "fs";
-import path from "path";
 import { Property } from "../../models/property.js";
+import { unlinkImages } from "./image-property.js";
 
 export const deleteProperty = async function (req, res) {
   const { id } = req.params;
@@ -10,17 +9,7 @@ export const deleteProperty = async function (req, res) {
       res.status(404).send({});
     }
     if (property.images?.length) {
-      const images = property.images.map((img) => {
-        const imgSplt = img.split("/");
-        return imgSplt[imgSplt.length - 1];
-      });
-      images.forEach((img) => {
-        const __dirname = path.resolve();
-        fs.unlink(__dirname + "/uploads/" + img, (err) => {
-          if (err) console.log(err);
-          console.log("Successfully deleted " + img);
-        });
-      });
+      unlinkImages(property.images);
     }
 
     res.status(200).send({ data: { ...property.toObject() } });
