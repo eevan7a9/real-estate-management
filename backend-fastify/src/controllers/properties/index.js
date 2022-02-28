@@ -3,7 +3,7 @@ import { getProperty } from "./get-property.js";
 import { createProperty } from "./create-property.js";
 import { deleteProperty } from "./delete-property.js";
 import { updateProperty } from "./update-property.js";
-import { addImagesProperty } from "./add-image-property.js";
+import { addImagesProperty, deleteImagesProperty } from "./image-property.js";
 
 export {
   getProperties,
@@ -12,4 +12,5 @@ export {
   deleteProperty,
   updateProperty,
   addImagesProperty,
+  deleteImagesProperty
 };

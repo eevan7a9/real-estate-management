@@ -35,3 +35,41 @@ export const addImagesProperty = async function (req, res) {
     res.send(error);
   }
 };
+
+export const deleteImagesProperty = async function (req, res) {
+  const property_id = req.params.id;
+  const { images } = req.body;
+  try {
+    // We check if property exists
+    const foundProperty = await Property.findOne({ property_id });
+    if (!foundProperty) {
+      res.status(404).send({ message: "Error: Can't find property." });
+      return;
+    }
+    foundProperty.images = foundProperty.images.filter(
+      (img) => !images.includes(img)
+    );
+    foundProperty.save();
+    unlinkImages(images);
+    return res.send({ data: images });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+export const unlinkImages = function (propertyImages = []) {
+  const images = propertyImages.map((img) => {
+    const imgSplt = img.split("/");
+    return imgSplt[imgSplt.length - 1];
+  });
+  images.forEach((img) => {
+    const __dirname = path.resolve();
+    fs.unlink(__dirname + "/uploads/" + img, (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log("Successfully deleted " + img);
+    });
+  });
+};
