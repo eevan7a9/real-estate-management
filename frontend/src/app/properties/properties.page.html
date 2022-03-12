@@ -24,6 +24,8 @@
             <ion-select
               multiple="true"
               [(ngModel)]="filterBy"
+              okText="Confirm"
+              cancelText="Dismiss"
               (ionChange)="propertyLists.setFilters(filterBy)"
             >
               <ion-select-option
@@ -41,7 +43,7 @@
             <ion-label>Sort by:</ion-label>
             <ion-select
               [(ngModel)]="sortBy"
-              okText="Okay"
+              okText="Confirm"
               cancelText="Dismiss"
               (ionChange)="propertyLists.setSort(sortBy)"
             >
