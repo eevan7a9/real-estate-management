@@ -69,8 +69,8 @@ export class PropertiesNewComponent implements OnInit {
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
-      const res = await this.propertiesService.addProperty(newProperty);
-      this.modalCtrl.dismiss(res);
+      const { data } = await this.propertiesService.addProperty(newProperty);
+      this.modalCtrl.dismiss(data);
       this.presentToast('Property is Added');
       return;
     }
