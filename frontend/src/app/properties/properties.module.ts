@@ -16,6 +16,7 @@ import { MortgageCalcPageModule } from '../mortgage-calc/mortgage-calc.module';
 import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
 import { PropertiesGalleryComponent } from './properties-gallery/properties-gallery.component';
 import { SwiperModule } from 'swiper/angular';
+import { PropertiesCurrentImagesComponent } from './properties-uploads-modal/properties-current-images/properties-current-images.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { SwiperModule } from 'swiper/angular';
     PropertiesEditComponent,
     PropertiesCoordinatesComponent,
     PropertiesUploadsComponent,
-    PropertiesGalleryComponent
+    PropertiesGalleryComponent,
+    PropertiesCurrentImagesComponent
   ],
   exports: [
     PropertiesListComponent

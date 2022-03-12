@@ -1,0 +1,41 @@
+<section title="current-images" class="current-images">
+  <header>Current Images:</header>
+
+  <swiper [config]="slideOpts" class="slides">
+    <ng-template *ngFor="let image of images" swiperSlide>
+      <div
+        class="slide-content"
+        (click)="setSelected(image)"
+        [style.backgroundImage]="getImage(image)"
+      >
+        <img
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          alt="image"
+        />
+
+        <input
+          type="checkbox"
+          class="checkbox"
+          [ngClass]="{ showOutline: !isSelected(image) }"
+          [checked]="isSelected(image)"
+        />
+
+        <div
+          class="cover-img"
+          [ngClass]="{ selected: isSelected(image) }"
+        ></div>
+      </div>
+    </ng-template>
+  </swiper>
+
+  <ion-button
+    color="primary"
+    expand="block"
+    class=""
+    color="danger"
+    [disabled]="!selectedImages.length"
+    (click)="deleteSelected()"
+  >
+    Delete Selected
+  </ion-button>
+</section>

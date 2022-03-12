@@ -8,9 +8,10 @@ import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
 
 const propertyUrl = environment.api.url + 'properties';
-const requestOptions = {
+const requestOptions = (body = {}) => ({
   headers: new HttpHeaders(headerDict),
-};
+  body
+});
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class PropertiesService {
 
   public async addProperty(property: Property) {
     try {
-      const res = await this.http.post<ApiResponse & { data: Property }>(propertyUrl, property, requestOptions)
+      const res = await this.http.post<ApiResponse & { data: Property }>(propertyUrl, property, requestOptions())
         .toPromise();
       this.properties = [...this.properties, res.data];
       return res;
@@ -78,9 +79,22 @@ export class PropertiesService {
     }
   }
 
+  public async deletePropertyImage(images: string[], propId: string) {
+    try {
+      const url = `${propertyUrl}/upload/images/${propId}`;
+      const res = await this.http
+        .delete<ApiResponse & { data: string[] }>(url, requestOptions({ images })).toPromise();
+      this.property.images = this.property.images.filter(img => !res.data.includes(img));
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   public async removeProperty(propId: string) {
     try {
-      const res = await this.http.delete<ApiResponse & { data: Property }>(`${propertyUrl}/${propId}`).toPromise();
+      const url = `${propertyUrl}/${propId}`;
+      const res = await this.http.delete<ApiResponse & { data: Property }>(url).toPromise();
       this.properties = this.properties.filter(property => property.property_id !== res.data.property_id);
     } catch (error) {
       console.error(error);
@@ -90,7 +104,7 @@ export class PropertiesService {
   public async updateProperty(updated: Property): Promise<ApiResponse & { data: Property }> {
     try {
       const res = await this.http.patch<ApiResponse & { data: Property }>
-        (`${propertyUrl}/${updated.property_id}`, updated, requestOptions).toPromise();
+        (`${propertyUrl}/${updated.property_id}`, updated, requestOptions()).toPromise();
 
       if (res.status !== 200 && res.status !== 201) {
         return;

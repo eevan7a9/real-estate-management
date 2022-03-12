@@ -12,7 +12,7 @@
 
 <ion-content class="ion-padding">
   <div class="wrapper">
-    <section class="previews" *ngIf="previews.length">
+    <section title="preview-section" class="previews" *ngIf="previews.length">
       <div
         *ngFor="let preview of previews; let i = index"
         class="preview-img"
@@ -26,7 +26,7 @@
       </div>
     </section>
 
-    <section class="upload-form-container">
+    <section title="upload-section" class="upload-form-container">
       <div class="input-contianer" *ngIf="!previews.length">
         <div>
           <input
@@ -41,14 +41,20 @@
       </div>
       <ion-button
         color="primary"
-        size="large"
         expand="block"
+        class=""
         id="uploadBtn"
         (click)="upload()"
       >
         Upload Image
       </ion-button>
     </section>
+
+    <app-properties-current-images
+      [images]="property.images"
+      [id]="property.property_id"
+      *ngIf="property.images.length"
+    ></app-properties-current-images>
   </div>
 </ion-content>
 

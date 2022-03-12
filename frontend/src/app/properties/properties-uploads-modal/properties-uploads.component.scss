@@ -46,7 +46,7 @@
 .upload-form-container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 54px;
+  padding-bottom: 16px;
   .input-contianer {
     width: 100%;
     height: 100%;
@@ -76,22 +76,7 @@
   ion-button {
     border: none;
     transition: all 0.2s ease;
-  }
-}
-.uploaded-files-container {
-  margin: auto 0 0;
-  padding: 16px 0;
-  gap: 12px;
-  .uploaded-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 80px));
-    gap: 16px;
-    .file-item {
-      cursor: pointer;
-      height: 80px;
-      padding: 8px;
-      border-radius: 12px;
-      background-color: var(--ion-color-light-shade);
-    }
+    --padding-top: 16px;
+    --padding-bottom: 16px;
   }
 }

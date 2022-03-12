@@ -1,0 +1,62 @@
+@import "~swiper/scss";
+@import "~@ionic/angular/css/ionic-swiper";
+.swiper .swiper-slide {
+  width: auto;
+}
+
+.current-images {
+  margin: 16px 0;
+  height: 100%;
+  width: 100%;
+  header {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin-bottom: 16px;
+  }
+  swiper {
+    .slide-content {
+      height: 150px;
+      width: 150px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      img {
+        height: 100%;
+        width: 100%;
+
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+      }
+      .checkbox {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        height: 16px;
+        width: 16px;
+        z-index: 2;
+        &.showOutline {
+          outline: 3px solid var(--ion-color-primary);
+        }
+      }
+      .cover-img {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(51, 51, 51, 0.63);
+        &.selected {
+          background-color: rgba(11, 114, 211, 0.219);
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+  ion-button {
+    margin-top: 16px;
+  }
+}
