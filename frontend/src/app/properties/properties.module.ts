@@ -14,6 +14,8 @@ import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/p
 import { EnquiriesPageModule } from '../enquiries/enquiries.module';
 import { MortgageCalcPageModule } from '../mortgage-calc/mortgage-calc.module';
 import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
+import { PropertiesGalleryComponent } from './properties-gallery/properties-gallery.component';
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   imports: [
@@ -22,7 +24,8 @@ import { PropertiesUploadsComponent } from './properties-uploads-modal/propertie
     PropertiesPageRoutingModule,
     SharedModule,
     EnquiriesPageModule,
-    MortgageCalcPageModule
+    MortgageCalcPageModule,
+    SwiperModule
   ],
   declarations: [
     PropertiesPage,
@@ -31,7 +34,8 @@ import { PropertiesUploadsComponent } from './properties-uploads-modal/propertie
     PropertiesDetailComponent,
     PropertiesEditComponent,
     PropertiesCoordinatesComponent,
-    PropertiesUploadsComponent
+    PropertiesUploadsComponent,
+    PropertiesGalleryComponent
   ],
   exports: [
     PropertiesListComponent

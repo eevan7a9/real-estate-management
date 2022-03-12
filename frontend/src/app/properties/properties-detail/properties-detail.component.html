@@ -34,12 +34,12 @@
             </ion-card-content>
           </ion-card>
 
-          <app-property-gallery
+          <app-properties-gallery
             [images]="property.images"
             [showEdit]="true"
             (edit)="editImages()"
             *ngIf="property.images"
-          ></app-property-gallery>
+          ></app-properties-gallery>
 
           <ion-card class="property-description">
             <ion-card-header> Description </ion-card-header>

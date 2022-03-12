@@ -6,14 +6,12 @@
       class="edit-btn"
       (click)="edit.emit(true)"
     >
-      <ion-text>Edit</ion-text>
+      <ion-text>Upload</ion-text>
       <ion-icon name="images-outline"></ion-icon>
     </ion-button>
   </div>
 
-  <ion-card-content
-    class="gallery-container ion-padding-horizontal ion-no-padding"
-  >
+  <ion-card-content class="gallery-container">
     <div class="selected-image ion-padding-vertical">
       <img [src]="imagePresented" alt="image" />
     </div>

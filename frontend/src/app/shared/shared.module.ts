@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SwiperModule } from 'swiper/angular';
-import { PropertyGalleryComponent } from './components/property-gallery/property-gallery.component';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
 import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
 import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/div-horizontal-slide.component';
@@ -19,7 +17,6 @@ import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
-    PropertyGalleryComponent,
     ActionPopupComponent,
     PropertyBadgeComponent,
     DivHorizontalSlideComponent,
@@ -37,12 +34,10 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    SwiperModule,
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    PropertyGalleryComponent,
     ActionPopupComponent,
     PropertyBadgeComponent,
     DivHorizontalSlideComponent,
@@ -57,4 +52,4 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   providers: [CustomValidatorsDirective],
 })
-export class SharedModule {}
+export class SharedModule { }

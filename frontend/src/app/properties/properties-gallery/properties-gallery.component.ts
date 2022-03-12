@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } fro
 import { SwiperOptions } from 'swiper';
 
 @Component({
-  selector: 'app-property-gallery',
-  templateUrl: './property-gallery.component.html',
-  styleUrls: ['./property-gallery.component.scss'],
+  selector: 'app-properties-gallery',
+  templateUrl: './properties-gallery.component.html',
+  styleUrls: ['./properties-gallery.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class PropertyGalleryComponent implements OnInit {
+export class PropertiesGalleryComponent implements OnInit {
   @Input() images: string[] = [];
   @Input() showEdit = false;
   @Output() edit = new EventEmitter<boolean>();
@@ -19,7 +19,8 @@ export class PropertyGalleryComponent implements OnInit {
     freeMode: true,
     slidesPerView: 'auto',
   };
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit() {
     if (this.images?.length) {
