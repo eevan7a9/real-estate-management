@@ -1,0 +1,47 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      <div class="property-name">
+        <ion-badge class="badge" color="light" *ngIf="enquiry.read">
+          Read
+        </ion-badge>
+        <ion-badge class="badge" color="medium" *ngIf="!enquiry.read">
+          Unread
+        </ion-badge>
+        {{ enquiry.title }}
+      </div>
+    </ion-card-title>
+
+    <ion-button
+      class="action-btn"
+      color="light"
+      (click)="actionPopup($event, enquiry.id)"
+    >
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+    </ion-button>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid class="ion-no-padding ion-no-margin">
+      <ion-row>
+        <ion-col size="12" sizeLg="6">
+          <ion-row size="auto">
+            <ion-col>
+              <ion-text>{{ enquiry.property.name }}</ion-text>
+            </ion-col>
+            <ion-col size="*" sizeLg="1">
+              <app-enquiry-badge [topic]="enquiry.topic"></app-enquiry-badge>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="12" sizeLg="4" class="ion-text-lg-center">
+          <ion-text>{{ enquiry.email }}</ion-text>
+        </ion-col>
+        <ion-col size="12" sizeLg="2">
+          <ion-text>{{ enquiry.date | date }}</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

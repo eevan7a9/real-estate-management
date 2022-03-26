@@ -12,6 +12,7 @@ import { EnquiriesDetailComponent } from './enquiries-detail/enquiries-detail.co
 import { SharedModule } from '../shared/shared.module';
 import { EnquiriesNewComponent } from './enquiries-new-modal/enquiries-new.component';
 import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-form.component';
+import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list-item.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-fo
   declarations: [
     EnquiriesPage,
     EnquiriesListComponent,
+    EnquiriesListItemComponent,
     EnquiriesDetailComponent,
     EnquiriesNewComponent,
     EnquiriesNewFormComponent
