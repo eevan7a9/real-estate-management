@@ -3,45 +3,7 @@
   --color: var(--ion-color-light);
 }
 
-ion-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .action-btn {
-    --box-shadow: none;
-  }
-  .property-name {
-    display: flex;
-    align-items: center;
-    .badge {
-      margin-right: 8px;
-    }
-  }
-}
-
 .label-text {
   font-size: 19px;
   font-weight: bold;
-}
-.item-text {
-  font-size: 18px;
-}
-
-@media (max-width: 920px) {
-  .item-text {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 768px) {
-  ion-card-header {
-    .property-name {
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-      .badge {
-        margin: 0 0 8px 0;
-      }
-    }
-  }
 }
