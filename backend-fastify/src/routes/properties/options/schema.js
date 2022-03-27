@@ -54,3 +54,22 @@ export const defaultError = {
   },
 };
 Object.freeze(defaultError);
+
+export const unauthorizedError = {
+  type: "object",
+  properties: {
+    status: {
+      type: "number",
+      default: 401,
+    },
+    error: {
+      type: "string",
+      default: "Unauthorized",
+    },
+    message: {
+      type: "string",
+      default: "No Authorization was found in request.headers",
+    },
+  },
+};
+Object.freeze(defaultError);

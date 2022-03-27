@@ -20,7 +20,7 @@ import {
 export const propertiesRoutes = function (fastify, opts, done) {
   fastify.get("/", getPropertiesOpts(getProperties));
   fastify.get("/:id", getPropertyOpts(getProperty));
-  fastify.post("/", createPropertyOpts(createProperty));
+  fastify.post("/", createPropertyOpts(fastify, createProperty));
   fastify.patch("/:id", updatePropertyOpts(updateProperty));
   fastify.delete("/:id", deletePropertyOpts(deleteProperty));
   fastify.post("/upload/images/:id", uploadImagesOpts(addImagesProperty));

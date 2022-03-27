@@ -1,6 +1,11 @@
-import { propertyProperties, defaultError } from "./schema.js";
+import {
+  propertyProperties,
+  defaultError,
+  unauthorizedError,
+} from "./schema.js";
 
-export const createPropertyOpts = (handler) => ({
+export const createPropertyOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       201: {
@@ -18,6 +23,7 @@ export const createPropertyOpts = (handler) => ({
         },
       },
       400: defaultError,
+      401: unauthorizedError,
     },
   },
   handler: handler,
