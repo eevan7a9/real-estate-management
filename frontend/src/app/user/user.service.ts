@@ -8,7 +8,7 @@ import { StorageService } from '../shared/services/storage/storage.service';
 
 const url = environment.api.url;
 const requestOptions = {
-  headers: new HttpHeaders(headerDict),
+  headers: new HttpHeaders(headerDict()),
 };
 
 @Injectable({
