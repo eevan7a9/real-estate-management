@@ -1,11 +1,15 @@
-export const headerDict = {
+interface HeaderDict {
+  token: string;
+}
+export const headerDict = (arg: HeaderDict = { token: '' }) => ({
   // eslint-disable-next-line @typescript-eslint/naming-convention
   'Content-Type': 'application/json',
   // eslint-disable-next-line @typescript-eslint/naming-convention
   Accept: 'application/json',
   // eslint-disable-next-line @typescript-eslint/naming-convention
   'Access-Control-Allow-Headers': 'Content-Type',
-};
+  Authorization: `Bearer ${arg.token}`
+});
 
 export const sortListByName = (
   items: any[],
