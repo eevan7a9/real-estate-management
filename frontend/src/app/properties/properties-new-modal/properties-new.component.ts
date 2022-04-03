@@ -69,9 +69,13 @@ export class PropertiesNewComponent implements OnInit {
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
-      const { data } = await this.propertiesService.addProperty(newProperty);
-      this.modalCtrl.dismiss(data);
-      this.presentToast('Property is Added');
+      const { data, message } = await this.propertiesService.addProperty(newProperty);
+      if (data) {
+        this.modalCtrl.dismiss(data);
+        this.presentToast(message);
+        return;
+      }
+      this.presentToast('Error:' + message, 'danger');
       return;
     }
     this.presentToast('Error: Invalid, please fill the form properly', 'danger');
