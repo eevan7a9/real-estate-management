@@ -1,4 +1,4 @@
-import { propertyNotFound } from "./schema.js";
+import { responseError } from "../../../utils/schema/response.js";
 
 export const uploadImagesOpts = (handler) => ({
   schema: {
@@ -22,8 +22,10 @@ export const uploadImagesOpts = (handler) => ({
           },
         },
       },
-      // ERRORS
-      404: propertyNotFound,
+      404: responseError({
+        status: 404,
+        message: "Error: Property not found!",
+      }),
     },
   },
   handler: handler,
@@ -51,8 +53,10 @@ export const deleteImagesOpts = (handler) => ({
           },
         },
       },
-      // ERRORS
-      404: propertyNotFound,
+      404: responseError({
+        status: 404,
+        message: "Error: Property not found!",
+      }),
     },
   },
   handler: handler,

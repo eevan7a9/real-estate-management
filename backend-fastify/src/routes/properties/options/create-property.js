@@ -1,8 +1,5 @@
-import {
-  propertyProperties,
-  defaultError,
-  unauthorizedError,
-} from "./schema.js";
+import { propertyProperties } from "./schema.js";
+import { responseError } from "../../../utils/schema/response.js";
 
 export const createPropertyOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
@@ -22,8 +19,14 @@ export const createPropertyOpts = (fastify, handler) => ({
           data: propertyProperties,
         },
       },
-      400: defaultError,
-      401: unauthorizedError,
+      400: responseError({
+        status: 400,
+        message: "Error: Something went wrong, please try again later."
+      }),
+      401: responseError({
+        status: 401,
+        message: "No Authorization was found in request.headers",
+      }),
     },
   },
   handler: handler,

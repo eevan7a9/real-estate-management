@@ -1,4 +1,5 @@
-import { propertyNotFound, propertyProperties } from "./schema.js";
+import { propertyProperties } from "./schema.js";
+import { responseError } from "../../../utils/schema/response.js";
 
 export const updatePropertyOpts = (handler) => ({
   schema: {
@@ -17,8 +18,11 @@ export const updatePropertyOpts = (handler) => ({
           data: propertyProperties,
         },
       },
-      // ERRORS
-      404: propertyNotFound,
+      400: responseError(),
+      404: responseError({
+        status: 404,
+        message: "Error: Property not found!",
+      }),
     },
   },
   handler: handler,

@@ -1,4 +1,5 @@
 import { propertyProperties } from "./schema.js";
+import { responseError } from "../../../utils/schema/response.js";
 
 export const getPropertiesOpts = (handler) => ({
   schema: {
@@ -20,6 +21,7 @@ export const getPropertiesOpts = (handler) => ({
           },
         },
       },
+      400: responseError(),
     },
   },
   handler: handler,
