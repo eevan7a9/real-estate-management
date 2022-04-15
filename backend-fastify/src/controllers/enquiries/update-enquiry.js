@@ -19,16 +19,16 @@ export const updateEnquiry = async function (req, res) {
   };
   const options = { new: true };
   try {
-    const result = await Enquiry.findOneAndUpdate(
+    const enquiry = await Enquiry.findOneAndUpdate(
       { enquiry_id },
       { $set },
       options
     );
-    if (!result) {
+    if (!enquiry) {
       res.status(404).send({ message: "Error: Can't find Enquiry." });
       return;
     }
-    res.status(201).send({ ...result.toObject() });
+    res.status(201).send({ data: enquiry });
   } catch (error) {
     res.status(400).send(error);
   }

@@ -14,7 +14,7 @@ export const createEnquiry = async function (req, res) {
       ...req.body,
     });
     await newEnquiry.save();
-    res.status(201).send(newEnquiry);
+    res.status(201).send({ data: newEnquiry });
   } catch (error) {
     res.status(400).send(error);
   }
