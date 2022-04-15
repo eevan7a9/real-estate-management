@@ -1,4 +1,6 @@
 import { Property } from "../../models/property.js";
+import { authBearerToken } from "../../utils/requests.js";
+import { userIdToken } from "../../utils/users.js";
 
 export const updateProperty = async function (req, res) {
   const property_id = req.params.id;
@@ -33,18 +35,20 @@ export const updateProperty = async function (req, res) {
     }),
   };
   try {
+    const token = authBearerToken(req);
+    const user_id = userIdToken(token);
     const options = { useFindAndModify: false, new: true, runValidators: true };
-    const result = await Property.findOneAndUpdate(
-      { property_id },
+    const property = await Property.findOneAndUpdate(
+      { property_id, user_id },
       { $set },
       options
     );
-    if (!result) {
+    if (!property) {
       res.status(404).send({ message: "Error: Can't update unknown property" });
       return;
     }
     res.status(201).send({
-      data: { ...result.toObject() },
+      data: { ...property.toObject() },
       message: "Success: Property is updated.",
     });
   } catch (error) {
