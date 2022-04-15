@@ -18,6 +18,7 @@ export const getPropertyOpts = (handler) => ({
           data: propertyProperties,
         },
       },
+      400: responseError(),
       404: responseError({
         status: 404,
         message: "Error: Property not found!",

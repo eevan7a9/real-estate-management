@@ -19,11 +19,11 @@ export const deletePropertyOpts = (fastify, handler) => ({
           data: propertyProperties,
         },
       },
-      400: responseError({
-        status: 400,
-        message: "Error: Something went wrong, please try again later."
+      400: responseError(),
+      401: responseError({
+        status: 401,
+        message: "No Authorization was found in request.headers"
       }),
-      // ERRORS
       404: responseError({
         status: 404,
         message: "Error: Property not found!",

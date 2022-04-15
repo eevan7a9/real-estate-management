@@ -1,6 +1,7 @@
 import { responseError } from "../../../utils/schema/response.js";
 
-export const uploadImagesOpts = (handler) => ({
+export const uploadImagesOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       201: {
@@ -22,6 +23,11 @@ export const uploadImagesOpts = (handler) => ({
           },
         },
       },
+      400: responseError(),
+      401: responseError({
+        status: 401,
+        message: "No Authorization was found in request.headers"
+      }),
       404: responseError({
         status: 404,
         message: "Error: Property not found!",
@@ -31,7 +37,8 @@ export const uploadImagesOpts = (handler) => ({
   handler: handler,
 });
 
-export const deleteImagesOpts = (handler) => ({
+export const deleteImagesOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       200: {
@@ -53,6 +60,11 @@ export const deleteImagesOpts = (handler) => ({
           },
         },
       },
+      400: responseError(),
+      401: responseError({
+        status: 401,
+        message: "No Authorization was found in request.headers"
+      }),
       404: responseError({
         status: 404,
         message: "Error: Property not found!",

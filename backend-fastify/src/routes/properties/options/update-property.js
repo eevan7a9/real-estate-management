@@ -20,6 +20,10 @@ export const updatePropertyOpts = (fastify, handler) => ({
         },
       },
       400: responseError(),
+      401: responseError({
+        status: 401,
+        message: "No Authorization was found in request.headers"
+      }),
       404: responseError({
         status: 404,
         message: "Error: Property not found!",
