@@ -1,7 +1,8 @@
 import { propertyProperties } from "./schema.js";
 import { responseError } from "../../../utils/schema/response.js";
 
-export const deletePropertyOpts = (handler) => ({
+export const deletePropertyOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       200: {
