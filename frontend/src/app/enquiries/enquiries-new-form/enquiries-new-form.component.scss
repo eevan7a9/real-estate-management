@@ -3,21 +3,28 @@ ion-item {
   --inner-padding-start: 0;
   --padding-end: 8px;
   --padding-start: 8px;
-  --padding-top: 8px;
+  --padding-top: 0;
   --padding-bottom: 8px;
   margin: 0 0 16px 0;
   ion-label {
     --color: #8794a4;
   }
-  ion-input,
-  ion-textarea {
+  ion-input {
     --padding-start: 12px;
     padding: 16px;
-    border: 1px solid rgba(0, 56, 100, 0.2);
+    border: 1px solid rgb(196 196 196);
     box-sizing: border-box;
     border-radius: 4px;
     margin-top: 8px;
   }
+  .ckeditor {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 200px;
 }
 
 .alert-errors {

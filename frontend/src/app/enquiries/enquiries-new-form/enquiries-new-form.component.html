@@ -19,7 +19,12 @@
 
   <ion-item lines="none">
     <ion-label position="stacked">Content :</ion-label>
-    <ion-textarea formControlName="content" placeholder="..."></ion-textarea>
+    <ckeditor
+      [editor]="Editor"
+      formControlName="content"
+      (ready)="onReady($event)"
+      class="ckeditor"
+    ></ckeditor>
   </ion-item>
 
   <div class="alert-errors" *ngIf="error && enquiryForm.get('content').errors">

@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { EnquiriesNewComponent } from './enquiries-new-modal/enquiries-new.component';
 import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-form.component';
 import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list-item.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list
     FormsModule,
     IonicModule,
     EnquiriesPageRoutingModule,
-    SharedModule
+    SharedModule,
+    CKEditorModule
   ],
   declarations: [
     EnquiriesPage,
@@ -28,7 +30,7 @@ import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list
     EnquiriesListItemComponent,
     EnquiriesDetailComponent,
     EnquiriesNewComponent,
-    EnquiriesNewFormComponent
+    EnquiriesNewFormComponent,
   ],
   exports: [
     EnquiriesNewFormComponent

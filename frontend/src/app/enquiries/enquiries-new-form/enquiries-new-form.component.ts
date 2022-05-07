@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-enquiries-new-form',
@@ -11,6 +12,7 @@ import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
 export class EnquiriesNewFormComponent implements OnInit {
   public error = false;
   public enquiryForm: FormGroup;
+  public Editor = ClassicEditor;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,14 +29,22 @@ export class EnquiriesNewFormComponent implements OnInit {
 
   ngOnInit() { }
 
-  public submit() {
+  public async submit() {
     if (!this.enquiryForm.valid) {
       this.error = true;
       return;
     }
     console.log(this.enquiryForm.value);
+
+    const hasModal = await this.modalCtrl.getTop();
+    if (hasModal) {
+      this.modalCtrl.dismiss();
+    }
     this.presentToast('Success, message is sent.');
-    this.modalCtrl.dismiss();
+  }
+
+  public onReady(e) {
+    console.log(e);
   }
 
   private async presentToast(message: string, duration = 3000) {
@@ -45,5 +55,4 @@ export class EnquiriesNewFormComponent implements OnInit {
     });
     toast.present();
   }
-
 }
