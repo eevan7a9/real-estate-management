@@ -8,7 +8,6 @@ import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/d
 import { CustomValidatorsDirective } from './directives/custom-validators.directive';
 import { AlertCardComponent } from './components/alert-card/alert-card.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
-import { PropertyCardComponent } from './components/property-card/property-card.component';
 import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.component';
 // FROM MAP MODULE
 import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
@@ -23,7 +22,6 @@ import { FooterComponent } from './components/footer/footer.component';
     CustomValidatorsDirective,
     AlertCardComponent,
     ContactFormComponent,
-    PropertyCardComponent,
     EnquiryBadgeComponent,
     MapLeafletComponent,
     MapSearchFieldComponent,
@@ -44,7 +42,6 @@ import { FooterComponent } from './components/footer/footer.component';
     CustomValidatorsDirective,
     AlertCardComponent,
     ContactFormComponent,
-    PropertyCardComponent,
     EnquiryBadgeComponent,
     MapLeafletComponent,
     MapSearchFieldComponent,

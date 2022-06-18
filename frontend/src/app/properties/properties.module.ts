@@ -8,6 +8,7 @@ import { PropertiesPageRoutingModule } from './properties-routing.module';
 import { PropertiesPage } from './properties.page';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
+import { PropertiesCardComponent } from './properties-card/properties-card.component';
 import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
 import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
 import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
@@ -32,6 +33,7 @@ import { PropertiesCurrentImagesComponent } from './properties-uploads-modal/pro
     PropertiesPage,
     PropertiesNewComponent,
     PropertiesListComponent,
+    PropertiesCardComponent,
     PropertiesDetailComponent,
     PropertiesEditComponent,
     PropertiesCoordinatesComponent,
@@ -40,7 +42,7 @@ import { PropertiesCurrentImagesComponent } from './properties-uploads-modal/pro
     PropertiesCurrentImagesComponent
   ],
   exports: [
-    PropertiesListComponent
+    PropertiesListComponent,
   ]
 })
 export class PropertiesPageModule { }

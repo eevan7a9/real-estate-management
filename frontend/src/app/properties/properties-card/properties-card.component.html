@@ -9,6 +9,7 @@
     [src]="'assets/images/madison.jpeg'"
     *ngIf="!property?.images || !property?.images.length"
   />
+
   <ion-card-header>
     <app-property-badge [type]="property?.type"></app-property-badge>
     <ion-card-title class="name">
@@ -19,6 +20,7 @@
       {{ property?.createdAt | date }}
     </div>
   </ion-card-header>
+
   <ion-card-content>
     <div class="desc">
       {{ property?.description }}

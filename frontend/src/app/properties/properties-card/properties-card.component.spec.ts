@@ -2,19 +2,19 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PropertyCardComponent } from './property-card.component';
+import { PropertiesCardComponent } from './properties-card.component';
 
-describe('PropertyCardComponent', () => {
-  let component: PropertyCardComponent;
-  let fixture: ComponentFixture<PropertyCardComponent>;
+describe('PropertiesCardComponent', () => {
+  let component: PropertiesCardComponent;
+  let fixture: ComponentFixture<PropertiesCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyCardComponent ],
+      declarations: [PropertiesCardComponent],
       imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PropertyCardComponent);
+    fixture = TestBed.createComponent(PropertiesCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

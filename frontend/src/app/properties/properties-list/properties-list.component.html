@@ -7,7 +7,7 @@
     [sizeXl]="singleCol ? 12 : 3"
     *ngFor="let item of displayedItems"
   >
-    <app-property-card [property]="item"></app-property-card>
+    <app-properties-card [property]="item"></app-properties-card>
   </ion-col>
 
   <ion-col
@@ -50,7 +50,7 @@
     *ngFor="let item of properties.slice(0, 6)"
     class="card-slider ion-margin-vertical"
   >
-    <app-property-card [property]="item"></app-property-card>
+    <app-properties-card [property]="item"></app-properties-card>
   </div>
 
   <div class="card-slider card-view-all ion-margin-vertical">
