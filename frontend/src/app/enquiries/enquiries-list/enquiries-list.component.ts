@@ -37,7 +37,7 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
 
   public selectEnquiry(enquiry: Enquiry) {
     this.enquiriesService.enquiry = enquiry;
-    this.router.navigate(['/enquiries', enquiry.id]);
+    this.router.navigate(['/enquiries', enquiry.enquiry_id]);
   }
 
   public setFilters(filter: string[]) {
