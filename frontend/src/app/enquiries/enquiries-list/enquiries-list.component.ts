@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { Router } from '@angular/router';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries.service';
-import { enquiries } from '../../shared/dummy-data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { sortListByDate, sortListByName } from 'src/app/shared/utility';
@@ -79,18 +78,18 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getEnquiries() {
+  private async getEnquiries() {
     this.isLoading.emit(true);
     this.unSubscribed();
-    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe(items => {
+    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe((items) => {
       this.enquiries = items;
       this.sortEnquiries();
-      if (this.searchText) { this.searchEnquiries(); };
+      if (this.searchText) { this.searchEnquiries(); }
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
       }
       if (!this.enquiries.length) {
-        this.enquiriesService.enquiries = enquiries;
+        this.enquiriesService.fetchEnquiries();
       }
     });
   }

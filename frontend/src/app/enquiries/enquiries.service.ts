@@ -18,6 +18,10 @@ interface ResEnquiry extends ApiResponse {
   data: Enquiry;
 }
 
+interface ResEnquiries extends ApiResponse {
+  data: Enquiry[];
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,6 +51,15 @@ export class EnquiriesService {
 
   public set enquiry(enquiry: Enquiry) {
     this.enquirySub.next(enquiry);
+  }
+
+  public async fetchEnquiries(): Promise<void> {
+    try {
+      this.enquiries = (await this.http.get<ResEnquiries>(enquiryUrl).toPromise()).data;
+    } catch (error) {
+      console.error(error);
+      return error.error || error;
+    }
   }
 
   public async addEnquiry(enquiry: Enquiry, property: Partial<Property>): Promise<ResEnquiry> {
