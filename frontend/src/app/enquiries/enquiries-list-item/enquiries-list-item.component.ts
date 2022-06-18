@@ -61,9 +61,14 @@ export class EnquiriesListItemComponent implements OnInit {
         }, {
           text: 'DELETE',
           cssClass: 'alert-danger-text',
-          handler: () => {
-            this.enquiriesService.removeEnquiry(enqId);
-            this.presentToast('Enquiry is deleted successfully.');
+          handler: async () => {
+            const res = await this.enquiriesService.removeEnquiry(enqId);
+            if (!res || res.status !== 200) {
+              const msg = 'Error: Something went wrong, please try again later.';
+              this.presentToast(`${res.message || msg}`, 3000, 'danger');
+              return;
+            }
+            return this.presentToast(res.message);
           }
         }
       ]
@@ -71,11 +76,11 @@ export class EnquiriesListItemComponent implements OnInit {
     await alert.present();
   }
 
-  public async presentToast(message: string, duration = 3000) {
+  public async presentToast(message: string, duration = 3000, color = 'success') {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color: 'success'
+      color
     });
     toast.present();
   }

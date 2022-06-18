@@ -84,7 +84,17 @@ export class EnquiriesService {
     }
   }
 
-  public removeEnquiry(enqId: string) {
-    this.enquiries = this.enquiries.filter(enquiry => enquiry.id !== enqId);
+  public async removeEnquiry(enqId: string): Promise<ApiResponse> {
+
+    try {
+      const res = await this.http.delete<ApiResponse>(enquiryUrl + '/' + enqId).toPromise();
+      if (res && res.status === 200) {
+        this.enquiries = this.enquiries.filter(enquiry => enquiry.enquiry_id !== enqId);
+        return res;
+      }
+    } catch (error) {
+      console.log(error);
+      return error.error || error;
+    }
   }
 }
