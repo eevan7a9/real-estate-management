@@ -1,5 +1,5 @@
 export interface Enquiry {
-  id: string;
+  enquiry_id: string;
   content: string;
   date: Date;
   email: string;
