@@ -1,4 +1,8 @@
 <ion-card>
+  <div class="tag" *ngIf="userService.user?.user_id === property.user_id">
+    Owned
+  </div>
+
   <img
     class="profile-image"
     [src]="property?.images[0]"
