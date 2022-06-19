@@ -19,7 +19,7 @@ export class PropertiesUploadsComponent implements OnInit {
     private toastCtrl: ToastController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public dismissModal() {
     this.modalCtrl.dismiss();
@@ -45,28 +45,20 @@ export class PropertiesUploadsComponent implements OnInit {
 
   public async upload() {
     if (!this.selectedFiles) {
-      const toast = this.toastCtrl.create({
-        message: 'Please, select images to upload.',
-        color: 'danger',
-        duration: 2500
-      });
-      (await toast).present();
-      return;
+      return this.presentToast('Please, select images to upload.', 300, 'danger');
     }
     const res = await this.propertiesService
       .addPropertyImage(this.selectedFiles, this.property.property_id);
-
-    if (res.data.length) {
-      const toast = this.toastCtrl.create({
-        message: res.message,
-        color: 'success',
-        duration: 2500
-      });
-      this.property.images = res.data;
-      this.propertiesService.updateProperty(this.property);
-      (await toast).present();
+    if (!res || res.status !== 201) {
+      const msg = 'Error: Something went wrong, please try again later.';
+      this.presentToast(`Error: ${res.message || msg}`, 3000, 'danger');
       this.modalCtrl.dismiss();
+      return;
     }
+    this.property.images = res.data;
+    this.propertiesService.updateProperty(this.property);
+    this.presentToast(res.message || 'Success: Image uploaded');
+    this.modalCtrl.dismiss();
   }
 
   public removeFile(index: number) {
@@ -85,5 +77,14 @@ export class PropertiesUploadsComponent implements OnInit {
       };
       fr.readAsDataURL(file);
     });
+  }
+
+  private async presentToast(message: string, duration = 3000, color = 'success') {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration,
+      color
+    });
+    toast.present();
   }
 }

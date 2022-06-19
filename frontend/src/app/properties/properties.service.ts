@@ -9,8 +9,8 @@ import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
 
 const propertyUrl = environment.api.url + 'properties';
-const requestOptions = (token = '', body = {},) => ({
-  headers: new HttpHeaders(headerDict({ token })),
+const requestOptions = ({ token = '', contentType = 'application/json' }, body = {}) => ({
+  headers: new HttpHeaders(headerDict({ token, contentType })),
   body
 });
 
@@ -70,7 +70,7 @@ export class PropertiesService {
   public async addProperty(property: Property): Promise<ResProperty> {
     const token = this.userService.token();
     try {
-      const res = await this.http.post<ResProperty>(propertyUrl, property, requestOptions(token))
+      const res = await this.http.post<ResProperty>(propertyUrl, property, requestOptions({ token }))
         .toPromise();
       this.properties = [...this.properties, res.data];
       return res;
@@ -86,18 +86,23 @@ export class PropertiesService {
       formData.append('images', file, file.name);
     });
     try {
-      return await this.http.post<ResStrings>(propertyUrl + '/upload/images/' + id, formData)
-        .toPromise();
+      const token = this.userService.token();
+      return await this.http.post<ResStrings>(
+        propertyUrl + '/upload/images/' + id,
+        formData,
+        requestOptions({ token, contentType: null })
+      ).toPromise();
     } catch (error) {
       console.error(error);
-      return error;
+      return error.error || error;
     }
   }
 
   public async deletePropertyImage(images: string[], propId: string): Promise<ResStrings> {
+    const token = this.userService.token();
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
-      const res = await this.http.delete<ResStrings>(url, requestOptions('', { images })).toPromise();
+      const res = await this.http.delete<ResStrings>(url, requestOptions({ token }, { images })).toPromise();
       this.property.images = this.property.images.filter(img => !res.data.includes(img));
       return res;
     } catch (error) {
@@ -118,10 +123,8 @@ export class PropertiesService {
   public async updateProperty(updated: Property): Promise<ResProperty> {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
-      const res = await this.http.patch<ResProperty>(url, updated, requestOptions()).toPromise();
-      if (res.status !== 200 && res.status !== 201) {
-        return;
-      }
+      const token = this.userService.token();
+      const res = await this.http.patch<ResProperty>(url, updated, requestOptions({ token })).toPromise();
       // UPDATE CURRENT PROPERTIES
       this.properties = this.properties.map(property =>
         (property.property_id === updated.property_id) ? res.data : property);
@@ -130,7 +133,7 @@ export class PropertiesService {
       return res;
     } catch (error) {
       console.error(error);
-      return error;
+      return error.error || error;
     }
 
   }
