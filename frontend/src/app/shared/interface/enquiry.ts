@@ -14,6 +14,11 @@ export interface Enquiry {
     from: string;
     to: string;
   };
+  replyTo: {
+    id: string;
+    title: string;
+    topic: string;
+  };
   createdAt?: string;
   updatedAt?: string;
 
