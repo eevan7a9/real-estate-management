@@ -14,5 +14,7 @@ export interface Enquiry {
     from: string;
     to: string;
   };
+  createdAt?: string;
+  updatedAt?: string;
 
 }
