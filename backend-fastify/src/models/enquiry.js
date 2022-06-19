@@ -16,6 +16,14 @@ const enquirySchema = new mongoose.Schema(
       from: { type: String, required: true },
       to: { type: String, required: true },
     },
+    responseTo: {
+      enquiry: {
+        id: { type: String },
+        title: { type: String },
+        topic: { type: String },
+      },
+      user_id: { type: String },
+    },
   },
   {
     timestamps: true,

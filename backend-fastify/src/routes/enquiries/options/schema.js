@@ -17,6 +17,17 @@ export const enquiryProperties = {
     },
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
+    responseTo: {
+      enquiry: {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          title: { type: "string" },
+          topic: { type: "string" },
+        },
+      },
+      user_id: { type: "string" },
+    },
   },
 };
 Object.freeze(enquiryProperties);
