@@ -88,7 +88,7 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
       }
-      if (!this.enquiries.length) {
+      if (!this.enquiries.length && !this.filterBy.length && !this.searchText) {
         this.enquiriesService.fetchEnquiries();
       }
     });
