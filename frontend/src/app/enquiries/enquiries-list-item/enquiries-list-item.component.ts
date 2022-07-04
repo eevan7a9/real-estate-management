@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
+import { UserService } from 'src/app/user/user.service';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 
@@ -13,15 +14,19 @@ import { EnquiriesService } from '../enquiries.service';
 export class EnquiriesListItemComponent implements OnInit {
 
   @Input() enquiry: Enquiry;
+  public sent = false;
   constructor(
     private enquiriesService: EnquiriesService,
     private alertCtrl: AlertController,
     private popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public userService: UserService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.sent = this.userService.user.user_id === this.enquiry.user.from;
+  }
 
   public async actionPopup(ev: Event, enqId: string) {
     ev.stopPropagation();

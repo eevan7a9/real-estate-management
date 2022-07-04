@@ -5,7 +5,7 @@ ion-card-header {
   .action-btn {
     --box-shadow: none;
   }
-  .property-name {
+  .enquiry-title {
     display: flex;
     align-items: center;
     .badge {
@@ -22,7 +22,7 @@ ion-card-header {
 
 @media (max-width: 768px) {
   ion-card-header {
-    .property-name {
+    .enquiry-title {
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
