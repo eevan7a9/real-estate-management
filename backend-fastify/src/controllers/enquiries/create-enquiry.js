@@ -21,11 +21,15 @@ export const createEnquiry = async function (req, res) {
       read: false,
       ...req.body,
     });
-    const user = await User.findOne({ user_id });
-    user.enquiries.push(newEnquiry.enquiry_id);
-
     await newEnquiry.save();
-    await user.save();
+
+    const { from, to } = newEnquiry.user;
+    const users = await User.find({ user_id: { "$in": [from, to] } });
+    users.forEach(async (user) => {
+      user.enquiries.push(newEnquiry.enquiry_id);
+      await user.save();
+    });
+
     res.status(201).send({ data: newEnquiry });
   } catch (error) {
     res.status(400).send(error);
