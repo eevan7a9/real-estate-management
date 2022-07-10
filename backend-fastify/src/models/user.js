@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema(
     properties: {
       type: Array,
     },
+    enquiries: {
+      type: Array,
+    },
   },
   {
     timestamps: true,
