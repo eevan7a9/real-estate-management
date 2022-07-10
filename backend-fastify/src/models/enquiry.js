@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+const userSchema = new mongoose.Schema({
+  from: { type: String, required: true },
+  to: { type: String, required: true },
+});
+
+const replyToSchema = new mongoose.Schema({
+  id: { type: String },
+  title: { type: String },
+  topic: { type: String },
+})
+
 const enquirySchema = new mongoose.Schema(
   {
     enquiry_id: { type: String, required: true },
@@ -12,15 +23,8 @@ const enquirySchema = new mongoose.Schema(
       name: { type: String },
       id: { type: String },
     },
-    user: {
-      from: { type: String, required: true },
-      to: { type: String, required: true },
-    },
-    replyTo: {
-      id: { type: String },
-      title: { type: String },
-      topic: { type: String },
-    },
+    user: userSchema,
+    replyTo: replyToSchema,
   },
   {
     timestamps: true,
