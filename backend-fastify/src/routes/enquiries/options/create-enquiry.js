@@ -1,7 +1,8 @@
 import { enquiryProperties } from "./schema.js";
 import { responseError } from '../../../utils/schema/response.js';
 
-export const createEnquiryOpts = (handler) => ({
+export const createEnquiryOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       201: {
