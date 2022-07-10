@@ -1,6 +1,7 @@
 import { enquiryProperties } from "./schema.js";
 
-export const updateEnquiryOpts = (handler) => ({
+export const updateEnquiryOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
   schema: {
     response: {
       201: {

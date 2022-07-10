@@ -1,4 +1,6 @@
 import { Enquiry } from "../../models/enquiry.js";
+import { authBearerToken } from "../../utils/requests.js";
+import { userIdToken } from "../../utils/users.js";
 
 export const updateEnquiry = async function (req, res) {
   const enquiry_id = req.params.id;
@@ -6,24 +8,27 @@ export const updateEnquiry = async function (req, res) {
     res.status(404).send({ message: "Error: Can't find Enquiry." });
     return;
   }
-  const { content, email, title, topic, read, property, user } = req.body;
+
+  const token = authBearerToken(req);
+  const user_id = userIdToken(token);
+
+  const { content, title, topic, read } = req.body;
   const $set = {
     // Fields to update
     ...(content !== undefined && { content }),
-    ...(email !== undefined && { email: email.toLowerCase() }),
     ...(title !== undefined && { title }),
     ...(topic !== undefined && { topic }),
     ...(read !== undefined && { read }),
-    ...(property !== undefined && { property }),
-    ...(user !== undefined && { user }),
   };
   const options = { new: true };
+
   try {
     const enquiry = await Enquiry.findOneAndUpdate(
-      { enquiry_id },
+      { enquiry_id, 'user.from': user_id },
       { $set },
       options
     );
+
     if (!enquiry) {
       res.status(404).send({ message: "Error: Can't find Enquiry." });
       return;
