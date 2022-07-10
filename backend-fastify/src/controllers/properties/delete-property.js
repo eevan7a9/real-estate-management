@@ -1,4 +1,5 @@
 import { Property } from "../../models/property.js";
+import { User } from "../../models/user.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
 import { unlinkImages } from "./image-property.js";
@@ -15,6 +16,9 @@ export const deleteProperty = async function (req, res) {
     if (property.images?.length) {
       unlinkImages(property.images);
     }
+    const user = await User.findOne({ user_id });
+    user.properties = user.properties.filter(i => i !== property.property_id);
+    user.save();
 
     res.status(200).send({ data: { ...property.toObject() } });
     return;
