@@ -11,7 +11,12 @@ export const userProperties = {
   ...usersProperties,
   properties: {
     type: "array"
-  },
+  }
+};
+
+// single user current user
+export const meProperties = {
+  ...userProperties,
   enquiries: {
     type: "array"
   }
