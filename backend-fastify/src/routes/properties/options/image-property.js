@@ -1,28 +1,19 @@
-import { responseError } from "../../../utils/schema/response.js";
+import { responseSuccess, responseError } from "../../../utils/schema/response.js";
 
 export const uploadImagesOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
-      201: {
-        type: "object",
-        properties: {
-          status: {
-            type: "number",
-            default: 201,
-          },
-          message: {
+      201: responseSuccess({
+        status: 201,
+        message: "Files are uploaded.",
+        data: {
+          type: "array",
+          items: {
             type: "string",
-            default: "Files are uploaded.",
           },
-          data: {
-            type: "array",
-            items: {
-              type: "string",
-            },
-          },
-        },
-      },
+        }
+      }),
       400: responseError(),
       401: responseError({
         status: 401,
