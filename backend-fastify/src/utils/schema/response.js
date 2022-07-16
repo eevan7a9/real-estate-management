@@ -1,52 +1,54 @@
+const success = {
+  status: 200,
+  message: "Success!",
+  data: {}
+}
 export const responseSuccess = (
-  def = {
-    status: 200,
-    message: "Success!",
-    data: {}
-  }
+  def = success
 ) => ({
   type: "object",
   properties: {
     status: {
       type: "number",
-      default: def.status,
+      default: def.status || success.status,
     },
     statusCode: {
       type: "number",
-      default: def.status,
+      default: def.status || success.status,
     },
     message: {
       type: "string",
-      default: def.message,
+      default: def.message || success.message,
     },
-    data: def.data,
+    data: def.data || success.data,
   },
 });
 
+const error = {
+  status: 400,
+  error: "error",
+  message: "Something went wrong, please try again later.",
+}
 export const responseError = (
-  def = {
-    status: 400,
-    error: "error",
-    message: "Error: Something went wrong, please try again later.",
-  }
+  def = error
 ) => ({
   type: "object",
   properties: {
     status: {
       type: "number",
-      default: def.status,
+      default: def.status || error.status,
     },
     statusCode: {
       type: "number",
-      default: def.status,
+      default: def.status || error.status,
     },
     error: {
       type: "string",
-      default: def.error,
+      default: def.error || error.error,
     },
     message: {
       type: "string",
-      default: def.message,
+      default: def.message || error.message,
     },
 
   },
