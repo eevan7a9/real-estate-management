@@ -5,7 +5,7 @@ import { userIdToken } from "../../utils/users.js";
 export const updateEnquiry = async function (req, res) {
   const enquiry_id = req.params.id;
   if (!enquiry_id) {
-    res.status(404).send({ message: "Error: Can't find Enquiry." });
+    res.status(404).send({ message: "Can't find Enquiry." });
     return;
   }
 
@@ -30,7 +30,7 @@ export const updateEnquiry = async function (req, res) {
     );
 
     if (!enquiry) {
-      res.status(404).send({ message: "Error: Can't find Enquiry." });
+      res.status(404).send({ message: "Can't find Enquiry." });
       return;
     }
     res.status(201).send({ data: enquiry });

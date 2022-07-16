@@ -1,23 +1,16 @@
 import { enquiryProperties } from "./schema.js";
+import { responseError, responseSuccess } from '../../../utils/schema/response.js';
 
 export const updateEnquiryOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
-      201: {
-        type: "object",
-        properties: {
-          status: {
-            type: "number",
-            default: 201,
-          },
-          message: {
-            type: "string",
-            default: "Success: Enquiry updated!",
-          },
-          data: enquiryProperties,
-        },
-      },
+      201: responseSuccess({
+        message: "Enquiry updated!",
+        data: enquiryProperties
+      }),
+      400: responseError(),
+      404: responseError()
     },
   },
   handler,

@@ -1,27 +1,18 @@
 import { enquiryProperties } from "./schema.js";
-import { responseError } from '../../../utils/schema/response.js';
+import { responseSuccess, responseError } from '../../../utils/schema/response.js';
 
 export const deleteEnquiryOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
-      200: {
-        type: "object",
-        properties: {
-          status: {
-            type: "number",
-            default: 200,
-          },
-          message: {
-            type: "string",
-            default: "Success: Enquiry deleted!",
-          },
-          data: enquiryProperties,
-        },
-      },
+      200: responseSuccess({
+        message: "Enquiry deleted!",
+        data: enquiryProperties
+      }),
+      400: responseError(),
       404: responseError({
         status: 404,
-        message: "Error: Can't find Enquiry."
+        message: "Can't find Enquiry."
       })
     },
   },

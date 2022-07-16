@@ -10,11 +10,11 @@ export const deleteEnquiry = async function (req, res) {
   try {
     const enquiry = await Enquiry.findOne({ enquiry_id: id });
     if (!enquiry) {
-      return res.status(404).send({ message: "Error: Can't find Enquiry." });
+      return res.status(404).send({});
     }
     const { from, to } = enquiry.user;
     if (from !== user_id && to !== user_id) {
-      return res.status(400).send({ message: "Error: Not allowed." });
+      return res.status(400).send({ message: "Not allowed." });
     }
     await enquiry.delete();
 
@@ -25,7 +25,7 @@ export const deleteEnquiry = async function (req, res) {
     });
     res
       .status(200)
-      .send({ data: enquiry, message: "Success: Enquiry deleted!" });
+      .send({ data: enquiry });
   } catch (error) {
     res.status(400).send(error);
   }

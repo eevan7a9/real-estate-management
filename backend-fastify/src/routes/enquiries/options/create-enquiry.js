@@ -1,24 +1,15 @@
 import { enquiryProperties } from "./schema.js";
-import { responseError } from '../../../utils/schema/response.js';
+import { responseSuccess, responseError } from '../../../utils/schema/response.js';
 
 export const createEnquiryOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
-      201: {
-        type: "object",
-        properties: {
-          status: {
-            type: "number",
-            default: 201,
-          },
-          message: {
-            type: "string",
-            default: "Success: Enquiry created!",
-          },
-          data: enquiryProperties,
-        },
-      },
+      201: responseSuccess({
+        status: 201,
+        message: 'Enquiry created!',
+        data: enquiryProperties
+      }),
       400: responseError(),
     },
   },
