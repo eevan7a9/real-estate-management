@@ -13,6 +13,7 @@ export const userProperties = {
     type: "array"
   }
 };
+Object.freeze(userProperties);
 
 // single user current user
 export const meProperties = {
@@ -21,4 +22,4 @@ export const meProperties = {
     type: "array"
   }
 };
-Object.freeze(userProperties);
+Object.freeze(meProperties);
