@@ -1,14 +1,26 @@
 const property = {
   type: "object",
-  properties: { name: { type: "string" }, id: { type: "string" } },
+  properties: {
+    name: { type: "string" },
+    property_id: { type: "string" }
+  },
 };
 Object.freeze(property);
 
-const user = {
+const users = {
   type: "object",
-  properties: { from: { type: "string" }, to: { type: "string" } },
+  properties: {
+    from: {
+      user_id: { type: "string" },
+      keep: { type: "boolean" }
+    },
+    to: {
+      user_id: { type: "boolean" },
+      keep: { type: "boolean" }
+    }
+  },
 };
-Object.freeze(user);
+Object.freeze(users);
 
 const replyTo = {
   type: "object",
@@ -30,8 +42,8 @@ export const enquiryProperties = {
     topic: { type: "string" },
     read: { type: "boolean" },
     property,
-    user,
     replyTo,
+    users,
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
   },

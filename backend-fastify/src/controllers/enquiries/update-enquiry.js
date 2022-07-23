@@ -24,7 +24,7 @@ export const updateEnquiry = async function (req, res) {
 
   try {
     const enquiry = await Enquiry.findOneAndUpdate(
-      { enquiry_id, 'user.from': user_id },
+      { enquiry_id, 'users.from.user_id': user_id },
       { $set },
       options
     );
