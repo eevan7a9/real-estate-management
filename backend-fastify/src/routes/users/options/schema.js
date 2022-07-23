@@ -14,12 +14,3 @@ export const userProperties = {
   }
 };
 Object.freeze(userProperties);
-
-// single user current user
-export const meProperties = {
-  ...userProperties,
-  enquiries: {
-    type: "array"
-  }
-};
-Object.freeze(meProperties);
