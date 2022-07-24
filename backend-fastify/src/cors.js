@@ -1,4 +1,4 @@
-import FastifyCors from "fastify-cors";
+import FastifyCors from "@fastify/cors";
 
 export const setFastifyCors = function (fastify) {
   fastify.register(FastifyCors, {
