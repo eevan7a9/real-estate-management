@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import Fastify from "fastify";
 import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "fastify-jwt";
-import FastifyMultipart from "fastify-multipart";
+import FastifyMultipart from "@fastify/multipart";
 import mongoose from "mongoose";
 // Local Files
 import { setFastifySwagger } from "./swagger.js";
