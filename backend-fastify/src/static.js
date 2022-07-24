@@ -1,4 +1,4 @@
-import FastifyStatic from "fastify-static";
+import FastifyStatic from "@fastify/static";
 import path from "path";
 
 export const setFastifyStatic = function (fastify) {
