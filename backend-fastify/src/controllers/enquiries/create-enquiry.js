@@ -2,6 +2,7 @@ import { Enquiry } from "../../models/enquiry.js";
 import { v4 as uuidV4 } from "uuid";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
+import { User } from "../../models/user.js";
 
 export const createEnquiry = async function (req, res) {
   const { title, content, topic, email, userTo, property } = req.body;
@@ -10,10 +11,19 @@ export const createEnquiry = async function (req, res) {
   }
 
   const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const userFrom = userIdToken(token);
+
+  if (userFrom === userTo) {
+    return res.status(400).send({ message: "Not allowed to send enquiry to yourself." });
+  }
+
+  const targetUser = await User.findOne({ user_id: userTo });
+  if (!targetUser) {
+    return res.status(400).send({ message: "Target user not found." });
+  }
 
   const users = {
-    from: { user_id, keep: true },
+    from: { user_id: userFrom, keep: true },
     to: { user_id: userTo, keep: true }
   }
 
