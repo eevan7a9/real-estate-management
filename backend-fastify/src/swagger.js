@@ -1,4 +1,4 @@
-import FastifySwagger from "fastify-swagger";
+import FastifySwagger from "@fastify/swagger";
 
 export const setFastifySwagger = function (fastify) {
   fastify.register(FastifySwagger, {
