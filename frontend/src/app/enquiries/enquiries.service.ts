@@ -55,7 +55,8 @@ export class EnquiriesService {
 
   public async fetchEnquiries(): Promise<void> {
     try {
-      this.enquiries = (await this.http.get<ResEnquiries>(enquiryUrl).toPromise()).data;
+      const token = this.userService.token();
+      this.enquiries = (await this.http.get<ResEnquiries>(enquiryUrl, requestOptions(token)).toPromise()).data;
     } catch (error) {
       console.error(error);
       return error.error || error;
@@ -66,8 +67,8 @@ export class EnquiriesService {
     const token = this.userService.token();
     const formData = enquiry;
     formData.property = {
+      property_id: property.property_id,
       name: property.name,
-      id: property.property_id
     };
     formData.user = {
       from: this.userService.user?.user_id,
