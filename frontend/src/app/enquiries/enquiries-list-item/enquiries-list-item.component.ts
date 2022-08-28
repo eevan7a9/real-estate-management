@@ -25,7 +25,7 @@ export class EnquiriesListItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sent = this.userService.user.user_id === this.enquiry.user.from;
+    this.sent = this.userService.user.user_id === this.enquiry.users.from.user_id;
   }
 
   public async actionPopup(ev: Event, enqId: string) {
