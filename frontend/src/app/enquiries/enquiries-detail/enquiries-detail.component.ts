@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
+import { UserService } from 'src/app/user/user.service';
 import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
 import { EnquiriesService } from '../enquiries.service';
 
@@ -19,9 +20,10 @@ export class EnquiriesDetailComponent implements OnInit {
     public location: Location,
     private router: Router,
     private enquiriesService: EnquiriesService,
+    private userService: UserService,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -31,6 +33,13 @@ export class EnquiriesDetailComponent implements OnInit {
         this.router.navigate(['/enquiries']);
       }
     });
+  }
+
+  ionViewDidEnter() {
+    const userId = this.userService.user.user_id;
+    if (!this.enquiry.read && this.enquiry.users.to.user_id === userId) {
+      this.enquiriesService.readEnquiry(this.enquiry.enquiry_id);
+    }
   }
 
   public async report(enqId: string) {

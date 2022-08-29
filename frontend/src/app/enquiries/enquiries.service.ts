@@ -87,15 +87,29 @@ export class EnquiriesService {
 
   public async removeEnquiry(enqId: string): Promise<ApiResponse> {
     const token = this.userService.token();
+    const url = enquiryUrl + '/' + enqId;
     try {
-      const res = await this.http.delete<ApiResponse>(enquiryUrl + '/' + enqId, requestOptions(token)).toPromise();
+      const res = await this.http.delete<ApiResponse>(url, requestOptions(token)).toPromise();
       if (res && res.status === 200) {
         this.enquiries = this.enquiries.filter(enquiry => enquiry.enquiry_id !== enqId);
         return res;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return error.error || error;
+    }
+  }
+
+  public async readEnquiry(enqId: string): Promise<void> {
+    const token = this.userService.token();
+    const url = enquiryUrl + '/' + enqId;
+    try {
+      const { data } = await this.http.patch<ResEnquiry>(url, { read: true }, requestOptions(token)).toPromise();
+      // UPDATE ENQUIRIES && CURRENT ENQUIRY
+      this.enquiries = this.enquiries.map(enquiry => (enquiry.enquiry_id === enqId) ? data : enquiry);
+      this.enquiry = data;
+    } catch (error) {
+      console.error(error);
     }
   }
 }
