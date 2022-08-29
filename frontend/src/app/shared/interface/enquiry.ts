@@ -1,3 +1,7 @@
+interface EnquiryProperty {
+  property_id: string;
+  name: string;
+}
 export interface Enquiry {
   enquiry_id: string;
   content: string;
@@ -5,15 +9,8 @@ export interface Enquiry {
   title: string;
   topic: string;
   read: boolean;
-  property: {
-    property_id: string;
-    name: string;
-  };
-  user?: {
-    from: string;
-    to: string;
-  };
-  replyTo: {
+  property: EnquiryProperty;
+  replyTo?: {
     id: string;
     title: string;
     topic: string;
@@ -31,4 +28,18 @@ export interface Enquiry {
   createdAt?: string;
   updatedAt?: string;
 
+}
+
+export interface EnquiryCreate {
+  content: string;
+  email: string;
+  title: string;
+  topic: string;
+  property: EnquiryProperty;
+  replyTo?: {
+    id: string;
+    title: string;
+    topic: string;
+  };
+  userTo: string;
 }
