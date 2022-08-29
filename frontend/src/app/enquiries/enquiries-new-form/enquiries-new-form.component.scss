@@ -31,3 +31,15 @@ ion-item {
   width: 100%;
   margin: 6px 0 0 0;
 }
+
+body.dark :host ::ng-deep {
+  // ckeditor5-angular - we change color when dark-mode is active
+  .ck-content.ck-editor__editable {
+    &.ck-blurred {
+      background: var(--ion-color-step-50);
+    }
+    &.ck-focused {
+      background: var(--ion-color-light);
+    }
+  }
+}
