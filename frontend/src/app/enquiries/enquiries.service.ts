@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
-import { Enquiry } from '../shared/interface/enquiry';
+import { Enquiry, EnquiryCreate } from '../shared/interface/enquiry';
 import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
@@ -63,17 +63,17 @@ export class EnquiriesService {
     }
   }
 
-  public async addEnquiry(enquiry: Enquiry, property: Partial<Property>): Promise<ResEnquiry> {
+  public async addEnquiry(enquiry: EnquiryCreate, property: Partial<Property>): Promise<ResEnquiry> {
     const token = this.userService.token();
-    const formData = enquiry;
-    formData.property = {
-      property_id: property.property_id,
-      name: property.name,
+    const formData = {
+      ...enquiry,
+      property: {
+        property_id: property.property_id,
+        name: property.name,
+      },
+      userTo: property.user_id
     };
-    formData.user = {
-      from: this.userService.user?.user_id,
-      to: property.user_id
-    };
+
     try {
       const res = await this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))
         .toPromise();
