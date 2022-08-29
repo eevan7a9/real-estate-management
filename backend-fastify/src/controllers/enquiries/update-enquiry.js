@@ -23,8 +23,17 @@ export const updateEnquiry = async function (req, res) {
   const options = { new: true };
 
   try {
+    console.log("************ updateEnquiry ***********");
+    console.log({
+      user_id
+    })
     const enquiry = await Enquiry.findOneAndUpdate(
-      { enquiry_id, 'users.from.user_id': user_id },
+      {       
+        $or: [
+          { 'users.from.user_id': user_id, enquiry_id},
+          { 'users.to.user_id': user_id, enquiry_id},
+        ],
+      },
       { $set },
       options
     );
