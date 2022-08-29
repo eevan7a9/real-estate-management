@@ -86,9 +86,9 @@ export class EnquiriesService {
   }
 
   public async removeEnquiry(enqId: string): Promise<ApiResponse> {
-
+    const token = this.userService.token();
     try {
-      const res = await this.http.delete<ApiResponse>(enquiryUrl + '/' + enqId).toPromise();
+      const res = await this.http.delete<ApiResponse>(enquiryUrl + '/' + enqId, requestOptions(token)).toPromise();
       if (res && res.status === 200) {
         this.enquiries = this.enquiries.filter(enquiry => enquiry.enquiry_id !== enqId);
         return res;
