@@ -14,7 +14,7 @@
     <ion-card class="ion-no-padding">
       <ion-card-header>
         <ion-card-title color="dark">
-          {{ enquiry.property.name }}
+          {{ enquiry.property?.name }}
         </ion-card-title>
         <ion-card-subtitle class="ion-text-capitalize">
           <ion-badge color="primary">{{ enquiry.topic }}</ion-badge>
@@ -27,7 +27,7 @@
         <ion-card-title>
           {{ enquiry.title }}
         </ion-card-title>
-        <ion-card-subtitle> {{ enquiry.date | date }}</ion-card-subtitle>
+        <ion-card-subtitle> {{ enquiry.createdAt | date }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
@@ -56,12 +56,12 @@
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-right">
-            <ion-button color="light" (click)="report(enquiry.id)">
+            <ion-button color="light" (click)="report(enquiry.enquiry_id)">
               <ion-icon name="flag-outline" color="danger"></ion-icon>
               <ion-text color="danger"> Report </ion-text>
             </ion-button>
 
-            <ion-button color="light" (click)="delete(enquiry.id)">
+            <ion-button color="light" (click)="delete(enquiry.enquiry_id)">
               <ion-icon name="trash-outline" color="danger"></ion-icon>
               <ion-text color="danger"> Delete </ion-text>
             </ion-button>
