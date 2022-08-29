@@ -65,7 +65,7 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
         break;
 
       default:
-        this.enquiries = sortListByDate(this.enquiries, { property: 'date' });
+        this.enquiries = sortListByDate(this.enquiries, { property: 'createdAt' });
         break;
     }
   }
