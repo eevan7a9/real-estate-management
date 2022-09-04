@@ -8,6 +8,7 @@ import { PropertiesService } from '../properties.service';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-properties-detail',
@@ -16,8 +17,10 @@ import { PropertiesUploadsComponent } from '../properties-uploads-modal/properti
 })
 export class PropertiesDetailComponent implements OnInit {
   public property: Property | undefined;
+  public showGalleryEdit = false;
   constructor(
     public location: Location,
+    private userService: UserService,
     private router: Router,
     private propertiesService: PropertiesService,
     private popoverCtrl: PopoverController,
@@ -32,6 +35,10 @@ export class PropertiesDetailComponent implements OnInit {
         this.router.navigate(['/properties']);
       }
     });
+  }
+
+  ionViewDidEnter() {
+    this.showGalleryEdit = this.userService.user.user_id === this.property.user_id;
   }
 
   public async actionPopup() {
@@ -69,7 +76,7 @@ export class PropertiesDetailComponent implements OnInit {
   public async editImages() {
     const modal = await this.modalController.create({
       component: PropertiesUploadsComponent,
-      componentProps:{
+      componentProps: {
         property: this.property
       }
     });
