@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
@@ -9,6 +9,7 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
+import { async } from 'rxjs';
 
 @Component({
   selector: 'app-properties-detail',
@@ -18,6 +19,7 @@ import { UserService } from 'src/app/user/user.service';
 export class PropertiesDetailComponent implements OnInit {
   public property: Property | undefined;
   public showGalleryEdit = false;
+  public ready = false;
   constructor(
     public location: Location,
     private userService: UserService,
@@ -26,19 +28,21 @@ export class PropertiesDetailComponent implements OnInit {
     private popoverCtrl: PopoverController,
     public modalController: ModalController,
     private toastCtrl: ToastController,
+    private route: ActivatedRoute
   ) { }
 
   async ngOnInit() {
-    this.propertiesService.property$.subscribe(property => {
+    const paramId = this.route.snapshot.paramMap.get('id');
+
+    this.propertiesService.property$.subscribe(async property => {
       this.property = property;
       if (!this.property) {
-        this.router.navigate(['/properties']);
+        await this.propertiesService.fetchProperty(paramId);
       }
+      this.ready = true;
+      this.showGalleryEdit = this.userService.user.user_id === this.property?.user_id;
     });
-  }
 
-  ionViewDidEnter() {
-    this.showGalleryEdit = this.userService.user.user_id === this.property.user_id;
   }
 
   public async actionPopup() {
