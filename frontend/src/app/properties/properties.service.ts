@@ -67,6 +67,14 @@ export class PropertiesService {
     }
   }
 
+  public async fetchProperty(id: string) {
+    try {
+      this.property = (await this.http.get<ResProperty>(propertyUrl + '/' + id).toPromise()).data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   public async addProperty(property: Property): Promise<ResProperty> {
     const token = this.userService.token();
     try {
