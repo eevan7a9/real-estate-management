@@ -8,6 +8,9 @@
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-pr */
+  .property-card {
+    padding: 0.3rem 0.5rem;
+  }
 }
 
 .card-view-all {
@@ -17,7 +20,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 450px;
+      min-height: 506px;
     }
   }
 }
