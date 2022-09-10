@@ -41,6 +41,10 @@ export class EnquiriesNewFormComponent implements OnInit {
       return;
     }
     this.submitting = true;
+
+    if (!this.enquiriesService.enquiries.length) {
+      this.enquiriesService.fetchEnquiries();
+    }
     const res = await this.enquiriesService.addEnquiry(this.enquiryForm.value, this.property);
     if (!res || res.status !== 201) {
       const msg = 'Error: Something went wrong, please try again later.';
