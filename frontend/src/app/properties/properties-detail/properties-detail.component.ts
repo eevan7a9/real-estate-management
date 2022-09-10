@@ -18,8 +18,9 @@ import { async } from 'rxjs';
 })
 export class PropertiesDetailComponent implements OnInit {
   public property: Property | undefined;
-  public showGalleryEdit = false;
+  public isOwner = false;
   public ready = false;
+
   constructor(
     public location: Location,
     private userService: UserService,
@@ -40,7 +41,7 @@ export class PropertiesDetailComponent implements OnInit {
         await this.propertiesService.fetchProperty(paramId);
       }
       this.ready = true;
-      this.showGalleryEdit = this.userService.user.user_id === this.property?.user_id;
+      this.isOwner = this.userService.user.user_id === this.property?.user_id;
     });
 
   }

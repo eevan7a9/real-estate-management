@@ -36,7 +36,7 @@
 
           <app-properties-gallery
             [images]="property.images"
-            [showEdit]="showGalleryEdit"
+            [showEdit]="isOwner"
             (edit)="editImages()"
             *ngIf="property.images"
           ></app-properties-gallery>
@@ -84,7 +84,7 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card class="enquiry-section">
+          <ion-card class="enquiry-section" *ngIf="!isOwner">
             <ion-card-header>
               <ion-card-title color="dark">
                 Enquire for more Information
