@@ -9,7 +9,6 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
-import { async } from 'rxjs';
 
 @Component({
   selector: 'app-properties-detail',
@@ -50,7 +49,9 @@ export class PropertiesDetailComponent implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: ActionPopupComponent,
       componentProps: {
-        message: false
+        message: false,
+        edit: this.isOwner,
+        delete: this.isOwner
       },
       translucent: true
     });
