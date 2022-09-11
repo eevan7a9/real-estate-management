@@ -119,9 +119,10 @@ export class PropertiesService {
   }
 
   public async removeProperty(propId: string): Promise<void> {
+    const token = this.userService.token();
     try {
       const url = `${propertyUrl}/${propId}`;
-      const res = await this.http.delete<ResProperty>(url).toPromise();
+      const res = await this.http.delete<ResProperty>(url, requestOptions({ token })).toPromise();
       this.properties = this.properties.filter(property => property.property_id !== res.data.property_id);
     } catch (error) {
       console.error(error);
