@@ -5,7 +5,9 @@ physical property management. This can include residential,
 commercial, and land real estate. a software developed to
 connect property managers and potential buyers.
 
-both **frontend/** & **backend-fastify/** are work in progress.😕
+🚧 **frontend/** work in progress 🚧.
+
+🚧 **backend-fastify/** work in progress 🚧.
 
 **[LIVE DEMO](https://real-estate-management.netlify.app/)**
 
@@ -15,33 +17,41 @@ both **frontend/** & **backend-fastify/** are work in progress.😕
 ## **Dependencies**
 
 ### **Frontend**
-- ionic 5+
-- Angular 12+
-- leaflet 1.7+
-- chartjs 3.5+
+- [Ionic 6+](https://ionicframework.com/)
+- [Angular 13+](https://angular.io/)
+- [leaflet 1.7+](https://leafletjs.com/)
+- [chartjs 3.5+](https://www.chartjs.org/)
 
 ### **Backend**
-- Node
-- fastify 3+
-- mongoDB
+- [Node](https://nodejs.org/en/)
+- [fastify 3+](https://www.fastify.io/)
+- [mongoDB](https://www.mongodb.com/)
 
 # **SETUP**
 
 ## **Frontend (Part)**
 
-navigate to `frontend/` directory.
+### **1.1 navigate to `frontend/` directory.**
 
-### **1. Fill the desired environment variables:**  
+```
+#  navigate to frontend 
+$ cd frontend
+```
+
+### **1.2 Fill the desired environment variables:**  
 - navigate to `frontend/src/environments`
 - set values to variables (ex. api.url) 
+```
+  api: {
+    url: 'http://localhost:8000/', <-- server URL
+    mapKey: '', <-- Leaflet map key
+  }
+```
 
 ### **2. then install dependencies & run ionic serve**
 
 In terminal - command
 ```
-#  navigate to frontend 
-$ cd frontend
-
 # install dependencies
 $ npm install
 
@@ -52,12 +62,20 @@ $ npm install
 <br>
 
 ## **Backend-Fastify (Part)**
-navigate to `backend-fastify/` directory.
-
-### **1. create `.env` file & add variables:**
+### **1.1 navigate to `backend-fastify/` directory.**
+```
+cd backend-fastify/
+```
+### **1.2 create `.env` file & add variables:**
 - copy `.env.example` & re-name it to `.env`
 - set your desired variable value
-
+```
+PORT=8000
+LOGGER=true
+SALT=12
+SECRET_KEY='secret'
+DB_CONNECT=mongodb://localhost:27017/rem-db
+```
 ### **2. then install dependencies & run dev**
 
 In terminal - command
