@@ -37,7 +37,7 @@ export class EnquiriesDetailComponent implements OnInit {
 
   ionViewDidEnter() {
     const userId = this.userService.user.user_id;
-    if (!this.enquiry.read && this.enquiry.users.to.user_id === userId) {
+    if (!this.enquiry?.read && this.enquiry?.users?.to.user_id === userId) {
       this.enquiriesService.readEnquiry(this.enquiry.enquiry_id);
     }
   }

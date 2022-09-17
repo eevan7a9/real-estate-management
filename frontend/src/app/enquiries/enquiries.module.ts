@@ -14,6 +14,7 @@ import { EnquiriesNewComponent } from './enquiries-new-modal/enquiries-new.compo
 import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-form.component';
 import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list-item.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     IonicModule,
     EnquiriesPageRoutingModule,
     SharedModule,
-    CKEditorModule
+    CKEditorModule,
+    MarkdownModule.forChild()
   ],
   declarations: [
     EnquiriesPage,

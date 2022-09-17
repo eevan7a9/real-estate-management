@@ -31,18 +31,11 @@
       </ion-card-header>
 
       <ion-card-content>
-        <div class="ion-padding-vertical">
-          <p>
-            {{ enquiry.content }} Lorem, ipsum dolor sit amet consectetur
-            adipisicing elit. Quae sint dolor iste cumque beatae saepe ducimus
-            omnis culpa, vitae quaerat, explicabo quia voluptates alias
-            reprehenderit nam iure ad sit similique?
-          </p>
+        <div class="enquiry-content">
+          <markdown [data]="enquiry.content"></markdown>
         </div>
 
-        <div class="ion-padding-vertical">
-          {{ enquiry.email }}
-        </div>
+        <div class="ion-padding">- {{ enquiry.email }}</div>
       </ion-card-content>
     </ion-card>
 

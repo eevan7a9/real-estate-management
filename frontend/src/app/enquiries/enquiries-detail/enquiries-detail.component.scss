@@ -7,6 +7,11 @@ ion-content {
   max-width: 1600px;
   margin: 0 auto;
   height: 100%;
+  .enquiry-content {
+    background-color: var(--ion-color-light-tint);
+    padding: 1rem;
+    min-height: 250px;
+  }
 }
 
 ion-button {
