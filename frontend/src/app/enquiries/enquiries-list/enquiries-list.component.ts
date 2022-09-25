@@ -21,7 +21,6 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   public searchText = '';
   private unsubscribe$ = new Subject<void>();
 
-
   constructor(
     private enquiriesService: EnquiriesService,
     private router: Router,
@@ -71,7 +70,7 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   }
 
   private searchEnquiries() {
-    this.enquiries = this.enquiries.filter((item: Enquiry) => {
+    return this.enquiries.filter((item: Enquiry) => {
       const title = item.title.toLowerCase();
       const email = item.email.toLowerCase();
       return title.includes(this.searchText) || email.includes(this.searchText);
@@ -81,15 +80,18 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   private async getEnquiries() {
     this.isLoading.emit(true);
     this.unSubscribed();
-    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe((items) => {
-      this.enquiries = items;
+    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe((enquiries) => {
+      this.enquiries = enquiries;
       this.sortEnquiries();
-      if (this.searchText) { this.searchEnquiries(); }
+
+      if (!this.enquiriesService.initialFetchDone) {
+        this.enquiriesService.fetchEnquiries();
+      }
+      if (this.searchText) {
+        this.enquiries = this.searchEnquiries();
+      }
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
-      }
-      if (!this.enquiries.length && !this.filterBy.length && !this.searchText) {
-        this.enquiriesService.fetchEnquiries();
       }
     });
   }
