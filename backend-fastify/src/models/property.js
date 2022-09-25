@@ -9,7 +9,7 @@ const propertySchema = new mongoose.Schema(
     type: { type: String, required: true },
     position: { lat: Number, lng: Number },
     price: { type: Number },
-    enquiries: { type: Array },
+    // enquiries: { type: Array },
     features: { type: Array },
     profileImage: { type: String },
     images: { type: Array },
