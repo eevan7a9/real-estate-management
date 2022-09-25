@@ -13,15 +13,16 @@ export const properties = [
       lng: 125.54472774267198,
     },
     price: 42000000,
-    enquiries: [],
     features: ["bedroom", " restaurant", " coffee", " service"],
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-03-23T01:09:49.642Z",
+    updatedAt: "2022-03-23T01:09:49.642Z"
   },
   {
     property_id: "106ab526-72af-4446-9550-998a48d98c0c",
-    name: "Dummy WASH AND DRY LAUNDRY",
+    name: "WASH AND DRY LAUNDRY - Dummy",
     address:
       "WGWV+JM6, Butuan City, Agusan Del Norte WGWV+Xv6, Butuan City, Agusan Del Norte",
     description:
@@ -32,15 +33,16 @@ export const properties = [
       lng: 125.54475992918017,
     },
     price: 3000000,
-    enquiries: [],
     features: ["shop", " self service", " open space"],
     images: [],
     currency: "PHP",
     user_id: "u01",
+    createdAt: "2022-05-23T01:09:49.642Z",
+    updatedAt: "2022-05-23T01:09:49.642Z"
   },
   {
     property_id: "4b58df58-3e8d-453e-9802-7537a514453e",
-    name: "Dummy data Photo Studio",
+    name: "Photo Studio - Dummy",
     address: "WGWV+VC8, A.D. Curato St, Butuan City, Agusan Del Norte",
     description:
       "Great Image is a prime mover in the photo and digital imaging industry. Dummy data Photo Studio, Great Image is known for its excellent, professional, reliably fast and creative photography services. It has built a solid reputation in the photo industry business over the last 38 years.\n\n",
@@ -50,15 +52,16 @@ export const properties = [
       lng: 125.54396063089374,
     },
     price: 5000000,
-    enquiries: [],
     features: ["item1", " item2", " item3", " item4", " item5", " item6"],
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-05-11T01:09:49.642Z",
+    updatedAt: "2022-05-11T01:09:49.642Z"
   },
   {
     property_id: "62130ae8-de7c-47f0-afa6-4f19828b5d23",
-    name: "Dummy industrial building",
+    name: "Industrial building - Dummy",
     address: "WGXR+PXP, Lopez Jaena St, Butuan City, Agusan Del Norte",
     description:
       "A building directly used in manufacturing or technically productive enterprises. Industrial buildings are not generally or typically accessible to other than workers. Industrial buildings include buildings used directly in the production of power, the manufacture of products, the mining of raw materials, and the storage of textiles, petroleum products, wood and paper products, chemicals, plastics, and metals. ",
@@ -68,15 +71,16 @@ export const properties = [
       lng: 125.54419666528703,
     },
     price: 10000000,
-    enquiries: [],
     features: ["item1", " item2", " item3", " item4", " item5"],
     images: [],
     currency: "PHP",
     user_id: "u03",
+    createdAt: "2022-06-02T01:09:49.642Z",
+    updatedAt: "2022-06-02T01:09:49.642Z"
   },
   {
     property_id: "08633488-cba6-4b5a-8ef9-5a85d4247196",
-    name: " Dummy village Housing",
+    name: "village Housing - Dummy",
     address: "WGVQ+FXD3, Butuan City, Agusan Del Norte",
     description:
       "Village Housing has properties to meet a variety of needs from apartments (studio, one-bedroom, and two-bedroom) to several 2- and 3-bedroom houses. To be reside in Village Housing, residents must be enrolled full-time in a degree-track program and meet eligibility to live \n\nenrolled full-time in a degree-track program and meet eligibility to live \noff campus. Faculty and staff must be full-time, benefit-eligible employees of  Dummy village Housing.",
@@ -86,15 +90,17 @@ export const properties = [
       lng: 125.5455216765404,
     },
     price: 850000,
-    enquiries: [],
+
     features: ["item1", " item", "2 item3"],
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-03-16T01:09:49.642Z",
+    updatedAt: "2022-03-16T01:09:49.642Z"
   },
   {
     property_id: "8faf2abc-5e01-420b-a232-1ce300d70c84",
-    name: "Dummy Apartment Room #4",
+    name: "Apartment Room #4 - Dummy",
     address: "XG2P+8M4, T. Calo Ext, St, Butuan City, Agusan Del Norte",
     description:
       "The apartment consists of a large bright bedroom with Kitchenette includes small fridge, induction stove, microwave and all necessary cutlery to prepare and enjoy your food., a modern fully-equipped kitchen and a sunlit living room with Apple TV and free Netflix account. It is the perfect place to stay for couples looking for a romantic location in the historic centre, within walking distance of some of the most beautiful sceneries you can find in the city and all famous landmarks. The sofa in the living room can also serve as an additional bed for a 3rd guest. Located in a side street between the ___ river bank and the leafy ___ hill park, the apartment is very quiet at night. Please note, my apartment is on the 3rd floor with no elevator. I am more than happy to help you with your luggage! ",
@@ -104,7 +110,6 @@ export const properties = [
       lng: 125.54344028234485,
     },
     price: 1000400,
-    enquiries: [],
     features: [
       "fridge",
       " induction stove",
@@ -115,10 +120,12 @@ export const properties = [
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-04-17T01:09:49.642Z",
+    updatedAt: "2022-04-17T01:09:49.642Z"
   },
   {
     property_id: "b7973ec5-2931-4040-a846-a0271153718d",
-    name: "Dummy Land area for Sale",
+    name: "High Land area for Sale - Dummy",
     address:
       "Butuan City riverside XG2V+4P9 Agusan River, Butuan City, Agusan Del Norte",
     description:
@@ -129,15 +136,16 @@ export const properties = [
       lng: 125.5453982949257,
     },
     price: 20000000,
-    enquiries: [],
     features: ["item1", " item2", " item3", " item4", " item5", " item6"],
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-03-23T01:09:49.642Z",
+    updatedAt: "2022-03-23T01:09:49.642Z"
   },
   {
     property_id: "8eca0691-5a3e-46a2-b4db-87d4f536af1b",
-    name: "Dummy Farmland For Sale",
+    name: "Sweet Farmland For Sale - Dummy",
     address:
       "Buhangin Pob. (Brgy 19), Butuan City, Agusan Del Norte, Butuan City, Agusan Del Norte",
     description:
@@ -148,15 +156,16 @@ export const properties = [
       lng: 125.54766296055794,
     },
     price: 1000000,
-    enquiries: [],
     features: ["item1", " item2", " item3", " item4"],
     images: [],
     currency: "PHP",
     user_id: "u02",
+    createdAt: "2022-05-13T01:09:49.642Z",
+    updatedAt: "2022-05-13T01:09:49.642Z"
   },
   {
     property_id: "fef95dc0-0131-46b4-aa63-09f19898a0c8",
-    name: "Dummy Storage Facility ",
+    name: "Storage Facility - Dummy",
     address: "Baan Riverside Pob. (Brgy 20), Butuan City, Agusan Del Norte",
     description:
       "A building directly used in manufacturing or technically productive enterprises. Industrial buildings are not generally or typically accessible to other than workers. Industrial buildings include buildings used directly in the production of power, the manufacture of products, the mining of raw materials, and the storage of textiles, petroleum products, wood and paper products, chemicals, plastics, and metals.",
@@ -166,10 +175,11 @@ export const properties = [
       lng: 125.54708272218707,
     },
     price: 10000000,
-    enquiries: [],
     features: ["item1", " item2", " item3"],
     images: [],
     currency: "PHP",
     user_id: "u03",
+    createdAt: "2022-06-24T01:09:49.642Z",
+    updatedAt: "2022-06-24T01:09:49.642Z"
   },
 ];

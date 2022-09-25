@@ -6,14 +6,14 @@ const dummyContent1 = "<h3>Dear [Person],</h3><p>&nbsp;</p><p>I am writing this 
 
 export const enquiries = [
     {
-        enquiry_id: "fcf2ec99-48be-4eff-8b29-6baca92a385c",
+        enquiry_id: "e01",
         content: dummyContent1,
         email: "test@email.com",
-        title: "Dummy Question about [XXX]",
+        title: "LAUNDRY Dummy Question",
         topic: EnquiryTopic.info,
         read: false,
         property: {
-            name: "Dummy WASH AND DRY LAUNDRY",
+            name: "WASH AND DRY LAUNDRY - Dummy",
             property_id: "106ab526-72af-4446-9550-998a48d98c0c"
         },
         users: {
@@ -30,14 +30,14 @@ export const enquiries = [
         updatedAt: "2022-08-25T04:08:49.642Z"
     },
     {
-        enquiry_id: "fcf2ec99-48be-4eff-8b29-6baca92a385c",
+        enquiry_id: "e02",
         content: dummyContent1,
         email: "test@email.com",
-        title: "Dummy Question about [XXX]",
+        title: "LAUNDRY Dummy Sales [XXX]",
         topic: EnquiryTopic.sales,
         read: false,
         property: {
-            name: "Dummy WASH AND DRY LAUNDRY",
+            name: "WASH AND DRY LAUNDRY - Dummy",
             property_id: "106ab526-72af-4446-9550-998a48d98c0c"
         },
         users: {
@@ -54,14 +54,14 @@ export const enquiries = [
         updatedAt: "2022-08-25T04:08:49.642Z"
     },
     {
-        enquiry_id: "fcf2ec99-48be-4eff-8b29-6baca92a385c",
+        enquiry_id: "e03",
         content: dummyContent1,
         email: "test@email.com",
-        title: "Dummy Question about [XXX]",
+        title: "Land Dummy Question about [XXX]",
         topic: EnquiryTopic.info,
         read: false,
         property: {
-            name: "Dummy Land area for Sale",
+            name: "High Land area for Sale - Dummy",
             property_id: "b7973ec5-2931-4040-a846-a0271153718d"
         },
         users: {
@@ -78,14 +78,14 @@ export const enquiries = [
         updatedAt: "2022-09-25T04:09:49.642Z"
     },
     {
-        enquiry_id: "fcf2ec99-48be-4eff-8b29-6baca92a385c",
+        enquiry_id: "e04",
         content: dummyContent1,
         email: "test@email.com",
-        title: "Dummy Schedule about [XXX]",
+        title: "Photo Studio Dummy Schedule about [XXX]",
         topic: EnquiryTopic.schedule,
         read: false,
         property: {
-            name: "Dummy data Photo Studio",
+            name: "Photo Studio - Dummy",
             property_id: "4b58df58-3e8d-453e-9802-7537a514453e"
         },
         users: {
@@ -102,14 +102,14 @@ export const enquiries = [
         updatedAt: "2022-09-23T04:09:49.642Z"
     },
     {
-        enquiry_id: "fcf2ec99-48be-4eff-8b29-6baca92a385c",
+        enquiry_id: "e05",
         content: dummyContent1,
         email: "test@email.com",
-        title: "Dummy Payment about [XXX]",
+        title: "Facility Dummy Payment about [XXX]",
         topic: EnquiryTopic.payment,
         read: false,
         property: {
-            name: "Dummy Storage Facility",
+            name: "Storage Facility - Dummy",
             property_id: "fef95dc0-0131-46b4-aa63-09f19898a0c8"
         },
         users: {
