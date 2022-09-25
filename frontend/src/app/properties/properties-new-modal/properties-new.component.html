@@ -131,6 +131,7 @@
       (click)="submit()"
       class="ion-margin"
       color="success"
+      [disabled]="isSubmit"
     >
       {{ step === 2 ? "Submit" : "Next" }}
     </ion-button>

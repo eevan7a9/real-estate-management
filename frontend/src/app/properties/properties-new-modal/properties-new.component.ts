@@ -32,6 +32,7 @@ export class PropertiesNewComponent implements OnInit {
   ];
   public step = 1;
   public error = false;
+  public isSubmit = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -63,7 +64,9 @@ export class PropertiesNewComponent implements OnInit {
       return;
     }
     if (this.step === 2 && this.validateStepTwo()) {
+      this.isSubmit = true;
       const ft = this.propertyForm.get('features').value;
+
       this.propertyForm.patchValue({
         features: ft.split(',').filter((item: string) => item.trim() !== '')
       });

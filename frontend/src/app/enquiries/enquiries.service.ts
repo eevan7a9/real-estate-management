@@ -26,7 +26,7 @@ interface ResEnquiries extends ApiResponse {
   providedIn: 'root'
 })
 export class EnquiriesService {
-
+  public initialFetchDone = false;
   public readonly enquiries$: Observable<Enquiry[]>;
   public readonly enquiry$: Observable<Enquiry>;
   private readonly enquiriesSub = new BehaviorSubject<Enquiry[]>([]);
@@ -57,6 +57,7 @@ export class EnquiriesService {
     try {
       const token = this.userService.token();
       this.enquiries = (await this.http.get<ResEnquiries>(enquiryUrl, requestOptions(token)).toPromise()).data;
+      this.initialFetchDone = true;
     } catch (error) {
       console.error(error);
       return error.error || error;
