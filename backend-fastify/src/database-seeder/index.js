@@ -8,13 +8,14 @@ import { Property } from "../models/property.js";
 import { properties } from "./dummy-data/properties.js";
 
 import { Enquiry } from "../models/enquiry.js";
-// import { enquiries } from "./dummy-data/properties.js";
+import { enquiries } from "./dummy-data/enquiries.js";
 
 dotenv.config();
 
 const seederUser = async () => {
   await User.deleteMany({});
   console.log("User document - is now empty!");
+
   await User.insertMany(users);
   console.log("User document - Seed Successful!");
 };
@@ -22,6 +23,7 @@ const seederUser = async () => {
 const seederProperty = async () => {
   await Property.deleteMany({});
   console.log("Property document - is now empty!");
+
   await Property.insertMany(properties);
   console.log("Property document - Seed Successful!");
 };
@@ -29,6 +31,9 @@ const seederProperty = async () => {
 const seederEnquiry = async () => {
   await Enquiry.deleteMany({});
   console.log("Enquiry document - is now empty!");
+  
+  await Enquiry.insertMany(enquiries);
+  console.log("Enquiry document - Seed Successful!");
 };
 
 mongoose
