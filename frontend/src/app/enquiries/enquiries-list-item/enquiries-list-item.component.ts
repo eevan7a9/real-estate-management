@@ -34,7 +34,9 @@ export class EnquiriesListItemComponent implements OnInit {
       component: ActionPopupComponent,
       event: ev,
       componentProps: {
-        edit: false
+        edit: false,
+        report: !this.sent,
+        message: !this.sent,
       },
       translucent: true
     });
