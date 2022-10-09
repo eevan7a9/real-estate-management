@@ -25,7 +25,7 @@ Object.freeze(users);
 const replyTo = {
   type: "object",
   properties: {
-    id: { type: "string" },
+    enquiry_id: { type: "string" },
     title: { type: "string" },
     topic: { type: "string" },
   },

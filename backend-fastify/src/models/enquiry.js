@@ -17,7 +17,7 @@ const usersSchema = new mongoose.Schema({
 });
 
 const replyToSchema = new mongoose.Schema({
-  id: { type: String },
+  enquiry_id: { type: String },
   title: { type: String },
   topic: { type: String },
 });
