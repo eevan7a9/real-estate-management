@@ -64,15 +64,14 @@ export class EnquiriesService {
     }
   }
 
-  public async addEnquiry(enquiry: EnquiryCreate, property: Partial<Property>): Promise<ResEnquiry> {
+  public async createEnquiry(enquiry: EnquiryCreate, property: Partial<Property>): Promise<ResEnquiry> {
     const token = this.userService.token();
     const formData = {
       ...enquiry,
       property: {
         property_id: property.property_id,
         name: property.name,
-      },
-      userTo: property.user_id
+      }
     };
 
     try {

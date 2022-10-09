@@ -2,6 +2,7 @@ interface EnquiryProperty {
   property_id: string;
   name: string;
 }
+
 export interface Enquiry {
   enquiry_id: string;
   content: string;
@@ -11,7 +12,7 @@ export interface Enquiry {
   read: boolean;
   property: EnquiryProperty;
   replyTo?: {
-    id: string;
+    enquiry_id: string;
     title: string;
     topic: string;
   };
