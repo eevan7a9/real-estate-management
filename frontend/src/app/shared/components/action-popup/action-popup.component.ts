@@ -12,6 +12,8 @@ export class ActionPopupComponent implements OnInit {
   @Input() message = true;
   @Input() edit = true;
   @Input() delete = true;
+  @Input() report = true;
+
   constructor(
     private popupCtrl: PopoverController,
     private userService: UserService,

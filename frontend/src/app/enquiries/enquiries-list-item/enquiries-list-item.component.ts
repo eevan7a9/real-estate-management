@@ -3,7 +3,7 @@ import { AlertController, ModalController, PopoverController, ToastController } 
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { UserService } from 'src/app/user/user.service';
-import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
+import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class EnquiriesListItemComponent implements OnInit {
 
   @Input() enquiry: Enquiry;
   public sent = false;
+
   constructor(
     private enquiriesService: EnquiriesService,
     private alertCtrl: AlertController,
@@ -34,7 +35,9 @@ export class EnquiriesListItemComponent implements OnInit {
       component: ActionPopupComponent,
       event: ev,
       componentProps: {
-        edit: false
+        edit: false,
+        report: !this.sent,
+        message: !this.sent,
       },
       translucent: true
     });
@@ -92,9 +95,16 @@ export class EnquiriesListItemComponent implements OnInit {
 
   public async createEnquiryModal() {
     const modal = await this.modalCtrl.create({
-      component: EnquiriesNewComponent,
+      component: EnquiriesReplyModalComponent,
       componentProps: {
-        title: 'Reply Enquiry'
+        title: 'Reply Enquiry',
+        property: this.enquiry?.property,
+        replyTo: {
+          id: this.enquiry.enquiry_id,
+          title: this.enquiry.title,
+          topic: this.enquiry.topic
+        },
+        userTo: this.enquiry.users?.from?.user_id
       }
     });
     return await modal.present();

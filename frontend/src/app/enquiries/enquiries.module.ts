@@ -10,7 +10,7 @@ import { EnquiriesPage } from './enquiries.page';
 import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
 import { EnquiriesDetailComponent } from './enquiries-detail/enquiries-detail.component';
 import { SharedModule } from '../shared/shared.module';
-import { EnquiriesNewComponent } from './enquiries-new-modal/enquiries-new.component';
+import { EnquiriesReplyModalComponent } from './enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-form.component';
 import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list-item.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -31,7 +31,7 @@ import { MarkdownModule } from 'ngx-markdown';
     EnquiriesListComponent,
     EnquiriesListItemComponent,
     EnquiriesDetailComponent,
-    EnquiriesNewComponent,
+    EnquiriesReplyModalComponent,
     EnquiriesNewFormComponent,
   ],
   exports: [

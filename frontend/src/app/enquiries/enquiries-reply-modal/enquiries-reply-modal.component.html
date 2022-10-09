@@ -10,5 +10,9 @@
 </ion-header>
 
 <ion-content class="form ion-padding">
-  <app-enquiries-new-form></app-enquiries-new-form>
+  <app-enquiries-new-form
+    [property]="property"
+    [replyTo]="replyTo"
+    [userTo]="userTo"
+  ></app-enquiries-new-form>
 </ion-content>

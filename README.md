@@ -90,3 +90,31 @@ $ npm install
 $ npm start `or` $ npm run dev
 
 ```
+
+### **2.1 Database seeder(optional)**
+- Make sure `.env` is configured & dependencies are installed
+- Will populate database with dummy data.
+
+⚠️ This will delete existing records in the database document. 
+
+⚠️ Make a backup if needed
+```
+$ npm run db:seeder
+```
+
+dummy user:
+```
+  fullName: "test tester",
+  email: "test@email.com",
+  password: "password"
+
+  You can use this to signin.
+```
+## Routes
+```
+/docs/
+/users/
+/auth/
+/properties/
+/enquiries/
+```

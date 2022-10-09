@@ -17,7 +17,7 @@
     </ion-button>
   </ion-item>
 
-  <ion-item>
+  <ion-item *ngIf="report">
     <ion-button expand="block" color="warning" (click)="close('report')">
       <ion-icon name="flag-outline" style="margin: 0 8px 0 0"></ion-icon>
       Report

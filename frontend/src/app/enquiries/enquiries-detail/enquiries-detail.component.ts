@@ -5,7 +5,7 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { UserService } from 'src/app/user/user.service';
-import { EnquiriesNewComponent } from '../enquiries-new-modal/enquiries-new.component';
+import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
 
 @Component({
@@ -110,7 +110,7 @@ export class EnquiriesDetailComponent implements OnInit {
 
   async createEnquiryModal() {
     const modal = await this.modalCtrl.create({
-      component: EnquiriesNewComponent,
+      component: EnquiriesReplyModalComponent,
       componentProps: {
         title: 'Reply Enquiry'
       }

@@ -12,7 +12,13 @@ import { EnquiriesService } from '../enquiries.service';
   styleUrls: ['./enquiries-new-form.component.scss'],
 })
 export class EnquiriesNewFormComponent implements OnInit {
-  @Input() property: Property;
+  @Input() property: Partial<Property>;
+  @Input() userTo: string;
+  @Input() replyTo?: {
+    enquiry_id: string;
+    title: string;
+    topic: string;
+  };
 
   public error = false;
   public submitting = false;
@@ -45,7 +51,18 @@ export class EnquiriesNewFormComponent implements OnInit {
     if (!this.enquiriesService.enquiries.length) {
       this.enquiriesService.fetchEnquiries();
     }
-    const res = await this.enquiriesService.addEnquiry(this.enquiryForm.value, this.property);
+
+    const enquiryForm = {
+      userTo: this.userTo,
+      ...this.enquiryForm.value,
+      ...(this.replyTo ? { replyTo: this.replyTo } : '')
+    };
+
+    const res = await this.enquiriesService.createEnquiry(
+      enquiryForm,
+      this.property
+    );
+
     if (!res || res.status !== 201) {
       const msg = 'Error: Something went wrong, please try again later.';
       this.presentToast(`Error: ${res.message || msg}`, 3000, 'danger');
