@@ -64,6 +64,17 @@ export class EnquiriesService {
     }
   }
 
+  public async fetchEnquiry(enqId: string): Promise<Enquiry> {
+    try {
+      const token = this.userService.token();
+      this.enquiry = (await this.http.get<ResEnquiry>(enquiryUrl + '/' + enqId, requestOptions(token)).toPromise()).data;
+      return this.enquiry;
+    } catch (error) {
+      console.error(error);
+      return error.error || error;
+    }
+  };
+
   public async createEnquiry(enquiry: EnquiryCreate, property: Partial<Property>): Promise<ResEnquiry> {
     const token = this.userService.token();
     const formData = {
