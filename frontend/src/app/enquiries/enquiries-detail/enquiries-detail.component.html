@@ -43,13 +43,21 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-button color="light" (click)="createEnquiryModal()">
+            <ion-button
+              color="light"
+              (click)="createEnquiryModal()"
+              *ngIf="!sentByMe()"
+            >
               <ion-icon name="create-outline"></ion-icon>
               Reply
             </ion-button>
           </ion-col>
           <ion-col class="ion-text-right">
-            <ion-button color="light" (click)="report(enquiry.enquiry_id)">
+            <ion-button
+              color="light"
+              (click)="report(enquiry.enquiry_id)"
+              *ngIf="!sentByMe()"
+            >
               <ion-icon name="flag-outline" color="danger"></ion-icon>
               <ion-text color="danger"> Report </ion-text>
             </ion-button>

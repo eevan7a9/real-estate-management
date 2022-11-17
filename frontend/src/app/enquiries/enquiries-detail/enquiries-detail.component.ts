@@ -57,6 +57,13 @@ export class EnquiriesDetailComponent implements OnInit {
     }
   }
 
+  public sentByMe(): boolean {
+    if (this.user && this.enquiry) {
+      return this.user.user_id === this.enquiry.users.from.user_id;
+    }
+    return false;
+  }
+
   public async report(enqId: string) {
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-alert-class',
