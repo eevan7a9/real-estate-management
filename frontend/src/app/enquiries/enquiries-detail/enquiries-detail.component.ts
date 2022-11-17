@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
+import { User } from 'src/app/shared/interface/user';
 import { UserService } from 'src/app/user/user.service';
 import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
@@ -15,6 +16,7 @@ import { EnquiriesService } from '../enquiries.service';
 })
 export class EnquiriesDetailComponent implements OnInit {
   public enquiry: Enquiry;
+  public user: User;
 
   constructor(
     public location: Location,
@@ -24,18 +26,31 @@ export class EnquiriesDetailComponent implements OnInit {
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
+    private route: ActivatedRoute,
+    private loadingCtrl: LoadingController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Fetching enquiry details...',
+      spinner: 'circular'
+    });
+    loading.present();
+
+    const paramId = this.route.snapshot.paramMap.get('id');
+    this.enquiriesService.fetchEnquiry(paramId);
     this.enquiriesService.enquiry$.subscribe(enquiry => {
-      this.enquiry = enquiry;
-      if (!this.enquiry) {
-        this.router.navigate(['/enquiries']);
+      if (enquiry) {
+        this.enquiry = enquiry;
+        loading.dismiss();
       }
+    });
+    this.userService.user$.subscribe(user => {
+      if (user) { this.user = user; }
     });
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     const userId = this.userService.user.user_id;
     if (!this.enquiry?.read && this.enquiry?.users?.to.user_id === userId) {
       this.enquiriesService.readEnquiry(this.enquiry.enquiry_id);
