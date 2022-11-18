@@ -61,6 +61,12 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" class=" ion-margin-end">
+  <ion-fab-button (click)="presentModal()"  color="success">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
 <ion-content>
   <div class="properties-container">
     <ion-progress-bar
@@ -70,7 +76,7 @@
     ></ion-progress-bar>
 
     <ion-grid>
-      <ion-row class="ion-align-items-center ion-margin-top">
+      <ion-row class="ion-align-items-center ion-margin-top hide-on-mobile">
         <ion-col class="heading ion-padding-horizontal">
           List of Properties
         </ion-col>

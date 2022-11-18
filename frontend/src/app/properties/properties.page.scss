@@ -16,3 +16,12 @@ ion-searchbar {
   font-size: 24px;
   font-weight: bold;
 }
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  ion-fab-button {
+    width: 65px;
+    height: 65px;
+  }
+}
