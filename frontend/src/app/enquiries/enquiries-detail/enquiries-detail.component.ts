@@ -134,7 +134,14 @@ export class EnquiriesDetailComponent implements OnInit {
     const modal = await this.modalCtrl.create({
       component: EnquiriesReplyModalComponent,
       componentProps: {
-        title: 'Reply Enquiry'
+        title: 'Reply Enquiry',
+        property: this.enquiry?.property,
+        replyTo: {
+          enquiry_id: this.enquiry.enquiry_id,
+          title: this.enquiry.title,
+          topic: this.enquiry.topic
+        },
+        userTo: this.enquiry.users?.from?.user_id
       }
     });
     return await modal.present();

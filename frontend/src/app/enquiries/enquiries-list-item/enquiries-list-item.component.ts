@@ -100,7 +100,7 @@ export class EnquiriesListItemComponent implements OnInit {
         title: 'Reply Enquiry',
         property: this.enquiry?.property,
         replyTo: {
-          id: this.enquiry.enquiry_id,
+          enquiry_id: this.enquiry.enquiry_id,
           title: this.enquiry.title,
           topic: this.enquiry.topic
         },
