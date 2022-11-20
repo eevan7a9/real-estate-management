@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 
@@ -9,16 +9,19 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-properties-detail',
   templateUrl: './properties-detail.component.html',
   styleUrls: ['./properties-detail.component.scss'],
 })
-export class PropertiesDetailComponent implements OnInit {
+export class PropertiesDetailComponent implements OnInit, OnDestroy {
   public property: Property | undefined;
   public isOwner = false;
   public ready = false;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     public location: Location,
@@ -33,8 +36,7 @@ export class PropertiesDetailComponent implements OnInit {
 
   async ngOnInit() {
     const paramId = this.route.snapshot.paramMap.get('id');
-
-    this.propertiesService.property$.subscribe(async property => {
+    this.propertiesService.property$.pipe(takeUntil(this.unsubscribe$)).subscribe(async property => {
       this.property = property;
       if (!this.property) {
         await this.propertiesService.fetchProperty(paramId);
@@ -42,7 +44,11 @@ export class PropertiesDetailComponent implements OnInit {
       this.ready = true;
       this.isOwner = this.userService.user.user_id === this.property?.user_id;
     });
+  }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public async actionPopup() {
