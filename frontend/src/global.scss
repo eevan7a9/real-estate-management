@@ -37,6 +37,11 @@
 .show-on-mobile {
   display: none;
 }
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 @media (max-width: 768px) {
   .hide-on-mobile {
     display: none;
