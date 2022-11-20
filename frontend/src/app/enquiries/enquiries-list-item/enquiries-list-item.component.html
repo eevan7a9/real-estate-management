@@ -1,30 +1,27 @@
 <ion-card>
   <ion-card-header>
+    <div class="sent-recieve-wrapper">
+      <ion-badge class="badge" color="light" *ngIf="this.sent">
+        Sent
+      </ion-badge>
+      <ion-badge class="badge" color="light" *ngIf="!this.sent">
+        Received
+      </ion-badge>
+    </div>
     <ion-card-title>
-      <div class="enquiry-title">
-        <span style="margin-right: 8px">{{ enquiry.title }}</span>
-        <ion-badge
-          class="badge"
-          color="light"
-          *ngIf="!this.sent && enquiry.read"
-        >
-          Read
-        </ion-badge>
-        <ion-badge
-          class="badge"
-          color="medium"
-          *ngIf="!this.sent && !enquiry.read"
-        >
-          Unread
-        </ion-badge>
-
-        <ion-badge class="badge" color="warning" *ngIf="this.sent">
-          Sent
-        </ion-badge>
-        <ion-badge class="badge" color="success" *ngIf="!this.sent">
-          Received
-        </ion-badge>
+      <div class="enquiry-title" style="margin-right: 8px">
+        <div class="title-text">
+          {{ this.enquiry.title }} dsdad adas ad ad sad ad ad adada asdad asda
+          dsa
+        </div>
       </div>
+      <ion-badge
+        class="badge-unread ion-text-uppercase"
+        color="medium"
+        *ngIf="!this.sent && !enquiry.read"
+      >
+        Unread
+      </ion-badge>
     </ion-card-title>
 
     <ion-button
@@ -32,7 +29,7 @@
       color="light"
       (click)="actionPopup($event, enquiry.enquiry_id)"
     >
-      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      <ion-icon color="dark" name="ellipsis-vertical-outline"></ion-icon>
     </ion-button>
   </ion-card-header>
 
