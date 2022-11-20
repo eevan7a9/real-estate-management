@@ -1,7 +1,9 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { User } from 'src/app/shared/interface/user';
@@ -14,9 +16,11 @@ import { EnquiriesService } from '../enquiries.service';
   templateUrl: './enquiries-detail.component.html',
   styleUrls: ['./enquiries-detail.component.scss'],
 })
-export class EnquiriesDetailComponent implements OnInit {
+export class EnquiriesDetailComponent implements OnInit, OnDestroy {
   public enquiry: Enquiry;
   public user: User;
+  public paramId: string;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     public location: Location,
@@ -37,9 +41,13 @@ export class EnquiriesDetailComponent implements OnInit {
     });
     loading.present();
 
-    const paramId = this.route.snapshot.paramMap.get('id');
-    this.enquiriesService.fetchEnquiry(paramId);
-    this.enquiriesService.enquiry$.subscribe(enquiry => {
+    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe(async (params) => {
+      loading.present();
+      this.paramId = params.get('id');
+      await this.enquiriesService.fetchEnquiry(this.paramId);
+    });
+
+    this.enquiriesService.enquiry$.pipe(takeUntil(this.unsubscribe$)).subscribe(enquiry => {
       if (enquiry) {
         this.enquiry = enquiry;
         loading.dismiss();
@@ -48,6 +56,16 @@ export class EnquiriesDetailComponent implements OnInit {
     this.userService.user$.subscribe(user => {
       if (user) { this.user = user; }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.enquiriesService.enquiry = null;
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  async goToEnquiry(enqId: string) {
+    await this.router.navigate(['/enquiries', enqId]);
   }
 
   async ionViewDidEnter() {

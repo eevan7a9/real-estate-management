@@ -24,6 +24,17 @@
 
     <ion-card>
       <ion-card-header>
+        <ion-card-subtitle class="ion-text-capitalize" *ngIf="enquiry.replyTo">
+          <button
+            class="reply-to-btn ellipsis"
+            (click)="goToEnquiry(enquiry.replyTo.enquiry_id)"
+          >
+            <ion-icon name="arrow-redo" color="primary"></ion-icon>
+            [Response to] - {{ enquiry.replyTo.title }} sdsadasdaadasda ada dasd
+            das da d
+          </button>
+        </ion-card-subtitle>
+
         <ion-card-title>
           {{ enquiry.title }}
         </ion-card-title>
@@ -35,7 +46,10 @@
           <markdown [data]="enquiry.content"></markdown>
         </div>
 
-        <div class="ion-padding">- {{ enquiry.email }}</div>
+        <div class="ion-padding">
+          - {{ enquiry.email }}
+          <span *ngIf="sentByMe()">(You)</span>
+        </div>
       </ion-card-content>
     </ion-card>
 
