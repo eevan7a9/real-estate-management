@@ -1,7 +1,20 @@
 ion-content {
   --background: var(--ion-color-light);
 }
-
+.view-property {
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 12px;
+}
+.topic-subtitle {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.property-title {
+  display: flex;
+  align-items: center;
+}
 .reply-to-btn {
   padding: 0;
   font-size: 16px;

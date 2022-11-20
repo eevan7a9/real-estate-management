@@ -63,7 +63,9 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
+  async gotToProperty(propertyId: string) {
+    await this.router.navigate(['/properties', propertyId]);
+  }
   async goToEnquiry(enqId: string) {
     await this.router.navigate(['/enquiries', enqId]);
   }

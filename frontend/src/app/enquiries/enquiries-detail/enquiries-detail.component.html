@@ -13,10 +13,20 @@
   <div class="details-container">
     <ion-card class="ion-no-padding">
       <ion-card-header>
-        <ion-card-title color="dark">
+        <ion-card-title color="dark" class="property-title">
           {{ enquiry.property?.name }}
+          <ion-button
+            size="small"
+            fill="outline"
+            class="view-property"
+            (click)="gotToProperty(enquiry.property.property_id)"
+          >
+            View Property
+          </ion-button>
         </ion-card-title>
-        <ion-card-subtitle class="ion-text-capitalize">
+
+        <ion-card-subtitle class="ion-text-capitalize topic-subtitle">
+          Topic -
           <ion-badge color="primary">{{ enquiry.topic }}</ion-badge>
         </ion-card-subtitle>
       </ion-card-header>
