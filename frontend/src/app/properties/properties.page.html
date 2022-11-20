@@ -61,8 +61,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-fab slot="fixed" vertical="bottom" horizontal="end" class=" ion-margin-end">
-  <ion-fab-button (click)="presentModal()"  color="success">
+<ion-fab
+  slot="fixed"
+  vertical="bottom"
+  horizontal="end"
+  class="ion-margin-end show-on-mobile"
+>
+  <ion-fab-button (click)="presentModal()" color="success">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>

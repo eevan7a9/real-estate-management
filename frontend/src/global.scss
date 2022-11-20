@@ -26,10 +26,26 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 // overide style
-
 .my-custom-alert-class {
   .alert-danger-text {
     --color: var(--ion-color-danger);
     color: var(--ion-color-danger);
+  }
+}
+
+// GLOBAL STYLE
+.show-on-mobile {
+  display: none;
+}
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .show-on-mobile {
+    display: block;
+  }
+  ion-fab-button {
+    width: 65px;
+    height: 65px;
   }
 }
