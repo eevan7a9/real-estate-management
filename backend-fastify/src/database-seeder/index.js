@@ -37,7 +37,7 @@ const seederEnquiry = async () => {
 };
 
 
-const database = mongoose.connect(process.env.DB_CONNECT, {
+mongoose.connect(process.env.DB_CONNECT, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 }).then(async (con) => {
@@ -54,6 +54,9 @@ const database = mongoose.connect(process.env.DB_CONNECT, {
   };
   await db();
   await con.disconnect();
-  await con.connection.close();
-
 }).catch((e) => fastify.log.error(e));
+
+mongoose.connection.on('disconnected', () => {
+  console.log("Process: Exiting...")
+  process.exit();
+});
