@@ -1,3 +1,4 @@
 /node_modules
-/uploads
+/uploads/*
+!/uploads/placeholder.jpeg
 .env
