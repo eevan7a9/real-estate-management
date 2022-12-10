@@ -15,13 +15,14 @@
     justify-content: center;
     ion-icon {
       min-width: 40px;
-      color: rgba(51, 51, 51, 0.726);
+      color: var(--ion-color-dark);
       font-size: 20px;
     }
   }
 
   input {
-    color: #333;
+    color: var(--ion-color-dark);
+    background: var(--ion-color-light);
     width: 100%;
     height: 40px;
     padding-left: 36px;
