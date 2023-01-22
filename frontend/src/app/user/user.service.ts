@@ -5,6 +5,7 @@ import { headerDict } from '../shared/utility';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
+import { GoogleAuthResponse } from '../shared/interface/google';
 
 const url = environment.api.server;
 const requestOptions = {
@@ -69,6 +70,16 @@ export class UserService {
     } catch (error) {
       console.log('error', error);
       return error;
+    }
+  }
+
+  public async googleAuth(payload: GoogleAuthResponse) {
+    try {
+      const result = await this.http.post<User>(url + 'auth/google', payload).toPromise();
+      await this.updateUser(result);
+      return result;
+    } catch (error) {
+      console.log('google-auth error:', error);
     }
   }
 

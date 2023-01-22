@@ -3,5 +3,6 @@ export const environment = {
   api: {
     server: 'http://localhost:8000/',
     mapKey: '',
+    googleAuthClientId: ''
   }
 };
