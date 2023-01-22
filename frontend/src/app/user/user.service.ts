@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 
-const url = environment.api.url;
+const url = environment.api.server;
 const requestOptions = {
   headers: new HttpHeaders(headerDict()),
 };

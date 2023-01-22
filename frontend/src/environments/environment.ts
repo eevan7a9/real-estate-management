@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: {
-    url: 'http://localhost:8000/',
+    server: 'http://localhost:8000/',
     mapKey: ''
   }
 };
