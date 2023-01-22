@@ -109,6 +109,6 @@ export class AppComponent implements OnInit {
   }
 
   private checkServer() {
-    this.http.get(environment.api.url).toPromise().then(data => console.log(data));
+    this.http.get(environment.api.server).toPromise().then(data => console.log(data));
   }
 }

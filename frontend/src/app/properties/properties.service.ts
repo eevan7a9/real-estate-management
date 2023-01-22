@@ -8,7 +8,7 @@ import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
 
-const propertyUrl = environment.api.url + 'properties';
+const propertyUrl = environment.api.server + 'properties';
 const requestOptions = ({ token = '', contentType = 'application/json' }, body = {}) => ({
   headers: new HttpHeaders(headerDict({ token, contentType })),
   body

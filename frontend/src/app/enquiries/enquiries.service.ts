@@ -8,7 +8,7 @@ import { Property } from '../shared/interface/property';
 import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
 
-const enquiryUrl = environment.api.url + 'enquiries';
+const enquiryUrl = environment.api.server + 'enquiries';
 const requestOptions = (token = '', body = {},) => ({
   headers: new HttpHeaders(headerDict({ token })),
   body

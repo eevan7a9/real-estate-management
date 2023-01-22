@@ -49,6 +49,32 @@
               Sign In
             </ion-button>
 
+            <div class="ion-margin-vertical ion-text-center">OR</div>
+
+            <div class="social-container">
+              <!--
+              <div
+                id="g_id_onload"
+                data-client_id="GOOGLE.AUTH.CLIENT.ID"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-login_uri="http://localhost:8100/user/signin"
+                data-auto_prompt="false"
+              ></div>
+              -->
+              <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left"
+                id="web-google-button"
+                data-width="300px"
+              ></div>
+            </div>
+
             <div class="ask-register">
               First time here? <a [routerLink]="['/user/register']">Register</a>
             </div>
