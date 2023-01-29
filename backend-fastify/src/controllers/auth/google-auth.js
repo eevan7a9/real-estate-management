@@ -7,15 +7,25 @@ export const googleAuth = async function (req, res) {
    *  we decoded JWT token from google API to get user information
    *  https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions
    */
-  const { clientId, client_id, credential } = req.body;
-  const authClientId = clientId || client_id;
-  if (!authClientId || !credential) {
+  const { credential } = req.body;
+  if (!credential) {
     return res.status(400).send({ message: "Error: Invalid request." });
   }
-  if (process.env.GOOGLE_AUTH_CLIENT_ID != authClientId) {
-    return res.status(400).send({ message: "Error: Invalid client Id." });
+  const { sub, email, name: fullName, aud, iss, exp, picture } = fastify.jwt.decode(credential);
+
+  if (process.env.GOOGLE_AUTH_CLIENT_ID !== aud) {
+    // Invalid client id && invalid
+    return res.status(400).send({ message: "Error: Invalid Request." });
   }
-  const { sub, email, name: fullName, picture } = fastify.jwt.decode(credential);
+  if (iss !== 'accounts.google.com' && iss !== 'https://accounts.google.com') {
+    // Source is invalid
+    return res.status(400).send({ message: "Error: Invalid Request." });
+  }
+  if (exp < new Date().getTime() / 1000) {
+    // Token is expired
+    return res.status(400).send({ message: "Error: Invalid Request." });
+  }
+
   const foundUser = await User.findOne({ user_id: sub });
   let id = foundUser?.id;
   let accessToken = '';
