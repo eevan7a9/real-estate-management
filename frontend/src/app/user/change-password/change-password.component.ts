@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 
 @Component({
@@ -9,9 +9,9 @@ import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-vali
 })
 export class ChangePasswordComponent implements OnInit {
   public error = false;
-  public changePassForm: FormGroup;
+  public changePassForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder, private customValidators: CustomValidatorsDirective) {
+  constructor(private fb: UntypedFormBuilder, private customValidators: CustomValidatorsDirective) {
     this.changePassForm = this.fb.group({
       passwordCurrent: ['', Validators.required],
       passwordNew: ['', [

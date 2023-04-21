@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -9,10 +9,10 @@ import { ToastController } from '@ionic/angular';
 })
 export class ContactFormComponent implements OnInit {
   public error = false;
-  public contactForm: FormGroup;
+  public contactForm: UntypedFormGroup;
   public sent = false;
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private toastCtrl: ToastController,
   ) {
     this.contactForm = this.formBuilder.group({

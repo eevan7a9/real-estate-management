@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { GoogleAuthResponse } from 'src/app/shared/interface/google';
@@ -16,10 +16,10 @@ declare let google: any;
 export class SigninComponent implements OnInit {
   public error = false;
   public authFailed = false;
-  public signinForm: FormGroup;
+  public signinForm: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private user: UserService,
     private toastCtrl: ToastController,
     public loadingController: LoadingController,

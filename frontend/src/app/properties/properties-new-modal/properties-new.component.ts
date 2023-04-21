@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
 import { PropertyType } from 'src/app/shared/enums/property';
 import { PropertiesService } from '../properties.service';
@@ -12,7 +12,7 @@ import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/
   styleUrls: ['./properties-new.component.scss'],
 })
 export class PropertiesNewComponent implements OnInit {
-  public propertyForm: FormGroup;
+  public propertyForm: UntypedFormGroup;
   public propertyTypes = [
     {
       label: 'residential',
@@ -36,7 +36,7 @@ export class PropertiesNewComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController,
   ) {

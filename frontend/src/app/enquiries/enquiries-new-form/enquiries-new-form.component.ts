@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -22,11 +22,11 @@ export class EnquiriesNewFormComponent implements OnInit {
 
   public error = false;
   public submitting = false;
-  public enquiryForm: FormGroup;
+  public enquiryForm: UntypedFormGroup;
   public Editor = ClassicEditor;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private enquiriesService: EnquiriesService
