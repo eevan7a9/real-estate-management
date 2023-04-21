@@ -61,7 +61,9 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
       case 'title':
         this.enquiries = sortListByName(this.enquiries, { property: 'title' });
         break;
-
+      case 'oldest':
+        this.enquiries = sortListByDate(this.enquiries, { latest: false, property: 'createdAt' });
+        break;
       default:
         this.enquiries = sortListByDate(this.enquiries, { property: 'createdAt' });
         break;
@@ -99,5 +101,4 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 }
