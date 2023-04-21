@@ -1,34 +1,24 @@
 <ion-card class="ion-no-padding ion-no-margin">
   <div class="ion-text-right" *ngIf="showEdit">
-    <ion-button
-      size="small"
-      fill="clear"
-      class="edit-btn"
-      (click)="edit.emit(true)"
-    >
+    <ion-button size="small" fill="clear" class="edit-btn" (click)="edit.emit(true)">
       <ion-text>Edit</ion-text>
       <ion-icon name="images-outline"></ion-icon>
     </ion-button>
   </div>
 
   <ion-card-content class="gallery-container">
-    <div class="selected-image ion-padding-vertical">
+    <div class="selected-image ion-padding-vertical death">
       <img [src]="imagePresented" alt="image" />
     </div>
-    <swiper [config]="slideOpts" class="slides">
-      <ng-template *ngFor="let image of images" swiperSlide>
-        <div class="slide-content" (click)="setSelected(image)">
-          <img
-            [style.backgroundImage]="getImage(image)"
-            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            alt="image"
-          />
-          <div
-            class="cover-img"
-            [ngClass]="{ selected: imagePresented === image }"
-          ></div>
+
+    <swiper-container [slidesPerView]="'auto'" speed="500" [spaceBetween]="6">
+      <swiper-slide *ngFor="let image of images" class="swiper">
+        <div class="swipers-image" (click)="setSelected(image)">
+          <img [style.backgroundImage]="getImage(image)"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="image" />
+          <div class="cover-img" [ngClass]="{ selected: imagePresented === image }"></div>
         </div>
-      </ng-template>
-    </swiper>
+      </swiper-slide>
+    </swiper-container>
   </ion-card-content>
 </ion-card>

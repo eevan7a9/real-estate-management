@@ -1,24 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { SwiperOptions } from 'swiper';
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-properties-gallery',
   templateUrl: './properties-gallery.component.html',
   styleUrls: ['./properties-gallery.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class PropertiesGalleryComponent implements OnInit {
   @Input() images: string[] = [];
   @Input() showEdit = false;
   @Output() edit = new EventEmitter<boolean>();
+
   public imagePresented = 'assets/images/no-image.jpeg';
-  public slideOpts: SwiperOptions = {
-    initialSlide: 0,
-    speed: 400,
-    spaceBetween: 15,
-    freeMode: true,
-    slidesPerView: 'auto',
-  };
 
   constructor() { }
 
