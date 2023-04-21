@@ -45,7 +45,12 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "localforage",
+              "@ckeditor/ckeditor5-build-classic",
+              "leaflet"
+           ]
           },
           "configurations": {
             "production": {
