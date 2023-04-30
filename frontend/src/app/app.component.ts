@@ -7,6 +7,9 @@ import { User } from './shared/interface/user';
 
 import { StorageService } from './shared/services/storage/storage.service';
 import { UserService } from './user/user.service';
+// Register swiper js
+import { register } from 'swiper/element/bundle';
+register();
 
 interface NavLinks {
   title: string;

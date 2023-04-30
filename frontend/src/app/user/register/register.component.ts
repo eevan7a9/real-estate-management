@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
@@ -12,10 +12,10 @@ import { UserService } from '../user.service';
 })
 export class RegisterComponent implements OnInit {
   public error = false;
-  public registerForm: FormGroup;
+  public registerForm: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private customValidators: CustomValidatorsDirective,
     private toastCtrl: ToastController,
     private loadingController: LoadingController,

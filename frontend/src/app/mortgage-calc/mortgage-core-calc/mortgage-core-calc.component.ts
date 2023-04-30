@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 
 @Component({
@@ -28,11 +28,11 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   }[]>();
   @Output() scheduleChanged = new EventEmitter<boolean>();
 
-  public mortgageForm: FormGroup;
+  public mortgageForm: UntypedFormGroup;
   public lifetimePayment = '0';
   public monthlyPayment = '0';
 
-  constructor(private formBuilder: FormBuilder, private customValidator: CustomValidatorsDirective) {
+  constructor(private formBuilder: UntypedFormBuilder, private customValidator: CustomValidatorsDirective) {
     this.mortgageForm = this.formBuilder.group({
       price: ['300,000', [Validators.required, Validators.min(1)]],
       downPayment: ['100,000', [Validators.required, Validators.min(1)]],

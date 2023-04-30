@@ -41,6 +41,10 @@ export class EnquiriesPage implements OnInit {
       label: 'Latest'
     },
     {
+      value: 'oldest',
+      label: 'Oldest'
+    },
+    {
       value: 'title',
       label: 'Title'
     },

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PropertyType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
@@ -12,7 +12,7 @@ import { PropertiesService } from '../properties.service';
   styleUrls: ['./properties-edit.component.scss'],
 })
 export class PropertiesEditComponent implements OnInit {
-  public propertyForm: FormGroup;
+  public propertyForm: UntypedFormGroup;
   public propertyTypes = [
     {
       label: 'residential',
@@ -34,7 +34,7 @@ export class PropertiesEditComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController
   ) {

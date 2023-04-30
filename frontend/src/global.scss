@@ -25,6 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+// swiperjs styles
+@import "./assets/swiper-js.scss";
+
 // overide style
 .my-custom-alert-class {
   .alert-danger-text {
