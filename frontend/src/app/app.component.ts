@@ -5,8 +5,10 @@ import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { User } from './shared/interface/user';
 
+import { EnquiriesService } from './enquiries/enquiries.service';
 import { StorageService } from './shared/services/storage/storage.service';
 import { UserService } from './user/user.service';
+
 // Register swiper js
 import { register } from 'swiper/element/bundle';
 register();
@@ -49,7 +51,8 @@ export class AppComponent implements OnInit {
     private alertController: AlertController,
     private toastController: ToastController,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private enquiriesService: EnquiriesService
   ) { }
 
   async ngOnInit() {
@@ -93,6 +96,7 @@ export class AppComponent implements OnInit {
           cssClass: 'danger',
           handler: async () => {
             await this.userService.signOut();
+            this.enquiriesService.resetState();
             this.showToast();
             this.router.navigate(['/user/signin']);
           }

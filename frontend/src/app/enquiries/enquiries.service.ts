@@ -123,4 +123,9 @@ export class EnquiriesService {
       console.error(error);
     }
   }
+
+  public resetState(): void {
+    this.enquiries = [];
+    this.initialFetchDone = false;
+  }
 }
