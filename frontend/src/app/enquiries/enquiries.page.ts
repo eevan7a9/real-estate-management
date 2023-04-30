@@ -58,8 +58,11 @@ export class EnquiriesPage implements OnInit {
     this.userService.user$.subscribe(user => this.user = user);
   }
 
-  public async presentLoading() {
-    this.progressBar = true;
-    setTimeout(() => this.progressBar = false, 1500);
+  ionViewDidEnter() {
+    this.enquiriesList.onParentDidEnter();
+  }
+
+  public async setLoading(val: boolean) {
+    this.progressBar = val;
   }
 }

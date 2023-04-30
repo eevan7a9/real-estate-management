@@ -23,10 +23,18 @@
     </ion-card-content>
   </ion-card>
 
-  <app-enquiries-list-item
-    *ngFor="let item of enquiries"
-    [enquiry]="item"
-    class="ion-margin-vertical"
-    (click)="selectEnquiry(item)"
-  ></app-enquiries-list-item>
+  <div [ngSwitch]="!!enquiries.length">
+    <div *ngSwitchCase="true">
+      <app-enquiries-list-item
+        *ngFor="let item of enquiries"
+        [enquiry]="item"
+        class="ion-margin-vertical"
+        (click)="selectEnquiry(item)"
+      ></app-enquiries-list-item>
+    </div>
+
+    <div *ngSwitchCase="false" class="enquiries-empty-list">
+      Currently empty...
+    </div>
+  </div>
 </div>

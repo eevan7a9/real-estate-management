@@ -7,3 +7,12 @@
   font-size: 19px;
   font-weight: bold;
 }
+
+.enquiries-empty-list {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ion-color-dark);
+  padding: 3rem 0;
+}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries.service';
@@ -11,11 +11,11 @@ import { sortListByDate, sortListByName } from 'src/app/shared/utility';
   templateUrl: './enquiries-list.component.html',
   styleUrls: ['./enquiries-list.component.scss'],
 })
-export class EnquiriesListComponent implements OnInit, OnDestroy {
+export class EnquiriesListComponent implements OnDestroy {
 
   @Output() isLoading = new EventEmitter<boolean>();
   public date = new Date();
-  public enquiries: Enquiry[];
+  public enquiries: Enquiry[] = [];
   public filterBy: string[] = [];
   public sortBy = 'latest';
   public searchText = '';
@@ -26,12 +26,13 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
     private router: Router,
   ) { }
 
-  ngOnInit() {
-    this.getEnquiries();
-  }
 
   ngOnDestroy() {
     this.unSubscribed();
+  }
+
+  public onParentDidEnter() {
+    this.getEnquiries();
   }
 
   public selectEnquiry(enquiry: Enquiry) {
@@ -79,21 +80,25 @@ export class EnquiriesListComponent implements OnInit, OnDestroy {
   }
 
   private async getEnquiries() {
-    this.isLoading.emit(true);
     this.unSubscribed();
+    this.isLoading.emit(true);
     this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe((enquiries) => {
       this.enquiries = enquiries;
       this.sortEnquiries();
 
       if (!this.enquiriesService.initialFetchDone) {
         this.enquiriesService.fetchEnquiries();
+      } else {
+        this.isLoading.emit(false);
       }
+
       if (this.searchText) {
         this.enquiries = this.searchEnquiries();
       }
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
       }
+
     });
   }
 
