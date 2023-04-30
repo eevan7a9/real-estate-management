@@ -49,9 +49,11 @@
               Sign In
             </ion-button>
 
-            <div class="ion-margin-vertical ion-text-center">OR</div>
+            <div class="ion-margin-vertical ion-text-center" *ngIf="showSocial">
+              OR
+            </div>
 
-            <div class="social-container">
+            <div class="social-container" *ngIf="showSocial">
               <!--
               <div
                 id="g_id_onload"

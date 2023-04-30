@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
@@ -13,10 +13,11 @@ declare let google: any;
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.scss'],
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent implements OnInit, AfterViewInit {
   public error = false;
   public authFailed = false;
   public signinForm: UntypedFormGroup;
+  public showSocial = false;
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -33,6 +34,10 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showSocial = !!environment.api.googleAuthClientId;
+  }
+
+  ngAfterViewInit(): void {
     if (!this.platform.is('capacitor')) {
       this.initializeGoogleSigninWeb();
     }
@@ -62,7 +67,9 @@ export class SigninComponent implements OnInit {
     }
   }
 
-  private initializeGoogleSigninWeb() {
+  private initializeGoogleSigninWeb(): void {
+    if (!environment.api.googleAuthClientId) { return; }
+
     google.accounts.id.initialize({
       client_id: environment.api.googleAuthClientId,
       callback: this.handleCredentialResponse.bind(this),
