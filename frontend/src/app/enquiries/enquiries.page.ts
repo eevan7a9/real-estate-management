@@ -59,7 +59,9 @@ export class EnquiriesPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.enquiriesList.onParentDidEnter();
+    if (this.user) {
+      this.enquiriesList.onParentDidEnter();
+    }
   }
 
   public async setLoading(val: boolean) {
