@@ -3,7 +3,14 @@ import { v4 as uuidV4 } from "uuid";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
 import { User } from "../../models/user.js";
+import { sendTargetedNotification } from "../../websocket/index.js";
+import { EnquiryNotification } from "../../enums/enquiries.js";
 
+/**
+ * Creates an enquiry.
+ * @param {import('fastify').FastifyRequest} req - The Fastify request object.
+ * @param {import('fastify').FastifyReply} res - The Fastify reply object.
+ */
 export const createEnquiry = async function (req, res) {
   const { title, content, topic, email, userTo, property } = req.body;
   if (!title || !content || !topic || !email || !userTo) {
@@ -37,6 +44,7 @@ export const createEnquiry = async function (req, res) {
     });
     await newEnquiry.save();
     res.status(201).send({ data: newEnquiry });
+    sendTargetedNotification(EnquiryNotification.new, newEnquiry, userTo);
   } catch (error) {
     res.status(400).send(error);
   }

@@ -5,3 +5,8 @@ export const EnquiryTopic = {
   info: "information",
 };
 Object.freeze(EnquiryTopic);
+
+export const EnquiryNotification = {
+  new: "newEnquiry",
+};
+Object.freeze(EnquiryNotification);
