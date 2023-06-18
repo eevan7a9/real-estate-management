@@ -22,6 +22,7 @@
     "@fastify/multipart": "^6.0.0",
     "@fastify/static": "^5.0.2",
     "@fastify/swagger": "^6.1.0",
+    "@fastify/websocket": "^6.0.1",
     "@types/mongoose": "^5.11.97",
     "dotenv": "^10.0.0",
     "fastify": "^3.29.4",
