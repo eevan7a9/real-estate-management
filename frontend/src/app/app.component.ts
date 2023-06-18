@@ -8,6 +8,7 @@ import { User } from './shared/interface/user';
 import { EnquiriesService } from './enquiries/enquiries.service';
 import { StorageService } from './shared/services/storage/storage.service';
 import { UserService } from './user/user.service';
+import { WebSocketService } from './web-scoket/web-socket.service';
 
 // Register swiper js
 import { register } from 'swiper/element/bundle';
@@ -52,7 +53,8 @@ export class AppComponent implements OnInit {
     private toastController: ToastController,
     private router: Router,
     private http: HttpClient,
-    private enquiriesService: EnquiriesService
+    private enquiriesService: EnquiriesService,
+    private webSocket: WebSocketService
   ) { }
 
   async ngOnInit() {
@@ -63,7 +65,12 @@ export class AppComponent implements OnInit {
     if (isDark) {
       document.body.classList.add('dark');
     }
-    this.userService.user$.subscribe(user => this.user = user);
+    this.userService.user$.subscribe(user => {
+      this.user = user;
+      if(user) {
+        this.webSocket.connect(this.userService.token());
+      }
+    });
     this.checkServer();
   }
 
