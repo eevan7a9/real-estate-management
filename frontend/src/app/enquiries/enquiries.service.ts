@@ -88,7 +88,7 @@ export class EnquiriesService {
     try {
       const res = await this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))
         .toPromise();
-      this.enquiries = [...this.enquiries, res.data];
+      this.insertEnquiryToState(res.data);
       return res;
     } catch (error) {
       console.error(error);
@@ -127,5 +127,9 @@ export class EnquiriesService {
   public resetState(): void {
     this.enquiries = [];
     this.initialFetchDone = false;
+  }
+
+  public insertEnquiryToState(enquiry: Enquiry): void {
+    this.enquiries = [...this.enquiries, enquiry];
   }
 }
