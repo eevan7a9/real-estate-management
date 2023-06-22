@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { User } from '../shared/interface/user';
+import { Enquiry } from '../shared/interface/enquiry';
+import { EnquiriesService } from '../enquiries/enquiries.service';
+import { WebSocketNotification } from '../shared/interface/notification';
+import { EnquiryNotification } from '../shared/enums/enquiry';
 
 const parseMessage = function (message: string) {
   try {
@@ -11,16 +14,18 @@ const parseMessage = function (message: string) {
   }
 };
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebSocketService {
   private socket: WebSocket;
   public messages: string[] = [];
 
-  constructor() { }
+  constructor(private enquiry: EnquiriesService) {}
 
   connect(token?: string): void {
-    this.socket = new WebSocket(`${environment.api.webSocketUrl}?userToken=${token}`);
+    this.socket = new WebSocket(
+      `${environment.api.webSocketUrl}?userToken=${token}`
+    );
 
     this.socket.onopen = () => {
       console.log('WebSocket connection established.');
@@ -29,6 +34,7 @@ export class WebSocketService {
     this.socket.onmessage = (event: MessageEvent) => {
       const message = event.data;
       console.log('Received message:', parseMessage(message));
+      this.handleNotification(parseMessage(message));
       this.messages.push(message);
     };
 
@@ -53,6 +59,18 @@ export class WebSocketService {
     if (this.socket) {
       this.socket.close();
       this.socket = null;
+    }
+  }
+
+  handleNotification(notfication: WebSocketNotification): void {
+    switch (notfication.type) {
+      case EnquiryNotification.new:
+        this.enquiry.insertEnquiryToState(notfication.payload as Enquiry);
+        break;
+
+      default:
+        console.error('Unkown Notification type', notfication.type);
+        break;
     }
   }
 }
