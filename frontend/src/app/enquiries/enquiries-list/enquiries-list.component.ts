@@ -86,19 +86,15 @@ export class EnquiriesListComponent implements OnDestroy {
       this.enquiries = enquiries;
       this.sortEnquiries();
 
-      if (!this.enquiriesService.initialFetchDone) {
-        this.enquiriesService.fetchEnquiries();
-      } else {
-        this.isLoading.emit(false);
-      }
-
       if (this.searchText) {
         this.enquiries = this.searchEnquiries();
       }
       if (this.filterBy.length) {
         this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
       }
-
+      if (this.enquiriesService.initialFetchDone) {
+        this.isLoading.emit(false);
+      }
     });
   }
 

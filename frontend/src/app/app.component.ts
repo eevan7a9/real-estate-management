@@ -9,6 +9,7 @@ import { EnquiriesService } from './enquiries/enquiries.service';
 import { StorageService } from './shared/services/storage/storage.service';
 import { UserService } from './user/user.service';
 import { WebSocketService } from './web-scoket/web-socket.service';
+import { Enquiry } from './shared/interface/enquiry';
 
 // Register swiper js
 import { register } from 'swiper/element/bundle';
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
   ];
 
   public user: User;
+  public unreadEnquiries: number = 0;
 
   constructor(
     private platform: Platform,
@@ -69,8 +71,17 @@ export class AppComponent implements OnInit {
       this.user = user;
       if(user) {
         this.webSocket.connect(this.userService.token());
+        /**
+         *  Fetch users enquiries if there's was no initial fetch
+         */
+        if (!this.enquiriesService.initialFetchDone) {
+          this.enquiriesService.fetchEnquiries();
+        } 
       }
     });
+    this.enquiriesService.enquiries$.subscribe(enquiries => {
+      this.unreadEnquiries = enquiries.filter(enq => this.isUnread(enq)).length;
+    })
     this.checkServer();
   }
 
@@ -124,5 +135,9 @@ export class AppComponent implements OnInit {
 
   private checkServer() {
     this.http.get(environment.api.server).toPromise().then(data => console.log(data));
+  }
+
+  private isUnread(enquiry: Enquiry) {
+    return !enquiry.read && enquiry.users.to.user_id == this.user.user_id;
   }
 }

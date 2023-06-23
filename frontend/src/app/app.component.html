@@ -31,6 +31,10 @@
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
               <ion-label>{{ p.title || "Menu Item" }}</ion-label>
+              <!-- badge counter for unread messages -->
+              <ion-badge slot="end" *ngIf="p.title === 'Enquiries' && unreadEnquiries">
+                {{ unreadEnquiries }}
+              </ion-badge>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
