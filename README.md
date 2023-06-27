@@ -18,13 +18,13 @@ connect property managers and potential buyers.
 
 ### **Frontend**
 - [Ionic 6+](https://ionicframework.com/)
-- [Angular 13+](https://angular.io/)
+- [Angular 14+](https://angular.io/)
 - [leaflet 1.7+](https://leafletjs.com/)
 - [chartjs 3.5+](https://www.chartjs.org/)
 
 ### **Backend**
 - [Node](https://nodejs.org/en/)
-- [fastify 3+](https://www.fastify.io/)
+- [fastify 4+](https://www.fastify.io/)
 - [mongoDB](https://www.mongodb.com/)
 
 # **SETUP**
@@ -44,7 +44,9 @@ $ cd frontend
 ```
   api: {
     url: 'http://localhost:8000/', <-- server URL
-    mapKey: '', <-- Leaflet map key
+    mapKey: '', <-- Leaflet map key,
+    googleAuthClientId: '', <-- google Auth CLient ID for Social signin
+    webSocketUrl: 'ws://localhost:8000/websocket' <-- websocket URL
   }
 ```
 
@@ -56,7 +58,7 @@ In terminal - command
 $ npm install
 
 # serve frontend
-& ionic serve
+$ ionic serve
 ```
 
 <br>
