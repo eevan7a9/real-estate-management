@@ -4,14 +4,14 @@ import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "@fastify/jwt";
 import FastifyMultipart from "@fastify/multipart";
 import mongoose from "mongoose";
-import FastifyWebsocket from '@fastify/websocket';
+import FastifyWebsocket from "@fastify/websocket";
 
 // Local Files
 import { setFastifySwagger } from "./swagger.js";
 import { setFastifyCors } from "./cors.js";
 import { setFastifyRoutes } from "./routes/index.js";
 import { setFastifyStatic } from "./static.js";
-import { setFastifyWebsocket } from "./websocket/index.js"
+import { setFastifyWebsocket } from "./websocket/index.js";
 
 dotenv.config();
 
@@ -59,9 +59,14 @@ mongoose
   .then(() => {
     const PORT = process.env.PORT || 5000;
     try {
-      fastify.listen(PORT, () => {
-        console.log("Listening on PORT: " + PORT);
-      });
+      fastify.listen(
+        {
+          port: PORT,
+        },
+        () => {
+          console.log("Listening on PORT: " + PORT);
+        }
+      );
     } catch (error) {
       fastify.log.error(error);
     }
