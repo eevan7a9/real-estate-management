@@ -22,7 +22,7 @@ const parseMessage = function (message) {
  */
 export const sendTargetedNotification = function (type, payload, targetUserId) {
   fastify.websocketServer.clients.forEach((client) => {
-    if(Array.isArray(targetUserId) ? targetUserId.includes(client.userId) : targetUserId === client.userId) {
+    if (Array.isArray(targetUserId) ? targetUserId.includes(client.userId) : targetUserId === client.userId) {
       client.send(JSON.stringify({ type, payload }));
     }
   });
@@ -41,26 +41,32 @@ export const sendGeneralNotification = function (type, payload) {
 
 /**
  * Sets up WebSocket functionality for the Fastify instance.
+ * 
  */
 export const setFastifyWebsocket = function () {
-  fastify.get(
-    "/websocket",
-    { websocket: true },
-    (connection /* SocketStream */, req /* FastifyRequest */) => {
-      if (req.query.userToken) {
-        const userId = userIdToken(req.query.userToken);
-        // Store the user ID in the connection context
-        connection.socket.userId = userId;
+    /**
+   * @param {SocketStream} connection - The WebSocket connection
+   * @param {FastifyRequest} req - The Fastify request object
+   */
+  fastify.register(async function (fastify) {
+    fastify.get(
+      "/websocket",
+      { websocket: true },
+      (connection, req) => {
+        const userToken = req.query?.userToken || req.request?.query?.userToken;
+        if (userToken) {
+          const userId = userIdToken(userToken);
+          // Store the user ID in the connection context
+          connection.socket.userId = userId;
+          fastify.websocketServer.clients.add(connection.socket)
+        }
+        connection.socket.on("close", () => {
+          console.log("*****************************  Web Socket - close *****************************");
+        });
+        connection.socket.on("message", (message) => {
+          console.log("Web Socket - message", parseMessage(message));
+        });
       }
-      connection.socket.on("open", () => {
-        console.log("Web Socket - connected");
-      });
-      connection.socket.on("close", () => {
-        console.log("Web Socket - close");
-      });
-      connection.socket.on("message", (message) => {
-        console.log("Web Socket - message", parseMessage(message));
-      });
-    }
-  );
+    );
+  })
 };

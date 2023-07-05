@@ -30,7 +30,11 @@ fastify.register(FastifyBcrypt, {
   saltWorkFactor: Number(process.env.SALT) || 12,
 });
 // We register Websocket
-fastify.register(FastifyWebsocket);
+fastify.register(FastifyWebsocket, {
+  options: {
+    clientTracking: true
+  }
+});
 
 // We register authenticate
 fastify.decorate("authenticate", async function (request, reply) {
