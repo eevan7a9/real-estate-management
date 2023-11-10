@@ -15,6 +15,7 @@
       ],
       "rules": {
         "jsdoc/newline-after-description": "off",
+        "@typescript-eslint/member-ordering": "off",
         "@angular-eslint/component-class-suffix": [
           "error",
           {
