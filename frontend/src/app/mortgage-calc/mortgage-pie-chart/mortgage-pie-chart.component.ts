@@ -11,7 +11,7 @@ Chart.register(...registerables);
 })
 export class MortgagePieChartComponent implements OnInit {
 
-  private pieChart: Chart;
+  private pieChart: Chart<'doughnut'>;
   constructor(private storage: StorageService) { }
 
   ngOnInit() { }

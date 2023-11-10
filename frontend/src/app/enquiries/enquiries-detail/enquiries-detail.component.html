@@ -45,7 +45,7 @@
           </button>
         </ion-card-subtitle>
 
-        <ion-card-title>
+        <ion-card-title class="ion-margin-top">
           {{ enquiry.title }}
         </ion-card-title>
         <ion-card-subtitle> {{ enquiry.createdAt | date }}</ion-card-subtitle>
@@ -56,7 +56,7 @@
           <markdown [data]="enquiry.content"></markdown>
         </div>
 
-        <div class="ion-padding">
+        <div class="ion-padding" style="font-size: 20px;">
           - {{ enquiry.email }}
           <span *ngIf="sentByMe()">(You)</span>
         </div>

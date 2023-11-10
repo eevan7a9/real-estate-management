@@ -1,19 +1,12 @@
 <ion-card>
   <ion-card-header>
-    <div class="sent-recieve-wrapper">
-      <ion-badge class="badge" color="light" *ngIf="this.sent">
+    <ion-card-title>
+      <ion-badge class="badge ion-margin-end" color="light" *ngIf="this.sent">
         Sent
       </ion-badge>
-      <ion-badge class="badge" color="light" *ngIf="!this.sent">
+      <ion-badge class="badge ion-margin-end" color="light" *ngIf="!this.sent">
         Received
       </ion-badge>
-    </div>
-    <ion-card-title>
-      <div class="enquiry-title" style="margin-right: 8px">
-        <div class="title-text">
-          {{ this.enquiry.title }}
-        </div>
-      </div>
       <ion-badge
         class="badge-unread ion-text-uppercase"
         color="medium"
@@ -35,12 +28,12 @@
   <ion-card-content>
     <ion-grid class="ion-no-padding ion-no-margin">
       <ion-row>
-        <ion-col size="12" sizeLg="4">
-          <ion-text>{{ enquiry.property?.name || "None" }}</ion-text>
+        <ion-col size="12" sizeLg="4" class="message-title-text">
+          <ion-text color="dark" >{{ this.enquiry.title || "None" }}</ion-text>
         </ion-col>
 
-        <ion-col size="*" sizeLg="2" class="ion-text-lg-center">
-          <app-enquiry-badge [topic]="enquiry.topic"></app-enquiry-badge>
+        <ion-col size="*" sizeLg="2">
+          <app-enquiry-badge [topic]="enquiry.topic" class="ion-margin-top"></app-enquiry-badge>
         </ion-col>
 
         <ion-col size="12" sizeLg="4" class="ion-text-lg-center">

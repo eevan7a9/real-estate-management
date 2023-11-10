@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   ];
 
   public user: User;
-  public unreadEnquiries: number = 0;
+  public unreadEnquiries = 0;
 
   constructor(
     private platform: Platform,
@@ -69,19 +69,19 @@ export class AppComponent implements OnInit {
     }
     this.userService.user$.subscribe(user => {
       this.user = user;
-      if(user) {
+      if (user) {
         this.webSocket.connect(this.userService.token());
         /**
          *  Fetch users enquiries if there's was no initial fetch
          */
         if (!this.enquiriesService.initialFetchDone) {
           this.enquiriesService.fetchEnquiries();
-        } 
+        }
       }
     });
     this.enquiriesService.enquiries$.subscribe(enquiries => {
       this.unreadEnquiries = enquiries.filter(enq => this.isUnread(enq)).length;
-    })
+    });
     this.checkServer();
   }
 
@@ -138,6 +138,6 @@ export class AppComponent implements OnInit {
   }
 
   private isUnread(enquiry: Enquiry) {
-    return !enquiry.read && enquiry.users.to.user_id == this.user.user_id;
+    return !enquiry.read && enquiry.users.to.user_id === this.user.user_id;
   }
 }

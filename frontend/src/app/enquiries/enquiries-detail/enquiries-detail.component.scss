@@ -1,6 +1,9 @@
 ion-content {
   --background: var(--ion-color-light);
 }
+ion-card {
+  box-shadow: none;
+}
 .view-property {
   font-size: 12px;
   font-weight: 400;
@@ -29,9 +32,11 @@ ion-content {
   margin: 0 auto;
   height: 100%;
   .enquiry-content {
-    background-color: var(--ion-color-light-tint);
+    // background-color: var(--ion-color-light);
     padding: 1rem;
     min-height: fit-content;
+    border: 2px solid var(--ion-color-primary-tint);
+    border-radius: 16px;
   }
 }
 

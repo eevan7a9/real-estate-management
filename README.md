@@ -17,8 +17,8 @@ connect property managers and potential buyers.
 ## **Dependencies**
 
 ### **Frontend**
-- [Ionic 6+](https://ionicframework.com/)
-- [Angular 14+](https://angular.io/)
+- [Ionic 7+](https://ionicframework.com/)
+- [Angular 15+](https://angular.io/)
 - [leaflet 1.7+](https://leafletjs.com/)
 - [chartjs 3.5+](https://www.chartjs.org/)
 
