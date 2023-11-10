@@ -2,13 +2,17 @@
   <ion-card-header>
     <ion-card-title class="ion-text-capitalize"> Contact Form </ion-card-title>
   </ion-card-header>
-  {{ contactForm.errors }}
+
   <ion-card-content>
     <form [formGroup]="contactForm" (submit)="submit()">
       <ion-list>
         <ion-item>
-          <ion-label color="dark" position="floating">Email:</ion-label>
-          <ion-input type="text" formControlName="email"></ion-input>
+          <ion-input
+            labelPlacement="floating"
+            label="Email:"
+            type="text"
+            formControlName="email"
+          ></ion-input>
         </ion-item>
 
         <div
@@ -19,8 +23,12 @@
         </div>
 
         <ion-item>
-          <ion-label color="dark" position="floating">Name:</ion-label>
-          <ion-input type="text" formControlName="name"></ion-input>
+          <ion-input
+            labelPlacement="floating"
+            label="Name:"
+            type="text"
+            formControlName="name"
+          ></ion-input>
         </ion-item>
 
         <div
@@ -31,9 +39,10 @@
         </div>
 
         <ion-item>
-          <ion-label color="dark" position="floating">Message</ion-label>
           <ion-textarea
             formControlName="message"
+            labelPlacement="floating"
+            label="Message:"
             placeholder="Must be atleast 10 charters long"
           ></ion-textarea>
         </ion-item>

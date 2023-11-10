@@ -20,8 +20,12 @@
         <form [formGroup]="signinForm" (submit)="submit()">
           <ion-list>
             <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" formControlName="email"></ion-input>
+              <ion-input
+                labelPlacement="floating"
+                label="Email"
+                type="email"
+                formControlName="email"
+              ></ion-input>
             </ion-item>
             <div
               class="alert-errors"
@@ -30,8 +34,12 @@
               <app-alert-card content="Email is not valid."></app-alert-card>
             </div>
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-input
+                labelPlacement="floating"
+                label="Password"
+                type="password"
+                formControlName="password"
+              ></ion-input>
             </ion-item>
             <div class="alert-errors" *ngIf="authFailed">
               <app-alert-card

@@ -6,10 +6,9 @@ ion-card-header {
   position: relative;
   .action-btn {
     --box-shadow: none;
-  }
-  .sent-recieve-wrapper {
     position: absolute;
-    top: 8px;
+    top: 12px;
+    right: 12px;
   }
   ion-card-title {
     display: flex;
@@ -27,10 +26,12 @@ ion-card-header {
         max-width: 400px;
       }
     }
-    .badge-unread {
-      width: 80px;
-    }
   }
+}
+
+.message-title-text {
+  font-size: 16px;
+  padding-bottom: 6px;
 }
 
 @media (max-width: 920px) {

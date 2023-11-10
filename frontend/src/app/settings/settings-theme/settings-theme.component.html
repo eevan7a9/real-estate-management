@@ -16,10 +16,13 @@
           ></ion-icon>
           <ion-label color="dark"> Theme Switcher</ion-label>
 
-          <ion-toggle
+          <ion-item-option color="light" slot="end">
+            <ion-toggle
             [(ngModel)]="darkTheme"
             (ionChange)="switchDarkMode($event)"
+            aria-label="change theme"
           ></ion-toggle>
+          </ion-item-option>
         </ion-item>
       </ion-col>
     </ion-row>
