@@ -5,7 +5,7 @@ import { EnquiriesService } from '../enquiries/enquiries.service';
 import { WebSocketNotification } from '../shared/interface/notification';
 import { EnquiryNotification } from '../shared/enums/enquiry';
 
-const parseMessage = function (message: string) {
+const parseMessage =  (message: string) => {
   try {
     const parsedMessage = JSON.parse(message);
     return parsedMessage;

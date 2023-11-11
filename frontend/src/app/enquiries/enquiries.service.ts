@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 import { Enquiry, EnquiryCreate } from '../shared/interface/enquiry';
@@ -9,9 +9,9 @@ import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
 
 const enquiryUrl = environment.api.server + 'enquiries';
-const requestOptions = (token = '', body = {},) => ({
+const requestOptions = (token = '', body = {}) => ({
   headers: new HttpHeaders(headerDict({ token })),
-  body
+  body,
 });
 
 interface ResEnquiry extends ApiResponse {
@@ -23,7 +23,7 @@ interface ResEnquiries extends ApiResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EnquiriesService {
   public initialFetchDone = false;
@@ -56,7 +56,12 @@ export class EnquiriesService {
   public async fetchEnquiries(): Promise<void> {
     try {
       const token = this.userService.token();
-      this.enquiries = (await this.http.get<ResEnquiries>(enquiryUrl, requestOptions(token)).toPromise()).data;
+      this.enquiries = (
+        await firstValueFrom(
+          this.http.get<ResEnquiries>(enquiryUrl, requestOptions(token))
+        )
+      ).data;
+
       this.initialFetchDone = true;
     } catch (error) {
       console.error(error);
@@ -67,27 +72,39 @@ export class EnquiriesService {
   public async fetchEnquiry(enqId: string): Promise<Enquiry> {
     try {
       const token = this.userService.token();
-      this.enquiry = (await this.http.get<ResEnquiry>(enquiryUrl + '/' + enqId, requestOptions(token)).toPromise()).data;
+      this.enquiry = (
+        await firstValueFrom(
+          this.http.get<ResEnquiry>(
+            enquiryUrl + '/' + enqId,
+            requestOptions(token)
+          )
+        )
+      ).data;
+
       return this.enquiry;
     } catch (error) {
       console.error(error);
       return error.error || error;
     }
-  };
+  }
 
-  public async createEnquiry(enquiry: EnquiryCreate, property: Partial<Property>): Promise<ResEnquiry> {
+  public async createEnquiry(
+    enquiry: EnquiryCreate,
+    property: Partial<Property>
+  ): Promise<ResEnquiry> {
     const token = this.userService.token();
     const formData = {
       ...enquiry,
       property: {
         property_id: property.property_id,
         name: property.name,
-      }
+      },
     };
 
     try {
-      const res = await this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))
-        .toPromise();
+      const res = await firstValueFrom(
+        this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))
+      );
       this.insertEnquiryToState(res.data);
       return res;
     } catch (error) {
@@ -100,9 +117,13 @@ export class EnquiriesService {
     const token = this.userService.token();
     const url = enquiryUrl + '/' + enqId;
     try {
-      const res = await this.http.delete<ApiResponse>(url, requestOptions(token)).toPromise();
+      const res = await firstValueFrom(
+        this.http.delete<ApiResponse>(url, requestOptions(token))
+      );
       if (res && res.status === 200) {
-        this.enquiries = this.enquiries.filter(enquiry => enquiry.enquiry_id !== enqId);
+        this.enquiries = this.enquiries.filter(
+          (enquiry) => enquiry.enquiry_id !== enqId
+        );
         return res;
       }
     } catch (error) {
@@ -115,9 +136,13 @@ export class EnquiriesService {
     const token = this.userService.token();
     const url = enquiryUrl + '/' + enqId;
     try {
-      const { data } = await this.http.patch<ResEnquiry>(url, { read: true }, requestOptions(token)).toPromise();
+      const { data } = await firstValueFrom(
+        this.http.patch<ResEnquiry>(url, { read: true }, requestOptions(token))
+      );
       // UPDATE ENQUIRIES && CURRENT ENQUIRY
-      this.enquiries = this.enquiries.map(enquiry => (enquiry.enquiry_id === enqId) ? data : enquiry);
+      this.enquiries = this.enquiries.map((enquiry) =>
+        enquiry.enquiry_id === enqId ? data : enquiry
+      );
       this.enquiry = data;
     } catch (error) {
       console.error(error);

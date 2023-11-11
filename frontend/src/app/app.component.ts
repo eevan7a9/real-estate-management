@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
 import { User } from './shared/interface/user';
 
@@ -134,7 +136,7 @@ export class AppComponent implements OnInit {
   }
 
   private checkServer() {
-    this.http.get(environment.api.server).toPromise().then(data => console.log(data));
+    firstValueFrom(this.http.get(environment.api.server)).then(data => console.log(data));
   }
 
   private isUnread(enquiry: Enquiry) {

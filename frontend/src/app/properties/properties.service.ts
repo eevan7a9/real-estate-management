@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
@@ -9,9 +9,12 @@ import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
 
 const propertyUrl = environment.api.server + 'properties';
-const requestOptions = ({ token = '', contentType = 'application/json' }, body = {}) => ({
+const requestOptions = (
+  { token = '', contentType = 'application/json' },
+  body = {}
+) => ({
   headers: new HttpHeaders(headerDict({ token, contentType })),
-  body
+  body,
 });
 
 interface ResProperty extends ApiResponse {
@@ -27,10 +30,9 @@ interface ResStrings extends ApiResponse {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PropertiesService {
-
   public readonly properties$: Observable<Property[]>;
   public readonly property$: Observable<Property>;
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
@@ -50,7 +52,6 @@ export class PropertiesService {
     this.propertiesSub.next(property);
   }
 
-
   public get property(): Property | null {
     return this.propertySub.getValue();
   }
@@ -61,7 +62,9 @@ export class PropertiesService {
 
   public async fetchProperties(): Promise<void> {
     try {
-      this.properties = (await this.http.get<ResProperties>(propertyUrl).toPromise()).data;
+      this.properties = (
+        await firstValueFrom(this.http.get<ResProperties>(propertyUrl))
+      ).data;
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +72,9 @@ export class PropertiesService {
 
   public async fetchProperty(id: string) {
     try {
-      this.property = (await this.http.get<ResProperty>(propertyUrl + '/' + id).toPromise()).data;
+      this.property = (
+        await firstValueFrom(this.http.get<ResProperty>(propertyUrl + '/' + id))
+      ).data;
     } catch (error) {
       console.error(error);
     }
@@ -78,8 +83,14 @@ export class PropertiesService {
   public async addProperty(property: Property): Promise<ResProperty> {
     const token = this.userService.token();
     try {
-      const res = await this.http.post<ResProperty>(propertyUrl, property, requestOptions({ token }))
-        .toPromise();
+      const res = await firstValueFrom(
+        this.http.post<ResProperty>(
+          propertyUrl,
+          property,
+          requestOptions({ token })
+        )
+      );
+
       this.properties = [...this.properties, res.data];
       return res;
     } catch (error) {
@@ -88,30 +99,43 @@ export class PropertiesService {
     }
   }
 
-  public async addPropertyImage(files: File[], id: string): Promise<ResStrings> {
+  public async addPropertyImage(
+    files: File[],
+    id: string
+  ): Promise<ResStrings> {
     const formData = new FormData();
-    files.forEach(file => {
+    files.forEach((file) => {
       formData.append('images', file, file.name);
     });
     try {
       const token = this.userService.token();
-      return await this.http.post<ResStrings>(
-        propertyUrl + '/upload/images/' + id,
-        formData,
-        requestOptions({ token, contentType: null })
-      ).toPromise();
+      return await firstValueFrom(
+        this.http.post<ResStrings>(
+          propertyUrl + '/upload/images/' + id,
+          formData,
+          requestOptions({ token, contentType: null })
+        )
+      );
     } catch (error) {
       console.error(error);
       return error.error || error;
     }
   }
 
-  public async deletePropertyImage(images: string[], propId: string): Promise<ResStrings> {
+  public async deletePropertyImage(
+    images: string[],
+    propId: string
+  ): Promise<ResStrings> {
     const token = this.userService.token();
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
-      const res = await this.http.delete<ResStrings>(url, requestOptions({ token }, { images })).toPromise();
-      this.property.images = this.property.images.filter(img => !res.data.includes(img));
+      const res = await firstValueFrom(
+        this.http.delete<ResStrings>(url, requestOptions({ token }, { images }))
+      );
+
+      this.property.images = this.property.images.filter(
+        (img) => !res.data.includes(img)
+      );
       return res;
     } catch (error) {
       console.error(error);
@@ -122,8 +146,13 @@ export class PropertiesService {
     const token = this.userService.token();
     try {
       const url = `${propertyUrl}/${propId}`;
-      const res = await this.http.delete<ResProperty>(url, requestOptions({ token })).toPromise();
-      this.properties = this.properties.filter(property => property.property_id !== res.data.property_id);
+      const res = await firstValueFrom(
+        this.http.delete<ResProperty>(url, requestOptions({ token }))
+      );
+
+      this.properties = this.properties.filter(
+        (property) => property.property_id !== res.data.property_id
+      );
     } catch (error) {
       console.error(error);
     }
@@ -133,10 +162,14 @@ export class PropertiesService {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
       const token = this.userService.token();
-      const res = await this.http.patch<ResProperty>(url, updated, requestOptions({ token })).toPromise();
+      const res = await firstValueFrom(
+        this.http.patch<ResProperty>(url, updated, requestOptions({ token }))
+      );
+
       // UPDATE CURRENT PROPERTIES
-      this.properties = this.properties.map(property =>
-        (property.property_id === updated.property_id) ? res.data : property);
+      this.properties = this.properties.map((property) =>
+        property.property_id === updated.property_id ? res.data : property
+      );
       this.property = res.data;
 
       return res;
@@ -144,6 +177,5 @@ export class PropertiesService {
       console.error(error);
       return error.error || error;
     }
-
   }
 }
