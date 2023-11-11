@@ -21,8 +21,7 @@
     <!-- STEP ONE -->
     <section *ngIf="step === 1">
       <ion-item lines="none">
-        <ion-label position="stacked">Name:</ion-label>
-        <ion-input type="text" formControlName="name"></ion-input>
+        <ion-input type="text" label="Name:" labelPlacement="floating" formControlName="name"></ion-input>
       </ion-item>
 
       <div
@@ -33,8 +32,7 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked">Address:</ion-label>
-        <ion-input type="text" formControlName="address"></ion-input>
+        <ion-input type="text" label="Address:" labelPlacement="floating" formControlName="address"></ion-input>
       </ion-item>
 
       <div
@@ -45,9 +43,10 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked">Description</ion-label>
         <ion-textarea
           formControlName="description"
+          labelPlacement="floating"
+          label="Description:"
           placeholder="..."
         ></ion-textarea>
       </ion-item>
@@ -59,8 +58,8 @@
           </ion-list-header>
 
           <ion-item lines="none" *ngFor="let type of propertyTypes">
-            <ion-label>{{ type.label }}</ion-label>
-            <ion-radio slot="start" [value]="type.value"></ion-radio>
+            <label for="radio">{{ type.label }}</label>
+            <ion-radio slot="start" id="radio" [label]="type.label" [value]="type.value"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
@@ -68,15 +67,15 @@
     <!-- STEP TWO -->
     <section *ngIf="step === 2">
       <ion-item lines="none">
-        <ion-label position="stacked">Price:</ion-label>
-        <ion-input type="number" formControlName="price"></ion-input>
+        <ion-input type="number" label="Price:" labelPlacement="floating" formControlName="price"></ion-input>
       </ion-item>
 
       <ion-item lines="none">
-        <ion-label position="stacked">Currency:</ion-label>
         <ion-input
           type="text"
           placeholder="USD, PHP, SGD"
+          labelPlacement="floating"
+          label="Currency:"
           formControlName="currency"
         ></ion-input>
       </ion-item>
@@ -89,10 +88,10 @@
       </div>
 
       <ion-item lines="none">
-        <ion-label position="stacked">Features:</ion-label>
-
         <ion-textarea
           formControlName="features"
+          label="Features:"
+          labelPlacement="floating"
           placeholder="bedroom, kitchen, ..."
         ></ion-textarea>
       </ion-item>
@@ -106,18 +105,20 @@
       </div>
       <div class="coord-input">
         <ion-item lines="none">
-          <ion-label position="floating">Latitude:</ion-label>
           <ion-input
             type="text"
+            label="Latitude:"
+            labelPlacement="floating"
             formControlName="lat"
             placeholder="Latitude"
           ></ion-input>
         </ion-item>
         <div class="ion-margin"></div>
         <ion-item lines="none">
-          <ion-label position="floating">Longitude:</ion-label>
           <ion-input
             type="text"
+            label="Longitude:"
+            labelPlacement="floating"
             formControlName="lng"
             placeholder="Longitude"
           ></ion-input>

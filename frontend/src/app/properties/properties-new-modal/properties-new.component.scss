@@ -23,8 +23,6 @@ ion-list-header {
   color: #8794a4;
 }
 ion-item {
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
   --padding-end: 8px;
   --padding-start: 8px;
   --padding-top: 8px;
@@ -35,7 +33,7 @@ ion-item {
   }
   ion-input,
   ion-textarea {
-    --padding-start: 12px;
+    --padding-start: 12px !important;
     padding: 6px;
     border: 1px solid rgba(0, 56, 100, 0.2);
     box-sizing: border-box;
