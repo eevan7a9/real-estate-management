@@ -30,7 +30,7 @@
 
             <div
               class="alert-errors"
-              *ngIf="error && registerForm.get('fullName').errors"
+              *ngIf="registerForm.get('fullName').errors"
             >
               <app-alert-card
                 content="Full Name is too short."
@@ -48,9 +48,9 @@
 
             <div
               class="alert-errors"
-              *ngIf="error && registerForm.get('email').errors"
+              *ngIf="registerForm.get('email').errors"
             >
-              <app-alert-card content="Email is not valid."></app-alert-card>
+              <app-alert-card content="Email is not valid. ex: name@email.com"></app-alert-card>
             </div>
 
             <ion-item>
@@ -64,7 +64,7 @@
 
             <div
               class="alert-errors"
-              *ngIf="error && registerForm.get('password').errors"
+              *ngIf="registerForm.get('password').errors"
             >
               <app-alert-card
                 content="Length needs to be 8+ long & contain a
@@ -83,7 +83,7 @@
 
             <div
               class="alert-errors"
-              *ngIf="error && registerForm.errors?.notConfirmed"
+              *ngIf="registerForm.errors?.notConfirmed"
             >
               <app-alert-card
                 content="Password not confirmed."

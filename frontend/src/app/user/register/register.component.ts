@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
@@ -22,25 +26,41 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private user: UserService
   ) {
-    this.registerForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(4)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(8),
-        this.customValidators.patternValidator(/\d/, { hasNumber: true }),
-        this.customValidators.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
-        this.customValidators.patternValidator(/[a-z]/, { hasSmallCase: true }),
-        this.customValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, { hasSpecialCharacters: true })
-      ]],
-      confirm: ['', Validators.required],
-      termService: [false, Validators.required]
-    }, {
-      validators: this.customValidators.isDifferent('password', 'confirm', 'notConfirmed')
-    });
+    this.registerForm = this.fb.group(
+      {
+        fullName: ['', [Validators.required, Validators.minLength(4)]],
+        email: ['', [Validators.required, customValidators.emailValidation()]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            this.customValidators.patternValidator(/\d/, { hasNumber: true }),
+            this.customValidators.patternValidator(/[A-Z]/, {
+              hasCapitalCase: true,
+            }),
+            this.customValidators.patternValidator(/[a-z]/, {
+              hasSmallCase: true,
+            }),
+            this.customValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, {
+              hasSpecialCharacters: true,
+            }),
+          ],
+        ],
+        confirm: ['', Validators.required],
+        termService: [false, Validators.required],
+      },
+      {
+        validators: this.customValidators.isDifferent(
+          'password',
+          'confirm',
+          'notConfirmed'
+        ),
+      }
+    );
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public async submit() {
     if (this.registerForm.invalid) {
@@ -49,17 +69,18 @@ export class RegisterComponent implements OnInit {
     }
     const loading = await this.presentLoading();
     loading.present();
-    setTimeout(async () => {
-      const { fullName, email, password } = this.registerForm.value;
-      const result = await this.user.register(fullName, email, password);
-      if (!result.error) {
-        loading.dismiss();
-        await this.showToast('Success, registration is complete.');
-        await this.router.navigateByUrl('/user/account/profile');
-      }
-    }, 1000);
-  }
 
+    const { fullName, email, password } = this.registerForm.value;
+    const result = await this.user.register(fullName, email, password);
+    if (!result.error) {
+      loading.dismiss();
+      await this.showToast('Success, registration is complete.');
+      await this.router.navigateByUrl('/user/account/profile');
+      return;
+    }
+    await this.showToast('Error:' + result.error.message, 'danger');
+    loading.dismiss();
+  }
 
   private async presentLoading() {
     return await this.loadingController.create({
@@ -72,7 +93,7 @@ export class RegisterComponent implements OnInit {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2000,
-      color
+      color,
     });
     toast.present();
   }
