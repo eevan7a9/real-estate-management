@@ -20,8 +20,12 @@
         <form [formGroup]="registerForm" (submit)="submit()">
           <ion-list>
             <ion-item>
-              <ion-label position="floating">Full Name</ion-label>
-              <ion-input type="text" formControlName="fullName"></ion-input>
+              <ion-input
+                type="text"
+                labelPlacement="floating"
+                label="Full Name"
+                formControlName="fullName"
+              ></ion-input>
             </ion-item>
 
             <div
@@ -34,8 +38,12 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Email</ion-label>
-              <ion-input type="email" formControlName="email"></ion-input>
+              <ion-input
+                type="email"
+                labelPlacement="floating"
+                label="Email"
+                formControlName="email"
+              ></ion-input>
             </ion-item>
 
             <div
@@ -46,8 +54,12 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Password</ion-label>
-              <ion-input type="password" formControlName="password"></ion-input>
+              <ion-input
+                label="Password"
+                labelPlacement="floating"
+                type="password"
+                formControlName="password"
+              ></ion-input>
             </ion-item>
 
             <div
@@ -61,8 +73,12 @@
             </div>
 
             <ion-item>
-              <ion-label position="floating">Confirm Password</ion-label>
-              <ion-input type="password" formControlName="confirm"></ion-input>
+              <ion-input
+                type="password"
+                labelPlacement="floating"
+                label="Confirm Password"
+                formControlName="confirm"
+              ></ion-input>
             </ion-item>
 
             <div
