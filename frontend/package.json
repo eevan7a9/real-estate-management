@@ -36,7 +36,7 @@
     "leaflet-geosearch": "^3.7.0",
     "ngx-markdown": "^15.1.2",
     "rxjs": "^7.5.0",
-    "swiper": "^9.2.3",
+    "swiper": "^11.0.4",
     "tslib": "^2.3.1",
     "zone.js": "~0.11.4"
   },
