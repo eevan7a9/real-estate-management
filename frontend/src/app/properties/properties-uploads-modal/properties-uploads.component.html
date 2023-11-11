@@ -53,7 +53,7 @@
     <app-properties-current-images
       [images]="property.images"
       [id]="property.property_id"
-      *ngIf="property.images.length"
+      [hidden]="!property.images.length"
     ></app-properties-current-images>
   </div>
 </ion-content>

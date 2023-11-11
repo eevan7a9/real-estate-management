@@ -39,6 +39,7 @@
             [showEdit]="isOwner"
             (edit)="editImages()"
             *ngIf="property.images"
+            #propertiesGallery
           ></app-properties-gallery>
 
           <ion-card class="property-description">

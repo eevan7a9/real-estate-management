@@ -1,10 +1,16 @@
 <section title="current-images" class="current-images">
   <header>Current Images:</header>
 
-  <swiper [config]="slideOpts" class="slides">
-    <ng-template *ngFor="let image of images" swiperSlide>
+  <swiper-container
+    pagination="true"
+    pagination-clickable="true"
+    space-between="30"
+    slides-per-view="auto"
+    class="slides"
+  >
+    <swiper-slide *ngFor="let image of images">
       <div
-        class="slide-content"
+        class="swipers-image"
         (click)="setSelected(image)"
         [style.backgroundImage]="getImage(image)"
       >
@@ -25,8 +31,8 @@
           [ngClass]="{ selected: isSelected(image) }"
         ></div>
       </div>
-    </ng-template>
-  </swiper>
+    </swiper-slide>
+  </swiper-container>
 
   <ion-button
     color="primary"

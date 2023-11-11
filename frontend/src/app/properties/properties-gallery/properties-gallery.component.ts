@@ -14,9 +14,7 @@ export class PropertiesGalleryComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.images?.length) {
-      this.imagePresented = this.images[0];
-    }
+    this.setImage();
   }
 
   public getImage(image: string) {
@@ -26,5 +24,9 @@ export class PropertiesGalleryComponent implements OnInit {
 
   public setSelected(image: string) {
     this.imagePresented = image || 'assets/images/no-image.jpeg';
+  }
+
+  public setImage() {
+    this.imagePresented = this.images[0] || 'assets/images/no-image.jpeg';
   }
 }

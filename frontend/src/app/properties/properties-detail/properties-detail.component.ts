@@ -1,7 +1,11 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, PopoverController, ToastController } from '@ionic/angular';
+import {
+  ModalController,
+  PopoverController,
+  ToastController,
+} from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
@@ -11,6 +15,7 @@ import { PropertiesUploadsComponent } from '../properties-uploads-modal/properti
 import { UserService } from 'src/app/user/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 
 @Component({
   selector: 'app-properties-detail',
@@ -18,6 +23,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./properties-detail.component.scss'],
 })
 export class PropertiesDetailComponent implements OnInit, OnDestroy {
+  @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
   public property: Property | undefined;
   public isOwner = false;
   public ready = false;
@@ -32,18 +38,25 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
     public modalController: ModalController,
     private toastCtrl: ToastController,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   async ngOnInit() {
     const paramId = this.route.snapshot.paramMap.get('id');
-    this.propertiesService.property$.pipe(takeUntil(this.unsubscribe$)).subscribe(async property => {
-      this.property = property;
-      if (!this.property) {
-        await this.propertiesService.fetchProperty(paramId);
-      }
-      this.ready = true;
-      this.isOwner = this.userService.user?.user_id === this.property?.user_id;
-    });
+    this.propertiesService.property$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(async (property) => {
+        this.property = property;
+        if (!this.property) {
+          await this.propertiesService.fetchProperty(paramId);
+        }
+        this.ready = true;
+        this.isOwner =
+          this.userService.user?.user_id === this.property?.user_id;
+
+        if(this.propertiesGallery && this.property) {
+          this.propertiesGallery.setImage();
+        }
+      });
   }
 
   ngOnDestroy() {
@@ -57,9 +70,9 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
       componentProps: {
         message: false,
         edit: this.isOwner,
-        delete: this.isOwner
+        delete: this.isOwner,
       },
-      translucent: true
+      translucent: true,
     });
     await popover.present();
 
@@ -89,24 +102,28 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: PropertiesUploadsComponent,
       componentProps: {
-        property: this.property
-      }
+        property: this.property,
+      },
     });
-    await modal.present();
+    modal.present();
   }
 
   private async editModal() {
     const modal = await this.modalController.create({
-      component: PropertiesEditComponent
+      component: PropertiesEditComponent,
     });
     return await modal.present();
   }
 
-  private async presentToast(message: string, color = 'success', duration = 3000) {
+  private async presentToast(
+    message: string,
+    color = 'success',
+    duration = 3000
+  ) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color
+      color,
     });
     toast.present();
   }

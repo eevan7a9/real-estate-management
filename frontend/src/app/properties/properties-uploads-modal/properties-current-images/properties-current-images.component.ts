@@ -1,8 +1,16 @@
-import { Component, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { SwiperOptions } from 'swiper';
 import { PropertiesService } from '../../properties.service';
+import { register } from 'swiper/element/bundle';
 
+register();
 
 @Component({
   selector: 'app-properties-current-images',
@@ -13,7 +21,9 @@ import { PropertiesService } from '../../properties.service';
 export class PropertiesCurrentImagesComponent implements OnInit {
   @Input() images: string[] = [];
   @Input() id: string;
-  public slideOpts: SwiperOptions = {
+  @Output() delete = new EventEmitter<boolean>();
+
+  public slideOpts = {
     initialSlide: 0,
     speed: 400,
     spaceBetween: 15,
@@ -22,9 +32,12 @@ export class PropertiesCurrentImagesComponent implements OnInit {
   };
   public selectedImages: string[] = [];
 
-  constructor(private propertyService: PropertiesService, private toastCtrl: ToastController) { }
+  constructor(
+    private propertyService: PropertiesService,
+    private toastCtrl: ToastController
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public getImage(image: string) {
     image = image || 'assets/images/no-image.jpeg';
@@ -33,7 +46,9 @@ export class PropertiesCurrentImagesComponent implements OnInit {
 
   public setSelected(selected: string) {
     if (this.isSelected(selected)) {
-      this.selectedImages = this.selectedImages.filter(img => img !== selected);
+      this.selectedImages = this.selectedImages.filter(
+        (img) => img !== selected
+      );
       return;
     }
     this.selectedImages.push(selected);
@@ -44,12 +59,25 @@ export class PropertiesCurrentImagesComponent implements OnInit {
   }
 
   public async deleteSelected() {
-    const { data, message } = await this.propertyService.deletePropertyImage(this.selectedImages, this.id);
-    if (data) {
+    const { data, message } = await this.propertyService.deletePropertyImage(
+      this.selectedImages,
+      this.id
+    );
+    if (data.length) {
       const toast = await this.toastCtrl.create({
-        message, duration: 3000, color: 'success'
+        message,
+        duration: 3000,
+        color: 'success',
       });
       toast.present();
+      // we remove the current images that was deleted
+      const property = this.propertyService.property;
+      this.propertyService.property = {
+        ...property,
+        images: property.images.filter(
+          (currentImg) => !data.includes(currentImg)
+        ),
+      };
     }
   }
 }

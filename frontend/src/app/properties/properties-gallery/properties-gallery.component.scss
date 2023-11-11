@@ -1,8 +1,63 @@
 // @import "~swiper/scss";
 // @import "~@ionic/angular/css/ionic-swiper";
 
-.swiper .swiper-slide {
-  width: auto;
+.gallery-container {
+  // background-color: var(--ion-color-medium-shade);
+  .selected-image {
+    display: flex;
+    justify-content: center;
+    height: 550px;
+    img {
+      width: 100%;
+      background-color: var(--ion-color-light-tint);
+      object-fit: contain;
+    }
+  }
+}
+
+swiper-container {
+  width: 100%;
+  height: 250px;
+}
+
+swiper-slide {
+  max-width: 300px;
+  padding: 0;
+  .swipers-image {
+    width: 100%;
+    height: 100%;
+    img {
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    .cover-img {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(51, 51, 51, 0.63);
+      background-size: cover;
+      &.selected {
+        background-color: rgba(11, 114, 211, 0.219);
+        opacity: 0.7;
+      }
+    }
+  }
+}
+
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 ion-card {
@@ -13,53 +68,8 @@ ion-card {
       margin-right: 4px;
     }
   }
-  .gallery-container {
-    // background-color: var(--ion-color-medium-shade);
-    .selected-image {
-      display: flex;
-      justify-content: center;
-      height: 450px;
-      img {
-        width: 100%;
-        background-color: var(--ion-color-light-tint);
-        object-fit: contain;
-      }
-    }
-    .swiper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      max-width: 200px;
-    }
-    .swipers-image {
-      width: 100%;
-      height: 100%;
-      img {
-        height: 100%;
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
-      }
-      .cover-img {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(51, 51, 51, 0.63);
-        &.selected {
-          background-color: rgba(11, 114, 211, 0.219);
-          opacity: 0.7;
-        }
-      }
-    }
-  }
 }
+
 @media (max-width: 500px) {
   ion-card {
     box-shadow: none;
