@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { headerDict } from '../shared/utility';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
@@ -13,7 +13,7 @@ const requestOptions = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   public user$: Observable<User>;
@@ -23,7 +23,7 @@ export class UserService {
     this.user$ = this.userSub.asObservable();
     // Access Stored User
     this.storage.init().then(() => {
-      this.storage.getUser().then(user => {
+      this.storage.getUser().then((user) => {
         if (user) {
           this.updateUser(user);
         }
@@ -46,10 +46,16 @@ export class UserService {
 
   public async signIn(email: string, password: string) {
     try {
-      const result = await this.http.post<User>(url + 'auth/signin', {
-        email,
-        password
-      }, requestOptions).toPromise();
+      const result = await firstValueFrom(
+        this.http.post<User>(
+          url + 'auth/signin',
+          {
+            email,
+            password,
+          },
+          requestOptions
+        )
+      );
       await this.updateUser(result);
       return result;
     } catch (error) {
@@ -60,11 +66,17 @@ export class UserService {
 
   public async register(fullName: string, email: string, password: string) {
     try {
-      const result = await this.http.post<User>(url + 'auth/register', {
-        fullName,
-        email,
-        password
-      }, requestOptions).toPromise();
+      const result = await firstValueFrom(
+        this.http.post<User>(
+          url + 'auth/register',
+          {
+            fullName,
+            email,
+            password,
+          },
+          requestOptions
+        )
+      );
       await this.updateUser(result);
       return result;
     } catch (error) {
@@ -75,7 +87,9 @@ export class UserService {
 
   public async googleAuth(payload: GoogleAuthResponse) {
     try {
-      const result = await this.http.post<User>(url + 'auth/google', payload).toPromise();
+      const result = await firstValueFrom(
+        this.http.post<User>(url + 'auth/google', payload)
+      );
       await this.updateUser(result);
       return result;
     } catch (error) {
