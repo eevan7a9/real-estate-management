@@ -1,7 +1,11 @@
 <form [formGroup]="enquiryForm">
   <ion-item lines="none">
-    <ion-label position="stacked">Title :</ion-label>
-    <ion-input type="text" formControlName="title"></ion-input>
+    <ion-input
+      type="text"
+      label="Title :"
+      labelPlacement="floating"
+      formControlName="title"
+    ></ion-input>
   </ion-item>
 
   <div class="alert-errors" *ngIf="error && enquiryForm.get('title').errors">
@@ -9,8 +13,12 @@
   </div>
 
   <ion-item lines="none">
-    <ion-label position="stacked">Email :</ion-label>
-    <ion-input type="text" formControlName="email"></ion-input>
+    <ion-input
+      type="text"
+      label="Email :"
+      labelPlacement="floating"
+      formControlName="email"
+    ></ion-input>
   </ion-item>
 
   <div class="alert-errors" *ngIf="error && enquiryForm.get('email').errors">
@@ -31,11 +39,11 @@
     <app-alert-card content="Message content is too short."></app-alert-card>
   </div>
   <ion-item>
-    <ion-label>Topic :</ion-label>
     <ion-select
       interface="popover"
       formControlName="topic"
       placeholder="Select One"
+      label="Topic :"
     >
       <ion-select-option value="schedule">Schedule Visit</ion-select-option>
       <ion-select-option value="payment">Payment</ion-select-option>

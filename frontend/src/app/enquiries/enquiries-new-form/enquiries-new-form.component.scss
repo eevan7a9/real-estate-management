@@ -10,7 +10,7 @@ ion-item {
     --color: #8794a4;
   }
   ion-input {
-    --padding-start: 12px;
+    --padding-start: 12px !important;
     padding: 16px;
     border: 1px solid rgb(196 196 196);
     box-sizing: border-box;
