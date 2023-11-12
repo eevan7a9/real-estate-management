@@ -40,7 +40,7 @@ export const addImagesProperty = async function (req, res) {
         req.protocol + "://" + req.headers.host + "/uploads/" + imgName;
       // We update Property images
       property.images.push(image);
-      property.save();
+      await property.save(); // Wait for the save operation to complete
     }
     res.status(201).send({ data: property.images });
   } catch (error) {
