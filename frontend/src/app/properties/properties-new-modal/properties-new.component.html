@@ -21,26 +21,28 @@
     <!-- STEP ONE -->
     <section *ngIf="step === 1">
       <ion-item lines="none">
-        <ion-input type="text" label="Name:" labelPlacement="floating" formControlName="name"></ion-input>
+        <ion-input
+          type="text"
+          label="Name:"
+          labelPlacement="floating"
+          formControlName="name"
+          fill="outline"
+          helperText="Enter property name"
+          errorText="Invalid Name"
+        ></ion-input>
       </ion-item>
-
-      <div
-        class="alert-errors"
-        *ngIf="error && propertyForm.get('name').errors"
-      >
-        <app-alert-card content="Name is not valid."></app-alert-card>
-      </div>
 
       <ion-item lines="none">
-        <ion-input type="text" label="Address:" labelPlacement="floating" formControlName="address"></ion-input>
+        <ion-input
+          type="text"
+          label="Address:"
+          labelPlacement="floating"
+          formControlName="address"
+          fill="outline"
+          helperText="Enter property physical address"
+          errorText="Invalid address, address is required"
+        ></ion-input>
       </ion-item>
-
-      <div
-        class="alert-errors"
-        *ngIf="error && propertyForm.get('address').errors"
-      >
-        <app-alert-card content="Address is not valid."></app-alert-card>
-      </div>
 
       <ion-item lines="none">
         <ion-textarea
@@ -48,6 +50,9 @@
           labelPlacement="floating"
           label="Description:"
           placeholder="..."
+          fill="outline"
+          helperText="Enter property description"
+          errorText="Invalid description, too short"
         ></ion-textarea>
       </ion-item>
 
@@ -59,7 +64,12 @@
 
           <ion-item lines="none" *ngFor="let type of propertyTypes">
             <label for="radio">{{ type.label }}</label>
-            <ion-radio slot="start" id="radio" [label]="type.label" [value]="type.value"></ion-radio>
+            <ion-radio
+              slot="start"
+              id="radio"
+              [label]="type.label"
+              [value]="type.value"
+            ></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
@@ -67,7 +77,15 @@
     <!-- STEP TWO -->
     <section *ngIf="step === 2">
       <ion-item lines="none">
-        <ion-input type="number" label="Price:" labelPlacement="floating" formControlName="price"></ion-input>
+        <ion-input
+          type="number"
+          label="Price:"
+          labelPlacement="floating"
+          formControlName="price"
+          fill="outline"
+          helperText="Enter property price"
+          errorText="Invalid price"
+        ></ion-input>
       </ion-item>
 
       <ion-item lines="none">
@@ -77,15 +95,11 @@
           labelPlacement="floating"
           label="Currency:"
           formControlName="currency"
+          fill="outline"
+          helperText="Enter property currency"
+          errorText="Currency is not valid"
         ></ion-input>
       </ion-item>
-
-      <div
-        class="alert-errors"
-        *ngIf="error && propertyForm.get('currency').errors"
-      >
-        <app-alert-card content="Currency is not valid."></app-alert-card>
-      </div>
 
       <ion-item lines="none">
         <ion-textarea
@@ -93,9 +107,10 @@
           label="Features:"
           labelPlacement="floating"
           placeholder="bedroom, kitchen, ..."
+          fill="outline"
+          helperText="For multiple features separate with comma( , )"
         ></ion-textarea>
       </ion-item>
-      <div class="notes">For multiple features separate with comma( , )</div>
 
       <div class="coord-heading">
         <ion-text color="dark">Set Marker Position:</ion-text>
@@ -111,6 +126,7 @@
             labelPlacement="floating"
             formControlName="lat"
             placeholder="Latitude"
+            fill="outline"
           ></ion-input>
         </ion-item>
         <div class="ion-margin"></div>
@@ -121,6 +137,7 @@
             labelPlacement="floating"
             formControlName="lng"
             placeholder="Longitude"
+            fill="outline"
           ></ion-input>
         </ion-item>
       </div>

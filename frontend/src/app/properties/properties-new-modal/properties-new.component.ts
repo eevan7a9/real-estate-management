@@ -43,9 +43,9 @@ export class PropertiesNewComponent implements OnInit {
     this.propertyForm = this.formBuilder.group({
       id: 'test',
       // Step 1
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(4)]],
       address: ['', Validators.required],
-      description: [''],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       type: [PropertyType.residential],
       // Step 2
       price: ['',],
