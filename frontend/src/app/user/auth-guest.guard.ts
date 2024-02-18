@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuestGuard implements CanActivate {
+export class AuthGuestGuard  {
   constructor(private user: UserService, private router: Router) { }
   async canActivate() {
     const user = this.user.user;
