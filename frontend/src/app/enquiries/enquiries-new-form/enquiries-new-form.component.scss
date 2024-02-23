@@ -1,27 +1,3 @@
-ion-item {
-  --inner-padding-end: 0;
-  --inner-padding-start: 0;
-  --padding-end: 8px;
-  --padding-start: 8px;
-  --padding-top: 0;
-  --padding-bottom: 8px;
-  margin: 0 0 16px 0;
-  ion-label {
-    --color: #8794a4;
-  }
-  ion-input {
-    --padding-start: 12px !important;
-    padding: 16px;
-    border: 1px solid rgb(196 196 196);
-    box-sizing: border-box;
-    border-radius: 4px;
-    margin-top: 8px;
-  }
-  .ckeditor {
-    width: 100%;
-    margin-top: 1rem;
-  }
-}
 
 :host ::ng-deep .ck-editor__editable_inline {
   min-height: 200px;
@@ -30,6 +6,7 @@ ion-item {
 .alert-errors {
   width: 100%;
   margin: 6px 0 0 0;
+  color: var(--ion-color-danger);
 }
 
 body.dark :host ::ng-deep {

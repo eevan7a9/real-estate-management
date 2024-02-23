@@ -1,44 +1,38 @@
 <form [formGroup]="enquiryForm">
-  <ion-item lines="none">
+  <div>
     <ion-input
       type="text"
       label="Title :"
       labelPlacement="floating"
       formControlName="title"
+      errorText="Title is too short."
     ></ion-input>
-  </ion-item>
-
-  <div class="alert-errors" *ngIf="error && enquiryForm.get('title').errors">
-    <app-alert-card content="Title is too short."></app-alert-card>
   </div>
 
-  <ion-item lines="none">
+  <div>
     <ion-input
       type="text"
       label="Email :"
       labelPlacement="floating"
       formControlName="email"
+      errorText="Invalid email"
     ></ion-input>
-  </ion-item>
-
-  <div class="alert-errors" *ngIf="error && enquiryForm.get('email').errors">
-    <app-alert-card content="Email is invalid."></app-alert-card>
   </div>
 
-  <ion-item lines="none">
-    <ion-label position="stacked">Content :</ion-label>
+  <div class="ion-margin-top">
     <ckeditor
       [editor]="Editor"
       formControlName="content"
       (ready)="onReady($event)"
-      class="ckeditor"
+      class="ckeditor ion-margin-top"
     ></ckeditor>
-  </ion-item>
+  </div>
 
   <div class="alert-errors" *ngIf="error && enquiryForm.get('content').errors">
-    <app-alert-card content="Message content is too short."></app-alert-card>
+    Message content is too short.
   </div>
-  <ion-item>
+
+  <div class="ion-margin-top">
     <ion-select
       interface="popover"
       formControlName="topic"
@@ -50,7 +44,7 @@
       <ion-select-option value="sales">Sales</ion-select-option>
       <ion-select-option value="information">Information</ion-select-option>
     </ion-select>
-  </ion-item>
+  </div>
 
   <ion-button
     expand="block"
