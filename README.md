@@ -20,7 +20,7 @@ connect property managers and potential buyers.
 
 ### **Frontend**
 - [Ionic 7+](https://ionicframework.com/)
-- [Angular 15+](https://angular.io/)
+- [Angular 16+](https://angular.io/)
 - [leaflet 1.7+](https://leafletjs.com/)
 - [chartjs 3.5+](https://www.chartjs.org/)
 
