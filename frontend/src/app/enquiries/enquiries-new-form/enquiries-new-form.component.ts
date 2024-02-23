@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Property } from 'src/app/shared/interface/property';
 import { EnquiriesService } from '../enquiries.service';
 
@@ -39,9 +43,11 @@ export class EnquiriesNewFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public async submit() {
+    this.enquiryForm.markAllAsTouched();
+
     if (!this.enquiryForm.valid) {
       this.error = true;
       return;
@@ -55,7 +61,7 @@ export class EnquiriesNewFormComponent implements OnInit {
     const enquiryForm = {
       userTo: this.userTo,
       ...this.enquiryForm.value,
-      ...(this.replyTo ? { replyTo: this.replyTo } : '')
+      ...(this.replyTo ? { replyTo: this.replyTo } : ''),
     };
 
     const res = await this.enquiriesService.createEnquiry(
@@ -81,11 +87,15 @@ export class EnquiriesNewFormComponent implements OnInit {
     console.log(e);
   }
 
-  private async presentToast(message: string, duration = 3000, color = 'success') {
+  private async presentToast(
+    message: string,
+    duration = 3000,
+    color = 'success'
+  ) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color
+      color,
     });
     toast.present();
   }
