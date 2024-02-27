@@ -6,6 +6,7 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
+
   <ion-toolbar>
     <ion-searchbar
       inputmode="text"
@@ -16,45 +17,62 @@
       (ionChange)="propertyLists.setSearch(search)"
       placeholder="Search Property"
     ></ion-searchbar>
+
     <ion-grid>
       <ion-row>
-        <ion-col size="12" sizeMd="6">
-          <ion-item lines="none">
-            <ion-select
-              multiple="true"
-              [(ngModel)]="filterBy"
-              okText="Confirm"
-              cancelText="Dismiss"
-              label="Filter by:"
-              (ionChange)="propertyLists.setFilters(filterBy)"
-            >
-              <ion-select-option
-                *ngFor="let filter of filters"
-                [value]="filter.value"
-              >
-                {{filter.label}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+        <ion-col size="12" sizeMd="4">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-toggle [disabled]="!user" (ionChange)="switchOwnedProperty($event)" [checked]="ownedPropertiesOnly()">
+                Owned Properties Only
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
         </ion-col>
 
-        <ion-col size="12" sizeMd="6">
-          <ion-item lines="none">
-            <ion-select
-              [(ngModel)]="sortBy"
-              okText="Confirm"
-              cancelText="Dismiss"
-              label="Sort by:"
-              (ionChange)="propertyLists.setSort(sortBy)"
-            >
-              <ion-select-option
-                *ngFor="let sort of sorts"
-                [value]="sort.value"
+        <ion-col size="12" sizeMd="4">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-select
+                multiple="true"
+                [(ngModel)]="filterBy"
+                okText="Confirm"
+                cancelText="Dismiss"
+                label="Filter type:"
+                (ionChange)="propertyLists.setFilters(filterBy)"
               >
-                {{ sort.label}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+                <ion-select-option
+                  *ngFor="let filter of filters"
+                  [value]="filter.value"
+                >
+                  {{filter.label}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+
+
+        <ion-col size="12" sizeMd="4">
+          <ion-list>
+            <ion-item lines="none">
+              <ion-select
+                [(ngModel)]="sortBy"
+                okText="Confirm"
+                cancelText="Dismiss"
+                label="Sort by:"
+                (ionChange)="propertyLists.setSort(sortBy)"
+              >
+                <ion-select-option
+                  *ngFor="let sort of sorts"
+                  [value]="sort.value"
+                >
+                  {{ sort.label}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>

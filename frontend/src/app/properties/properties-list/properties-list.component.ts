@@ -5,6 +5,8 @@ import { takeUntil } from 'rxjs/operators';
 import { Property } from 'src/app/shared/interface/property';
 import { sortListByDate, sortListByName, sortListByNumber } from 'src/app/shared/utility';
 import { PropertiesService } from '../properties.service';
+import { PropertyType } from 'src/app/shared/enums/property';
+import { UserService } from 'src/app/user/user.service';
 
 @Component({
   selector: 'app-properties-list',
@@ -18,15 +20,19 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
   @Input() horizontalSlide = false;
   @Input() limit = 0;
   @Output() isLoading = new EventEmitter<boolean>();
+
   public properties: Property[];
   public displayedItems: Property[] = [];
   public maxDisplayed = 8;
-  private filterBy: string[] = [];
+
+  private filterBy: PropertyType[] = [];
   private sortBy = 'latest';
+  private ownedPropertiesOnly = false;
   private searchText = '';
   private unsubscribe$ = new Subject<void>();
 
   constructor(
+    private userService: UserService,
     private propertiesService: PropertiesService,
     private changeDetector: ChangeDetectorRef
   ) { }
@@ -44,18 +50,16 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.displayedItems = this.properties.slice(0, this.maxDisplayed);
       this.infinityScroll.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      if (this.displayedItems.length >= this.properties.length) {
-        console.log('everything is loaded');
-        this.infinityScroll.disabled = true;
-      }
     }, 1500);
   }
 
-  public setFilters(filters: string[]) {
+  public setFilters(filters: PropertyType[]) {
     this.filterBy = filters;
+    this.getProperties();
+  }
+
+  public setOwnedPropertiesOnly(val: boolean) {
+    this.ownedPropertiesOnly = val;
     this.getProperties();
   }
 
@@ -93,20 +97,24 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
   private getProperties() {
     this.isLoading.emit(true);
     this.unSubscribed();
-    this.maxDisplayed = 8;
-    this.displayedItems = [];
-    this.properties = [];
-    if (this.infinityScroll) {
-      // we enable infinity scroll
-      this.infinityScroll.disabled = false;
-    }
+    
     this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
+      this.resetBehavior();
       this.properties = this.limit ? v.slice(0, this.limit) : v;
       this.sortProperties();
-      if (this.searchText) { this.searchProperties(); };
+      // if user toggles to show Owned properties only
+      if (this.ownedPropertiesOnly && this.userService.user) {
+        this.properties = this.properties.filter(item => item.user_id === this.userService.user.user_id);
+      }
+      // if user searched for a property
+      if (this.searchText) {
+        this.searchProperties();
+      }
+      // if any filters are being selected
       if (this.filterBy.length) {
         this.properties = this.properties.filter(item => this.filterBy.includes(item.type));
       }
@@ -115,9 +123,14 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     this.changeDetector.detectChanges();
   }
 
+  private resetBehavior(): void {
+    this.displayedItems = [];
+    this.properties = [];
+    this.maxDisplayed = 8;
+  }
+
   private unSubscribed() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
 }

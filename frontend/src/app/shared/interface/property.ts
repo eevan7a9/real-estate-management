@@ -1,3 +1,4 @@
+import { PropertyType } from '../enums/property';
 import { Coord } from './map';
 
 export interface Property {
@@ -5,7 +6,7 @@ export interface Property {
   name: string;
   address: string;
   description?: string;
-  type: string;
+  type: PropertyType;
   position: Coord;
   price: number;
   enquiries?: string[];
