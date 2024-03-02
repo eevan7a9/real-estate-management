@@ -11,10 +11,9 @@
     <ion-searchbar
       inputmode="text"
       clearIcon
-      debounce="1300"
-      [(ngModel)]="search"
+      debounce="700"
       animated
-      (ionChange)="propertyLists.setSearch(search)"
+      (ionInput)="propertyLists.setSearch($event)"
       placeholder="Search Property"
     ></ion-searchbar>
 

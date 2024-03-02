@@ -68,12 +68,10 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
     this.getProperties();
   }
 
-  public setSearch(text: string) {
-    text = text.trim().toLowerCase();
-    if (this.searchText !== text) {
-      this.searchText = text;
-      this.getProperties();
-    }
+  public setSearch(event: CustomEvent) {
+    const text = (event.detail.value as string).trim().toLowerCase();
+    this.searchText = text;
+    this.getProperties();
   }
 
   private searchProperties() {
@@ -101,7 +99,7 @@ export class PropertiesListComponent implements OnInit, OnDestroy {
   private getProperties() {
     this.isLoading.emit(true);
     this.unSubscribed();
-    
+
     this.propertiesService.properties$.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
       this.resetBehavior();
       this.properties = this.limit ? v.slice(0, this.limit) : v;
