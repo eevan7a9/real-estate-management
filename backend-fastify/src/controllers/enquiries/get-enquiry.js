@@ -5,11 +5,10 @@ export const getEnquiry = async function (req, res) {
   try {
     const enquiry = await Enquiry.findOne({ enquiry_id: id });
     if (!enquiry) {
-      res.status(404).send({ message: "Can't find Enquiry." });
-      return;
+      return res.status(404).send({ message: "Can't find Enquiry." });
     }
-    res.status(200).send({ data: enquiry });
+    return res.status(200).send({ data: enquiry });
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };

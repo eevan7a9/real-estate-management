@@ -5,8 +5,7 @@ import { userIdToken } from "../../utils/users.js";
 export const updateEnquiry = async function (req, res) {
   const enquiry_id = req.params.id;
   if (!enquiry_id) {
-    res.status(404).send({ message: "Can't find Enquiry." });
-    return;
+    return res.status(404).send({ message: "Can't find Enquiry." });
   }
 
   const token = authBearerToken(req);
@@ -35,11 +34,10 @@ export const updateEnquiry = async function (req, res) {
     );
 
     if (!enquiry) {
-      res.status(404).send({ message: "Can't find Enquiry." });
-      return;
+      return res.status(404).send({ message: "Can't find Enquiry." });
     }
-    res.status(201).send({ data: enquiry });
+    return res.status(201).send({ data: enquiry });
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };

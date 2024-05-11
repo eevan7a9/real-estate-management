@@ -7,8 +7,8 @@ export const getMe = async function (req, res) {
     const user_id = userIdToken(token);
     try {
         const user = await User.findOne({ user_id });
-        res.send({ data: user });
+        return res.send({ data: user });
     } catch (error) {
-        res.send(error);
+        return res.send(error);
     }
 };

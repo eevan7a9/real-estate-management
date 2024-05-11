@@ -44,14 +44,13 @@ export const updateProperty = async function (req, res) {
       options
     );
     if (!property) {
-      res.status(404).send({ message: "Error: Can't update unknown property" });
-      return;
+      return res.status(404).send({ message: "Error: Can't update unknown property" });
     }
-    res.status(201).send({
+    return res.status(201).send({
       data: { ...property.toObject() },
       message: "Success: Property is updated.",
     });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 };

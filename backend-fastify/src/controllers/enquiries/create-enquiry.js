@@ -45,7 +45,8 @@ export const createEnquiry = async function (req, res) {
     await newEnquiry.save();
     res.status(201).send({ data: newEnquiry });
     sendTargetedNotification(EnquiryNotification.new, newEnquiry, userTo);
+    return;
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };

@@ -26,8 +26,8 @@ export const createProperty = async function (req, res) {
     await newProperty.save();
     await user.save();
 
-    res.status(201).send({ data: newProperty });
+    return res.status(201).send({ data: newProperty });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 };

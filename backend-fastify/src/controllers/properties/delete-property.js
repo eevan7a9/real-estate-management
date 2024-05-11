@@ -11,7 +11,7 @@ export const deleteProperty = async function (req, res) {
     const user_id = userIdToken(token);
     const property = await Property.findOneAndDelete({ property_id: id, user_id });
     if (!property) {
-      res.status(404).send({});
+      return res.status(404).send({});
     }
     if (property.images?.length) {
       unlinkImages(property.images);
@@ -23,6 +23,6 @@ export const deleteProperty = async function (req, res) {
     res.status(200).send({ data: { ...property.toObject() } });
     return;
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 };

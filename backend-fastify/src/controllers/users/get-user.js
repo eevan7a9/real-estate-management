@@ -7,8 +7,8 @@ export const getUser = async function (req, res) {
         if (!user) {
             return res.status(404).send({ message: "Error: Can't find User." });
         }
-        res.send({ data: user });
+        return res.send({ data: user });
     } catch (error) {
-        res.send(error);
+        return res.send(error);
     }
 };

@@ -42,9 +42,9 @@ export const addImagesProperty = async function (req, res) {
       property.images.push(image);
       await property.save(); // Wait for the save operation to complete
     }
-    res.status(201).send({ data: property.images });
+    return res.status(201).send({ data: property.images });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 };
 
@@ -67,7 +67,7 @@ export const deleteImagesProperty = async function (req, res) {
     unlinkImages(images);
     return res.send({ data: images });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 };
 

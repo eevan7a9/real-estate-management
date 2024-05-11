@@ -27,11 +27,11 @@ export const deleteEnquiry = async function (req, res) {
     } else {
       await enquiry.save();
     }
-    res
+    return res
       .status(200)
       .send({ data: enquiry });
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 }
 

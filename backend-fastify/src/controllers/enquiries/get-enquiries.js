@@ -13,8 +13,8 @@ export const getEnquiries = async function (req, res) {
         { 'users.to.user_id': user_id, 'users.to.keep': true },
       ]
     });
-    res.status(200).send({ data: list });
+    return res.status(200).send({ data: list });
   } catch (error) {
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 };
