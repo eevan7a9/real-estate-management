@@ -1,21 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { IonInput, ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Property } from 'src/app/shared/interface/property';
 import { EnquiriesService } from '../enquiries.service';
+import { UserService } from 'src/app/user/user.service';
+import { NeedSigninContinueComponent } from 'src/app/shared/components/need-signin-continue/need-signin-continue.component';
 
 @Component({
   selector: 'app-enquiries-new-form',
   templateUrl: './enquiries-new-form.component.html',
   styleUrls: ['./enquiries-new-form.component.scss'],
 })
-export class EnquiriesNewFormComponent implements OnInit {
+export class EnquiriesNewFormComponent implements OnInit, OnDestroy {
   @Input() property: Partial<Property>;
   @Input() userTo: string;
   @Input() replyTo?: {
@@ -33,7 +42,8 @@ export class EnquiriesNewFormComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
-    private enquiriesService: EnquiriesService
+    private enquiriesService: EnquiriesService,
+    private userService: UserService
   ) {
     this.enquiryForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(8)]],
@@ -43,7 +53,9 @@ export class EnquiriesNewFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {}
 
   public async submit() {
     this.enquiryForm.markAllAsTouched();
@@ -53,6 +65,13 @@ export class EnquiriesNewFormComponent implements OnInit {
       return;
     }
     this.submitting = true;
+    if (!this.userService.user) {
+      const modalNeedSignin = await this.modalCtrl.create({
+        component: NeedSigninContinueComponent,
+        componentProps: { isModal: true },
+      });
+      return modalNeedSignin.present();
+    }
 
     if (!this.enquiriesService.enquiries.length) {
       this.enquiriesService.fetchEnquiries();
@@ -83,7 +102,7 @@ export class EnquiriesNewFormComponent implements OnInit {
     this.presentToast('Success, message is sent.');
   }
 
-  public onReady(e) {
+  public onReady(e: unknown) {
     console.log(e);
   }
 

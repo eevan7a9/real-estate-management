@@ -100,7 +100,7 @@ export class EnquiriesService {
         name: property.name,
       },
     };
-
+    console.log(formData);
     try {
       const res = await firstValueFrom(
         this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))

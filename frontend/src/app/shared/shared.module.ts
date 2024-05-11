@@ -13,6 +13,8 @@ import { EnquiryBadgeComponent } from './components/enquiry-badge/enquiry-badge.
 import { MapLeafletComponent } from '../map/map-leaflet/map-leaflet.component';
 import { MapSearchFieldComponent } from '../map/map-search-field/map-search-field.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { RouterLinkWithHref } from '@angular/router';
+import { NeedSigninContinueComponent } from './components/need-signin-continue/need-signin-continue.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +28,14 @@ import { FooterComponent } from './components/footer/footer.component';
     MapLeafletComponent,
     MapSearchFieldComponent,
     FooterComponent,
+    NeedSigninContinueComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    RouterLinkWithHref
   ],
   exports: [
     FormsModule,
@@ -46,6 +50,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MapLeafletComponent,
     MapSearchFieldComponent,
     FooterComponent,
+    NeedSigninContinueComponent
   ],
   providers: [CustomValidatorsDirective],
 })
