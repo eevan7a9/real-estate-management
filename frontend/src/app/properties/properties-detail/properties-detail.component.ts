@@ -50,10 +50,8 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
           await this.propertiesService.fetchProperty(paramId);
         }
         this.ready = true;
-        this.isOwner =
-          this.userService.user?.user_id === this.property?.user_id;
-
-        if(this.propertiesGallery && this.property) {
+        this.isOwner = this.userService.isPropertyOwner(this.property);
+        if (this.propertiesGallery && this.property) {
           this.propertiesGallery.setImage();
         }
       });

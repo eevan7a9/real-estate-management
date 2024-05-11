@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
+import { Property } from '../shared/interface/property';
 
 const url = environment.api.server;
 const requestOptions = {
@@ -95,6 +96,10 @@ export class UserService {
     } catch (error) {
       console.log('google-auth error:', error);
     }
+  }
+
+  public isPropertyOwner(property: Property): boolean {
+    return this.user && this.user.user_id === property.user_id;
   }
 
   private async updateUser(user: User) {
