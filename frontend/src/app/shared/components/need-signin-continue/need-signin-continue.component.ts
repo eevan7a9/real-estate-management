@@ -14,9 +14,13 @@ export class NeedSigninContinueComponent implements OnInit {
   ngOnInit() {}
 
   public async goSignin(): Promise<void> {
-    if(this.isModal) {
+    if (this.isModal) {
       await this.modalCtrl.dismiss();
     }
     this.router.navigate(['/user/signin']);
+  }
+
+  public async close(): Promise<void> {
+    await this.modalCtrl.dismiss();
   }
 }

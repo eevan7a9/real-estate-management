@@ -1,7 +1,20 @@
-<div class="security-container">
-  <div class="content">
-    <h1 class="security-heading">HOLD UP!!!</h1>
-    <h4 class="security-sub-heading">YOU NEED TO SIGN IN TO CONTINUE</h4>
-    <ion-button (click)="goSignin()" size="large"> SIGN IN </ion-button>
+<ion-header *ngIf="isModal">
+  <ion-toolbar>
+    <ion-title>Content Restricted</ion-title>
+    <ion-buttons slot="end">
+      <ion-button> 
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="security-container">
+    <div class="content">
+      <h1 class="security-heading">HOLD UP!!!</h1>
+      <h4 class="security-sub-heading">YOU NEED TO SIGN IN TO CONTINUE</h4>
+      <ion-button (click)="goSignin()" size="large"> SIGN IN </ion-button>
+    </div>
   </div>
-</div>
+</ion-content>
