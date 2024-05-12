@@ -28,6 +28,10 @@
 // swiperjs styles
 @import "./assets/swiper-js.scss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 // overide style
 .my-custom-alert-class {
   .alert-danger-text {
