@@ -17,18 +17,6 @@ const requestOptions = (
   body,
 });
 
-interface ResProperty extends ApiResponse {
-  data: Property;
-}
-
-interface ResProperties extends ApiResponse {
-  data: Property[];
-}
-
-interface ResStrings extends ApiResponse {
-  data: string[];
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -63,7 +51,7 @@ export class PropertiesService {
   public async fetchProperties(): Promise<void> {
     try {
       this.properties = (
-        await firstValueFrom(this.http.get<ResProperties>(propertyUrl))
+        await firstValueFrom(this.http.get<ApiResponse<Property[]>>(propertyUrl))
       ).data;
     } catch (error) {
       console.error(error);
@@ -73,18 +61,18 @@ export class PropertiesService {
   public async fetchProperty(id: string) {
     try {
       this.property = (
-        await firstValueFrom(this.http.get<ResProperty>(propertyUrl + '/' + id))
+        await firstValueFrom(this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id))
       ).data;
     } catch (error) {
       console.error(error);
     }
   }
 
-  public async addProperty(property: Property): Promise<ResProperty> {
+  public async addProperty(property: Property): Promise<ApiResponse<Property>> {
     const token = this.userService.token();
     try {
       const res = await firstValueFrom(
-        this.http.post<ResProperty>(
+        this.http.post<ApiResponse<Property>>(
           propertyUrl,
           property,
           requestOptions({ token })
@@ -102,7 +90,7 @@ export class PropertiesService {
   public async addPropertyImage(
     files: File[],
     id: string
-  ): Promise<ResStrings> {
+  ): Promise<ApiResponse<string[]>> {
     const formData = new FormData();
     files.forEach((file) => {
       formData.append('images', file, file.name);
@@ -110,7 +98,7 @@ export class PropertiesService {
     try {
       const token = this.userService.token();
       return await firstValueFrom(
-        this.http.post<ResStrings>(
+        this.http.post<ApiResponse<string[]>>(
           propertyUrl + '/upload/images/' + id,
           formData,
           requestOptions({ token, contentType: null })
@@ -125,12 +113,12 @@ export class PropertiesService {
   public async deletePropertyImage(
     images: string[],
     propId: string
-  ): Promise<ResStrings> {
+  ): Promise<ApiResponse<string[]>> {
     const token = this.userService.token();
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
       const res = await firstValueFrom(
-        this.http.delete<ResStrings>(url, requestOptions({ token }, { images }))
+        this.http.delete<ApiResponse<string[]>>(url, requestOptions({ token }, { images }))
       );
 
       this.property.images = this.property.images.filter(
@@ -147,7 +135,7 @@ export class PropertiesService {
     try {
       const url = `${propertyUrl}/${propId}`;
       const res = await firstValueFrom(
-        this.http.delete<ResProperty>(url, requestOptions({ token }))
+        this.http.delete<ApiResponse<Property>>(url, requestOptions({ token }))
       );
 
       this.properties = this.properties.filter(
@@ -158,12 +146,12 @@ export class PropertiesService {
     }
   }
 
-  public async updateProperty(updated: Property): Promise<ResProperty> {
+  public async updateProperty(updated: Property): Promise<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
       const token = this.userService.token();
       const res = await firstValueFrom(
-        this.http.patch<ResProperty>(url, updated, requestOptions({ token }))
+        this.http.patch<ApiResponse<Property>>(url, updated, requestOptions({ token }))
       );
 
       // UPDATE CURRENT PROPERTIES
