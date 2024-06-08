@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 
-export interface ApiResponse {
-  status: number | string;
+export interface ApiResponse<T = undefined> {
+  status: number;
   message: string;
 
   headers?: HttpHeaders;

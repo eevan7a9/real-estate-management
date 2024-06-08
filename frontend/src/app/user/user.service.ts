@@ -7,11 +7,16 @@ import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
+import { ApiResponse } from '../shared/interface/api-response';
 
 const url = environment.api.server;
-const requestOptions = {
-  headers: new HttpHeaders(headerDict()),
-};
+const requestOptions = (
+  { token = '', contentType = 'application/json' },
+  body = {}
+) => ({
+  headers: new HttpHeaders(headerDict({ token, contentType })),
+  body,
+});
 
 @Injectable({
   providedIn: 'root',
@@ -45,40 +50,40 @@ export class UserService {
     this.storage.removeUser();
   }
 
-  public async signIn(email: string, password: string) {
+  public async signIn(email: string, password: string): Promise<ApiResponse<User>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<User>(
+        this.http.post<ApiResponse<User>>(
           url + 'auth/signin',
           {
             email,
             password,
           },
-          requestOptions
+          requestOptions({ contentType: 'application/json' })
         )
       );
-      await this.updateUser(result);
+      await this.updateUser(result.data);
       return result;
     } catch (error) {
-      console.log('err', error);
+      console.error('err', error);
       return error;
     }
   }
 
-  public async register(fullName: string, email: string, password: string) {
+  public async register(fullName: string, email: string, password: string): Promise<ApiResponse<User>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<User>(
+        this.http.post<ApiResponse<User>>(
           url + 'auth/register',
           {
             fullName,
             email,
             password,
           },
-          requestOptions
+          requestOptions({ contentType: 'application/json' })
         )
       );
-      await this.updateUser(result);
+      await this.updateUser(result.data);
       return result;
     } catch (error) {
       console.log('error', error);
@@ -94,12 +99,26 @@ export class UserService {
       await this.updateUser(result);
       return result;
     } catch (error) {
-      console.log('google-auth error:', error);
+      console.error('google-auth error:', error);
     }
   }
 
   public isPropertyOwner(property: Property): boolean {
     return this.user && this.user.user_id === property.user_id;
+  }
+
+  public async changePassword(passwordNew: string, passwordCurrent: string): Promise<ApiResponse> {
+    try {
+      const res = await firstValueFrom(this.http.post<ApiResponse>(url + 'auth/change-password',
+        { passwordCurrent, passwordNew },
+        requestOptions({ token: this.token(), contentType: 'application/json' })
+      ));
+      // console.log(res);
+      return res;
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
   }
 
   private async updateUser(user: User) {
