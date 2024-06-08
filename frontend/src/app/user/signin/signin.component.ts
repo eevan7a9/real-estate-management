@@ -50,20 +50,17 @@ export class SigninComponent implements OnInit, AfterViewInit {
     }
     const loading = await this.presentLoading();
     loading.present();
+
     const { email, password } = this.signinForm.value;
-    const errMssg = 'Something went wrong, try again later.';
-    try {
-      const result = await this.user.signIn(email, password);
-      await loading.dismiss();
-      if (result.error) {
-        await this.showToast(result.error.message || errMssg, 'danger');
-        return;
-      }
-      await this.showToast('Success, You are logged in');
+    const result = await this.user.signIn(email, password);
+    
+    loading.dismiss();
+
+    if (result.status === 200) {
+      this.showToast('Success, You are logged in');
       this.router.navigateByUrl('/map');
-    } catch (error) {
-      await loading.dismiss();
-      await this.showToast(errMssg, 'danger');
+    } else {
+      this.showToast(result.message, 'danger');
     }
   }
 

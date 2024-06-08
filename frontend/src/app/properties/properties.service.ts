@@ -159,7 +159,6 @@ export class PropertiesService {
         property.property_id === updated.property_id ? res.data : property
       );
       this.property = res.data;
-
       return res;
     } catch (error) {
       console.error(error);
