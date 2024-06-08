@@ -6,7 +6,7 @@ export interface ApiResponse<T = undefined> {
 
   headers?: HttpHeaders;
   name?: string;
-  data?: any;
+  data?: T;
   ok?: boolean;
   statusText?: string;
   error?: { status: number; message: string };

@@ -14,14 +14,6 @@ const requestOptions = (token = '', body = {}) => ({
   body,
 });
 
-interface ResEnquiry extends ApiResponse {
-  data: Enquiry;
-}
-
-interface ResEnquiries extends ApiResponse {
-  data: Enquiry[];
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -58,7 +50,7 @@ export class EnquiriesService {
       const token = this.userService.token();
       this.enquiries = (
         await firstValueFrom(
-          this.http.get<ResEnquiries>(enquiryUrl, requestOptions(token))
+          this.http.get<ApiResponse<Enquiry[]>>(enquiryUrl, requestOptions(token))
         )
       ).data;
 
@@ -74,7 +66,7 @@ export class EnquiriesService {
       const token = this.userService.token();
       this.enquiry = (
         await firstValueFrom(
-          this.http.get<ResEnquiry>(
+          this.http.get<ApiResponse<Enquiry>>(
             enquiryUrl + '/' + enqId,
             requestOptions(token)
           )
@@ -91,7 +83,7 @@ export class EnquiriesService {
   public async createEnquiry(
     enquiry: EnquiryCreate,
     property: Partial<Property>
-  ): Promise<ResEnquiry> {
+  ): Promise<ApiResponse<Enquiry>> {
     const token = this.userService.token();
     const formData = {
       ...enquiry,
@@ -103,7 +95,7 @@ export class EnquiriesService {
     console.log(formData);
     try {
       const res = await firstValueFrom(
-        this.http.post<ResEnquiry>(enquiryUrl, formData, requestOptions(token))
+        this.http.post<ApiResponse<Enquiry>>(enquiryUrl, formData, requestOptions(token))
       );
       this.insertEnquiryToState(res.data);
       return res;
@@ -137,7 +129,7 @@ export class EnquiriesService {
     const url = enquiryUrl + '/' + enqId;
     try {
       const { data } = await firstValueFrom(
-        this.http.patch<ResEnquiry>(url, { read: true }, requestOptions(token))
+        this.http.patch<ApiResponse<Enquiry>>(url, { read: true }, requestOptions(token))
       );
       // UPDATE ENQUIRIES && CURRENT ENQUIRY
       this.enquiries = this.enquiries.map((enquiry) =>
