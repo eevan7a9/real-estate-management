@@ -6,18 +6,12 @@
   // background-color: var(--ion-color-light);
 }
 
-ion-item {
-  --background: var(--ion-color-light);
-}
+// ion-item {
+//   --background: var(--ion-color-light);
+// }
 ion-button {
   --padding-start: 20px;
   --padding-end: 20px;
   --padding-top: 16px;
   --padding-bottom: 16px;
-  &.reset {
-    --background: transparent;
-    --background-hover: transparent;
-    --box-shadow: none;
-    --color: var(--ion-color-dark);
-  }
 }

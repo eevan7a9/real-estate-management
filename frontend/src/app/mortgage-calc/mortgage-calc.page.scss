@@ -1,5 +1,8 @@
 ion-content {
-  --background: var(--ion-color-light-tint);
+  --background: var(--ion-background-color-step-100);
+}
+
+ion-content {
   --height: 100%;
   margin: 0;
 }

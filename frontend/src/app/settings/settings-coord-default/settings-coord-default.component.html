@@ -3,7 +3,7 @@
     <ion-row class="ion-align-items-center">
       <ion-col size="12" class="ion-no-padding">
         <div class="heading flex items-center pb-3">
-          <ion-text color="dark">Change Default Coordinates</ion-text>
+          <ion-text type="dark">Change Default Coordinates</ion-text>
           <ion-button size="small" class="ion-margin-start" (click)="openMap()">
             open map <ion-icon name="map-outline"></ion-icon>
           </ion-button>
@@ -11,22 +11,26 @@
       </ion-col>
 
       <ion-col size="12" sizeLg="6">
-        <ion-item>
-          <ion-input label="Latitude:" [(ngModel)]="coord.lat"></ion-input>
+        <ion-list color="light">
+          <ion-item>
+          <ion-input color="dark" label="Latitude:" [(ngModel)]="coord.lat"></ion-input>
         </ion-item>
+      </ion-list>
       </ion-col>
 
       <ion-col size="12" sizeLg="6">
-        <ion-item>
-          <ion-input label="Longitude:" [(ngModel)]="coord.lng"></ion-input>
-        </ion-item>
+        <ion-list color="light">
+          <ion-item>
+            <ion-input color="dark" label="Longitude:" [(ngModel)]="coord.lng"></ion-input>
+          </ion-item>
+        </ion-list>
       </ion-col>
 
       <ion-col size="12">
         <ion-button color="primary" (click)="setCoord()">
           set Coordinates</ion-button
         >
-        <ion-button class="reset ion-margin-start" (click)="resetCoord()">
+        <ion-button color="light" class="ion-margin-start" (click)="resetCoord()">
           Reset Coordinates
         </ion-button>
       </ion-col>
