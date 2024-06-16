@@ -8,39 +8,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row class="h-100">
-      <ion-col size="12" sizeLg="8" sizeXl="9" class="map-section">
-        <app-map-search-field
-          (selectedLocation)="mapLeaflet.setMapCenter($event)"
-        ></app-map-search-field>
-        <app-map-leaflet
-          #mapLeaflet
-          [visibleMarkerType]="visibleType"
-        ></app-map-leaflet>
-        <app-map-markers-legend
-          (toggledMarker)="setVisibleMarkerType($event)"
-        ></app-map-markers-legend>
-      </ion-col>
+  <ion-grid class="h-full min-h-full">
+    <ion-row class="h-full min-h-full">
+      <ion-col size="12" class="bg-light-shade z-10 relative flex min-h-[700px] h-[70%] lg:h-full">
+        <section class="w-full h-full relative">
+          <app-map-search-field
+            (selectedLocation)="mapLeaflet.setMapCenter($event)"
+          ></app-map-search-field>
+          <app-map-leaflet
+            #mapLeaflet
+            [visibleMarkerType]="visibleType"
+          ></app-map-leaflet>
+          <app-map-markers-legend
+            (toggledMarker)="setVisibleMarkerType($event)"
+          ></app-map-markers-legend>
+        </section>
 
-      <ion-col size="12" class="ion-hide-lg-up">
-        <div class="horizontal-slides-container">
-          <app-properties-list [horizontalSlide]="true"></app-properties-list>
-        </div>
-      </ion-col>
-
-      <ion-col
-        size="0"
-        sizeLg="4"
-        sizeXl="3"
-        class="extra-section ion-hide-lg-down"
-      >
-        <div class="properties-list">
+        <!-- Side section for vertical property list -->
+        <div class="hidden lg:block w-[400px] overflow-y-auto">
           <app-properties-list
             class="properties-list"
             [singleCol]="true"
             [limit]="10"
           ></app-properties-list>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" class="ion-hide-lg-up">
+        <div class="w-full mb-[60px]">
+          <app-properties-list [horizontalSlide]="true"></app-properties-list>
         </div>
       </ion-col>
 

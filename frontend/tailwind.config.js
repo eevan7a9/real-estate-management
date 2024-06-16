@@ -33,6 +33,10 @@ module.exports = {
         'tertiary': '#9006f6',
         'tertiary-shade': '#7f05d8',
         'tertiary-tint': '#9b1ff7',
+        // 
+        'light': '#f4f5f8',
+        'light-shade': '#d7d8da',
+        'light-tint': '#f5f6f9'
       },
     },
   },

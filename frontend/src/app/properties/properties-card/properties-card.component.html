@@ -3,16 +3,18 @@
     Owned
   </div>
 
-  <img
-    class="profile-image"
-    [src]="property?.images[0]"
-    *ngIf="property?.images?.length"
-  />
-  <img
-    class="profile-image ion-padding-vertical"
-    [src]="'assets/images/no-image.jpeg'"
-    *ngIf="!property?.images || !property?.images.length"
-  />
+  <div class="h-[230px]">
+    <img
+      class="w-full h-full object-cover"
+      [src]="property?.images[0]"
+      *ngIf="property?.images?.length"
+    />
+    <img
+      class="w-full h-full object-cover"
+      [src]="'assets/images/no-image.jpeg'"
+      *ngIf="!property?.images || !property?.images.length"
+    />
+  </div>
 
   <ion-card-header>
     <app-property-badge [type]="property?.type"></app-property-badge>
@@ -31,7 +33,7 @@
     </div>
 
     <div class="price">
-      {{ property?.price | currency: "PHP" }}
+      {{ property?.price | currency : "PHP" }}
     </div>
     <ion-button
       (click)="selectProperty(property)"

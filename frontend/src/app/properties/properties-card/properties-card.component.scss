@@ -27,7 +27,7 @@ ion-card {
 .desc {
   overflow: hidden;
   width: 100%;
-  min-height: 80px;
+  min-height: 68px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -38,8 +38,4 @@ ion-card {
   font-size: 18px;
   font-weight: bold;
   color: var(--ion-color-dark);
-}
-.profile-image {
-  height: 200px;
-  width: 100%;
 }
