@@ -91,12 +91,12 @@ export class UserService {
     }
   }
 
-  public async googleAuth(payload: GoogleAuthResponse) {
+  public async googleAuth(payload: GoogleAuthResponse): Promise<ApiResponse<User>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<User>(url + 'auth/google', payload)
+        this.http.post<ApiResponse<User>>(url + 'auth/google', payload)
       );
-      await this.updateUser(result);
+      await this.updateUser(result.data);
       return result;
     } catch (error) {
       console.error('google-auth error:', error);

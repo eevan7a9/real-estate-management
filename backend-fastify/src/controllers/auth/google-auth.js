@@ -46,10 +46,12 @@ export const googleAuth = async function (req, res) {
   }
   accessToken = fastify.jwt.sign({ id: sub });
   return res.status(200).send({
-    id,
-    user_id: sub,
-    fullName,
-    email,
-    accessToken,
+    data: {
+      id: foundUser.id,
+      user_id: foundUser.user_id,
+      fullName: foundUser.fullName,
+      email: foundUser.email,
+      accessToken,
+    }
   });
 }
