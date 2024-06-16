@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
     const isDark = await this.storage.getDartTheme();
     // SET THEME
     if (isDark) {
-      document.body.classList.add('dark');
+      document.documentElement.classList.add('ion-palette-dark');
     }
     this.userService.user$.subscribe(user => {
       this.user = user;
