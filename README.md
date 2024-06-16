@@ -1,5 +1,5 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/eevan7a9/real-estate-management?style=social)](https://github.com/eevan7a9/real-estate-management/stargazers)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_License_2.0-blue.svg)](LICENSE)
 # real-estate-management
 
 A online property management solution for real estate and
@@ -20,7 +20,7 @@ connect property managers and potential buyers.
 
 ### **Frontend**
 - [Ionic 7+](https://ionicframework.com/)
-- [Angular 16+](https://angular.io/)
+- [Angular 17+](https://angular.io/)
 - [leaflet 1.7+](https://leafletjs.com/)
 - [chartjs 3.5+](https://www.chartjs.org/)
 
@@ -45,7 +45,7 @@ $ cd frontend
 - set values to variables (ex. api.url) 
 ```
   api: {
-    url: 'http://localhost:8000/', <-- server URL
+    server: 'http://localhost:8000/', <-- server URL
     mapKey: '', <-- Leaflet map key,
     googleAuthClientId: '', <-- google Auth CLient ID for Social signin
     webSocketUrl: 'ws://localhost:8000/websocket' <-- websocket URL
