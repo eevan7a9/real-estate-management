@@ -1,27 +1,29 @@
-<ion-card [style.box-shadow]="!boxShadow ? 'none' : ''" class="card-calculator">
+<ion-card [style.box-shadow]="!boxShadow ? 'none' : ''" class="max-h-[520px]">
   <ion-card-header>
     <ion-card-title color="light">
       Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content  class="">
     <form [formGroup]="mortgageForm">
       <ion-grid>
         <ion-row>
           <ion-col size="12">
-            <ion-item>
-              <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-              <ion-input
-                clearInput
-                debounce="1000"
-                labelPlacement="stacked"
-                label="Price:"
-                value="mortgageForm.get('price').value"
-                formControlName="price"
-                (ionChange)="formatValue($event, 'price')"
-              >
-              </ion-input>
-            </ion-item>
+            <ion-list color="light">
+              <ion-item>
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                <ion-input
+                  clearInput
+                  debounce="1000"
+                  labelPlacement="stacked"
+                  label="Price:"
+                  value="mortgageForm.get('price').value"
+                  formControlName="price"
+                  (ionChange)="formatValue($event, 'price')"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-list>
           </ion-col>
 
           <ion-col size="12">
@@ -126,7 +128,8 @@
 
         <ion-row class="ion-align-items-center">
           <ion-col size="12" [sizeMd]="simpleMode ? 12 : 6">
-            <ion-item
+            <ion-list>
+              <ion-item
               lines="none"
               class="total-month"
               [class]="simpleMode ? 'simple' : ''"
@@ -139,6 +142,7 @@
               >
               </ion-input>
             </ion-item>
+            </ion-list>
           </ion-col>
 
           <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">

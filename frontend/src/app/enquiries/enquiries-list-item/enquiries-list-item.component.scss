@@ -4,12 +4,6 @@ ion-card-header {
   justify-content: space-between;
   align-items: center;
   position: relative;
-  .action-btn {
-    --box-shadow: none;
-    position: absolute;
-    top: 12px;
-    right: 12px;
-  }
   ion-card-title {
     display: flex;
     align-items: center;

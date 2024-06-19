@@ -1,5 +1,5 @@
 ion-content {
-  --background: var(--ion-color-light);
+  --background: var(--ion-background-color-step-100);
 }
 .signin-container {
   max-width: 1200px;
@@ -16,7 +16,7 @@ ion-content {
   max-width: 400px;
   ion-item {
     margin-top: 8px;
-    --background: var(--ion-color-light);
+    --background: var(--ion-background-color-step-100);
   }
 }
 

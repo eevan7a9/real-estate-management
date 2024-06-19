@@ -5,7 +5,7 @@
 
   <ion-card-content>
     <form [formGroup]="contactForm" (submit)="submit()">
-      <ion-list>
+      <ion-list color="light">
         <ion-item>
           <ion-input
             labelPlacement="floating"
@@ -57,7 +57,7 @@
         </div>
       </ion-list>
 
-      <ion-button expand="block" size="large" type="submit" [disabled]="sent">
+      <ion-button expand="block" type="submit" [disabled]="sent">
         {{ sent ? "Message Sent" : "Send message" }}
       </ion-button>
     </form>
