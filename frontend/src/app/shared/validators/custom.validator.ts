@@ -1,39 +1,61 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
+
+  /**
+   * Validator function to check if the values of two form controls are the same.
+   * @param a name/key of the 1st control.
+   * @param b name/key of the 2nd control.
+   * @param errorName The name of the error to return if validation fails.
+   * @returns returns a validation error object if the condition fails, otherwise null.
+   */
   static isSame(
-    field1: string,
-    field2: string,
+    a: string,
+    b: string,
     errorName: string = 'isSame'
   ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const field1Control = control.get(field1);
-      const field2Control = control.get(field2);
+      const aControl = control.get(a);
+      const bControl = control.get(b);
 
-      if (!field1Control || !field2Control) {
+      if (!aControl || !bControl) {
         return null;
       }
 
-      return field1Control.value === field2Control.value
+      return aControl.value === bControl.value
         ? { [errorName]: true }
         : null;
     };
   }
 
+  /**
+   * Validator function to check if the values of two form controls are different.
+   * @param a name/key of the 1st control.
+   * @param b name/key of the 2nd control.
+   * @param errorName The name of the error to return if validation fails.
+   * @returns returns a validation error object if the condition fails, otherwise null.
+   */
   static isDifferent(
-    v1: string,
-    v2: string,
+    a: string,
+    b: string,
     errorName = 'isDifferent'
   ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const val1 = control.get(v1);
-      const val2 = control.get(v2);
+      const val1 = control.get(a);
+      const val2 = control.get(b);
       return val1 && val2 && val1.value !== val2.value
         ? { [errorName]: true }
         : null;
     };
   }
 
+  /**
+   * Validator function to check if one control's value is greater than another control's value.
+   * @param a name/key of the 1st control.
+   * @param b name/key of the 2nd control.
+   * @param errorName The name of the error to return if validation fails.
+   * @returns returns a validation error object if the condition fails, otherwise null.
+   */
   static isGreaterValidator(
     a: string,
     b: string,
@@ -46,18 +68,12 @@ export class CustomValidators {
     };
   }
 
-  static isAbove(num: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (isNaN(value)) {
-        return;
-      }
-      return value > num ? { isAbove: true } : null;
-    };
-  }
-
+  /**
+   * Validator function to validate value against a regular expression pattern.
+   * @param regex The regular expression pattern to test against.
+   * @param error error to return if the pattern does not match.
+   * @returns returns a validation error object if the pattern does not match, otherwise null.
+   */
   static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       if (!control.value) {
@@ -71,6 +87,10 @@ export class CustomValidators {
     };
   }
 
+  /**
+   * Validator function to validate if a control's value is a valid email address.
+   * @returns returns error object if the value is not a valid email address, otherwise null.
+   */
   static emailValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const email: string = control.value;
@@ -88,6 +108,11 @@ export class CustomValidators {
     };
   }
 
+  /**
+   * 
+   * @param validate if a password confirmation matches the new password. 
+   * @returns returns error object if the value is not a valid email address, otherwise null.
+   */
   static confirmPasswordValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
