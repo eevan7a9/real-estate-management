@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
-import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 import { UserService } from '../user.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import {confirmPasswordValidator} from "../../shared/confirm-password.validator";
+import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 
 @Component({
   selector: 'app-change-password',
@@ -17,7 +16,6 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
-    private customValidators: CustomValidatorsDirective,
     private user: UserService,
     private toast: ToastController,
     private router: Router
@@ -26,16 +24,16 @@ export class ChangePasswordComponent implements OnInit {
     const passwordValidators = [
       Validators.required,
       Validators.minLength(8),
-      this.customValidators.patternValidator(/\d/, { hasNumber: true }),
-      this.customValidators.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
-      this.customValidators.patternValidator(/[a-z]/, { hasSmallCase: true }),
-      this.customValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, { hasSpecialCharacters: true })
-    ]
+      CustomValidators.patternValidator(/\d/, { hasNumber: true }),
+      CustomValidators.patternValidator(/[A-Z]/, { hasCapitalCase: true }),
+      CustomValidators.patternValidator(/[a-z]/, { hasSmallCase: true }),
+      CustomValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, { hasSpecialCharacters: true })
+    ];
 
     this.changePassForm = this.fb.group({
       passwordCurrent: ['', Validators.required],
       passwordNew: ['', passwordValidators],
-      passwordConfirm: ['', [ ...passwordValidators, confirmPasswordValidator ]]
+      passwordConfirm: ['', [...passwordValidators, CustomValidators.confirmPasswordValidator]]
     });
   }
 
@@ -46,7 +44,7 @@ export class ChangePasswordComponent implements OnInit {
       this.error = true;
 
       let message = 'Form is not valid';
-      if (this.changePassForm.controls.passwordConfirm?.errors?.PasswordNoMatch) message  = 'Passwords are not matching'
+      if (this.changePassForm.controls.passwordConfirm?.errors?.PasswordNoMatch) message = 'Passwords are not matching'
 
       const toast = await this.toast.create({
         message,
@@ -69,9 +67,9 @@ export class ChangePasswordComponent implements OnInit {
     });
     toast.present();
 
-    if(res.status === 200) {
+    if (res.status === 200) {
       this.user.signOut();
-      this.router.navigate(['/user/signin'])
+      this.router.navigate(['/user/signin']);
     }
   }
 }

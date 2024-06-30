@@ -1,50 +1,52 @@
-import { Directive } from '@angular/core';
-import { ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-@Directive({
-  selector: '[appCustomValidators]',
-})
-export class CustomValidatorsDirective {
-
-  constructor() {}
-
-  public isSame(v1: string, v2: string, error = 'isSame'): ValidatorFn {
+export class CustomValidators {
+  static isSame(
+    field1: string,
+    field2: string,
+    errorName: string = 'isSame'
+  ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const val1 = control.get(v1);
-      const val2 = control.get(v2);
-      return val1 && val2 && val1.value === val2.value
-        ? { [error]: true }
+      const field1Control = control.get(field1);
+      const field2Control = control.get(field2);
+
+      if (!field1Control || !field2Control) {
+        return null;
+      }
+
+      return field1Control.value === field2Control.value
+        ? { [errorName]: true }
         : null;
     };
   }
 
-  public isDifferent(
+  static isDifferent(
     v1: string,
     v2: string,
-    error = 'isDifferent'
+    errorName = 'isDifferent'
   ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const val1 = control.get(v1);
       const val2 = control.get(v2);
       return val1 && val2 && val1.value !== val2.value
-        ? { [error]: true }
+        ? { [errorName]: true }
         : null;
     };
   }
 
-  public isGreaterValidator(
-    isGreater: string,
-    isLess: string,
-    error = 'isGreater'
+  static isGreaterValidator(
+    a: string,
+    b: string,
+    errorName = 'isGreater'
   ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const val1 = Number(control.value[isGreater].split(',').join(''));
-      const val2 = Number(control.value[isLess].split(',').join(''));
-      return val1 && val2 && val1 <= val2 ? { [error]: true } : null;
+      const val1 = Number(control.value[a].split(',').join(''));
+      const val2 = Number(control.value[b].split(',').join(''));
+      return val1 && val2 && val1 <= val2 ? { [errorName]: true } : null;
     };
   }
 
-  public isAbove(num: number): ValidatorFn {
+  static isAbove(num: number): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value
         .toString()
@@ -56,7 +58,7 @@ export class CustomValidatorsDirective {
     };
   }
 
-  public patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
+  static patternValidator(regex: RegExp, error: ValidationErrors): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
       if (!control.value) {
         // if control is empty return no error
@@ -69,7 +71,7 @@ export class CustomValidatorsDirective {
     };
   }
 
-  public emailValidation(): ValidatorFn {
+  static emailValidation(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const email: string = control.value;
       if (!email) {
@@ -85,4 +87,15 @@ export class CustomValidatorsDirective {
       return null;
     };
   }
+
+  static confirmPasswordValidator: ValidatorFn = (
+    control: AbstractControl
+  ): ValidationErrors | null => {
+    if (!control.parent) {
+      return null;
+    }
+    const passwordNew = control.parent.get('passwordNew').value;
+    const passwordConfirm = control.value;
+    return passwordNew === passwordConfirm ? null : { PasswordNoMatch: true };
+  };
 }

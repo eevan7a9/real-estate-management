@@ -6,8 +6,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
-import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 import { UserService } from '../user.service';
+import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: UntypedFormBuilder,
-    private customValidators: CustomValidatorsDirective,
     private toastCtrl: ToastController,
     private loadingController: LoadingController,
     private router: Router,
@@ -29,20 +28,20 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group(
       {
         fullName: ['', [Validators.required, Validators.minLength(4)]],
-        email: ['', [Validators.required, customValidators.emailValidation()]],
+        email: ['', [Validators.required, CustomValidators.emailValidation()]],
         password: [
           '',
           [
             Validators.required,
             Validators.minLength(8),
-            this.customValidators.patternValidator(/\d/, { hasNumber: true }),
-            this.customValidators.patternValidator(/[A-Z]/, {
+            CustomValidators.patternValidator(/\d/, { hasNumber: true }),
+            CustomValidators.patternValidator(/[A-Z]/, {
               hasCapitalCase: true,
             }),
-            this.customValidators.patternValidator(/[a-z]/, {
+            CustomValidators.patternValidator(/[a-z]/, {
               hasSmallCase: true,
             }),
-            this.customValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, {
+            CustomValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, {
               hasSpecialCharacters: true,
             }),
           ],
@@ -51,7 +50,7 @@ export class RegisterComponent implements OnInit {
         termService: [false, Validators.required],
       },
       {
-        validators: this.customValidators.isDifferent(
+        validators: CustomValidators.isDifferent(
           'password',
           'confirm',
           'notConfirmed'
