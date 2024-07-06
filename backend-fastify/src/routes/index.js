@@ -5,6 +5,7 @@ import { enquiriesRoutes } from "./enquiries/index.js";
 
 export const setFastifyRoutes = function (fastify) {
   fastify.get("/", (_, res) => {
+    console.log("GET Request at base '/'");
     res.send(true);
   });
   fastify.register(usersRoutes, { prefix: "/users" });

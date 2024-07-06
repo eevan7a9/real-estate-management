@@ -73,6 +73,10 @@ mongoose
       );
     } catch (error) {
       fastify.log.error(error);
+      console.log("ERROR", error);
     }
   })
-  .catch((e) => fastify.log.error(e));
+  .catch((e) => {
+    fastify.log.error(e);
+    process.exit(1); // Exit process on connection error
+  });
