@@ -72,6 +72,22 @@
             ></ion-radio>
           </ion-item>
         </ion-radio-group>
+
+        <ion-radio-group formControlName="transactionType">
+          <ion-list-header>
+            <ion-label>Transaction Type</ion-label>
+          </ion-list-header>
+
+          <ion-item lines="none" *ngFor="let transaction of transactionType">
+            <label for="radio">{{ transaction.label }}</label>
+            <ion-radio
+              slot="start"
+              id="radio"
+              [label]="transaction.label"
+              [value]="transaction.value"
+            ></ion-radio>
+          </ion-item>
+        </ion-radio-group>
       </ion-list>
     </section>
     <!-- STEP TWO -->

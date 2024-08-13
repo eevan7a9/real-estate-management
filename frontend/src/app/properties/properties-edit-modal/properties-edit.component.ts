@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { PropertyType } from 'src/app/shared/enums/property';
+import { PropertyType, TransactionType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
@@ -30,6 +30,16 @@ export class PropertiesEditComponent implements OnInit {
       value: PropertyType.land
     }
   ];
+  public transactionType = [
+    {
+      label: 'For Sale',
+      value: 'sale'
+    },
+    {
+      label: 'For Rent',
+      value: 'rent'
+    }
+  ];
   public property: Property;
 
   constructor(
@@ -43,7 +53,7 @@ export class PropertiesEditComponent implements OnInit {
       address: ['', Validators.required],
       description: [''],
       type: [PropertyType.residential],
-
+      transactionType: [TransactionType.forSale],
       price: ['',],
       currency: ['', Validators.maxLength(3)],
       features: [''],
@@ -57,7 +67,7 @@ export class PropertiesEditComponent implements OnInit {
       this.property = property;
       if (property) {
         const {
-          name, address, description, type, price, currency, features, position
+          name, address, description, type, price, currency, features, position, transactionType
         } = property;
 
         this.propertyForm.patchValue(
@@ -69,6 +79,7 @@ export class PropertiesEditComponent implements OnInit {
             price,
             currency,
             features: features ? features.join(', ').trim() : '',
+            transactionType,
             lat: position.lat,
             lng: position.lng
           }
@@ -86,6 +97,7 @@ export class PropertiesEditComponent implements OnInit {
       address,
       description,
       type,
+      transactionType,
       updatedAt,
       price,
       currency,
@@ -100,6 +112,7 @@ export class PropertiesEditComponent implements OnInit {
       address,
       description,
       type,
+      transactionType,
       price,
       currency,
       updatedAt,

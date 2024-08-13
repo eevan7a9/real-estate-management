@@ -17,14 +17,17 @@ export const updateProperty = async function (req, res) {
     features,
     currency,
     contactNumber,
+    transactionType,
     contactEmail,
   } = req.body;
+
   const $set = {
     // Fields to update
     ...(name !== undefined && { name }),
     ...(address !== undefined && { address }),
     ...(description !== undefined && { description }),
     ...(type !== undefined && { type }),
+    ...(transactionType !== undefined && { transactionType }),
     ...(position !== undefined && { position }),
     ...(price !== undefined && { price }),
     ...(features !== undefined && { features }),
@@ -44,7 +47,9 @@ export const updateProperty = async function (req, res) {
       options
     );
     if (!property) {
-      return res.status(404).send({ message: "Error: Can't update unknown property" });
+      return res
+        .status(404)
+        .send({ message: "Error: Can't update unknown property" });
     }
     return res.status(201).send({
       data: { ...property.toObject() },

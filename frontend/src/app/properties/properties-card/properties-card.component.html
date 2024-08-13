@@ -1,6 +1,30 @@
 <ion-card>
-  <div class="tag" *ngIf="userService.user?.user_id === property.user_id">
-    Owned
+  <div
+    class="tag"
+    [ngClass]="[
+      userService.user?.user_id === property.user_id
+        ? 'bg-slate-500'
+        : property.transactionType === transactionType.forRent
+        ? 'bg-warning'
+        : 'bg-success'
+    ]"
+  >
+    <span *ngIf="userService.user?.user_id === property.user_id">
+      Owned |
+      <small>
+        For
+        {{
+          property.transactionType === transactionType.forRent ? "Rent" : "Sale"
+        }}
+      </small>
+    </span>
+
+    <span
+      class="capitalize"
+      *ngIf="userService.user?.user_id !== property.user_id"
+    >
+      For {{ property.transactionType }}
+    </span>
   </div>
 
   <div class="h-[230px]">

@@ -6,6 +6,7 @@ export const propertyProperties = {
     address: { type: "string" },
     description: { type: "string" },
     type: { type: "string" },
+    transactionType: { type: "string" },
     position: {
       type: "object",
       properties: { lat: { type: "number" }, lng: { type: "number" } },

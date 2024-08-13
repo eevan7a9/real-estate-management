@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PropertiesService } from 'src/app/properties/properties.service';
+import { TransactionType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 import { UserService } from 'src/app/user/user.service';
 
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['./properties-card.component.scss'],
 })
 export class PropertiesCardComponent implements OnInit {
-
+  public transactionType = TransactionType;
   @Input() property: Property;
   constructor(
     private propertiesService: PropertiesService,
