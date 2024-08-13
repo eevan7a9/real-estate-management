@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EnquiryTopic } from '../shared/enums/enquiry';
-import { PropertyType } from '../shared/enums/property';
 import { User } from '../shared/interface/user';
 import { UserService } from '../user/user.service';
 import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
@@ -32,6 +31,14 @@ export class EnquiriesPage implements OnInit {
     {
       value: EnquiryTopic.payment,
       label: 'Payment'
+    },
+    {
+      value: 'sent',
+      label: 'Sent'
+    },
+    {
+      value: 'received',
+      label: 'Received'
     },
   ];
   public sortBy = 'latest';
@@ -67,4 +74,10 @@ export class EnquiriesPage implements OnInit {
   public async setLoading(val: boolean) {
     this.progressBar = val;
   }
+
+  setFilterSort(data: { filterBy: string[], sortBy: string }) {
+    this.filterBy = data.filterBy;
+    this.sortBy = data.sortBy;
+  }
+
 }
