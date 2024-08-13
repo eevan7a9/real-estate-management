@@ -1,10 +1,11 @@
 import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { sortListByDate, sortListByName } from 'src/app/shared/utility';
+import {UserService} from "../../user/user.service";
 
 @Component({
   selector: 'app-enquiries-list',
@@ -14,16 +15,20 @@ import { sortListByDate, sortListByName } from 'src/app/shared/utility';
 export class EnquiriesListComponent implements OnDestroy {
 
   @Output() isLoading = new EventEmitter<boolean>();
+  @Output() filterSort = new EventEmitter<{ filterBy: string[], sortBy: string }>();
   public date = new Date();
   public enquiries: Enquiry[] = [];
   public filterBy: string[] = [];
   public sortBy = 'latest';
   public searchText = '';
   private unsubscribe$ = new Subject<void>();
+  private userId: string;
 
   constructor(
     private enquiriesService: EnquiriesService,
+    private userService: UserService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
 
@@ -32,7 +37,23 @@ export class EnquiriesListComponent implements OnDestroy {
   }
 
   public onParentDidEnter() {
-    this.getEnquiries();
+    this.userId = this.userService.user.user_id;
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['filter']) {
+        this.filterBy = params['filter'].split(',');
+      }
+      else this.filterBy = [];
+
+      if (params['sort']) this.sortBy = params['sort'];
+
+      this.filterSort.emit({
+        filterBy: this.filterBy,
+        sortBy: this.sortBy
+      });
+
+      this.getEnquiries();
+    });
   }
 
   public selectEnquiry(enquiry: Enquiry) {
@@ -40,13 +61,19 @@ export class EnquiriesListComponent implements OnDestroy {
   }
 
   public setFilters(filter: string[]) {
-    this.filterBy = filter;
-    this.getEnquiries();
+    this.router.navigate([window.location.pathname],
+      {
+        queryParams: {filter: filter.length ? filter.join() : null},
+        queryParamsHandling: "merge"
+      });
   }
 
   public setSort(sort: string) {
-    this.sortBy = sort;
-    this.getEnquiries();
+    this.router.navigate([window.location.pathname],
+      {
+        queryParams: {sort: sort},
+        queryParamsHandling: "merge"
+      });
   }
 
   public setSearch(text: string) {
@@ -90,7 +117,14 @@ export class EnquiriesListComponent implements OnDestroy {
         this.enquiries = this.searchEnquiries();
       }
       if (this.filterBy.length) {
-        this.enquiries = this.enquiries.filter(item => this.filterBy.includes(item.topic));
+        if (this.filterBy.find(filter => filter === 'sent'))
+          this.enquiries = this.enquiries.filter(item => this.userId === item.users.from.user_id);
+        else if (this.filterBy.find(filter => filter === 'received'))
+          this.enquiries = this.enquiries.filter(item => this.userId !== item.users.from.user_id);
+
+        const filtersWithoutSentAndReceived = this.filterBy.filter(filter => !['sent', 'received'].includes(filter))
+        if (filtersWithoutSentAndReceived.length)
+          this.enquiries = this.enquiries.filter(item => filtersWithoutSentAndReceived.includes(item.topic));
       }
       if (this.enquiriesService.initialFetchDone) {
         this.isLoading.emit(false);
