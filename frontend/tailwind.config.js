@@ -36,7 +36,10 @@ module.exports = {
         // 
         'light': '#f4f5f8',
         'light-shade': '#d7d8da',
-        'light-tint': '#f5f6f9'
+        'light-tint': '#f5f6f9',
+        //
+        'success': '#29c065',
+        'warning': '#ffc409'
       },
     },
   },
