@@ -12,6 +12,7 @@ export const propertyProperties = {
       properties: { lat: { type: "number" }, lng: { type: "number" } },
     },
     price: { type: "number" },
+    paymentFrequency: { type: "string" },
     enquiries: { type: "array" },
     features: { type: "array" },
     profileImage: { type: "string" },

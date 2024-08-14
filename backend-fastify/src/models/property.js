@@ -14,6 +14,10 @@ const propertySchema = new mongoose.Schema(
     },
     position: { lat: Number, lng: Number },
     price: { type: Number },
+    paymentFrequency: {
+      type: String,
+      enum: ["yearly", "quarterly", "monthly", "bi-weekly", "weekly", "daily"],
+    },
     // enquiries: { type: Array },
     features: { type: Array },
     profileImage: { type: String },

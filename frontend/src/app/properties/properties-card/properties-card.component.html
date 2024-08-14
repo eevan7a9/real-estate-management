@@ -58,6 +58,12 @@
 
     <div class="price">
       {{ property?.price | currency : "PHP" }}
+      <span
+        class="capitalize text-[16px]"
+        *ngIf="property.transactionType === transactionType.forRent"
+      >
+        | {{ property.paymentFrequency }}
+      </span>
     </div>
     <ion-button
       (click)="selectProperty(property)"

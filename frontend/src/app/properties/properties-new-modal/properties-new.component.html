@@ -92,6 +92,25 @@
     </section>
     <!-- STEP TWO -->
     <section *ngIf="step === 2">
+      <ion-item
+        lines="none"
+        *ngIf="propertyForm.get('transactionType').value === 'rent'"
+      >
+        <ion-select
+          label="Payment Frequency"
+          label-placement="floating"
+          fill="outline"
+          formControlName="paymentFrequency"
+        >
+          <ion-select-option
+            *ngFor="let frequency of rentPaymentFrequency"
+            [value]="frequency.value"
+          >
+            {{ frequency.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
       <ion-item lines="none">
         <ion-input
           type="number"

@@ -57,6 +57,21 @@
 
     <div class="divider"></div>
 
+    <ion-item *ngIf="propertyForm.get('transactionType').value === 'rent'">
+      <ion-select
+        label="Payment Frequency"
+        label-placement="floating"
+        formControlName="paymentFrequency"
+      >
+        <ion-select-option
+          *ngFor="let frequency of rentPaymentFrequency"
+          [value]="frequency.value"
+        >
+          {{ frequency.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <ion-item>
       <ion-label color="primary" position="floating">Price:</ion-label>
       <ion-input type="text" formControlName="price"></ion-input>

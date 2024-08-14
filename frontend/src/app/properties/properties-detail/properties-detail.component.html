@@ -44,8 +44,10 @@
 
           <ion-card class="shadow-none my-4 mx-0">
             <ion-card-header>
-              Transaction Type 
-              <span class="capitalize text-[20px] font-semibold">For {{ property.transactionType }}</span>
+              Transaction Type
+              <span class="capitalize text-[20px] font-semibold">
+                For {{ property.transactionType }}
+              </span>
             </ion-card-header>
           </ion-card>
 
@@ -85,15 +87,19 @@
           <ion-card class="property-price" *ngIf="property.price">
             <ion-card-header> Price </ion-card-header>
             <ion-card-content class="price">
-              {{ property.price | currency: property.currency:"symbol" }}
+              {{ property.price | currency : property.currency : "symbol" }}
+              <span
+                class="capitalize text-[18px]"
+                *ngIf="property.transactionType === transactionType.forRent"
+              >
+                | {{ property.paymentFrequency }}
+              </span>
             </ion-card-content>
           </ion-card>
 
           <ion-card class="enquiry-section" *ngIf="!isOwner">
             <ion-card-header>
-              <ion-card-title>
-                Enquire for more Information
-              </ion-card-title>
+              <ion-card-title> Enquire for more Information </ion-card-title>
             </ion-card-header>
 
             <ion-card-content>

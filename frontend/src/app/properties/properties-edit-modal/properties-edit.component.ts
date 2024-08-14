@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { PropertyType, TransactionType } from 'src/app/shared/enums/property';
+import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
@@ -33,11 +33,37 @@ export class PropertiesEditComponent implements OnInit {
   public transactionType = [
     {
       label: 'For Sale',
-      value: 'sale'
+      value: TransactionType.forSale
     },
     {
       label: 'For Rent',
-      value: 'rent'
+      value: TransactionType.forRent
+    }
+  ];
+  public rentPaymentFrequency = [
+    {
+      label: 'Yearly',
+      value: PaymentFrequency.yearly
+    },
+    {
+      label: 'Quarterly',
+      value: PaymentFrequency.quarterly
+    },
+    {
+      label: 'Monthly',
+      value: PaymentFrequency.monthly
+    },
+    {
+      label: 'Bi-Weekly',
+      value: PaymentFrequency.biWeekly
+    },
+    {
+      label: 'Weekly',
+      value: PaymentFrequency.weekly
+    },
+    {
+      label: 'Daily',
+      value: PaymentFrequency.daily
     }
   ];
   public property: Property;
@@ -55,6 +81,7 @@ export class PropertiesEditComponent implements OnInit {
       type: [PropertyType.residential],
       transactionType: [TransactionType.forSale],
       price: ['',],
+      paymentFrequency: [PaymentFrequency.monthly],
       currency: ['', Validators.maxLength(3)],
       features: [''],
       lat: ['0', Validators.required],
@@ -67,7 +94,7 @@ export class PropertiesEditComponent implements OnInit {
       this.property = property;
       if (property) {
         const {
-          name, address, description, type, price, currency, features, position, transactionType
+          name, address, description, type, price, paymentFrequency, currency, features, position, transactionType
         } = property;
 
         this.propertyForm.patchValue(
@@ -77,6 +104,7 @@ export class PropertiesEditComponent implements OnInit {
             description,
             type,
             price,
+            paymentFrequency,
             currency,
             features: features ? features.join(', ').trim() : '',
             transactionType,
@@ -100,6 +128,7 @@ export class PropertiesEditComponent implements OnInit {
       transactionType,
       updatedAt,
       price,
+      paymentFrequency,
       currency,
       features,
       lat,
@@ -114,6 +143,7 @@ export class PropertiesEditComponent implements OnInit {
       type,
       transactionType,
       price,
+      paymentFrequency,
       currency,
       updatedAt,
       features: features.split(',').filter((item: string) => item.trim() !== ''),

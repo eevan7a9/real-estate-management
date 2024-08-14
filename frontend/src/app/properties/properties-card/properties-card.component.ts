@@ -14,6 +14,7 @@ import { UserService } from 'src/app/user/user.service';
 export class PropertiesCardComponent implements OnInit {
   public transactionType = TransactionType;
   @Input() property: Property;
+
   constructor(
     private propertiesService: PropertiesService,
     private router: Router,
