@@ -11,7 +11,6 @@ ion-card {
   font-weight: 900;
   color: var(--ion-color-primary-contrast);
   border-bottom-right-radius: 12px;
-  background: var(--ion-color-success);
 }
 
 .name {
@@ -21,6 +20,7 @@ ion-card {
   height: 28px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
@@ -30,6 +30,7 @@ ion-card {
   min-height: 68px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 

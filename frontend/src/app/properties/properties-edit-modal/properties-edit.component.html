@@ -42,9 +42,35 @@
           <ion-radio slot="start" [value]="type.value"></ion-radio>
         </ion-item>
       </ion-radio-group>
+
+      <ion-radio-group formControlName="transactionType">
+        <ion-list-header>
+          <ion-label color="primary">Transaction Type</ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let transaction of transactionType">
+          <ion-label color="dark">{{ transaction.label }}</ion-label>
+          <ion-radio slot="start" [value]="transaction.value"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
     </ion-list>
 
     <div class="divider"></div>
+
+    <ion-item *ngIf="propertyForm.get('transactionType').value === 'rent'">
+      <ion-select
+        label="Payment Frequency"
+        label-placement="floating"
+        formControlName="paymentFrequency"
+      >
+        <ion-select-option
+          *ngFor="let frequency of rentPaymentFrequency"
+          [value]="frequency.value"
+        >
+          {{ frequency.label }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
 
     <ion-item>
       <ion-label color="primary" position="floating">Price:</ion-label>

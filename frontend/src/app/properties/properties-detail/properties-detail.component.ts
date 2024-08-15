@@ -16,6 +16,7 @@ import { UserService } from 'src/app/user/user.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
+import { TransactionType } from 'src/app/shared/enums/property';
 
 @Component({
   selector: 'app-properties-detail',
@@ -27,6 +28,7 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
   public property: Property | undefined;
   public isOwner = false;
   public ready = false;
+  public transactionType = TransactionType;
   private unsubscribe$ = new Subject<void>();
 
   constructor(

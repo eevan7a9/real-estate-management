@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Validators, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 
-import { PropertyType } from 'src/app/shared/enums/property';
+import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
 import { PropertiesService } from '../properties.service';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 
@@ -30,6 +30,42 @@ export class PropertiesNewComponent implements OnInit {
       value: PropertyType.land
     }
   ];
+  public transactionType = [
+    {
+      label: 'For Sale',
+      value: TransactionType.forSale
+    },
+    {
+      label: 'For Rent',
+      value: TransactionType.forRent
+    }
+  ];
+  public rentPaymentFrequency = [
+    {
+      label: 'Yearly',
+      value: PaymentFrequency.yearly
+    },
+    {
+      label: 'Quarterly',
+      value: PaymentFrequency.quarterly
+    },
+    {
+      label: 'Monthly',
+      value: PaymentFrequency.monthly
+    },
+    {
+      label: 'Bi-Weekly',
+      value: PaymentFrequency.biWeekly
+    },
+    {
+      label: 'Weekly',
+      value: PaymentFrequency.weekly
+    },
+    {
+      label: 'Daily',
+      value: PaymentFrequency.daily
+    }
+  ];
   public step = 1;
   public error = false;
   public isSubmit = false;
@@ -41,14 +77,15 @@ export class PropertiesNewComponent implements OnInit {
     private toastCtrl: ToastController,
   ) {
     this.propertyForm = this.formBuilder.group({
-      id: 'test',
       // Step 1
       name: ['', [Validators.required, Validators.minLength(4)]],
       address: ['', Validators.required],
       description: ['', [Validators.required, Validators.minLength(10)]],
       type: [PropertyType.residential],
+      transactionType: [TransactionType.forSale],
       // Step 2
       price: ['',],
+      paymentFrequency: [PaymentFrequency.monthly],
       currency: ['PHP', [Validators.maxLength(3), Validators.pattern('^[a-zA-Z ]*$')]],
       features: [''],
       lat: ['0', Validators.required],

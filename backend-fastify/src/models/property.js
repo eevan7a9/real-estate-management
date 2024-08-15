@@ -7,8 +7,17 @@ const propertySchema = new mongoose.Schema(
     address: { type: String, required: true },
     description: { type: String, minlength: 10 },
     type: { type: String, required: true },
+    transactionType: {
+      type: String,
+      enum: ["sale", "rent"],
+      required: true,
+    },
     position: { lat: Number, lng: Number },
     price: { type: Number },
+    paymentFrequency: {
+      type: String,
+      enum: ["yearly", "quarterly", "monthly", "bi-weekly", "weekly", "daily"],
+    },
     // enquiries: { type: Array },
     features: { type: Array },
     profileImage: { type: String },

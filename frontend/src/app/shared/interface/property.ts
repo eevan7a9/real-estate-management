@@ -1,4 +1,4 @@
-import { PropertyType } from '../enums/property';
+import { PaymentFrequency, PropertyType, TransactionType } from '../enums/property';
 import { Coord } from './map';
 
 export interface Property {
@@ -7,8 +7,10 @@ export interface Property {
   address: string;
   description?: string;
   type: PropertyType;
+  transactionType: TransactionType;
   position: Coord;
   price: number;
+  paymentFrequency?: PaymentFrequency;
   enquiries?: string[];
   features?: string[];
   images?: string[];
