@@ -4,7 +4,7 @@ import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
 import { User } from "../../models/user.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
-import { EnquiryNotification } from "../../enums/enquiries.js";
+import { NotificationType } from "../../enums/notifications.js";
 
 /**
  * Creates an enquiry.
@@ -21,7 +21,9 @@ export const createEnquiry = async function (req, res) {
   const userFrom = userIdToken(token);
 
   if (userFrom === userTo) {
-    return res.status(400).send({ message: "Not allowed to send enquiry to yourself." });
+    return res
+      .status(400)
+      .send({ message: "Not allowed to send enquiry to yourself." });
   }
 
   const targetUser = await User.findOne({ user_id: userTo });
@@ -31,8 +33,8 @@ export const createEnquiry = async function (req, res) {
 
   const users = {
     from: { user_id: userFrom, keep: true },
-    to: { user_id: userTo, keep: true }
-  }
+    to: { user_id: userTo, keep: true },
+  };
 
   try {
     const newEnquiry = new Enquiry({
@@ -44,7 +46,9 @@ export const createEnquiry = async function (req, res) {
     });
     await newEnquiry.save();
     res.status(201).send({ data: newEnquiry });
-    sendTargetedNotification(EnquiryNotification.new, newEnquiry, userTo);
+    
+    // Send Enquiry notification to Intended user
+    sendTargetedNotification(NotificationType.enquiry.new, newEnquiry, userTo);
     return;
   } catch (error) {
     return res.status(400).send(error);

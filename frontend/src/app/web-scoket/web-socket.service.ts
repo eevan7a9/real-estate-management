@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Enquiry } from '../shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries/enquiries.service';
 import { WebSocketNotification } from '../shared/interface/notification';
-import { EnquiryNotification } from '../shared/enums/enquiry';
+import { SocketNotificationType } from '../shared/enums/notification';
 
 const parseMessage =  (message: string) => {
   try {
@@ -64,7 +64,7 @@ export class WebSocketService {
 
   handleNotification(notfication: WebSocketNotification): void {
     switch (notfication.type) {
-      case EnquiryNotification.new:
+      case SocketNotificationType.EnquiryNew:
         this.enquiry.insertEnquiryToState(notfication.payload as Enquiry);
         break;
 

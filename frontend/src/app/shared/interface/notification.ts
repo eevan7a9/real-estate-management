@@ -1,4 +1,4 @@
-import { EnquiryNotification } from '../enums/enquiry';
+import { SocketNotificationType } from '../enums/notification';
 import { Enquiry } from './enquiry';
 import { Property } from './property';
 
@@ -13,6 +13,6 @@ export interface Notification {
 }
 
 export interface WebSocketNotification {
-  type: EnquiryNotification | 'message';
+  type: SocketNotificationType;
   payload: Enquiry | Property;
 }
