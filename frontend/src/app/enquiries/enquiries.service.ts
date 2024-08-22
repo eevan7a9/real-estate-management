@@ -1,18 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 import { Enquiry, EnquiryCreate } from '../shared/interface/enquiry';
 import { Property } from '../shared/interface/property';
-import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
+import { requestOptions } from '../shared/utility/requests';
 
 const enquiryUrl = environment.api.server + 'enquiries';
-const requestOptions = (token = '', body = {}) => ({
-  headers: new HttpHeaders(headerDict({ token })),
-  body,
-});
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +46,10 @@ export class EnquiriesService {
       const token = this.userService.token();
       this.enquiries = (
         await firstValueFrom(
-          this.http.get<ApiResponse<Enquiry[]>>(enquiryUrl, requestOptions(token))
+          this.http.get<ApiResponse<Enquiry[]>>(
+            enquiryUrl,
+            requestOptions({ token })
+          )
         )
       ).data;
 
@@ -68,7 +67,7 @@ export class EnquiriesService {
         await firstValueFrom(
           this.http.get<ApiResponse<Enquiry>>(
             enquiryUrl + '/' + enqId,
-            requestOptions(token)
+            requestOptions({ token })
           )
         )
       ).data;
@@ -95,7 +94,11 @@ export class EnquiriesService {
     console.log(formData);
     try {
       const res = await firstValueFrom(
-        this.http.post<ApiResponse<Enquiry>>(enquiryUrl, formData, requestOptions(token))
+        this.http.post<ApiResponse<Enquiry>>(
+          enquiryUrl,
+          formData,
+          requestOptions({ token })
+        )
       );
       this.insertEnquiryToState(res.data);
       return res;
@@ -110,7 +113,7 @@ export class EnquiriesService {
     const url = enquiryUrl + '/' + enqId;
     try {
       const res = await firstValueFrom(
-        this.http.delete<ApiResponse>(url, requestOptions(token))
+        this.http.delete<ApiResponse>(url, requestOptions({ token }))
       );
       if (res && res.status === 200) {
         this.enquiries = this.enquiries.filter(
@@ -129,7 +132,11 @@ export class EnquiriesService {
     const url = enquiryUrl + '/' + enqId;
     try {
       const { data } = await firstValueFrom(
-        this.http.patch<ApiResponse<Enquiry>>(url, { read: true }, requestOptions(token))
+        this.http.patch<ApiResponse<Enquiry>>(
+          url,
+          { read: true },
+          requestOptions({ token })
+        )
       );
       // UPDATE ENQUIRIES && CURRENT ENQUIRY
       this.enquiries = this.enquiries.map((enquiry) =>

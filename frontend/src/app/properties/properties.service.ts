@@ -1,21 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
-import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
+import { requestOptions } from '../shared/utility/requests';
 
 const propertyUrl = environment.api.server + 'properties';
-const requestOptions = (
-  { token = '', contentType = 'application/json' },
-  body = {}
-) => ({
-  headers: new HttpHeaders(headerDict({ token, contentType })),
-  body,
-});
 
 @Injectable({
   providedIn: 'root',

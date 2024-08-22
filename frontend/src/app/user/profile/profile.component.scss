@@ -1,9 +1,11 @@
 ion-content {
   --background: var(--ion-background-color-step-100);
 }
-ion-card {
-  box-shadow: none;
+
+.tab-button {
+  --border-radius: 0;
 }
+
 .profile-container {
   min-height: 100%;
   max-width: 1600px;

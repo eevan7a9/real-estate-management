@@ -31,9 +31,9 @@
               }
             ],
             "styles": [
-              "src/global.scss",
               "src/theme/variables.scss",
-              "./node_modules/leaflet/dist/leaflet.css"
+              "src/global.scss",
+              "./node_modules/leaflet/dist/leaflet.css",
             ],
             "scripts": [
               "node_modules/marked/marked.min.js",
