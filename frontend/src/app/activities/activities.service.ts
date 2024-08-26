@@ -19,7 +19,6 @@ export class ActivitiesService {
 
   constructor(private http: HttpClient, private user: UserService) {
     this.activities$ = this.activitiesSub.asObservable();
-    this.fetchActivities();
   }
 
   public get activities(): Activity[] {
@@ -32,7 +31,6 @@ export class ActivitiesService {
 
   public async fetchActivities(): Promise<ApiResponse<Activity[]>> {
     try {
-      console.log('fetchActivities()');
       this.loading.set(true);
       const res = await firstValueFrom(
         this.http.get<ApiResponse<Activity[]>>(
@@ -47,5 +45,9 @@ export class ActivitiesService {
     } finally {
       this.loading.set(false);
     }
+  }
+
+  public insertActivities(activity: Activity): void {
+    this.activities = [activity, ...this.activities];
   }
 }

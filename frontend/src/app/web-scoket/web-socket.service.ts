@@ -4,8 +4,10 @@ import { Enquiry } from '../shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries/enquiries.service';
 import { WebSocketNotification } from '../shared/interface/notification';
 import { SocketNotificationType } from '../shared/enums/notification';
+import { ActivitiesService } from '../activities/activities.service';
+import { Activity } from '../shared/interface/activities';
 
-const parseMessage =  (message: string) => {
+const parseMessage = (message: string) => {
   try {
     const parsedMessage = JSON.parse(message);
     return parsedMessage;
@@ -20,7 +22,10 @@ export class WebSocketService {
   private socket: WebSocket;
   public messages: string[] = [];
 
-  constructor(private enquiry: EnquiriesService) {}
+  constructor(
+    private enquiry: EnquiriesService,
+    private activities: ActivitiesService
+  ) {}
 
   connect(token?: string): void {
     this.socket = new WebSocket(
@@ -64,7 +69,11 @@ export class WebSocketService {
 
   handleNotification(notfication: WebSocketNotification): void {
     switch (notfication.type) {
-      case SocketNotificationType.EnquiryNew:
+      case SocketNotificationType.Activity:
+        this.activities.insertActivities(notfication.payload as Activity)
+        break;
+
+      case SocketNotificationType.Enquiry:
         this.enquiry.insertEnquiryToState(notfication.payload as Enquiry);
         break;
 

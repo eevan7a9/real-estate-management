@@ -1,24 +1,21 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { User } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
+import { ActivitiesService } from 'src/app/activities/activities.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
   public imgUrl: any = './assets/images/avatar.png';
   public user: User;
   public isActivityActive = signal(true);
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private activityService: ActivitiesService) {
     this.userService.user$.subscribe(data => this.user = data);
-  }
-
-  ngOnInit() {
-
   }
 
   public toggleUpload() {

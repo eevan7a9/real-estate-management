@@ -97,7 +97,7 @@ export class UserService {
   }
 
   public isPropertyOwner(property: Property): boolean {
-    return this.user && this.user.user_id === property.user_id;
+    return this.user && this.user?.user_id === property?.user_id;
   }
 
   public async changePassword(passwordNew: string, passwordCurrent: string): Promise<ApiResponse> {

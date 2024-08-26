@@ -15,7 +15,7 @@ const propertyUrl = environment.api.server + 'properties';
 })
 export class PropertiesService {
   public readonly properties$: Observable<Property[]>;
-  public readonly property$: Observable<Property>;
+  public readonly property$: Observable<Property | null>;
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
   private readonly propertySub = new BehaviorSubject<Property>(null);
 
@@ -44,7 +44,9 @@ export class PropertiesService {
   public async fetchProperties(): Promise<void> {
     try {
       this.properties = (
-        await firstValueFrom(this.http.get<ApiResponse<Property[]>>(propertyUrl))
+        await firstValueFrom(
+          this.http.get<ApiResponse<Property[]>>(propertyUrl)
+        )
       ).data;
     } catch (error) {
       console.error(error);
@@ -54,7 +56,9 @@ export class PropertiesService {
   public async fetchProperty(id: string) {
     try {
       this.property = (
-        await firstValueFrom(this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id))
+        await firstValueFrom(
+          this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id)
+        )
       ).data;
     } catch (error) {
       console.error(error);
@@ -111,7 +115,10 @@ export class PropertiesService {
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
       const res = await firstValueFrom(
-        this.http.delete<ApiResponse<string[]>>(url, requestOptions({ token }, { images }))
+        this.http.delete<ApiResponse<string[]>>(
+          url,
+          requestOptions({ token }, { images })
+        )
       );
 
       this.property.images = this.property.images.filter(
@@ -134,17 +141,24 @@ export class PropertiesService {
       this.properties = this.properties.filter(
         (property) => property.property_id !== res.data.property_id
       );
+      this.propertySub.next(null);
     } catch (error) {
       console.error(error);
     }
   }
 
-  public async updateProperty(updated: Property): Promise<ApiResponse<Property>> {
+  public async updateProperty(
+    updated: Property
+  ): Promise<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
       const token = this.userService.token();
       const res = await firstValueFrom(
-        this.http.patch<ApiResponse<Property>>(url, updated, requestOptions({ token }))
+        this.http.patch<ApiResponse<Property>>(
+          url,
+          updated,
+          requestOptions({ token })
+        )
       );
 
       // UPDATE CURRENT PROPERTIES

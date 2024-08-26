@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="user">
   <div class="profile-container ion-padding-vertical">
     <ion-grid>
       <ion-row>
@@ -121,15 +121,15 @@
             </ion-card-header>
 
             @if (isActivityActive()) {
-              <ion-card-content class="ml-8">
-                <app-activity-timeline />
-              </ion-card-content>
+            <ion-card-content class="ml-8">
+              <app-activity-timeline />
+            </ion-card-content>
             } @else {
-              <ion-card-content class="ml-8">
-                <div class="h-[100px] flex items-center justify-center">
-                  <h1>EMPTY<ion-icon name="alert-circle-outline"></ion-icon></h1>
-                </div>
-              </ion-card-content>
+            <ion-card-content class="ml-8">
+              <div class="h-[100px] flex items-center justify-center">
+                <h1>EMPTY<ion-icon name="alert-circle-outline"></ion-icon></h1>
+              </div>
+            </ion-card-content>
             }
           </ion-card>
         </ion-col>

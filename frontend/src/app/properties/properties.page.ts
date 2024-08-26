@@ -68,7 +68,6 @@ export class PropertiesPage implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.userService.user$.pipe(takeUntil(this.unSubscribe$)).subscribe((val) => {
-      console.log('subscsriptoon')
       this.user = val
     })
   }

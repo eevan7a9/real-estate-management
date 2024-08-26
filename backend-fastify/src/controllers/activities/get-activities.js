@@ -10,7 +10,7 @@ import { userIdToken } from "../../utils/users.js";
 export const getActivities = async function (req, res) {
   const token = authBearerToken(req);
   const id = userIdToken(token);
-  const activities = await Activity.find({ user_id: id });
+  const activities = await Activity.find({ user_id: id }).sort({ createdAt: -1 });
 
   res.status(200).send({
     status: 200,

@@ -51,9 +51,9 @@ export class NotificationsComponent implements OnInit {
 
   getItemBadge(type: string) {
     switch (type) {
-      case SocketNotificationType.EnquiryNew:
+      case SocketNotificationType.Activity:
         return 'secondary';
-      case SocketNotificationType.PropertyNew:
+      case SocketNotificationType.Enquiry:
         return 'success';
       default:
         return 'primary';
