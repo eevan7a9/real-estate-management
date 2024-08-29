@@ -20,6 +20,12 @@
         >
         View Property
       </button>
+      <button type="button" (click)="viewEnquiry(activity)"
+        class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
+        *ngIf="activity.enquiry_id"
+        >
+        View Enquiry
+      </button>
     </li>
     }
   </ol>

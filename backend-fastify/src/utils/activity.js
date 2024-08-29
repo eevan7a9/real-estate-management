@@ -12,6 +12,16 @@ import { ActivityType } from "../enums/activity.js";
  */
 
 /**
+ * @typedef {Object} Enquiry
+ * @property {string} enquiry_id - unique identifier
+ * @property {string} content - the content
+ * @property {string} email - email of the user who will received the Enquiry
+ * @property {string} title - A title
+ * @property {string} topic - the Enquiry topic
+ * @property {Partial<Property>} property - property being enquired
+ */
+
+/**
  * @param {string} currency
  * @param {number} price
  * @param {string} transactionType
@@ -100,6 +110,46 @@ export const activityPropertyDescription = function (
 
     case ActivityType.property.update:
       return propertyDescriptionUpdate(property);
+    default:
+      break;
+  }
+  return msg;
+};
+
+/**
+ * @param {Enquiry} enquiry
+ */
+const enquiryDescriptionCreate = function (enquiry) {
+  const { topic, property } = enquiry;
+  return `Enquiry sent to property [${
+    property.name ? propertyName(property.name) : property.property_id
+  }] regarding a topic about ${topic}.`;
+};
+
+/**
+ * @param {Enquiry} enquiry
+ */
+const enquiryDescriptionDelete = function (enquiry) {
+  const { topic, property } = enquiry;
+  return `Deleted a Enquiry that was sent to property [${
+    property.name ? propertyName(property.name) : property.property_id
+  }] regarding a topic about ${topic}.`;
+};
+
+/**
+ *
+ * @param {string} action
+ * @param {Enquiry} enquiry
+ * @returns {string}
+ */
+export const activityEnquiryDescription = function (action, enquiry) {
+  switch (action) {
+    case ActivityType.enquiry.new:
+      return enquiryDescriptionCreate(enquiry);
+
+    case ActivityType.enquiry.delete:
+      return enquiryDescriptionDelete(enquiry);
+
     default:
       break;
   }

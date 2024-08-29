@@ -7,13 +7,13 @@ const propertySchema = new mongoose.Schema({
 
 const usersSchema = new mongoose.Schema({
   from: {
-    user_id: { type: String },
-    keep: { type: Boolean, default: true, required: true }
+    user_id: { type: String, required: true },
+    keep: { type: Boolean, default: true, required: true },
   },
   to: {
-    user_id: { type: String },
-    keep: { type: Boolean, default: true, required: true }
-  }
+    user_id: { type: String, required: true },
+    keep: { type: Boolean, default: true, required: true },
+  },
 });
 
 const replyToSchema = new mongoose.Schema({
@@ -25,14 +25,14 @@ const replyToSchema = new mongoose.Schema({
 const enquirySchema = new mongoose.Schema(
   {
     enquiry_id: { type: String, required: true },
-    content: { type: String, minlength: 10 },
-    email: { type: String },
+    content: { type: String, minlength: 10, maxlength: 1000 },
+    email: { type: String, required: true },
     title: { type: String, required: true },
     topic: { type: String, required: true },
     read: { type: Boolean, default: false },
     property: propertySchema,
     replyTo: replyToSchema,
-    users: usersSchema
+    users: usersSchema,
   },
   {
     timestamps: true,

@@ -5,6 +5,9 @@ import { userIdToken } from "../../utils/users.js";
 import { User } from "../../models/user.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 import { NotificationType } from "../../enums/notifications.js";
+import { createActivity } from "../../services/activity.js";
+import { ActivityType } from "../../enums/activity.js";
+import { activityEnquiryDescription } from "../../utils/activity.js";
 
 /**
  * Creates an enquiry.
@@ -45,10 +48,22 @@ export const createEnquiry = async function (req, res) {
       ...req.body,
     });
     await newEnquiry.save();
-    res.status(201).send({ data: newEnquiry });
-    
-    // Send Enquiry notification to Intended user
+
+    // We Log User activity
+    const activity = await createActivity({
+      action: ActivityType.enquiry.new,
+      description: activityEnquiryDescription(ActivityType.enquiry.new, newEnquiry),
+      user_id: userFrom,
+      enquiry_id: newEnquiry.enquiry_id,
+    });
+    if (activity) {
+      // Send Websocket Notification to update User activity.
+      sendTargetedNotification(NotificationType.activity, activity, userFrom);
+    }
+    // Send Enquiry notification to Intended User.
     sendTargetedNotification(NotificationType.enquiry, newEnquiry, userTo);
+
+    res.status(201).send({ data: newEnquiry });
     return;
   } catch (error) {
     return res.status(400).send(error);

@@ -37,4 +37,10 @@ export class ActivityTimelineComponent implements OnInit, OnDestroy {
       this.router.navigate(['properties', activity.property_id])
     }
   }
+
+  public viewEnquiry(activity: Activity): void {
+    if(activity.enquiry_id) {
+      this.router.navigate(['enquiries', activity.enquiry_id])
+    }
+  }
 }

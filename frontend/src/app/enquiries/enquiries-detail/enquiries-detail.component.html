@@ -89,3 +89,18 @@
     </div>
   </div>
 </ion-content>
+
+<ion-content *ngIf="!enquiry">
+  <div class="details-container p-4">
+    <ion-card class="border border-2">
+      <ion-card-header>
+        <h1 class="text-[42px] text-center">Error 404</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <h5 class="!text-[24px] text-center">
+          Enquiry not found. It may not exist or has been deleted.
+        </h5>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
