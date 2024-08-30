@@ -2,7 +2,7 @@ import { ActivityType } from "../../enums/activity.js";
 import { NotificationType } from "../../enums/notifications.js";
 import { Enquiry } from "../../models/enquiry.js";
 import { createActivity } from "../../services/activity.js";
-import { activityEnquiryDescription } from "../../utils/activity.js";
+import { activityEnquiryDescription } from "../../utils/activity/index.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";

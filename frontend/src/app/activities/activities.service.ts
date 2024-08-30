@@ -50,4 +50,9 @@ export class ActivitiesService {
   public insertActivities(activity: Activity): void {
     this.activities = [activity, ...this.activities];
   }
+
+  public resetState(): void {
+    this.activities = [];
+    this.loading.set(false);
+  }
 }

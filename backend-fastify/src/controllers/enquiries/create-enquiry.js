@@ -7,7 +7,7 @@ import { sendTargetedNotification } from "../../websocket/index.js";
 import { NotificationType } from "../../enums/notifications.js";
 import { createActivity } from "../../services/activity.js";
 import { ActivityType } from "../../enums/activity.js";
-import { activityEnquiryDescription } from "../../utils/activity.js";
+import { activityEnquiryDescription } from "../../utils/activity/index.js";
 
 /**
  * Creates an enquiry.

@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { User } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
-import { ActivitiesService } from 'src/app/activities/activities.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +13,7 @@ export class ProfileComponent {
   public user: User;
   public isActivityActive = signal(true);
 
-  constructor(private userService: UserService, private activityService: ActivitiesService) {
+  constructor(private userService: UserService) {
     this.userService.user$.subscribe(data => this.user = data);
   }
 

@@ -1,5 +1,3 @@
-import { ActivityType } from "../enums/activity.js";
-
 /**
  * @typedef {Object} Property
  * @property {string} property_id - unique identifier
@@ -51,7 +49,7 @@ const propertyName = function (name) {
  * @param {Property} property
  * @returns {string}
  */
-const propertyDescriptionCreate = function (property) {
+export const propertyDescriptionCreate = function (property) {
   const { name, transactionType, price, paymentFrequency, currency } = property;
   return `Created a Property named [${propertyName(name)}] ${propertyPrice(
     currency,
@@ -66,7 +64,7 @@ const propertyDescriptionCreate = function (property) {
  * @param {Property} property
  * @returns {string}
  */
-const propertyDescriptionDelete = function (property) {
+export const propertyDescriptionDelete = function (property) {
   const { transactionType, name } = property;
   return `Deleted a Property listed for ${transactionType} named [${propertyName(
     name
@@ -78,7 +76,7 @@ const propertyDescriptionDelete = function (property) {
  * @param {Property} property
  * @returns {string}
  */
-const propertyDescriptionUpdate = function (property) {
+export const propertyDescriptionUpdate = function (property) {
   const { name, transactionType, price, paymentFrequency, currency } = property;
   return `Updated a Property listed for ${transactionType} named [${propertyName(
     name
@@ -86,40 +84,9 @@ const propertyDescriptionUpdate = function (property) {
 };
 
 /**
- *
- * @param {string} action
- * @param {Property} property
- * @returns {string}
- */
-export const activityPropertyDescription = function (
-  action,
-  property = {
-    name: "",
-    transactionType: "sale",
-    price: 0,
-    paymentFrequency: "",
-    currency: "",
-  }
-) {
-  switch (action) {
-    case ActivityType.property.new:
-      return propertyDescriptionCreate(property);
-
-    case ActivityType.property.delete:
-      return propertyDescriptionDelete(property);
-
-    case ActivityType.property.update:
-      return propertyDescriptionUpdate(property);
-    default:
-      break;
-  }
-  return msg;
-};
-
-/**
  * @param {Enquiry} enquiry
  */
-const enquiryDescriptionCreate = function (enquiry) {
+export const enquiryDescriptionCreate = function (enquiry) {
   const { topic, property } = enquiry;
   return `Enquiry sent to property [${
     property.name ? propertyName(property.name) : property.property_id
@@ -129,29 +96,9 @@ const enquiryDescriptionCreate = function (enquiry) {
 /**
  * @param {Enquiry} enquiry
  */
-const enquiryDescriptionDelete = function (enquiry) {
+export const enquiryDescriptionDelete = function (enquiry) {
   const { topic, property } = enquiry;
   return `Deleted a Enquiry that was sent to property [${
     property.name ? propertyName(property.name) : property.property_id
   }] regarding a topic about ${topic}.`;
-};
-
-/**
- *
- * @param {string} action
- * @param {Enquiry} enquiry
- * @returns {string}
- */
-export const activityEnquiryDescription = function (action, enquiry) {
-  switch (action) {
-    case ActivityType.enquiry.new:
-      return enquiryDescriptionCreate(enquiry);
-
-    case ActivityType.enquiry.delete:
-      return enquiryDescriptionDelete(enquiry);
-
-    default:
-      break;
-  }
-  return msg;
 };

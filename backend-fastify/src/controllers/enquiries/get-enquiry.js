@@ -16,7 +16,7 @@ export const getEnquiry = async function (req, res) {
     });
 
     if (!enquiry) {
-      return res.status(404).send({ message: "Can't find Enquiry." });
+      return res.status(200).send({ message: "Can't find Enquiry." });
     }
     return res.status(200).send({ data: enquiry });
   } catch (error) {

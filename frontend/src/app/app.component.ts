@@ -7,6 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from './shared/interface/user';
 
+import { ActivitiesService } from './activities/activities.service';
 import { EnquiriesService } from './enquiries/enquiries.service';
 import { StorageService } from './shared/services/storage/storage.service';
 import { UserService } from './user/user.service';
@@ -15,6 +16,7 @@ import { Enquiry } from './shared/interface/enquiry';
 
 // Register swiper js
 import { register } from 'swiper/element/bundle';
+
 register();
 
 interface NavLinks {
@@ -58,6 +60,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private http: HttpClient,
     private enquiriesService: EnquiriesService,
+    private activities: ActivitiesService,
     private webSocket: WebSocketService
   ) { }
 
@@ -117,8 +120,9 @@ export class AppComponent implements OnInit {
           handler: async () => {
             await this.userService.signOut();
             this.enquiriesService.resetState();
-            this.showToast();
-            this.router.navigate(['/user/signin']);
+            this.router.navigate(['/user/signin'], { replaceUrl: true });
+            this.activities.resetState();
+            this.showSignedOutToast();
           }
         }
       ]
@@ -126,7 +130,7 @@ export class AppComponent implements OnInit {
     await alert.present();
   }
 
-  private async showToast() {
+  private async showSignedOutToast() {
     const toast = await this.toastController.create({
       message: 'Success, you have signed out.',
       color: 'success',
