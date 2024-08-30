@@ -38,7 +38,7 @@ export class WebSocketService {
 
     this.socket.onmessage = (event: MessageEvent) => {
       const message = event.data;
-      console.log('Received message:', parseMessage(message));
+      // console.log('Received message:', parseMessage(message));
       this.handleNotification(parseMessage(message));
       this.messages.push(message);
     };
