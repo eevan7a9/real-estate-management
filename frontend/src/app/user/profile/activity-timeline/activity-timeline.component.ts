@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivitiesService } from 'src/app/activities/activities.service';
+import { ActivityType } from 'src/app/shared/enums/activity';
 import { Activity } from 'src/app/shared/interface/activities';
 
 @Component({
@@ -16,15 +17,15 @@ import { Activity } from 'src/app/shared/interface/activities';
   styleUrls: ['./activity-timeline.component.scss'],
 })
 export class ActivityTimelineComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnDestroy {
+  public action = ActivityType;
   public activities = signal<Activity[]>([]);
   private unSubscribe$ = new Subject<void>();
 
   constructor(
     private activitiesService: ActivitiesService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activitiesService.activities$

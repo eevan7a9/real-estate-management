@@ -1,7 +1,6 @@
 import { ActivityType } from "../../enums/activity.js";
 import { NotificationType } from "../../enums/notifications.js";
 import { Property } from "../../models/property.js";
-import { User } from "../../models/user.js";
 import { createActivity } from "../../services/activity.js";
 import { activityPropertyDescription } from "../../utils/activity/index.js";
 import { authBearerToken } from "../../utils/requests.js";
@@ -24,12 +23,6 @@ export const deleteProperty = async function (req, res) {
     if (property.images?.length) {
       unlinkImages(property.images);
     }
-    const user = await User.findOne({ user_id });
-    if (!user) {
-      return res.status(404).send({ message: "Error: User not found" });
-    }
-    user.properties = user.properties.filter((i) => i !== property.property_id);
-    user.save();
 
     // We Log User activity
     const activity = await createActivity({
@@ -39,6 +32,7 @@ export const deleteProperty = async function (req, res) {
         property
       ),
       user_id,
+      property_id: id,
     });
     if (activity) {
       sendTargetedNotification(NotificationType.activity, activity, user_id);
