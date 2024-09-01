@@ -119,6 +119,7 @@ export class AppComponent implements OnInit {
           cssClass: 'danger',
           handler: async () => {
             await this.userService.signOut();
+            this.webSocket.disconnect();
             this.enquiriesService.resetState();
             this.router.navigate(['/user/signin'], { replaceUrl: true });
             this.activities.resetState();
