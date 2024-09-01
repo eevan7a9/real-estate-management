@@ -71,6 +71,7 @@ export class AppComponent implements OnInit {
     // SET THEME
     if (isDark) {
       document.documentElement.classList.add('ion-palette-dark');
+      document.body.classList.add('dark');
     }
     this.userService.user$.subscribe(user => {
       this.user = user;
