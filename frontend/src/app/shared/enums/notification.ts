@@ -1,5 +1,5 @@
-export enum NotificationType {
-  enquiry = 'enquiry',
-  property = 'property',
-  app = 'app',
+export enum SocketNotificationType {
+  Activity = 'ACTIVITY',
+  Enquiry = 'ENQUIRY',
+  Logout = 'USER_LOGOUT',
 }

@@ -11,23 +11,32 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="wrapper">
+  <div class="h-full flex flex-col pb-8">
     <section title="preview-section" class="previews" *ngIf="previews.length">
       <div
         *ngFor="let preview of previews; let i = index"
-        class="preview-img"
+        class="border-[3px] border-gray-500 border-dashed relative cursor-pointer w-full h-full p-2"
         (click)="removeFile(i)"
       >
-        <img [src]="preview" class="" alt="preview" />
-        <div class="cover-hover">
-          <p>Click to remove!</p>
-          <small>{{ selectedFiles[i].name }}</small>
+        <img [src]="preview" class="h-full w-full" alt="preview" />
+        <div
+          class="absolute h-full w-full top-0 bottom-0 left-0 right-0 z-50 opacity-0 hover:opacity-90 transition-opacity ease-in-out duration-700"
+        >
+          <div
+            class="bg-gray-700 flex flex-col items-center justify-center h-full w-full"
+          >
+            <p class="text-light font-semibold">Click to remove!</p>
+            <small class="text-light">{{ selectedFiles[i].name }}</small>
+          </div>
         </div>
       </div>
     </section>
 
-    <section title="upload-section" class="upload-form-container">
-      <div class="input-contianer" *ngIf="!previews.length">
+    <section title="upload-section" class="flex flex-col mb-4">
+      <div
+        class="w-full h-full my-0 mx-auto border-4 border-dashed relative mb-4"
+        *ngIf="!previews.length"
+      >
         <div>
           <input
             type="file"
@@ -35,8 +44,11 @@
             (change)="onSelectFile($event)"
             id="imageUpload"
             multiple
+            class="absolute h-full w-full m-0 p-0 outline-none opacity-0"
           />
-          <p>Drag your files here or click in this area.</p>
+          <p class="text-center leading-[170px] text-gray-700 dark:text-light">
+            Drag your files here or click in this area.
+          </p>
         </div>
       </div>
       <ion-button

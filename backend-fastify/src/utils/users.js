@@ -1,5 +1,10 @@
 import { fastify } from "../index.js";
 
+/**
+ * 
+ * @param {string} token 
+ * @returns users id from the token
+ */
 export const userIdToken = function (token) {
   const { id } = fastify.jwt.decode(token);
   return id;

@@ -1,5 +1,8 @@
+import { ActivityType } from "../../enums/activity.js";
 import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
+import { createActivity } from "../../services/activity.js";
+import { activitySigninDescription } from "../../utils/activity/index.js";
 
 export const signIn = async function (req, res) {
   const { email, password } = req.body;
@@ -8,7 +11,7 @@ export const signIn = async function (req, res) {
     if (!foundUser) {
       return res.status(400).send({
         // error: "Internal Server Error",
-        message: "Error: Invalid Email or Password."
+        message: "Error: Invalid Email or Password.",
         // message: "Error: We can't find a user with that e-mail address.",
       });
     }
@@ -24,6 +27,12 @@ export const signIn = async function (req, res) {
     const { user_id } = foundUser;
     const accessToken = fastify.jwt.sign({ id: user_id });
 
+    await createActivity({
+      action: ActivityType.user.login,
+      description: activitySigninDescription(foundUser),
+      user_id,
+    });
+
     return res.status(200).send({
       data: {
         id: foundUser.id,
@@ -31,7 +40,7 @@ export const signIn = async function (req, res) {
         fullName: foundUser.fullName,
         email: foundUser.email,
         accessToken,
-      }
+      },
     });
   } catch (error) {
     return res.status(404).send({ message: "Error: Something went wrong." });

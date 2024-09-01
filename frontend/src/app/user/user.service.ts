@@ -1,22 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { headerDict } from '../shared/utility';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { User } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
 import { ApiResponse } from '../shared/interface/api-response';
+import { requestOptions } from '../shared/utility/requests';
 
 const url = environment.api.server;
-const requestOptions = (
-  { token = '', contentType = 'application/json' },
-  body = {}
-) => ({
-  headers: new HttpHeaders(headerDict({ token, contentType })),
-  body,
-});
 
 @Injectable({
   providedIn: 'root',
@@ -104,7 +97,7 @@ export class UserService {
   }
 
   public isPropertyOwner(property: Property): boolean {
-    return this.user && this.user.user_id === property.user_id;
+    return this.user && this.user?.user_id === property?.user_id;
   }
 
   public async changePassword(passwordNew: string, passwordCurrent: string): Promise<ApiResponse> {

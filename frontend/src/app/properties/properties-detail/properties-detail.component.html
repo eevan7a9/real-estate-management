@@ -9,15 +9,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="property">
-  <div class="details-container" *ngIf="ready">
+<ion-content class="ion-padding">
+  <div class="max-w-[1600px] my-0 mx-auto" *ngIf="property()">
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeXl="8">
           <ion-card class="property-identity">
             <ion-card-content>
               <div class="name">
-                <ion-text type="dark">{{ property.name }}</ion-text>
+                <ion-text type="dark">{{ property().name }}</ion-text>
 
                 <ion-button
                   class="action-btn"
@@ -28,17 +28,19 @@
                 </ion-button>
               </div>
               <div class="type">
-                <app-property-badge [type]="property.type"></app-property-badge>
+                <app-property-badge
+                  [type]="property().type"
+                ></app-property-badge>
               </div>
               <div class="price"></div>
             </ion-card-content>
           </ion-card>
 
           <app-properties-gallery
-            [images]="property.images"
+            [images]="property().images"
             [showEdit]="isOwner"
             (edit)="editImages()"
-            *ngIf="property.images"
+            *ngIf="property().images"
             #propertiesGallery
           ></app-properties-gallery>
 
@@ -46,7 +48,7 @@
             <ion-card-header>
               Transaction Type
               <span class="capitalize text-[20px] font-semibold">
-                For {{ property.transactionType }}
+                For {{ property().transactionType }}
               </span>
             </ion-card-header>
           </ion-card>
@@ -54,20 +56,20 @@
           <ion-card class="shadow-none my-4 mx-0">
             <ion-card-header> Description </ion-card-header>
             <ion-card-content class="text-[16px]">
-              {{ property.description }}
+              {{ property().description }}
             </ion-card-content>
           </ion-card>
 
           <ion-card
             class="property-features shadow-none my-4 mx-0"
-            *ngIf="property.features && property.features.length"
+            *ngIf="property().features && property().features.length"
           >
             <ion-card-header> Features </ion-card-header>
             <ion-card-content>
               <ion-badge
                 color="primary"
                 class="item"
-                *ngFor="let item of property.features"
+                *ngFor="let item of property().features"
               >
                 <div>
                   <ion-icon name="bookmark-outline"></ion-icon>
@@ -80,19 +82,19 @@
           <ion-card class="property-address">
             <ion-card-header> Address </ion-card-header>
             <ion-card-content>
-              {{ property.address }}
+              {{ property().address }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card class="property-price" *ngIf="property.price">
+          <ion-card class="property-price" *ngIf="property().price">
             <ion-card-header> Price </ion-card-header>
             <ion-card-content class="price">
-              {{ property.price | currency : property.currency : "symbol" }}
+              {{ property().price | currency : property().currency : "symbol" }}
               <span
                 class="capitalize text-[18px]"
-                *ngIf="property.transactionType === transactionType.forRent"
+                *ngIf="property().transactionType === transactionType.forRent"
               >
-                | {{ property.paymentFrequency }}
+                | {{ property().paymentFrequency }}
               </span>
             </ion-card-content>
           </ion-card>
@@ -104,8 +106,8 @@
 
             <ion-card-content>
               <app-enquiries-new-form
-                [property]="property"
-                [userTo]="property.user_id"
+                [property]="property()"
+                [userTo]="property().user_id"
               ></app-enquiries-new-form>
             </ion-card-content>
           </ion-card>
@@ -140,5 +142,18 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+  
+  <div class="p-4" *ngIf="!property()">
+    <ion-card class="border-2 shadow-none py-8">
+      <ion-card-header>
+        <h1 class="text-[42px] text-center">Error 404</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <h5 class="!text-[24px] text-center">
+          <strong>Property</strong> not found. It may not exist or has been removed.
+        </h5>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

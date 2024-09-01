@@ -58,7 +58,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
 
     if (result.status === 200) {
       this.showToast('Success, You are logged in');
-      this.router.navigateByUrl('/map');
+      this.router.navigate(['/map'], { replaceUrl: true });
     } else {
       this.showToast(result.message, 'danger');
     }

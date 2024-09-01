@@ -1,28 +1,21 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
 import { Property } from '../shared/interface/property';
-import { headerDict } from '../shared/utility';
 import { UserService } from '../user/user.service';
+import { requestOptions } from '../shared/utility/requests';
 
 const propertyUrl = environment.api.server + 'properties';
-const requestOptions = (
-  { token = '', contentType = 'application/json' },
-  body = {}
-) => ({
-  headers: new HttpHeaders(headerDict({ token, contentType })),
-  body,
-});
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertiesService {
   public readonly properties$: Observable<Property[]>;
-  public readonly property$: Observable<Property>;
+  public readonly property$: Observable<Property | null>;
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
   private readonly propertySub = new BehaviorSubject<Property>(null);
 
@@ -51,7 +44,9 @@ export class PropertiesService {
   public async fetchProperties(): Promise<void> {
     try {
       this.properties = (
-        await firstValueFrom(this.http.get<ApiResponse<Property[]>>(propertyUrl))
+        await firstValueFrom(
+          this.http.get<ApiResponse<Property[]>>(propertyUrl)
+        )
       ).data;
     } catch (error) {
       console.error(error);
@@ -60,9 +55,13 @@ export class PropertiesService {
 
   public async fetchProperty(id: string) {
     try {
-      this.property = (
-        await firstValueFrom(this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id))
-      ).data;
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id)
+      );
+      if (res.data && Object.keys(res.data).length) {
+        this.property = res.data;
+      }
+      return this.property;
     } catch (error) {
       console.error(error);
     }
@@ -118,7 +117,10 @@ export class PropertiesService {
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
       const res = await firstValueFrom(
-        this.http.delete<ApiResponse<string[]>>(url, requestOptions({ token }, { images }))
+        this.http.delete<ApiResponse<string[]>>(
+          url,
+          requestOptions({ token }, { images })
+        )
       );
 
       this.property.images = this.property.images.filter(
@@ -141,17 +143,24 @@ export class PropertiesService {
       this.properties = this.properties.filter(
         (property) => property.property_id !== res.data.property_id
       );
+      this.propertySub.next(null);
     } catch (error) {
       console.error(error);
     }
   }
 
-  public async updateProperty(updated: Property): Promise<ApiResponse<Property>> {
+  public async updateProperty(
+    updated: Property
+  ): Promise<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
       const token = this.userService.token();
       const res = await firstValueFrom(
-        this.http.patch<ApiResponse<Property>>(url, updated, requestOptions({ token }))
+        this.http.patch<ApiResponse<Property>>(
+          url,
+          updated,
+          requestOptions({ token })
+        )
       );
 
       // UPDATE CURRENT PROPERTIES

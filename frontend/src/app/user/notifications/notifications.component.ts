@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationType } from 'src/app/shared/enums/notification';
+import { SocketNotificationType } from 'src/app/shared/enums/notification';
 import { Notification } from 'src/app/shared/interface/notification';
 
 @Component({
@@ -51,9 +51,9 @@ export class NotificationsComponent implements OnInit {
 
   getItemBadge(type: string) {
     switch (type) {
-      case NotificationType.enquiry:
+      case SocketNotificationType.Activity:
         return 'secondary';
-      case NotificationType.property:
+      case SocketNotificationType.Enquiry:
         return 'success';
       default:
         return 'primary';

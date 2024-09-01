@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ModalController,
@@ -14,7 +14,7 @@ import { PropertiesEditComponent } from '../properties-edit-modal/properties-edi
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 import { TransactionType } from 'src/app/shared/enums/property';
 
@@ -25,7 +25,7 @@ import { TransactionType } from 'src/app/shared/enums/property';
 })
 export class PropertiesDetailComponent implements OnInit, OnDestroy {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
-  public property: Property | undefined;
+  public property = signal<Property | undefined>(undefined);
   public isOwner = false;
   public ready = false;
   public transactionType = TransactionType;
@@ -45,14 +45,20 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.propertiesService.property$
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        finalize(() => {
+          this.property.set(undefined);
+          this.propertiesService.property = null;
+        })
+      )
       .subscribe(async (property) => {
-        this.property = property;
-        if (!this.property) {
+        this.property.set(property);
+        if (!this.property()) {
           await this.propertiesService.fetchProperty(paramId);
         }
         this.ready = true;
-        this.isOwner = this.userService.isPropertyOwner(this.property);
+        this.isOwner = this.userService.isPropertyOwner(this.property());
         if (this.propertiesGallery && this.property) {
           this.propertiesGallery.setImage();
         }
@@ -81,7 +87,7 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
       return;
     }
     if (data.action === 'delete') {
-      this.propertiesService.removeProperty(this.property.property_id);
+      this.propertiesService.removeProperty(this.property().property_id);
       this.presentToast('Success,property deleted');
       this.router.navigate(['/properties']);
     }
@@ -94,7 +100,7 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
   }
 
   public findInMap() {
-    const { lat, lng } = this.property.position;
+    const { lat, lng } = this.property().position;
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }
 

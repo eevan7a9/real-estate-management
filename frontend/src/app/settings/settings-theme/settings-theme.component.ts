@@ -20,9 +20,11 @@ export class SettingsThemeComponent implements AfterViewInit {
   switchDarkMode(event) {
     if (event.detail.checked) {
       document.documentElement.classList.add('ion-palette-dark');
+      document.body.classList.add('dark');
       this.storage.setDarkTheme(true);
     } else {
       document.documentElement.classList.remove('ion-palette-dark');
+      document.body.classList.remove('dark');
       this.storage.setDarkTheme(false);
     }
   }

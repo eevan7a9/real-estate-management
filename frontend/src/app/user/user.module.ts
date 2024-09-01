@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ActivityTimelineComponent } from './profile/activity-timeline/activity-timeline.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     SigninComponent,
     ChangePasswordComponent,
     ProfileComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ActivityTimelineComponent
   ]
 })
 export class UserPageModule { }

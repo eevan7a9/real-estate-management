@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { User } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
 
@@ -7,16 +7,14 @@ import { UserService } from '../user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
   public imgUrl: any = './assets/images/avatar.png';
   public user: User;
+  public isActivityActive = signal(true);
+
   constructor(private userService: UserService) {
     this.userService.user$.subscribe(data => this.user = data);
-  }
-
-  ngOnInit() {
-
   }
 
   public toggleUpload() {
@@ -35,5 +33,8 @@ export class ProfileComponent implements OnInit {
         console.log(this.imgUrl);
       };
     }
+  }
+  public toggleActivityPropertyTab(): void {
+    this.isActivityActive.set(!this.isActivityActive())
   }
 }

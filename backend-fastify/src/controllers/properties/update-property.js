@@ -1,6 +1,11 @@
+import { ActivityType } from "../../enums/activity.js";
+import { NotificationType } from "../../enums/notifications.js";
 import { Property } from "../../models/property.js";
+import { createActivity } from "../../services/activity.js";
+import { activityPropertyDescription } from "../../utils/activity/index.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
+import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const updateProperty = async function (req, res) {
   const property_id = req.params.id;
@@ -53,6 +58,21 @@ export const updateProperty = async function (req, res) {
         .status(404)
         .send({ message: "Error: Can't update unknown property" });
     }
+
+    // We Log User activity
+    const activity = await createActivity({
+      action: ActivityType.property.update,
+      description: activityPropertyDescription(
+        ActivityType.property.update,
+        property
+      ),
+      user_id,
+      property_id: property.property_id,
+    });
+    if (activity) {
+      sendTargetedNotification(NotificationType.activity, activity, user_id);
+    }
+
     return res.status(201).send({
       data: { ...property.toObject() },
       message: "Success: Property is updated.",

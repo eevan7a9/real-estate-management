@@ -4,7 +4,3 @@ export enum EnquiryTopic {
   sales = 'sales',
   info = 'information',
 }
-
-export enum EnquiryNotification {
-  new = 'newEnquiry',
-}

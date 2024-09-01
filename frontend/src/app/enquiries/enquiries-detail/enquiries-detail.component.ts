@@ -17,7 +17,7 @@ import { EnquiriesService } from '../enquiries.service';
   styleUrls: ['./enquiries-detail.component.scss'],
 })
 export class EnquiriesDetailComponent implements OnInit, OnDestroy {
-  public enquiry: Enquiry;
+  public enquiry: Enquiry | null;
   public user: User;
   public paramId: string;
   private unsubscribe$ = new Subject<void>();
@@ -48,10 +48,8 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
     });
 
     this.enquiriesService.enquiry$.pipe(takeUntil(this.unsubscribe$)).subscribe(enquiry => {
-      if (enquiry) {
-        this.enquiry = enquiry;
-        loading.dismiss();
-      }
+      this.enquiry = enquiry;
+      loading.dismiss();
     });
     this.userService.user$.subscribe(user => {
       if (user) { this.user = user; }

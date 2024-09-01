@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'selector',
   content: [
     "./src/**/*.{html,ts}",
   ],
@@ -38,8 +39,14 @@ module.exports = {
         'light-shade': '#d7d8da',
         'light-tint': '#f5f6f9',
         //
+        'dark': '#222428',
+        'dark-shade': '#1e2023',
+        'dark-tint': '#383a3e',
+        //
         'success': '#29c065',
-        'warning': '#ffc409'
+        'warning': '#ffc409',
+        //
+        'link': '#1c7fff'
       },
     },
   },
