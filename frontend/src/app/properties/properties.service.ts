@@ -55,11 +55,13 @@ export class PropertiesService {
 
   public async fetchProperty(id: string) {
     try {
-      this.property = (
-        await firstValueFrom(
-          this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id)
-        )
-      ).data;
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id)
+      );
+      if (res.data && Object.keys(res.data).length) {
+        this.property = res.data;
+      }
+      return this.property;
     } catch (error) {
       console.error(error);
     }

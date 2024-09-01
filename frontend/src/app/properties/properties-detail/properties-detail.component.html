@@ -9,8 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="property()">
-  <div class="details-container" *ngIf="ready">
+<ion-content class="ion-padding">
+  <div class="max-w-[1600px] my-0 mx-auto" *ngIf="property()">
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeXl="8">
@@ -28,7 +28,9 @@
                 </ion-button>
               </div>
               <div class="type">
-                <app-property-badge [type]="property().type"></app-property-badge>
+                <app-property-badge
+                  [type]="property().type"
+                ></app-property-badge>
               </div>
               <div class="price"></div>
             </ion-card-content>
@@ -140,5 +142,18 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+  </div>
+  
+  <div class="p-4" *ngIf="!property()">
+    <ion-card class="border-2 shadow-none py-8">
+      <ion-card-header>
+        <h1 class="text-[42px] text-center">Error 404</h1>
+      </ion-card-header>
+      <ion-card-content>
+        <h5 class="!text-[24px] text-center">
+          <strong>Property</strong> not found. It may not exist or has been removed.
+        </h5>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
