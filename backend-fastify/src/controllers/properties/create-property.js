@@ -1,12 +1,13 @@
 import { v4 as uuidv4 } from "uuid";
 import { Property } from "../../models/property.js";
+import { User } from "../../models/user.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
-import { createActivity } from "../../services/activity.js";
+import { addActivity } from "../../services/activity.js";
 import { activityPropertyDescription } from "../../utils/activity/index.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 import { ActivityType } from "../../enums/activity.js";
-import { NotificationType } from "../../enums/notifications.js";
+import { SocketNotificationType } from "../../enums/notifications.js";
 
 /**
  *
@@ -29,19 +30,24 @@ export const createProperty = async function (req, res) {
       user_id,
       ...req.body,
     });
-
+    const user = await User.findOne({ user_id });
+    if(!user) {
+      return res.status(404).send({ message: "Error: User not found." });
+    }
     // We Log User activity
-    const activity = await createActivity({
+    const activity = addActivity(user, {
       action: ActivityType.property.new,
       description: activityPropertyDescription(
         ActivityType.property.new,
         newProperty
       ),
-      user_id,
       property_id: newProperty.property_id,
     });
+    user.properties.push(newProperty.property_id);
+    await user.save();
+
     if (activity) {
-      sendTargetedNotification(NotificationType.activity, activity, user_id);
+      sendTargetedNotification(SocketNotificationType.activity, activity, user_id);
     }
     await newProperty.save();
     return res.status(201).send({ data: newProperty });
