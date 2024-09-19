@@ -4,12 +4,12 @@ import { responseSuccess, responseError } from '../../../utils/schema/response.j
  * @param {import("fastify").FastifyInstance} fastify
  * @param {Function} handler
  */
-export const deleteNotificationOpts = (fastify, handler) => ({
+export const readNotificationOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
       200: responseSuccess({
-        message: "Notification deleted!",
+        message: "Notification is read!",
       }),
       400: responseError(),
       404: responseError({
