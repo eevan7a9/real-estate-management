@@ -1,7 +1,12 @@
+import { ActivityType } from "../../enums/activity.js";
+import { NotificationType, SocketNotificationType } from "../../enums/notifications.js";
 import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
+import { addActivity } from "../../services/activity.js";
+import { addNotification } from "../../services/notification.js";
 import {authBearerToken} from "../../utils/requests.js";
 import {isPasswordValid, userIdToken} from "../../utils/users.js";
+import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const changePassword = async function (req, res) {
   const { passwordCurrent, passwordNew } = req.body;
@@ -34,6 +39,18 @@ export const changePassword = async function (req, res) {
 
     const hashedPassword = await fastify.bcrypt.hash(passwordNew);
     foundUser.password = hashedPassword;
+    // Add notification
+    const notification = addNotification(foundUser, {
+      type: NotificationType.account,
+      message: "Your account password has been successfully updated.",
+    });
+    sendTargetedNotification(SocketNotificationType.user, notification, user_id);
+
+    // Add activity
+    addActivity(foundUser, {
+      action: ActivityType.user.update,
+      description: "You changed your account password.",
+    });
     await foundUser.save();
 
     return res.status(200).send({});

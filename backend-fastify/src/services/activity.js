@@ -29,7 +29,7 @@ export const addActivity = function (user, activity) {
   }
   try {
     // We check users activities to prevent from exceeding the limit
-    if (user.activities.length >= (process.env.USER_ACTIVITIES_MAX || 20)) {
+    if (user.activities.length >= (Number(process.env.USER_ACTIVITIES_MAX) || 20)) {
       user.activities.pop();
     }
     user.activities.unshift(activity);
