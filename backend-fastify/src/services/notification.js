@@ -13,6 +13,7 @@
  * @property {string} message
  * @property {string} type
  * @property {Date} [expiresAt]
+ * @property {Date} [createdAt]
  */
 
 /**
@@ -46,6 +47,7 @@ export const addNotification = function (user, notification) {
   if (user.notifications?.length >= maxNotification) {
     user.notifications.pop();
   }
+  notification.createdAt = new Date();
   // 7 day
   notification.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   // 3 min
