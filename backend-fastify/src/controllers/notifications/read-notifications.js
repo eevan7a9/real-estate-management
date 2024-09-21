@@ -11,7 +11,8 @@ import { userIdToken } from "../../utils/users.js";
 export const readNotification = async function (req, res) {
   const token = authBearerToken(req);
   const user_id = userIdToken(token);
-  const param_id = req.params.id;
+  const param_id = req.body.id;
+
   try {
     const user = await User.findOne({ user_id }).select("notifications");
     if (!user) {
@@ -21,19 +22,25 @@ export const readNotification = async function (req, res) {
       return res.status(404).send({});
     }
     removeExpiredNotifications(user);
-    const notification = user.notifications.find(
-      (item) => item.notification_id === param_id
-    );
-    if (!notification) {
-      return res.status(404).send({});
-    }
-    notification.read = true;
-    await user.save();
 
+    const ids = Array.isArray(param_id) ? param_id : [param_id];
+    const updatedNotifications = [];
+    ids.forEach((id) => {
+      const notification = user.notifications.find(
+        (item) => item.notification_id === id && !item.read
+      );
+      if (notification) {
+        notification.read = true;
+        updatedNotifications.push(notification);
+      }
+    });
+    if(updatedNotifications.length) {
+      await user.save();
+    }
     res.status(200).send({
       status: 200,
       message: "Success: Notification has been set to read!",
-      data: notification,
+      data: updatedNotifications,
     });
   } catch (error) {
     res

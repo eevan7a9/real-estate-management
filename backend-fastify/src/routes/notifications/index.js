@@ -11,7 +11,7 @@ import { readNotificationOpts } from "./options/read-notification.js";
  */
 export const notificationsRoutes = function (fastify, opts, done) {
   fastify.get("/", getNotificationsOpts(fastify, getNotifications));
-  fastify.patch("/:id", readNotificationOpts(fastify, readNotification));
+  fastify.patch("/", readNotificationOpts(fastify, readNotification));
   fastify.delete("/:id", deleteNotificationOpts(fastify, deleteNotification));
 
   done();

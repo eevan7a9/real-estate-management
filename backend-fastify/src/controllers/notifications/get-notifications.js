@@ -13,11 +13,9 @@ export const getNotifications = async function (req, res) {
   const user_id = userIdToken(token);
   try {
     const user = await User.findOne({ user_id }).select("notifications");
-
     if (!user) {
       return res.status(404).send({ message: "Error: User not found." });
     }
-
     if (user.notifications.length) {
       const hasExpired = removeExpiredNotifications(user);
       if (hasExpired) {
