@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
     private activitiesService: ActivitiesService,
     private webSocket: WebSocketService,
     private notificationsService: NotificationsService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
@@ -75,47 +75,37 @@ export class AppComponent implements OnInit {
       document.documentElement.classList.add('ion-palette-dark');
       document.body.classList.add('dark');
     }
-    this.userService.user$.subscribe(user => {
+    this.userService.user$.subscribe((user) => {
       this.user = user;
       if (user) {
-        console.log("Verified User...")
+        console.log('Connect verified user...');
         this.webSocket.connect(this.userService.token());
         /**
          *  Fetch users enquiries if there's was no initial fetch
          */
-        console.log("Fetching Enquiries...")
+        console.log('Fetching Enquiries...');
         if (!this.enquiriesService.initialFetchDone) {
-          
-          this.enquiriesService.fetchEnquiries().then(res => {
-            if (res?.status === 200) {
-              this.enquiriesService.enquiries = res.data;
-              this.enquiriesService.initialFetchDone = true;
-            }
-          });
+          this.fetchEnquiries();
         }
         /**
          *  Fetch Users Notifications
          */
-        console.log("Fetching Notifications...")
-        this.notificationsService.fetchNotifications().then(res => {
-          if (res?.status === 200) {
-            this.notificationsService.notifications = res.data;
-          }
-        });
+        console.log('Fetching Notifications...');
+        this.fetchNotifications();
       } else {
-        console.log("Unkown User...");
+        console.log('Unkown User...');
         this.webSocket.disconnect();
         this.enquiriesService.resetState();
         this.notificationsService.resetState();
         this.activitiesService.resetState();
       }
     });
-    this.enquiriesService.enquiries$.subscribe(enquiries => {
-      const unreadCount = enquiries.filter(enq => this.isUnread(enq)).length;
+    this.enquiriesService.enquiries$.subscribe((enquiries) => {
+      const unreadCount = enquiries.filter((enq) => this.isUnread(enq)).length;
       this.unreadEnquiries.set(unreadCount);
     });
-    this.notificationsService.notifications$.subscribe(notifications => {
-      const unreadCount = notifications.filter(noti => !noti.read).length;
+    this.notificationsService.notifications$.subscribe((notifications) => {
+      const unreadCount = notifications.filter((noti) => !noti.read).length;
       this.unreadNotifications.set(unreadCount);
     });
     this.checkServer();
@@ -131,7 +121,7 @@ export class AppComponent implements OnInit {
     return false;
   }
 
-  public async signOut() {
+  public async signOut(): Promise<void> {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Are you sure?',
@@ -141,31 +131,50 @@ export class AppComponent implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => { }
-        }, {
+          handler: () => {},
+        },
+        {
           text: 'Sign out',
           cssClass: 'danger',
           handler: async () => {
             await this.userService.signOut();
             this.showSignedOutToast();
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     await alert.present();
   }
 
-  private async showSignedOutToast() {
+  private fetchEnquiries(): void {
+    this.enquiriesService.fetchEnquiries().then((res) => {
+      if (res?.status === 200) {
+        this.enquiriesService.enquiries = res.data;
+        this.enquiriesService.initialFetchDone = true;
+      }
+    });
+  }
+
+  private fetchNotifications(): void {
+    this.notificationsService.fetchNotifications().then((res) => {
+      if (res?.status === 200) {
+        this.notificationsService.notifications = res.data;
+      }
+    });
+  }
+  private async showSignedOutToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: 'Success, you have signed out.',
       color: 'success',
-      duration: 3000
+      duration: 3000,
     });
     toast.present();
   }
 
   private checkServer() {
-    firstValueFrom(this.http.get(environment.api.server)).then(data => console.log(data));
+    firstValueFrom(this.http.get(environment.api.server)).then((data) =>
+      console.log(data)
+    );
   }
 
   private isUnread(enquiry: Enquiry) {
