@@ -4,27 +4,43 @@
       <ion-row>
         <ion-col size="12">
           <ion-card>
-            <ion-card-header>
-              <ion-card-title> My Notifications </ion-card-title>
+            <ion-card-header class="flex flex-row justify-between items-center">
+              <ion-card-title class="text-[24px]"> Notifications
+                <small *ngIf="notificationsChecked.length"> - Selected ( {{ notificationsChecked.length }} )</small>
+              </ion-card-title>
+
+              <ion-button [disabled]="isLoading()" (click)="deleteSelectedNotfications()" color="danger"
+                *ngIf="notificationsChecked.length">
+                <ion-icon name="trash"></ion-icon>
+                Delete
+              </ion-button>
             </ion-card-header>
 
-            <ion-card-content>
-              <ion-list>
-                <ion-item
-                  *ngFor="let item of notifications"
-                  button
-                  (click)="itemClicked()"
-                >
-                  <ion-label>{{ item.title }}</ion-label>
-                  <div class="item-right-side">
-                    <ion-badge [color]="getItemBadge(item.type)">{{
-                      item.type
-                    }}</ion-badge>
-                    {{ item.date | date }}
-                  </div>
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
+            @if (notifications().length) {
+              <ion-card-content>
+                <ion-list class="max-h-[500px] overflow-y-auto">
+                  <ion-item *ngFor="let item of notifications()" #notificationElement>
+                    <ion-checkbox class="relative px-3 py-2" [ngClass]="{ 'bg-gray-300 bg-opacity-30': !item.read}"
+                      (ionChange)="itemClicked($event, item.notification_id)" labelPlacement="end" justify="start"
+                      alignment="center">
+                      <div class="flex items-center">
+                        <div>{{ item.message }}</div>
+                        <div class="absolute right-3 gap-2 flex items-center justify-around">
+                          <ion-badge [color]="getItemBadge(item.type)">
+                            {{ item.type }}
+                          </ion-badge>
+                          {{ item.createdAt | date }}
+                        </div>
+                      </div>
+                    </ion-checkbox>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            } @else {
+              <ion-card-content class="py-5 text-center">
+                <h1 class="!text-[18px]">You have no notifications.</h1>
+              </ion-card-content>
+            }
           </ion-card>
         </ion-col>
       </ion-row>

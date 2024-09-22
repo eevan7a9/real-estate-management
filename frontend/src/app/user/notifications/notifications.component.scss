@@ -7,15 +7,9 @@ ion-card {
   margin: 0 auto;
 }
 
-ion-item {
-  --inner-padding-bottom: 16px;
-  --inner-padding-top: 16px;
-  .item-right-side {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    ion-badge {
-      margin: 0 8px 0 0;
-    }
-  }
+ion-item, ion-checkbox {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-end: 0;
+  --padding-start: 0;
 }
