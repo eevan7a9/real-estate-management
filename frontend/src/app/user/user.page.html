@@ -27,6 +27,9 @@
       <ion-tab-button tab="notifications">
         <ion-icon name="notifications-outline"></ion-icon>
         <ion-label>Notifications</ion-label>
+        <ion-badge color="primary" *ngIf="unreadNotifications()">
+          {{ unreadNotifications() }}
+        </ion-badge>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

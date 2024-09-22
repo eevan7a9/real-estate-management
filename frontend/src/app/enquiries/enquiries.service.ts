@@ -41,19 +41,15 @@ export class EnquiriesService {
     this.enquirySub.next(enquiry);
   }
 
-  public async fetchEnquiries(): Promise<void> {
+  public async fetchEnquiries(): Promise<ApiResponse<Enquiry[]>> {
     try {
-      const token = this.userService.token();
-      this.enquiries = (
-        await firstValueFrom(
-          this.http.get<ApiResponse<Enquiry[]>>(
-            enquiryUrl,
-            requestOptions({ token })
-          )
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<Enquiry[]>>(
+          enquiryUrl,
+          requestOptions({ token: this.userService.token() })
         )
-      ).data;
-
-      this.initialFetchDone = true;
+      );
+      return res;
     } catch (error) {
       console.error(error);
       return error.error || error;

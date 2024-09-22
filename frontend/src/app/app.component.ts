@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
@@ -16,6 +16,7 @@ import { Enquiry } from './shared/interface/enquiry';
 
 // Register swiper js
 import { register } from 'swiper/element/bundle';
+import { NotificationsService } from './user/notifications/notifications.service';
 
 register();
 
@@ -49,7 +50,8 @@ export class AppComponent implements OnInit {
   ];
 
   public user: User;
-  public unreadEnquiries = 0;
+  public unreadEnquiries = signal(0);
+  public unreadNotifications = signal(0);
 
   constructor(
     private platform: Platform,
@@ -57,11 +59,11 @@ export class AppComponent implements OnInit {
     private userService: UserService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private router: Router,
     private http: HttpClient,
     private enquiriesService: EnquiriesService,
-    private activities: ActivitiesService,
-    private webSocket: WebSocketService
+    private activitiesService: ActivitiesService,
+    private webSocket: WebSocketService,
+    private notificationsService: NotificationsService
   ) { }
 
   async ngOnInit() {
@@ -76,32 +78,57 @@ export class AppComponent implements OnInit {
     this.userService.user$.subscribe(user => {
       this.user = user;
       if (user) {
+        console.log("Verified User...")
         this.webSocket.connect(this.userService.token());
         /**
          *  Fetch users enquiries if there's was no initial fetch
          */
+        console.log("Fetching Enquiries...")
         if (!this.enquiriesService.initialFetchDone) {
-          this.enquiriesService.fetchEnquiries();
+          
+          this.enquiriesService.fetchEnquiries().then(res => {
+            if (res?.status === 200) {
+              this.enquiriesService.enquiries = res.data;
+              this.enquiriesService.initialFetchDone = true;
+            }
+          });
         }
+        /**
+         *  Fetch Users Notifications
+         */
+        console.log("Fetching Notifications...")
+        this.notificationsService.fetchNotifications().then(res => {
+          if (res?.status === 200) {
+            this.notificationsService.notifications = res.data;
+          }
+        });
+      } else {
+        console.log("Unkown User...");
+        this.webSocket.disconnect();
+        this.enquiriesService.resetState();
+        this.notificationsService.resetState();
+        this.activitiesService.resetState();
       }
     });
     this.enquiriesService.enquiries$.subscribe(enquiries => {
-      this.unreadEnquiries = enquiries.filter(enq => this.isUnread(enq)).length;
+      const unreadCount = enquiries.filter(enq => this.isUnread(enq)).length;
+      this.unreadEnquiries.set(unreadCount);
+    });
+    this.notificationsService.notifications$.subscribe(notifications => {
+      const unreadCount = notifications.filter(noti => !noti.read).length;
+      this.unreadNotifications.set(unreadCount);
     });
     this.checkServer();
   }
 
-  public isHidden(link: NavLinks) {
-    if (!link.signIn && !link.guest) {
-      return;
+  public isHidden(link: NavLinks): boolean {
+    if (link.signIn) {
+      return !this.user;
     }
-    if (link.signIn && this.user) {
-      return;
+    if (link.guest) {
+      return !!this.user;
     }
-    if (link.guest && !this.user) {
-      return;
-    }
-    return true;
+    return false;
   }
 
   public async signOut() {
@@ -120,10 +147,6 @@ export class AppComponent implements OnInit {
           cssClass: 'danger',
           handler: async () => {
             await this.userService.signOut();
-            this.webSocket.disconnect();
-            this.enquiriesService.resetState();
-            this.router.navigate(['/user/signin'], { replaceUrl: true });
-            this.activities.resetState();
             this.showSignedOutToast();
           }
         }

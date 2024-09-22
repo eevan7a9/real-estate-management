@@ -1,7 +1,7 @@
 import { ActivityType } from "../../enums/activity.js";
 import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
-import { createActivity } from "../../services/activity.js";
+import { addActivity } from "../../services/activity.js";
 import { activitySigninDescription } from "../../utils/activity/index.js";
 
 export const signIn = async function (req, res) {
@@ -27,11 +27,13 @@ export const signIn = async function (req, res) {
     const { user_id } = foundUser;
     const accessToken = fastify.jwt.sign({ id: user_id });
 
-    await createActivity({
+    // We log as User activity
+    addActivity(foundUser, {
       action: ActivityType.user.login,
       description: activitySigninDescription(foundUser),
       user_id,
-    });
+    })
+    await foundUser.save();
 
     return res.status(200).send({
       data: {

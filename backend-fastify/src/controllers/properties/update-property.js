@@ -1,7 +1,8 @@
 import { ActivityType } from "../../enums/activity.js";
-import { NotificationType } from "../../enums/notifications.js";
+import { SocketNotificationType } from "../../enums/notifications.js";
 import { Property } from "../../models/property.js";
-import { createActivity } from "../../services/activity.js";
+import { User } from "../../models/user.js";
+import { addActivity } from "../../services/activity.js";
 import { activityPropertyDescription } from "../../utils/activity/index.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
@@ -48,6 +49,11 @@ export const updateProperty = async function (req, res) {
     const token = authBearerToken(req);
     const user_id = userIdToken(token);
     const options = { useFindAndModify: false, new: true, runValidators: true };
+
+    const user = await User.findOne({ user_id });
+    if (!user) {
+      return res.status(404).send({ message: "Error: User not found." });
+    }
     const property = await Property.findOneAndUpdate(
       { property_id, user_id },
       { $set },
@@ -60,17 +66,21 @@ export const updateProperty = async function (req, res) {
     }
 
     // We Log User activity
-    const activity = await createActivity({
+    const activity = addActivity(user, {
       action: ActivityType.property.update,
       description: activityPropertyDescription(
         ActivityType.property.update,
         property
       ),
-      user_id,
       property_id: property.property_id,
     });
+    await user.save();
     if (activity) {
-      sendTargetedNotification(NotificationType.activity, activity, user_id);
+      sendTargetedNotification(
+        SocketNotificationType.activity,
+        activity,
+        user_id
+      );
     }
 
     return res.status(201).send({

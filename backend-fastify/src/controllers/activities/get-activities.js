@@ -10,8 +10,8 @@ import { userIdToken } from "../../utils/users.js";
 export const getActivities = async function (req, res) {
   const token = authBearerToken(req);
   const user_id = userIdToken(token);
-  const user = await User.findOne({ user_id });
-
+  const user = await User.findOne({ user_id }).select("activities -_id").lean();
+  
   res.status(200).send({
     status: 200,
     message: "Returns list of activities",

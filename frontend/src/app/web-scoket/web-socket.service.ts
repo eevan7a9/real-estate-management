@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Enquiry } from '../shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries/enquiries.service';
-import { WebSocketNotification } from '../shared/interface/notification';
+import { WebSocketNotification, Notification } from '../shared/interface/notification';
 import { SocketNotificationType } from '../shared/enums/notification';
 import { ActivitiesService } from '../activities/activities.service';
 import { Activity } from '../shared/interface/activities';
+import { NotificationsService } from '../user/notifications/notifications.service';
 
 const parseMessage = (message: string) => {
   try {
@@ -24,7 +25,8 @@ export class WebSocketService {
 
   constructor(
     private enquiry: EnquiriesService,
-    private activities: ActivitiesService
+    private activities: ActivitiesService,
+    private notificationService: NotificationsService
   ) {}
 
   connect(token?: string): void {
@@ -68,6 +70,7 @@ export class WebSocketService {
   }
 
   handleNotification(notfication: WebSocketNotification): void {
+    console.log("handleNotification");
     switch (notfication.type) {
       case SocketNotificationType.Activity:
         this.activities.insertActivities(notfication.payload as Activity)
@@ -75,6 +78,10 @@ export class WebSocketService {
 
       case SocketNotificationType.Enquiry:
         this.enquiry.insertEnquiryToState(notfication.payload as Enquiry);
+        break;
+      
+      case SocketNotificationType.User:
+        this.notificationService.insertNotificationToState(notfication.payload as Notification)
         break;
 
       default:

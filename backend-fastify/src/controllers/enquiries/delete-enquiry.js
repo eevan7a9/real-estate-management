@@ -1,7 +1,8 @@
 import { ActivityType } from "../../enums/activity.js";
-import { NotificationType } from "../../enums/notifications.js";
+import { SocketNotificationType } from "../../enums/notifications.js";
 import { Enquiry } from "../../models/enquiry.js";
-import { createActivity } from "../../services/activity.js";
+import { User } from "../../models/user.js";
+import { addActivity } from "../../services/activity.js";
 import { activityEnquiryDescription } from "../../utils/activity/index.js";
 import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
@@ -11,7 +12,6 @@ export const deleteEnquiry = async function (req, res) {
   const { id } = req.params;
   const token = authBearerToken(req);
   const user_id = userIdToken(token);
-
   try {
     const enquiry = await Enquiry.findOne({ enquiry_id: id });
     if (!enquiry) {
@@ -35,20 +35,26 @@ export const deleteEnquiry = async function (req, res) {
     } else {
       await enquiry.save();
     }
+
     // We Log User activity
-    const activity = await createActivity({
+    const user = await User.findOne({ user_id });
+    const activity = addActivity(user, {
       action: ActivityType.enquiry.new,
       description: activityEnquiryDescription(
         ActivityType.enquiry.delete,
         enquiry
       ),
-      user_id,
     });
-    if (activity) {
-      // Send Websocket Notification to update User activity.
-      sendTargetedNotification(NotificationType.activity, activity, user_id);
-    }
+    await user.save();
 
+    // Send Websocket Notification to update User activity.
+    if (activity) {
+      sendTargetedNotification(
+        SocketNotificationType.activity,
+        activity,
+        user_id
+      );
+    }
     return res.status(200).send({ data: enquiry });
   } catch (error) {
     return res.status(400).send(error);

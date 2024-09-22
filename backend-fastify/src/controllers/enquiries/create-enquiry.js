@@ -4,8 +4,8 @@ import { authBearerToken } from "../../utils/requests.js";
 import { userIdToken } from "../../utils/users.js";
 import { User } from "../../models/user.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
-import { NotificationType } from "../../enums/notifications.js";
-import { createActivity } from "../../services/activity.js";
+import { SocketNotificationType } from "../../enums/notifications.js";
+import { addActivity } from "../../services/activity.js";
 import { ActivityType } from "../../enums/activity.js";
 import { activityEnquiryDescription } from "../../utils/activity/index.js";
 
@@ -29,39 +29,39 @@ export const createEnquiry = async function (req, res) {
       .send({ message: "Not allowed to send enquiry to yourself." });
   }
 
-  const targetUser = await User.findOne({ user_id: userTo });
-  if (!targetUser) {
-    return res.status(400).send({ message: "Target user not found." });
+  // const targetUser = await User.findOne({ user_id: userTo });
+  const users = await User.find({ $or: [{user_id: userFrom}, { user_id: userTo}]});
+  if (users.length < 2) {
+    return res.status(404).send({ message: "Target users are not found." });
   }
-
-  const users = {
-    from: { user_id: userFrom, keep: true },
-    to: { user_id: userTo, keep: true },
-  };
-
   try {
     const newEnquiry = new Enquiry({
       enquiry_id: uuidV4(),
       read: false,
-      users,
+      users: {
+        from: { user_id: userFrom, keep: true },
+        to: { user_id: userTo, keep: true },
+      },
       property,
       ...req.body,
     });
     await newEnquiry.save();
 
     // We Log User activity
-    const activity = await createActivity({
+    const user = users.find((item) => item.user_id === userFrom);
+    const activity = addActivity(user, {
       action: ActivityType.enquiry.new,
       description: activityEnquiryDescription(ActivityType.enquiry.new, newEnquiry),
-      user_id: userFrom,
       enquiry_id: newEnquiry.enquiry_id,
-    });
+    })
+    await user.save();
+
+    // Send Websocket Notification to update User activity.
     if (activity) {
-      // Send Websocket Notification to update User activity.
-      sendTargetedNotification(NotificationType.activity, activity, userFrom);
+      sendTargetedNotification(SocketNotificationType.activity, activity, userFrom);
     }
     // Send Enquiry notification to Intended User.
-    sendTargetedNotification(NotificationType.enquiry, newEnquiry, userTo);
+    sendTargetedNotification(SocketNotificationType.enquiry, newEnquiry, userTo);
 
     res.status(201).send({ data: newEnquiry });
     return;
