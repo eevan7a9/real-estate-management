@@ -69,7 +69,6 @@ export class ChangePasswordComponent implements OnInit {
 
     if (res.status === 200) {
       this.user.signOut();
-      this.router.navigate(['/user/signin']);
     }
   }
 }

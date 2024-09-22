@@ -8,6 +8,7 @@ import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
 import { ApiResponse } from '../shared/interface/api-response';
 import { requestOptions } from '../shared/utility/requests';
+import { Router } from '@angular/router';
 
 const url = environment.api.server;
 
@@ -18,7 +19,11 @@ export class UserService {
   public user$: Observable<User>;
   private readonly userSub = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient, private storage: StorageService) {
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService,
+    private router: Router,
+  ) {
     this.user$ = this.userSub.asObservable();
     // Access Stored User
     this.storage.init().then(() => {
@@ -41,6 +46,7 @@ export class UserService {
   public async signOut() {
     this.userSub.next(null);
     this.storage.removeUser();
+    this.router.navigate(['/user/signin'], { replaceUrl: true });
   }
 
   public async signIn(email: string, password: string): Promise<ApiResponse<User>> {
@@ -106,7 +112,6 @@ export class UserService {
         { passwordCurrent, passwordNew },
         requestOptions({ token: this.token(), contentType: 'application/json' })
       ));
-      // console.log(res);
       return res;
     } catch (error) {
       console.error(error);
