@@ -34,15 +34,17 @@ export const readNotification = async function (req, res) {
         updatedNotifications.push(notification);
       }
     });
-    if(updatedNotifications.length) {
-      await user.save();
+    if(!updatedNotifications.length) {
+      res.status(400).send({ message: "Error: Some or all notifications have already been read." });
     }
+    await user.save();
     res.status(200).send({
       status: 200,
       message: "Success: Notification has been set to read!",
       data: updatedNotifications,
     });
   } catch (error) {
+    console.log("\n Read notification error:", error)
     res
       .status(400)
       .send({ message: "Error: Something went wrong please try again later." });

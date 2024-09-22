@@ -11,7 +11,7 @@ import { userIdToken } from "../../utils/users.js";
 export const deleteNotification = async function (req, res) {
   const token = authBearerToken(req);
   const user_id = userIdToken(token);
-  const param_id = req.params.id;
+  const ids = req.body.id;
   try {
     const user = await User.findOne({ user_id }).select("notifications");
     if (!user) {
@@ -23,15 +23,11 @@ export const deleteNotification = async function (req, res) {
         .send({ message: "Error: User notifications are empty." });
     }
     removeExpiredNotifications(user);
-    /**
-     * @type {Array} ids - list of ids to delete
-     */
-    const ids = param_id.split(",");
     user.notifications = user.notifications.filter((item) => {
-      if (ids.length > 1) {
+      if (Array.isArray(ids)) {
         return !ids.includes(item.notification_id);
       }
-      return item.notification_id !== param_id;
+      return item.notification_id !== ids;
     });
     await user.save();
 
@@ -40,6 +36,7 @@ export const deleteNotification = async function (req, res) {
       message: "Success: Notification has been deleted!",
     });
   } catch (error) {
+    console.log("\n Delete Error:", error)
     res
       .status(400)
       .send({ message: "Error: Something went wrong please try again later." });

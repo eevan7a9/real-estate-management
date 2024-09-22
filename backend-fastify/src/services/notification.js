@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from "uuid";
+
 /**
  * @typedef {Object} User
  * @property {string} user_id
@@ -47,10 +49,12 @@ export const addNotification = function (user, notification) {
   if (user.notifications?.length >= maxNotification) {
     user.notifications.pop();
   }
+  notification.notification_id = uuidv4();
   notification.createdAt = new Date();
-  // 7 day
+
+  // 7 day | Default
   notification.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  // 3 min
+  // 3 min | for testing
   // notification.expiresAt = new Date(Date.now() + 3 * 60 * 1000);
   user.notifications.unshift(notification);
   return notification;

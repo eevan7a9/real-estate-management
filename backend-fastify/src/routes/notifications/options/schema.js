@@ -6,6 +6,7 @@ export const notificationProperties = {
     type: { type: "string" },
     read: { type: "boolean" },
     expiresAt: { type: "string" },
+    createdAt: { type: "string" },
   },
 };
 
