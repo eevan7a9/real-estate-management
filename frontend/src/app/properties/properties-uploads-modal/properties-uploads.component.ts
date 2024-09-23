@@ -66,6 +66,10 @@ export class PropertiesUploadsComponent implements OnInit {
     this.selectedFiles.splice(index, 1);
   }
 
+  public imagesToDelete(event: string[]) {
+    this.modalCtrl.dismiss({ deleted: event });
+  }
+
   private async getPreviewImage(file: File) {
     return new Promise((resolve, reject) => {
       const fr = new FileReader();

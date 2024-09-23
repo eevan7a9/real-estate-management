@@ -65,7 +65,8 @@
     <app-properties-current-images
       [images]="property.images"
       [id]="property.property_id"
-      [hidden]="!property.images.length"
+      [hidden]="!property.images?.length"
+      (delete)="imagesToDelete($event)"
     ></app-properties-current-images>
   </div>
 </ion-content>

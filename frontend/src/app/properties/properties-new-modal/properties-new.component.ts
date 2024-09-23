@@ -5,6 +5,7 @@ import { Validators, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms
 import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
 import { PropertiesService } from '../properties.service';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
+import { Property } from 'src/app/shared/interface/property';
 
 @Component({
   selector: 'app-properties-new',
@@ -95,12 +96,11 @@ export class PropertiesNewComponent implements OnInit {
 
   ngOnInit() { }
 
-  public async submit() {
+  public async submit(): Promise<void> {
     if (this.step === 1 && this.validateStepOne()) {
       this.step = 2;
-      return;
-    }
-    if (this.step === 2 && this.validateStepTwo()) {
+      return 
+    } else if (this.step === 2 && this.validateStepTwo()) {
       this.isSubmit = true;
       const ft = this.propertyForm.get('features').value;
 
@@ -109,16 +109,10 @@ export class PropertiesNewComponent implements OnInit {
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
-      const { data, message } = await this.propertiesService.addProperty(newProperty);
-      if (data) {
-        this.modalCtrl.dismiss(data);
-        this.presentToast(message);
-        return;
-      }
-      this.presentToast('Error:' + message, 'danger');
-      return;
+      await this.addProperty(newProperty);
+    } else {
+      this.presentToast('Error: Invalid, please fill the form properly', 'danger');
     }
-    this.presentToast('Error: Invalid, please fill the form properly', 'danger');
   }
 
   public dismissModal() {
@@ -159,6 +153,17 @@ export class PropertiesNewComponent implements OnInit {
       return true;
     }
     this.error = true;
+  }
+
+  private async addProperty(property: Property): Promise<void> {
+    const res = await this.propertiesService.addProperty(property);
+    if (res.status === 200 || res.status === 201) {
+      this.modalCtrl.dismiss(res.data);
+      this.presentToast(res.message);
+      this.propertiesService.properties = [...this.propertiesService.properties, res.data];
+    } else {
+      this.presentToast(res.message, 'danger');
+    }
   }
 
   private async presentToast(message: string, color = 'success', duration = 3000) {

@@ -19,7 +19,6 @@ export class MapPopupComponent implements OnInit {
   ngOnInit() {}
 
   viewMore() {
-    this.propertiesService.property = this.property;
     this.router.navigate(['/properties', this.property.property_id]);
   }
 }

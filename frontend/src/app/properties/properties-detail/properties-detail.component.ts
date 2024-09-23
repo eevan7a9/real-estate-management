@@ -1,11 +1,7 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  ModalController,
-  PopoverController,
-  ToastController,
-} from '@ionic/angular';
+import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
@@ -13,8 +9,6 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
-import { Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
 import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 import { TransactionType } from 'src/app/shared/enums/property';
 
@@ -23,13 +17,12 @@ import { TransactionType } from 'src/app/shared/enums/property';
   templateUrl: './properties-detail.component.html',
   styleUrls: ['./properties-detail.component.scss'],
 })
-export class PropertiesDetailComponent implements OnInit, OnDestroy {
+export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
   public property = signal<Property | undefined>(undefined);
-  public isOwner = false;
-  public ready = false;
+  public isOwner = signal(false);
+  public ready = signal(false);
   public transactionType = TransactionType;
-  private unsubscribe$ = new Subject<void>();
 
   constructor(
     public location: Location,
@@ -40,34 +33,11 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
     public modalController: ModalController,
     private toastCtrl: ToastController,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   async ngOnInit() {
     const paramId = this.route.snapshot.paramMap.get('id');
-    this.propertiesService.property$
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        finalize(() => {
-          this.property.set(undefined);
-          this.propertiesService.property = null;
-        })
-      )
-      .subscribe(async (property) => {
-        this.property.set(property);
-        if (!this.property()) {
-          await this.propertiesService.fetchProperty(paramId);
-        }
-        this.ready = true;
-        this.isOwner = this.userService.isPropertyOwner(this.property());
-        if (this.propertiesGallery && this.property) {
-          this.propertiesGallery.setImage();
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this.setPropertyDetails(paramId);
   }
 
   public async actionPopup() {
@@ -75,21 +45,18 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
       component: ActionPopupComponent,
       componentProps: {
         message: false,
-        edit: this.isOwner,
-        delete: this.isOwner,
+        edit: this.isOwner(),
+        delete: this.isOwner(),
       },
       translucent: true,
     });
     await popover.present();
-
     const { data } = await popover.onDidDismiss();
     if (!data) {
       return;
     }
     if (data.action === 'delete') {
-      this.propertiesService.removeProperty(this.property().property_id);
-      this.presentToast('Success,property deleted');
-      this.router.navigate(['/properties']);
+      this.deleteProperty(this.property().property_id)
     }
     if (data.action === 'edit') {
       this.editModal();
@@ -108,17 +75,57 @@ export class PropertiesDetailComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: PropertiesUploadsComponent,
       componentProps: {
-        property: this.property,
+        property: this.property(),
       },
     });
     modal.present();
+    modal.onDidDismiss().then(res => {
+      const deleted = res.data?.deleted || [];
+      if (deleted) {
+        this.property.update(value => {
+          value.images = value.images.filter(image => !deleted.includes(image));
+          return value;
+        });
+      }
+    });
+  }
+
+  private setPropertyDetails(id: string): void {
+    this.propertiesService.fetchProperty(id).then((res) => {
+      if (res.status === 200) {
+        this.property.set(res.data);
+        if (this.propertiesGallery) {
+          this.propertiesGallery.setImage();
+        }
+        this.isOwner.set(this.userService.isPropertyOwner(res.data));
+      }
+    }).finally(() => this.ready.set(true))
+  }
+
+  private async deleteProperty(id: string): Promise<void> {
+    const res = await this.propertiesService.removeProperty(id);
+    if (res.status === 200) {
+      this.propertiesService.properties = this.propertiesService.properties.filter(
+        (property) => property.property_id !== res.data.property_id
+      );
+      this.presentToast('Success,property deleted');
+      this.router.navigate(['/properties']);
+    }
+
   }
 
   private async editModal() {
     const modal = await this.modalController.create({
       component: PropertiesEditComponent,
+      componentProps: {
+        property: this.property()
+      }
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    if (data.property) {
+      this.property.set(data.property);
+    }
   }
 
   private async presentToast(

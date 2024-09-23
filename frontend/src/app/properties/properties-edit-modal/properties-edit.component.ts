@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
@@ -66,7 +66,7 @@ export class PropertiesEditComponent implements OnInit {
       value: PaymentFrequency.daily
     }
   ];
-  public property: Property;
+  @Input() property: Property;
 
   constructor(
     private modalCtrl: ModalController,
@@ -75,9 +75,9 @@ export class PropertiesEditComponent implements OnInit {
     private toastCtrl: ToastController
   ) {
     this.propertyForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.minLength(4)]],
       address: ['', Validators.required],
-      description: [''],
+      description: ['', [Validators.required, Validators.minLength(10)]],
       type: [PropertyType.residential],
       transactionType: [TransactionType.forSale],
       price: ['',],
@@ -90,33 +90,30 @@ export class PropertiesEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.propertiesService.property$.subscribe(property => {
-      this.property = property;
-      if (property) {
-        const {
-          name, address, description, type, price, paymentFrequency, currency, features, position, transactionType
-        } = property;
+    if (this.property) {
+      const {
+        name, address, description, type, price, paymentFrequency, currency, features, position, transactionType
+      } = this.property;
 
-        this.propertyForm.patchValue(
-          {
-            name,
-            address,
-            description,
-            type,
-            price,
-            paymentFrequency,
-            currency,
-            features: features ? features.join(', ').trim() : '',
-            transactionType,
-            lat: position.lat,
-            lng: position.lng
-          }
-        );
-      }
-    });
+      this.propertyForm.patchValue(
+        {
+          name,
+          address,
+          description,
+          type,
+          price,
+          paymentFrequency,
+          currency,
+          features: features ? features.join(', ').trim() : '',
+          transactionType,
+          lat: position.lat,
+          lng: position.lng
+        }
+      );
+    }
   }
 
-  public async update(): Promise<void> {
+  public async submit(): Promise<void> {
     if (!this.propertyForm.valid) {
       return;
     }
@@ -151,17 +148,7 @@ export class PropertiesEditComponent implements OnInit {
       user_id: this.property.user_id
     };
     const updatedProperty = { ...this.property, ...editedProperty };
-    const res = await this.propertiesService.updateProperty(updatedProperty);
-
-    if (res) {
-      const toast = await this.toastCtrl.create({
-        message: res.message,
-        duration: 3000,
-        color: 'success'
-      });
-      await toast.present();
-    }
-    this.modalCtrl.dismiss();
+    this.updateProperty(updatedProperty);
   }
 
   public close() {
@@ -178,5 +165,21 @@ export class PropertiesEditComponent implements OnInit {
       const { lat, lng } = data;
       this.propertyForm.patchValue({ lat, lng });
     }
+  }
+
+  private async updateProperty(property: Property): Promise<void> {
+    const res = await this.propertiesService.updateProperty(property);
+    if (res.status === 200 || res.status === 201) {
+      const toast = await this.toastCtrl.create({
+        message: res.message,
+        duration: 3000,
+        color: 'success'
+      });
+      await toast.present();
+    }
+    this.propertiesService.properties = this.propertiesService.properties.map((property) =>
+      property.property_id === res.data.property_id ? res.data : property
+    );
+    this.modalCtrl.dismiss({ property: res.data });
   }
 }

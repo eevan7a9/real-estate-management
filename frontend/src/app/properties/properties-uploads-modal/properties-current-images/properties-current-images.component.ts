@@ -21,7 +21,7 @@ register();
 export class PropertiesCurrentImagesComponent implements OnInit {
   @Input() images: string[] = [];
   @Input() id: string;
-  @Output() delete = new EventEmitter<boolean>();
+  @Output() delete = new EventEmitter<string[]>();
 
   public slideOpts = {
     initialSlide: 0,
@@ -70,14 +70,7 @@ export class PropertiesCurrentImagesComponent implements OnInit {
         color: 'success',
       });
       toast.present();
-      // we remove the current images that was deleted
-      const property = this.propertyService.property;
-      this.propertyService.property = {
-        ...property,
-        images: property.images.filter(
-          (currentImg) => !data.includes(currentImg)
-        ),
-      };
+      this.delete.emit(data);
     }
   }
 }
