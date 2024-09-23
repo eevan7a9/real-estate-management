@@ -4,14 +4,12 @@ import { Enquiry } from "../../models/enquiry.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
 import { activityEnquiryDescription } from "../../utils/activity/index.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const deleteEnquiry = async function (req, res) {
   const { id } = req.params;
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
+  
   try {
     const enquiry = await Enquiry.findOne({ enquiry_id: id });
     if (!enquiry) {

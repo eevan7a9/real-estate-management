@@ -1,12 +1,9 @@
 import { Enquiry } from "../../models/enquiry.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 
 export const getEnquiry = async function (req, res) {
   const { id } = req.params;
+  const user_id = req.user?.id;
   try {
-    const token = authBearerToken(req);
-    const user_id = userIdToken(token);
     const enquiry = await Enquiry.findOne({ 
       enquiry_id: id,
       $or: [

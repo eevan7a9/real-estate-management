@@ -1,6 +1,4 @@
 import { User } from "../../models/user.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 
 /**
  *
@@ -8,8 +6,7 @@ import { userIdToken } from "../../utils/users.js";
  * @param {import("fastify").FastifyReply} res
  */
 export const getActivities = async function (req, res) {
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
   const user = await User.findOne({ user_id }).select("activities -_id").lean();
   
   res.status(200).send({

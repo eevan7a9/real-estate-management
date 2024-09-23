@@ -1,6 +1,4 @@
 import { Enquiry } from "../../models/enquiry.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 
 export const updateEnquiry = async function (req, res) {
   const enquiry_id = req.params.id;
@@ -8,8 +6,7 @@ export const updateEnquiry = async function (req, res) {
     return res.status(404).send({ message: "Can't find Enquiry." });
   }
 
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
 
   const { content, title, topic, read } = req.body;
   const $set = {
@@ -23,10 +20,10 @@ export const updateEnquiry = async function (req, res) {
 
   try {
     const enquiry = await Enquiry.findOneAndUpdate(
-      {       
+      {
         $or: [
-          { 'users.from.user_id': user_id, enquiry_id},
-          { 'users.to.user_id': user_id, enquiry_id},
+          { "users.from.user_id": user_id, enquiry_id },
+          { "users.to.user_id": user_id, enquiry_id },
         ],
       },
       { $set },

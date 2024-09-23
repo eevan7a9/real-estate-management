@@ -1,7 +1,5 @@
 import { User } from "../../models/user.js";
 import { removeExpiredNotifications } from "../../services/notification.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 
 /**
  *
@@ -9,8 +7,7 @@ import { userIdToken } from "../../utils/users.js";
  * @param {import("fastify").FastifyReply} res
  */
 export const getNotifications = async function (req, res) {
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
   try {
     const user = await User.findOne({ user_id }).select("notifications");
     if (!user) {

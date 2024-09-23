@@ -4,8 +4,6 @@ import { Property } from "../../models/property.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
 import { activityPropertyDescription } from "../../utils/activity/index.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const updateProperty = async function (req, res) {
@@ -46,8 +44,7 @@ export const updateProperty = async function (req, res) {
     }),
   };
   try {
-    const token = authBearerToken(req);
-    const user_id = userIdToken(token);
+    const user_id = req.user.id;
     const options = { useFindAndModify: false, new: true, runValidators: true };
 
     const user = await User.findOne({ user_id });

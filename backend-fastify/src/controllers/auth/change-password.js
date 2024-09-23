@@ -4,8 +4,7 @@ import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
 import { addNotification } from "../../services/notification.js";
-import {authBearerToken} from "../../utils/requests.js";
-import {isPasswordValid, userIdToken} from "../../utils/users.js";
+import { isPasswordValid } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const changePassword = async function (req, res) {
@@ -14,10 +13,9 @@ export const changePassword = async function (req, res) {
   else if (!passwordNew) return res.status(400).send({ message: "Error: form is invalid, new password is missing" });
   else if (passwordCurrent === passwordNew) return res.status(400).send({
     message: "Error: new password cannot be the same as your current password. Please choose a different password"
-  })
+  });
 
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
 
   try {
     const foundUser = await User.findOne({ user_id });

@@ -4,8 +4,6 @@ import { Property } from "../../models/property.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
 import { activityPropertyDescription } from "../../utils/activity/index.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 import { unlinkImages } from "./image-property.js";
 
@@ -16,9 +14,9 @@ import { unlinkImages } from "./image-property.js";
  */
 export const deleteProperty = async function (req, res) {
   const { id } = req.params;
+  const user_id = req.user.id;
+
   try {
-    const token = authBearerToken(req);
-    const user_id = userIdToken(token);
     const user = await User.findOne({ user_id });
     if (!user) {
       return res.status(404).send({ message: "Error: User not found." });

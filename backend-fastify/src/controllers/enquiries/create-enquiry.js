@@ -1,7 +1,5 @@
 import { Enquiry } from "../../models/enquiry.js";
 import { v4 as uuidV4 } from "uuid";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 import { User } from "../../models/user.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
 import { SocketNotificationType } from "../../enums/notifications.js";
@@ -19,9 +17,7 @@ export const createEnquiry = async function (req, res) {
   if (!title || !content || !topic || !email || !userTo) {
     return res.status(400).send({ message: "Some fields are missing!" });
   }
-
-  const token = authBearerToken(req);
-  const userFrom = userIdToken(token);
+  const userFrom = req.user.id;
 
   if (userFrom === userTo) {
     return res

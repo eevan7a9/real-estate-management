@@ -15,7 +15,7 @@ import {
 
 export const enquiriesRoutes = function (fastify, opts, done) {
   fastify.get("/", getEnquiriesOpts(fastify, getEnquiries));
-  fastify.get("/:id", getEnquiryOpts(getEnquiry));
+  fastify.get("/:id", getEnquiryOpts(fastify, getEnquiry));
   fastify.post("/", createEnquiryOpts(fastify, createEnquiry));
   fastify.patch("/:id", updateEnquiryOpts(fastify, updateEnquiry));
   fastify.delete("/:id", deleteEnquiryOpts(fastify, deleteEnquiry));

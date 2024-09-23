@@ -3,14 +3,11 @@ import util from "util";
 import path from "path";
 import { pipeline } from "stream";
 import { Property } from "../../models/property.js";
-import { authBearerToken } from "../../utils/requests.js";
-import { userIdToken } from "../../utils/users.js";
 
 const pump = util.promisify(pipeline);
 
 const isPropertyOwner = function (property, req, res) {
-  const token = authBearerToken(req);
-  const user_id = userIdToken(token);
+  const user_id = req.user.id;
   if (property.user_id !== user_id) {
     return res.status(401).send({ message: "Error: you do not own the property." });
   }

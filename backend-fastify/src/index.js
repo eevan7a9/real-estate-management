@@ -39,7 +39,8 @@ fastify.register(FastifyWebsocket, {
 // We register authenticate
 fastify.decorate("authenticate", async function (request, reply) {
   try {
-    await request.jwtVerify();
+    const user = await request.jwtVerify();
+    request.user = user;
   } catch (err) {
     reply.send(err);
   }
