@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema(
         "{PATH} exceeds the limit of notifications per user",
       ],
     },
+    about: {
+      type: String
+    },
+    address: {
+      type: String
+    }
   },
   {
     timestamps: true,

@@ -1,7 +1,7 @@
 /**
  *  Schema for multiple users request
  */
-import { usersProperties } from "./schema.js";
+import { userProperties } from "./schema.js";
 import { responseSuccess, responseError } from "../../../utils/schema/response.js";
 
 export const getUsersOpts = (fastify, handler) => ({
@@ -13,7 +13,7 @@ export const getUsersOpts = (fastify, handler) => ({
           type: "array",
           items: {
             type: "object",
-            properties: usersProperties,
+            properties: userProperties,
           }
         }
       }),

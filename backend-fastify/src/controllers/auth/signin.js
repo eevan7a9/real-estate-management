@@ -37,10 +37,7 @@ export const signIn = async function (req, res) {
 
     return res.status(200).send({
       data: {
-        id: foundUser.id,
-        user_id: foundUser.user_id,
-        fullName: foundUser.fullName,
-        email: foundUser.email,
+        ...foundUser.toObject(),
         accessToken,
       },
     });

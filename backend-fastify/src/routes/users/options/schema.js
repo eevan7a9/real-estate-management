@@ -1,16 +1,20 @@
 // multiple users
-export const usersProperties = {
+export const userProperties = {
   user_id: { type: "string" },
   email: { type: "string" },
   fullName: { type: "string" },
-};
-Object.freeze(usersProperties);
-
-// single user
-export const userProperties = {
-  ...usersProperties,
-  properties: {
-    type: "array"
-  }
+  about: { type: "string" },
+  address: { type: "string" },
 };
 Object.freeze(userProperties);
+
+// single user
+export const userDetailProperties = {
+  ...userProperties,
+  properties: { type: "array" },
+  notifications: { type: "array" },
+  activities: { type: "array" },
+  createdAt: { type: "string" },
+  updatedAt: { type: "string" },
+};
+Object.freeze(userDetailProperties);
