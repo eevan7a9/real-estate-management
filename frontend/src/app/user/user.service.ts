@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { User } from '../shared/interface/user';
+import { User, UserSignedIn } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
@@ -16,8 +16,8 @@ const url = environment.api.server;
   providedIn: 'root',
 })
 export class UserService {
-  public user$: Observable<User>;
-  private readonly userSub = new BehaviorSubject<User>(null);
+  public user$: Observable<UserSignedIn>;
+  private readonly userSub = new BehaviorSubject<UserSignedIn>(null);
 
   constructor(
     private http: HttpClient,
@@ -29,7 +29,7 @@ export class UserService {
     this.storage.init().then(() => {
       this.storage.getUser().then((user) => {
         if (user) {
-          this.updateUser(user);
+          this.setUser(user);
         }
       });
     });
@@ -39,7 +39,7 @@ export class UserService {
     return this.userSub.getValue();
   }
 
-  public token(): string {
+  public get token(): string {
     return this.userSub.getValue().accessToken;
   }
 
@@ -49,10 +49,10 @@ export class UserService {
     this.router.navigate(['/user/signin'], { replaceUrl: true });
   }
 
-  public async signIn(email: string, password: string): Promise<ApiResponse<User>> {
+  public async signIn(email: string, password: string): Promise<ApiResponse<UserSignedIn>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<ApiResponse<User>>(
+        this.http.post<ApiResponse<UserSignedIn>>(
           url + 'auth/signin',
           {
             email,
@@ -61,7 +61,7 @@ export class UserService {
           requestOptions({ contentType: 'application/json' })
         )
       );
-      await this.updateUser(result.data);
+      await this.setUser(result.data);
       return result;
     } catch (error) {
       console.error('err', error);
@@ -69,10 +69,10 @@ export class UserService {
     }
   }
 
-  public async register(fullName: string, email: string, password: string): Promise<ApiResponse<User>> {
+  public async register(fullName: string, email: string, password: string): Promise<ApiResponse<UserSignedIn>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<ApiResponse<User>>(
+        this.http.post<ApiResponse<UserSignedIn>>(
           url + 'auth/register',
           {
             fullName,
@@ -82,7 +82,7 @@ export class UserService {
           requestOptions({ contentType: 'application/json' })
         )
       );
-      await this.updateUser(result.data);
+      await this.setUser(result.data);
       return result;
     } catch (error) {
       console.log('error', error);
@@ -90,12 +90,12 @@ export class UserService {
     }
   }
 
-  public async googleAuth(payload: GoogleAuthResponse): Promise<ApiResponse<User>> {
+  public async googleAuth(payload: GoogleAuthResponse): Promise<ApiResponse<UserSignedIn>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<ApiResponse<User>>(url + 'auth/google', payload)
+        this.http.post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload)
       );
-      await this.updateUser(result.data);
+      await this.setUser(result.data);
       return result;
     } catch (error) {
       console.error('google-auth error:', error);
@@ -110,7 +110,7 @@ export class UserService {
     try {
       const res = await firstValueFrom(this.http.post<ApiResponse>(url + 'auth/change-password',
         { passwordCurrent, passwordNew },
-        requestOptions({ token: this.token(), contentType: 'application/json' })
+        requestOptions({ token: this.token, contentType: 'application/json' })
       ));
       return res;
     } catch (error) {
@@ -119,7 +119,7 @@ export class UserService {
     }
   }
 
-  private async updateUser(user: User) {
+  private async setUser(user: UserSignedIn) {
     this.userSub.next(user);
     await this.storage.setUser(user);
   }

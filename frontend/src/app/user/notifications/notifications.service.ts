@@ -38,7 +38,7 @@ export class NotificationsService {
       const res = await firstValueFrom(
         this.http.get<ApiResponse<Notification[]>>(
           notificationUrl,
-          requestOptions({ token: this.user.token() })
+          requestOptions({ token: this.user.token })
         )
       );
       return res;
@@ -60,7 +60,7 @@ export class NotificationsService {
         this.http.patch<ApiResponse<Notification[]>>(
           notificationUrl,
           body,
-          requestOptions({ token: this.user.token() })
+          requestOptions({ token: this.user.token })
         )
       );
       return res;
@@ -75,7 +75,7 @@ export class NotificationsService {
       const res = await firstValueFrom(
         this.http.delete<ApiResponse>(
           notificationUrl,
-          requestOptions({ token: this.user.token() }, { id })
+          requestOptions({ token: this.user.token }, { id })
         )
       );
       return res;

@@ -1,13 +1,21 @@
+import { Activity } from "./activities";
+
 export interface User {
-  id?: string;
   user_id: string;
   email: string;
   fullName: string;
-  created?: Date;
-  password?: string;
-  enquiries?: string[];
+  about?: string;
+  address?: string;
+}
+
+export interface UserSignedIn extends User {
+  accessToken: string;
+}
+
+export interface UserDetails extends User {
+  createdAt?: Date;
+  updatedAt?: Date;
   properties?: string[];
-  accessToken?: string;
-  aboutMe?: string;
-  location?: string;
+  activities?: Activity[];
+  notifications?: Notification[];
 }

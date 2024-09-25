@@ -59,7 +59,7 @@ export class PropertiesService {
   }
 
   public async addProperty(property: Property): Promise<ApiResponse<Property>> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     try {
       const res = await firstValueFrom(
         this.http.post<ApiResponse<Property>>(
@@ -84,7 +84,7 @@ export class PropertiesService {
       formData.append('images', file, file.name);
     });
     try {
-      const token = this.userService.token();
+      const token = this.userService.token;
       return await firstValueFrom(
         this.http.post<ApiResponse<string[]>>(
           propertyUrl + '/upload/images/' + id,
@@ -102,7 +102,7 @@ export class PropertiesService {
     images: string[],
     propId: string
   ): Promise<ApiResponse<string[]>> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
       const res = await firstValueFrom(
@@ -118,7 +118,7 @@ export class PropertiesService {
   }
 
   public async removeProperty(propId: string): Promise<ApiResponse<Property>> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     try {
       const url = `${propertyUrl}/${propId}`;
       const res = await firstValueFrom(
@@ -135,7 +135,7 @@ export class PropertiesService {
   ): Promise<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     try {
-      const token = this.userService.token();
+      const token = this.userService.token;
       const res = await firstValueFrom(
         this.http.patch<ApiResponse<Property>>(
           url,

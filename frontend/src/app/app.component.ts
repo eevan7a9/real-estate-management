@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   public user: User;
   public unreadEnquiries = signal(0);
   public unreadNotifications = signal(0);
-
+  
   constructor(
     private platform: Platform,
     private storage: StorageService,
@@ -79,7 +79,7 @@ export class AppComponent implements OnInit {
       this.user = user;
       if (user) {
         console.log('Connect verified user...');
-        this.webSocket.connect(this.userService.token());
+        this.webSocket.connect(this.userService.token);
         /**
          *  Fetch users enquiries if there's was no initial fetch
          */

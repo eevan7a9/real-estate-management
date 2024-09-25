@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { Coord } from '../../interface/map';
-import { User } from '../../interface/user';
+import { UserSignedIn } from '../../interface/user';
 
 @Injectable({
   providedIn: 'root'
@@ -43,11 +43,11 @@ export class StorageService {
     return await this.ionStorage?.get('coord');
   }
 
-  public async setUser(user: User) {
+  public async setUser(user: UserSignedIn) {
     await this.ionStorage?.set('user', user);
   }
 
-  public async getUser(): Promise<User> {
+  public async getUser(): Promise<UserSignedIn> {
     return await this.ionStorage?.get('user');
   }
 

@@ -46,7 +46,7 @@ export class EnquiriesService {
       const res = await firstValueFrom(
         this.http.get<ApiResponse<Enquiry[]>>(
           enquiryUrl,
-          requestOptions({ token: this.userService.token() })
+          requestOptions({ token: this.userService.token })
         )
       );
       return res;
@@ -58,7 +58,7 @@ export class EnquiriesService {
 
   public async fetchEnquiry(enqId: string): Promise<Enquiry> {
     try {
-      const token = this.userService.token();
+      const token = this.userService.token;
       this.enquiry = (
         await firstValueFrom(
           this.http.get<ApiResponse<Enquiry>>(
@@ -79,7 +79,7 @@ export class EnquiriesService {
     enquiry: EnquiryCreate,
     property: Partial<Property>
   ): Promise<ApiResponse<Enquiry>> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     const formData = {
       ...enquiry,
       property: {
@@ -104,7 +104,7 @@ export class EnquiriesService {
   }
 
   public async removeEnquiry(enqId: string): Promise<ApiResponse> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
     try {
       const res = await firstValueFrom(
@@ -123,7 +123,7 @@ export class EnquiriesService {
   }
 
   public async readEnquiry(enqId: string): Promise<void> {
-    const token = this.userService.token();
+    const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
     try {
       const { data } = await firstValueFrom(

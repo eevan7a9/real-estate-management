@@ -35,7 +35,7 @@ export class ActivitiesService {
       const res = await firstValueFrom(
         this.http.get<ApiResponse<Activity[]>>(
           propertyUrl,
-          requestOptions({ token: this.user.token() })
+          requestOptions({ token: this.user.token })
         )
       );
       this.activities = res.data;
