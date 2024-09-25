@@ -1,29 +1,22 @@
-import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { NotificationsService } from './notifications/notifications.service';
-import { Subscription } from 'rxjs';
+import { map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
   styleUrls: ['./user.page.scss'],
 })
-export class UserPage implements OnInit, OnDestroy {
+export class UserPage {
+  public unreadNotifications = toSignal(
+    this.notificationsService.notifications$.pipe(
+      map(
+        (notifications) => notifications.filter((notif) => !notif.read).length
+      )
+    ),
+    { initialValue: 0 }
+  );
 
-  public unreadNotifications = signal<number>(0);
-  private subscription: Subscription;
-
-  constructor(private notificationsService: NotificationsService) { }
-
-  ngOnInit() {
-    this.subscription = this.notificationsService.notifications$.subscribe((notifications) => {
-      const unreadCount = notifications.filter(item => !item.read).length;
-      this.unreadNotifications.set(unreadCount);
-    });
-  }
-
-  ngOnDestroy(): void {
-    if(this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
+  constructor(private notificationsService: NotificationsService) {}
 }

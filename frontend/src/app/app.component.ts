@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { User } from './shared/interface/user';
+import { UserDetails } from './shared/interface/user';
 
 import { ActivitiesService } from './activities/activities.service';
 import { EnquiriesService } from './enquiries/enquiries.service';
@@ -17,6 +16,7 @@ import { Enquiry } from './shared/interface/enquiry';
 // Register swiper js
 import { register } from 'swiper/element/bundle';
 import { NotificationsService } from './user/notifications/notifications.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 register();
 
@@ -49,10 +49,22 @@ export class AppComponent implements OnInit {
     { title: 'Sign In', url: '/user/signin', icon: 'log-in', guest: true },
   ];
 
-  public user: User;
-  public unreadEnquiries = signal(0);
-  public unreadNotifications = signal(0);
-  
+  public unreadEnquiries = toSignal(
+    this.enquiriesService.enquiries$.pipe(
+      map((enquiries) => enquiries.filter((item) => this.isUnread(item)).length)
+    ),
+    { initialValue: 0 }
+  );
+
+  public unreadNotifications = toSignal(
+    this.notificationsService.notifications$.pipe(
+      map((notifications) => notifications.filter((item) => !item.read).length)
+    ),
+    { initialValue: 0 }
+  );
+
+  public user = signal<UserDetails>(undefined);
+
   constructor(
     private platform: Platform,
     private storage: StorageService,
@@ -64,7 +76,7 @@ export class AppComponent implements OnInit {
     private activitiesService: ActivitiesService,
     private webSocket: WebSocketService,
     private notificationsService: NotificationsService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     await this.platform.ready();
@@ -76,37 +88,22 @@ export class AppComponent implements OnInit {
       document.body.classList.add('dark');
     }
     this.userService.user$.subscribe((user) => {
-      this.user = user;
-      if (user) {
-        console.log('Connect verified user...');
-        this.webSocket.connect(this.userService.token);
-        /**
-         *  Fetch users enquiries if there's was no initial fetch
-         */
-        console.log('Fetching Enquiries...');
-        if (!this.enquiriesService.initialFetchDone) {
-          this.fetchEnquiries();
-        }
-        /**
-         *  Fetch Users Notifications
-         */
-        console.log('Fetching Notifications...');
-        this.fetchNotifications();
-      } else {
+      if (!user) {
         console.log('Unkown User...');
         this.webSocket.disconnect();
         this.enquiriesService.resetState();
         this.notificationsService.resetState();
         this.activitiesService.resetState();
+        return;
       }
-    });
-    this.enquiriesService.enquiries$.subscribe((enquiries) => {
-      const unreadCount = enquiries.filter((enq) => this.isUnread(enq)).length;
-      this.unreadEnquiries.set(unreadCount);
-    });
-    this.notificationsService.notifications$.subscribe((notifications) => {
-      const unreadCount = notifications.filter((noti) => !noti.read).length;
-      this.unreadNotifications.set(unreadCount);
+      console.log('Connect verified user...');
+      this.webSocket.connect(this.userService.token);
+      console.log('Fetching Enquiries...');
+      if (!this.enquiriesService.initialFetchDone) {
+        this.fetchEnquiries();
+      }
+      console.log('Fetching user details...');
+      this.setUserProfile();
     });
     this.checkServer();
   }
@@ -131,7 +128,7 @@ export class AppComponent implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {},
+          handler: () => { },
         },
         {
           text: 'Sign out',
@@ -146,6 +143,16 @@ export class AppComponent implements OnInit {
     await alert.present();
   }
 
+  private async setUserProfile(): Promise<void> {
+    const res = await this.userService.getCurrentUser();
+    if (res.status === 200) {
+      const { activities, notifications, ...user } = res.data
+      this.user.set(user);
+      this.activitiesService.activities = activities;
+      this.notificationsService.notifications = notifications;
+    }
+  }
+
   private fetchEnquiries(): void {
     this.enquiriesService.fetchEnquiries().then((res) => {
       if (res?.status === 200) {
@@ -155,13 +162,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private fetchNotifications(): void {
-    this.notificationsService.fetchNotifications().then((res) => {
-      if (res?.status === 200) {
-        this.notificationsService.notifications = res.data;
-      }
-    });
-  }
   private async showSignedOutToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: 'Success, you have signed out.',
@@ -178,6 +178,6 @@ export class AppComponent implements OnInit {
   }
 
   private isUnread(enquiry: Enquiry) {
-    return !enquiry.read && enquiry.users.to.user_id === this.user.user_id;
+    return !enquiry.read && enquiry.users.to.user_id === this.user()?.user_id;
   }
 }

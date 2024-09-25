@@ -119,7 +119,7 @@ export class UserService {
     }
   }
 
-  public async updateUser(user: Partial<UserDetails>): Promise<ApiResponse<User>> {
+  public async updateUser(user: Partial<User>): Promise<ApiResponse<User>> {
     try {
       const res = await firstValueFrom(
         this.http.patch<ApiResponse<User>>(url + 'users/me', user, requestOptions({ token: this.token }))
@@ -131,8 +131,18 @@ export class UserService {
     }
   }
 
+  public async getCurrentUser(): Promise<ApiResponse<UserDetails>> {
+    try {
+      const res = await firstValueFrom(this.http.get<ApiResponse<UserDetails>>(url + 'users/me', requestOptions({ token: this.token })));
+      return res;
+    } catch (error) {
+      console.error(error);
+      return error.error || error;
+    }
+  }
+
   public async setUser(user: UserSignedIn) {
-    this.userSub.next({...this.userSub.value, ...user});
+    this.userSub.next({ ...this.userSub.value, ...user });
     await this.storage.setUser(user);
   }
 }

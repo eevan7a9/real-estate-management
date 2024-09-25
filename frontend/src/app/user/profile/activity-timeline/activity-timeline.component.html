@@ -16,13 +16,13 @@
 
       <button type="button" (click)="viewProperty(activity)"
         class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
-        *ngIf="activity.property_id && activity.action !== action.PropertyDelete"
+        *ngIf="activity.property_id && activity.action !== actionType.PropertyDelete"
         >
         View Property
       </button>
       <button type="button" (click)="viewEnquiry(activity)"
         class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
-        *ngIf="activity.enquiry_id && activity.action !== action.EnquiryDelte"
+        *ngIf="activity.enquiry_id && activity.action !== actionType.EnquiryDelte"
         >
         View Enquiry
       </button>

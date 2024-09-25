@@ -56,19 +56,16 @@ export class EnquiriesService {
     }
   }
 
-  public async fetchEnquiry(enqId: string): Promise<Enquiry> {
+  public async fetchEnquiry(enqId: string): Promise<ApiResponse<Enquiry>> {
     try {
       const token = this.userService.token;
-      this.enquiry = (
-        await firstValueFrom(
-          this.http.get<ApiResponse<Enquiry>>(
-            enquiryUrl + '/' + enqId,
-            requestOptions({ token })
-          )
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<Enquiry>>(
+          enquiryUrl + '/' + enqId,
+          requestOptions({ token })
         )
-      ).data;
-
-      return this.enquiry;
+      );
+      return res;
     } catch (error) {
       console.error(error);
       return error.error || error;

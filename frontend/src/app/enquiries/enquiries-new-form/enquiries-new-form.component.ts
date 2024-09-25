@@ -1,11 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
@@ -24,7 +17,7 @@ import { NeedSigninContinueComponent } from 'src/app/shared/components/need-sign
   templateUrl: './enquiries-new-form.component.html',
   styleUrls: ['./enquiries-new-form.component.scss'],
 })
-export class EnquiriesNewFormComponent implements OnInit, OnDestroy {
+export class EnquiriesNewFormComponent {
   @Input() property: Partial<Property>;
   @Input() userTo: string;
   @Input() replyTo?: {
@@ -52,10 +45,6 @@ export class EnquiriesNewFormComponent implements OnInit, OnDestroy {
       topic: [EnquiryTopic.info, Validators.required],
     });
   }
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {}
 
   public async submit() {
     this.enquiryForm.markAllAsTouched();

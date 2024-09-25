@@ -1,31 +1,31 @@
 import {
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
+  effect,
   ElementRef,
-  OnDestroy,
   QueryList,
   signal,
   ViewChildren,
 } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
 import { UserNotificationType } from 'src/app/shared/enums/notification';
 import { Notification } from 'src/app/shared/interface/notification';
 import { NotificationsService } from './notifications.service';
 import { CheckboxCustomEvent, IonItem, ToastController } from '@ionic/angular';
 import { debounce } from 'src/app/shared/utility/helpers';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss'],
 })
-export class NotificationsComponent implements AfterViewInit, OnDestroy {
-  public notifications = signal<Notification[]>([]);
-  public notificationsChecked: string[] = [];
+export class NotificationsComponent {
+  public notifications = toSignal<Notification[]>(
+    this.notificationsService.notifications$
+  );
+  public notificationsChecked = signal<string[]>([]);
   public isLoading = signal<boolean>(false);
 
-  private unsubscribed$ = new Subject();
   private notificationsToRead: string[] = [];
 
   @ViewChildren('notificationElement', { read: ElementRef })
@@ -35,32 +35,26 @@ export class NotificationsComponent implements AfterViewInit, OnDestroy {
     private notificationsService: NotificationsService,
     private toast: ToastController,
     private changeDetector: ChangeDetectorRef
-  ) { }
-
-  ngAfterViewInit(): void {
-    this.notificationsService.notifications$
-      .pipe(takeUntil(this.unsubscribed$))
-      .subscribe((notifications) => {
-        this.notifications.set(notifications);
-        if (notifications.length) {
-          this.changeDetector.detectChanges();
-          this.notificationElementObserver();
-        }
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribed$.next(true);
-    this.unsubscribed$.complete();
+  ) {
+    effect(() => {
+      if (this.notifications().length) {
+        this.changeDetector.detectChanges();
+        this.notificationElementObserver();
+      }
+    });
   }
 
   public itemClicked(e: CheckboxCustomEvent, id: string): void {
     if (e.detail.checked) {
-      this.notificationsChecked.push(id);
+      this.notificationsChecked.update((items) => {
+        items.push(id);
+        return items;
+      });
     } else {
-      this.notificationsChecked = this.notificationsChecked.filter(
-        (item) => item !== id
-      );
+      this.notificationsChecked.update((items) => {
+        items.filter((item) => item !== id);
+        return items;
+      });
     }
   }
 
@@ -70,23 +64,23 @@ export class NotificationsComponent implements AfterViewInit, OnDestroy {
         return 'success';
       case UserNotificationType.System:
         return 'primary';
-      // case UserNotificationType.Enquiry:
-      //     return 'tertiary';
       default:
         return 'tertiary';
     }
   }
 
   public async deleteSelectedNotfications(): Promise<void> {
-    if (!this.notificationsChecked.length) {
+    if (!this.notificationsChecked().length) {
       return;
     }
     this.isLoading.set(true);
-    const res = await this.notificationsService.deleteNotification(this.notificationsChecked);
+    const res = await this.notificationsService.deleteNotification(
+      this.notificationsChecked()
+    );
     if (res?.status === 200) {
       this.notificationsService.notifications = this.notifications().filter(
         (item) => {
-          return !this.notificationsChecked.includes(item.notification_id);
+          return !this.notificationsChecked().includes(item.notification_id);
         }
       );
     }
@@ -97,7 +91,7 @@ export class NotificationsComponent implements AfterViewInit, OnDestroy {
     });
     (await toast).present();
 
-    this.notificationsChecked = [];
+    this.notificationsChecked.set([]);
     this.isLoading.set(false);
   }
 
@@ -122,19 +116,18 @@ export class NotificationsComponent implements AfterViewInit, OnDestroy {
   }
 
   private setNotificationAsRead = debounce(async () => {
-    if(!this.notificationsToRead.length) {
+    if (!this.notificationsToRead.length) {
       return;
     }
-    console.log("notificationsToRead", this.notificationsToRead);
     const res = await this.notificationsService.readNotification(
       this.notificationsToRead
     );
-    if(!res?.data?.length) {
+    if (!res.data?.length) {
       return;
     }
-    const readNotifications = res?.data;
+    const readNotifications = res.data;
     const tempNotifications = this.notifications();
-  
+
     readNotifications.forEach((item) => {
       const found = tempNotifications.find(
         (noti) => noti.notification_id === item.notification_id
@@ -143,8 +136,6 @@ export class NotificationsComponent implements AfterViewInit, OnDestroy {
         found.read = true;
       }
     });
-
-    console.log("Set Notifications as read...")
     this.notificationsService.notifications = tempNotifications;
     this.notificationsToRead = [];
   }, 3000);

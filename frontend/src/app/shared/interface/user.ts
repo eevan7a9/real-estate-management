@@ -1,4 +1,5 @@
 import { Activity } from "./activities";
+import { Notification } from "./notification";
 
 export interface User {
   user_id: string;

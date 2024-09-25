@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, PopoverController, ToastController } from '@ionic/angular';
 
@@ -19,9 +19,9 @@ import { TransactionType } from 'src/app/shared/enums/property';
 })
 export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
-  public property = signal<Property | undefined>(undefined);
-  public isOwner = signal(false);
+  public property = signal<Property>(undefined);
   public ready = signal(false);
+  public isOwner = computed(() => this.userService.isPropertyOwner(this.property()));
   public transactionType = TransactionType;
 
   constructor(
@@ -62,7 +62,12 @@ export class PropertiesDetailComponent implements OnInit {
       this.editModal();
     }
     if (data.action === 'report') {
-      this.presentToast('Success, we will take a look at this property.');
+      const toast = await this.toastCtrl.create({
+        message: 'Success, we will take a look at this property.',
+        color: 'danger',
+        duration: 5000
+      });
+      toast.present();
     }
   }
 
@@ -97,7 +102,6 @@ export class PropertiesDetailComponent implements OnInit {
         if (this.propertiesGallery) {
           this.propertiesGallery.setImage();
         }
-        this.isOwner.set(this.userService.isPropertyOwner(res.data));
       }
     }).finally(() => this.ready.set(true))
   }
@@ -108,10 +112,14 @@ export class PropertiesDetailComponent implements OnInit {
       this.propertiesService.properties = this.propertiesService.properties.filter(
         (property) => property.property_id !== res.data.property_id
       );
-      this.presentToast('Success,property deleted');
+      const toast = await this.toastCtrl.create({
+        message: res.message,
+        color: res.status === 200 ? 'success' : 'danger',
+        duration: 4000
+      });
+      toast.present();
       this.router.navigate(['/properties']);
     }
-
   }
 
   private async editModal() {
@@ -126,18 +134,5 @@ export class PropertiesDetailComponent implements OnInit {
     if (data.property) {
       this.property.set(data.property);
     }
-  }
-
-  private async presentToast(
-    message: string,
-    color = 'success',
-    duration = 3000
-  ) {
-    const toast = await this.toastCtrl.create({
-      message,
-      duration,
-      color,
-    });
-    toast.present();
   }
 }

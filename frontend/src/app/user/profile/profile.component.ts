@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { User, UserDetails } from 'src/app/shared/interface/user';
+import { AfterViewInit, Component, signal } from '@angular/core';
+import { UserDetails } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { ActivitiesService } from 'src/app/activities/activities.service';
+import { NotificationsService } from '../notifications/notifications.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -18,16 +20,18 @@ export class ProfileComponent {
 
   constructor(
     private userService: UserService,
+    private activitiesService: ActivitiesService,
+    private notificationsService: NotificationsService,
     private formBuilder: FormBuilder,
     private toastCtrl: ToastController
   ) {
     this.userForm = this.formBuilder.group({
       fullName: [
-        this.user().fullName || '',
+        this.user()?.fullName || '',
         [Validators.required, Validators.minLength(4)],
       ],
-      about: [this.user().about || '', [Validators.maxLength(1000)]],
-      address: [this.user().address || '', [Validators.maxLength(1000)]],
+      about: [this.user()?.about || '', [Validators.maxLength(1000)]],
+      address: [this.user()?.address || '', [Validators.maxLength(1000)]],
     });
   }
 
@@ -40,9 +44,7 @@ export class ProfileComponent {
     // called each time file input changes
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-
       reader.onload = (ev) => {
         // called once readAsDataURL is completed
         this.imgUrl = ev.target.result;

@@ -6,11 +6,11 @@
           <ion-card>
             <ion-card-header class="flex flex-row justify-between items-center">
               <ion-card-title class="text-[24px]"> Notifications
-                <small *ngIf="notificationsChecked.length"> - Selected ( {{ notificationsChecked.length }} )</small>
+                <small *ngIf="notificationsChecked().length"> - Selected ( {{ notificationsChecked().length }} )</small>
               </ion-card-title>
 
               <ion-button [disabled]="isLoading()" (click)="deleteSelectedNotfications()" color="danger"
-                *ngIf="notificationsChecked.length">
+                *ngIf="notificationsChecked().length">
                 <ion-icon name="trash"></ion-icon>
                 Delete
               </ion-button>
@@ -24,7 +24,7 @@
                       (ionChange)="itemClicked($event, item.notification_id)" labelPlacement="end" justify="start"
                       alignment="center">
                       <div class="flex items-center">
-                        <div>{{ item.message }}</div>
+                        <div>{{ item.message }} {{ item.notification_id }}</div>
                         <div class="absolute right-3 gap-2 flex items-center justify-around">
                           <ion-badge [color]="getItemBadge(item.type)">
                             {{ item.type }}

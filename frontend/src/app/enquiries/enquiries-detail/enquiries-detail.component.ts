@@ -1,26 +1,25 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { User } from 'src/app/shared/interface/user';
 import { UserService } from 'src/app/user/user.service';
 import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-enquiries-detail',
   templateUrl: './enquiries-detail.component.html',
   styleUrls: ['./enquiries-detail.component.scss'],
 })
-export class EnquiriesDetailComponent implements OnInit, OnDestroy {
-  public enquiry: Enquiry | null;
-  public user: User;
-  public paramId: string;
-  private unsubscribe$ = new Subject<void>();
+export class EnquiriesDetailComponent implements OnInit {
+  public enquiry = signal<Enquiry>(undefined);
+  public user = toSignal<User>(this.userService.user$);
+  public paramId = toSignal(this.route.paramMap);
+  public ready = signal<boolean>(false);
 
   constructor(
     public location: Location,
@@ -32,7 +31,9 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private loadingCtrl: LoadingController
-  ) { }
+  ) {
+
+  }
 
   async ngOnInit() {
     const loading = await this.loadingCtrl.create({
@@ -40,27 +41,11 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
       spinner: 'circular'
     });
     loading.present();
-
-    this.route.paramMap.pipe(takeUntil(this.unsubscribe$)).subscribe(async (params) => {
-      loading.present();
-      this.paramId = params.get('id');
-      await this.enquiriesService.fetchEnquiry(this.paramId);
-    });
-
-    this.enquiriesService.enquiry$.pipe(takeUntil(this.unsubscribe$)).subscribe(enquiry => {
-      this.enquiry = enquiry;
-      loading.dismiss();
-    });
-    this.userService.user$.subscribe(user => {
-      if (user) { this.user = user; }
-    });
+    await this.setEnquiryDetails();
+    loading.dismiss();
+    this.ready.set(true)
   }
 
-  ngOnDestroy(): void {
-    this.enquiriesService.enquiry = null;
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
   async gotToProperty(propertyId: string) {
     await this.router.navigate(['/properties', propertyId]);
   }
@@ -69,15 +54,14 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
   }
 
   async ionViewDidEnter() {
-    const userId = this.userService.user.user_id;
-    if (!this.enquiry?.read && this.enquiry?.users?.to.user_id === userId) {
-      this.enquiriesService.readEnquiry(this.enquiry.enquiry_id);
+    if (!this.enquiry()?.read && this.enquiry()?.users?.to.user_id === this.user().user_id) {
+      this.enquiriesService.readEnquiry(this.enquiry().enquiry_id);
     }
   }
 
   public sentByMe(): boolean {
     if (this.user && this.enquiry) {
-      return this.user.user_id === this.enquiry.users.from.user_id;
+      return this.user().user_id === this.enquiry().users.from.user_id;
     }
     return false;
   }
@@ -92,9 +76,7 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {
-            // console.log('Confirm Cancel: blah');
-          }
+          handler: () => { }
         }, {
           text: 'REPORT',
           cssClass: 'alert-danger-text',
@@ -105,7 +87,6 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
         }
       ]
     });
-
     await alert.present();
   }
 
@@ -153,15 +134,22 @@ export class EnquiriesDetailComponent implements OnInit, OnDestroy {
       component: EnquiriesReplyModalComponent,
       componentProps: {
         title: 'Reply Enquiry',
-        property: this.enquiry?.property,
+        property: this.enquiry()?.property,
         replyTo: {
-          enquiry_id: this.enquiry.enquiry_id,
-          title: this.enquiry.title,
-          topic: this.enquiry.topic
+          enquiry_id: this.enquiry().enquiry_id,
+          title: this.enquiry().title,
+          topic: this.enquiry().topic
         },
-        userTo: this.enquiry.users?.from?.user_id
+        userTo: this.enquiry().users?.from?.user_id
       }
     });
     return await modal.present();
+  }
+
+  private async setEnquiryDetails(): Promise<void> {
+    const res = await this.enquiriesService.fetchEnquiry(this.paramId().get('id'));
+    if (res.status === 200) {
+      this.enquiry.set(res.data);
+    }
   }
 }
