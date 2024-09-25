@@ -30,7 +30,7 @@
               <div class="app-use-info">
                 <div class="item">
                   <ion-icon name="flame-outline"></ion-icon>
-                  <ion-text>Joined {{ user?.created | date }}</ion-text>
+                  <ion-text>Joined {{ user()?.createdAt | date }}</ion-text>
                 </div>
                 <div class="item">
                   <ion-icon name="calendar-outline"></ion-icon>
@@ -48,13 +48,14 @@
             </ion-card-header>
 
             <ion-card-content>
-              <form class="form-information">
+              <form (submit)="submit()" [formGroup]="userForm" class="form-information">
                 <ion-item lines="none">
                   <ion-input
                     labelPlacement="floating"
                     label="Email *"
                     type="email"
-                    [value]="user?.email"
+                    [readonly]="true"
+                    [value]="user()?.email"
                   ></ion-input>
                 </ion-item>
 
@@ -63,7 +64,9 @@
                     labelPlacement="floating"
                     label="Full Name *"
                     type="text"
-                    [value]="user?.fullName"
+                    formControlName="fullName"
+                    [value]="user()?.fullName"
+                    errorText="Full Name is too short."
                   ></ion-input>
                 </ion-item>
 
@@ -72,21 +75,25 @@
                     placeholder="..."
                     labelPlacement="floating"
                     label="About Me:"
-                    [value]="user?.aboutMe"
+                    formControlName="about"
+                    [value]="user()?.about"
+                    errorText="Maximum character limit of 1000 has been reached."
                   ></ion-textarea>
                 </ion-item>
 
                 <ion-item lines="none">
                   <ion-input
                     labelPlacement="floating"
-                    label="Location"
+                    label="Address"
                     type="text"
-                    [value]="user?.location"
+                    formControlName="address"
+                    [value]="user()?.address"
+                    errorText="Maximum character limit of 1000 has been reached."
                   ></ion-input>
                 </ion-item>
 
                 <div class="ion-text-end ion-padding-vertical">
-                  <ion-button>SAVE CHANGES</ion-button>
+                  <ion-button type="submit">SAVE CHANGES</ion-button>
                 </div>
               </form>
             </ion-card-content>

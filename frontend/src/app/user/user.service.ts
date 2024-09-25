@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { User, UserSignedIn } from '../shared/interface/user';
+import { User, UserDetails, UserSignedIn } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
@@ -43,7 +43,7 @@ export class UserService {
     return this.userSub.getValue().accessToken;
   }
 
-  public async signOut() {
+  public async signOut(): Promise<void> {
     this.userSub.next(null);
     this.storage.removeUser();
     this.router.navigate(['/user/signin'], { replaceUrl: true });
@@ -85,8 +85,8 @@ export class UserService {
       await this.setUser(result.data);
       return result;
     } catch (error) {
-      console.log('error', error);
-      return error;
+      console.error(error);
+      return error.error || error;
     }
   }
 
@@ -119,8 +119,20 @@ export class UserService {
     }
   }
 
-  private async setUser(user: UserSignedIn) {
-    this.userSub.next(user);
+  public async updateUser(user: Partial<UserDetails>): Promise<ApiResponse<User>> {
+    try {
+      const res = await firstValueFrom(
+        this.http.patch<ApiResponse<User>>(url + 'users/me', user, requestOptions({ token: this.token }))
+      );
+      return res;
+    } catch (error) {
+      console.error(error);
+      return error.error || error;
+    }
+  }
+
+  public async setUser(user: UserSignedIn) {
+    this.userSub.next({...this.userSub.value, ...user});
     await this.storage.setUser(user);
   }
 }
