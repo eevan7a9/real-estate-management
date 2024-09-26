@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
@@ -14,7 +14,7 @@ const enquiryUrl = environment.api.server + 'enquiries';
   providedIn: 'root',
 })
 export class EnquiriesService {
-  public initialFetchDone = false;
+  public initialFetchDone = signal<boolean>(false);
   public readonly enquiries$: Observable<Enquiry[]>;
   public readonly enquiry$: Observable<Enquiry>;
   private readonly enquiriesSub = new BehaviorSubject<Enquiry[]>([]);
@@ -142,10 +142,10 @@ export class EnquiriesService {
 
   public resetState(): void {
     this.enquiries = [];
-    this.initialFetchDone = false;
+    this.initialFetchDone.set(false);
   }
 
   public insertEnquiryToState(enquiry: Enquiry): void {
-    this.enquiries = [...this.enquiries, enquiry];
+    this.enquiries = [enquiry, ...this.enquiries];
   }
 }

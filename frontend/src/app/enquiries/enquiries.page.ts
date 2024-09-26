@@ -1,83 +1,120 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { EnquiryTopic } from '../shared/enums/enquiry';
-import { User } from '../shared/interface/user';
 import { UserService } from '../user/user.service';
 import { EnquiriesListComponent } from './enquiries-list/enquiries-list.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EnquiriesService } from './enquiries.service';
+import {
+  IonSearchbarCustomEvent,
+  IonSelectCustomEvent,
+  SearchbarChangeEventDetail,
+  SelectChangeEventDetail,
+} from '@ionic/core';
 
 @Component({
   selector: 'app-enquiries',
   templateUrl: './enquiries.page.html',
   styleUrls: ['./enquiries.page.scss'],
 })
-export class EnquiriesPage implements OnInit {
-
+export class EnquiriesPage implements AfterViewInit {
   @ViewChild(EnquiriesListComponent) enquiriesList: EnquiriesListComponent;
-  public progressBar = false;
-  public search = '';
-  public filterBy: string[] = [];
+  public search = signal<string>('');
+  public filterBy = signal<string[]>([]);
+  public sortBy = signal<string>('latest');
+  public user = toSignal(this.userService.user$, { initialValue: undefined });
+  public enquiriesReady = computed(() =>
+    this.enquiriesService.initialFetchDone()
+  );
+
   public filters = [
     {
       value: EnquiryTopic.info,
-      label: 'Information'
+      label: 'Information',
     },
     {
       value: EnquiryTopic.sales,
-      label: 'Sales'
+      label: 'Sales',
     },
     {
       value: EnquiryTopic.schedule,
-      label: 'Schedule'
+      label: 'Schedule',
     },
     {
       value: EnquiryTopic.payment,
-      label: 'Payment'
+      label: 'Payment',
     },
     {
       value: 'sent',
-      label: 'Sent'
+      label: 'Sent',
     },
     {
       value: 'received',
-      label: 'Received'
+      label: 'Received',
     },
   ];
-  public sortBy = 'latest';
   public sorts = [
     {
       value: 'latest',
-      label: 'Latest'
+      label: 'Latest',
     },
     {
       value: 'oldest',
-      label: 'Oldest'
+      label: 'Oldest',
     },
     {
       value: 'title',
-      label: 'Title'
+      label: 'Title',
     },
   ];
-  public user: User;
 
+  private queryParams = toSignal(this.activatedRoute.queryParams);
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private router: Router,
+    private enquiriesService: EnquiriesService
+  ) {}
 
-  ngOnInit() {
-    this.userService.user$.subscribe(user => this.user = user);
+  public ngAfterViewInit(): void {
+    const { filter, sort, search } = this.queryParams();
+    if (filter?.length) this.filterBy.set(filter.split(','));
+    if (sort) this.sortBy.set(sort);
+    if (search) this.search.set(search);
   }
 
-  ionViewDidEnter() {
-    if (this.user) {
-      this.enquiriesList.onParentDidEnter();
-    }
+  public setSearchedText(
+    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
+  ): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { search: value || null },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  public async setLoading(val: boolean) {
-    this.progressBar = val;
+  public setFilters(
+    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>
+  ): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { filter: value.length ? value.join() : null },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  setFilterSort(data: { filterBy: string[], sortBy: string }) {
-    this.filterBy = data.filterBy;
-    this.sortBy = data.sortBy;
+  public setSort(event: IonSelectCustomEvent<SelectChangeEventDetail>): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { sort: value },
+      queryParamsHandling: 'merge',
+    });
   }
-
 }

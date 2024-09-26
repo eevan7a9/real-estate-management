@@ -9,10 +9,10 @@
     <ion-searchbar
       clearIcon
       debounce="1300"
-      [(ngModel)]="search"
+      [value]="search()"
       animated
-      (ionChange)="enquiriesList.setSearch(search)"
       placeholder="Search Enquiry"
+      (ionChange)="setSearchedText($event)"
     ></ion-searchbar>
     <ion-grid>
       <ion-row>
@@ -20,9 +20,9 @@
           <ion-item lines="none">
             <ion-select
               multiple="true"
-              [(ngModel)]="filterBy"
+              [value]="filterBy()"
               label="Filter by:"
-              (ionChange)="enquiriesList.setFilters(filterBy)"
+              (ionChange)="setFilters($event)"
             >
               <ion-select-option
                 *ngFor="let filter of filters"
@@ -37,11 +37,11 @@
         <ion-col size="12" sizeMd="6">
           <ion-item lines="none">
             <ion-select
-              [(ngModel)]="sortBy"
+              [value]="sortBy()"
               okText="Okay"
               label="Sort by:"
               cancelText="Dismiss"
-              (ionChange)="enquiriesList.setSort(sortBy)"
+              (ionChange)="setSort($event)"
             >
               <ion-select-option
                 *ngFor="let sort of sorts"
@@ -58,19 +58,19 @@
 </ion-header>
 
 <ion-content>
-  <app-need-signin-continue *ngIf="!user"></app-need-signin-continue>
+  @if (!user()) {
+    <app-need-signin-continue></app-need-signin-continue>
+  }
 
-  <div class="enquiries-container" *ngIf="user">
+  <div class="enquiries-container" *ngIf="user()">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
-      *ngIf="progressBar"
+      *ngIf="!enquiriesReady()"
     ></ion-progress-bar>
 
     <app-enquiries-list
       #enquiriesList
-      (isLoading)="setLoading($event)"
-      (filterSort)="setFilterSort($event)"
     ></app-enquiries-list>
   </div>
 </ion-content>

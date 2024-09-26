@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       console.log('Connect verified user...');
       this.webSocket.connect(this.userService.token);
       console.log('Fetching Enquiries...');
-      if (!this.enquiriesService.initialFetchDone) {
+      if (!this.enquiriesService.initialFetchDone()) {
         this.fetchEnquiries();
       }
       console.log('Fetching user details...');
@@ -157,9 +157,8 @@ export class AppComponent implements OnInit {
     this.enquiriesService.fetchEnquiries().then((res) => {
       if (res?.status === 200) {
         this.enquiriesService.enquiries = res.data;
-        this.enquiriesService.initialFetchDone = true;
       }
-    });
+    }).finally(() => this.enquiriesService.initialFetchDone.set(true));
   }
 
   private async showSignedOutToast(): Promise<void> {

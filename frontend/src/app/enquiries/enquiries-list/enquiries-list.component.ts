@@ -1,28 +1,32 @@
-import { Component, EventEmitter, OnDestroy, Output } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, computed, EventEmitter, Output, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { sortListByDate, sortListByName } from 'src/app/shared/utility';
-import {UserService} from "../../user/user.service";
+import { UserService } from "../../user/user.service";
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-enquiries-list',
   templateUrl: './enquiries-list.component.html',
   styleUrls: ['./enquiries-list.component.scss'],
 })
-export class EnquiriesListComponent implements OnDestroy {
-
+export class EnquiriesListComponent {
   @Output() isLoading = new EventEmitter<boolean>();
-  @Output() filterSort = new EventEmitter<{ filterBy: string[], sortBy: string }>();
-  public date = new Date();
-  public enquiries: Enquiry[] = [];
-  public filterBy: string[] = [];
-  public sortBy = 'latest';
-  public searchText = '';
-  private unsubscribe$ = new Subject<void>();
-  private userId: string;
+  public isReceived = signal(false);
+  public enquiriesList = computed<Enquiry[]>(() => {
+    let temp = this.enquiries();
+    const { search, sort, filter } = this.queryParams();
+    if(sort) temp = this.sortEnquiries(sort);
+    if (search) temp = this.searchEnquiries(search);
+    if (filter) temp = this.filterEnquiries(filter, temp);
+    return temp;
+  });
+
+  private enquiries = toSignal<Enquiry[]>(this.enquiriesService.enquiries$);
+  private queryParams = toSignal(this.activatedRoute.queryParams);
+  private userId = toSignal(this.userService.user$.pipe(map(item => item.user_id)), { initialValue: '' });
 
   constructor(
     private enquiriesService: EnquiriesService,
@@ -31,109 +35,41 @@ export class EnquiriesListComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
   ) { }
 
-
-  ngOnDestroy() {
-    this.unSubscribed();
-  }
-
-  public onParentDidEnter() {
-    this.userId = this.userService.user.user_id;
-
-    this.activatedRoute.queryParams.subscribe(params => {
-      if (params['filter']) {
-        this.filterBy = params['filter'].split(',');
-      }
-      else this.filterBy = [];
-
-      if (params['sort']) this.sortBy = params['sort'];
-
-      this.filterSort.emit({
-        filterBy: this.filterBy,
-        sortBy: this.sortBy
-      });
-
-      this.getEnquiries();
-    });
-  }
-
   public selectEnquiry(enquiry: Enquiry) {
     this.router.navigate(['/enquiries', enquiry.enquiry_id]);
   }
 
-  public setFilters(filter: string[]) {
-    this.router.navigate([window.location.pathname],
-      {
-        queryParams: {filter: filter.length ? filter.join() : null},
-        queryParamsHandling: "merge"
-      });
-  }
-
-  public setSort(sort: string) {
-    this.router.navigate([window.location.pathname],
-      {
-        queryParams: {sort: sort},
-        queryParamsHandling: "merge"
-      });
-  }
-
-  public setSearch(text: string) {
-    text = text.trim().toLowerCase();
-    if (this.searchText !== text) {
-      this.searchText = text;
-      this.getEnquiries();
-    }
-  }
-
-  private sortEnquiries() {
-    switch (this.sortBy) {
+  private sortEnquiries(sortBy: string = '') {
+    switch (sortBy) {
       case 'title':
-        this.enquiries = sortListByName(this.enquiries, { property: 'title' });
-        break;
+        return sortListByName(this.enquiries(), { property: 'title' });
       case 'oldest':
-        this.enquiries = sortListByDate(this.enquiries, { latest: false, property: 'createdAt' });
-        break;
+        return sortListByDate(this.enquiries(), { latest: false, property: 'createdAt' });
       default:
-        this.enquiries = sortListByDate(this.enquiries, { property: 'createdAt' });
-        break;
+        return sortListByDate(this.enquiries(), { property: 'createdAt' });
     }
   }
 
-  private searchEnquiries() {
-    return this.enquiries.filter((item: Enquiry) => {
+  private filterEnquiries(filter: string = '', enquiries: Enquiry[] = []): Enquiry[] {
+    const isSent = filter.includes('sent');
+    const isReceived = filter.includes('received');
+    const otherFilters = filter.split(',').filter((filter: string) => !['sent', 'received'].includes(filter));
+
+    return enquiries.filter(item => {
+      if (isSent && this.userId() !== item.users.from.user_id) return false;
+      if (isReceived && this.userId() === item.users.from.user_id) return false;
+      if (otherFilters.length && !otherFilters.includes(item.topic)) return false;
+      return true;
+    });
+  }
+
+  private searchEnquiries(searchText: string = ''): Enquiry[] {
+    const textToFind = searchText.toLowerCase();
+    return this.enquiries().filter((item: Enquiry) => {
       const title = item.title.toLowerCase();
       const email = item.email.toLowerCase();
-      return title.includes(this.searchText) || email.includes(this.searchText);
+      console.log(title.includes(textToFind), email.includes(textToFind));
+      return title.includes(textToFind) || email.includes(textToFind);
     });
-  }
-
-  private async getEnquiries() {
-    this.unSubscribed();
-    this.isLoading.emit(true);
-    this.enquiriesService.enquiries$.pipe(takeUntil(this.unsubscribe$)).subscribe((enquiries) => {
-      this.enquiries = enquiries;
-      this.sortEnquiries();
-
-      if (this.searchText) {
-        this.enquiries = this.searchEnquiries();
-      }
-      if (this.filterBy.length) {
-        if (this.filterBy.find(filter => filter === 'sent'))
-          this.enquiries = this.enquiries.filter(item => this.userId === item.users.from.user_id);
-        else if (this.filterBy.find(filter => filter === 'received'))
-          this.enquiries = this.enquiries.filter(item => this.userId !== item.users.from.user_id);
-
-        const filtersWithoutSentAndReceived = this.filterBy.filter(filter => !['sent', 'received'].includes(filter))
-        if (filtersWithoutSentAndReceived.length)
-          this.enquiries = this.enquiries.filter(item => filtersWithoutSentAndReceived.includes(item.topic));
-      }
-      if (this.enquiriesService.initialFetchDone) {
-        this.isLoading.emit(false);
-      }
-    });
-  }
-
-  private unSubscribed() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 }
