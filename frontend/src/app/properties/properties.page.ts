@@ -1,95 +1,109 @@
-import { Component, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
-import { PropertyType } from '../shared/enums/property';
+import { Component, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ModalController,
+  SelectChangeEventDetail,
+  ToastController,
+} from '@ionic/angular';
+import { PropertyType, TransactionType } from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
-import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { User } from '../shared/interface/user';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { map } from 'rxjs';
+import {
+  IonSearchbarCustomEvent,
+  IonSelectCustomEvent,
+  SearchbarChangeEventDetail,
+} from '@ionic/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { PropertiesService } from './properties.service';
 
 @Component({
   selector: 'app-properties',
   templateUrl: './properties.page.html',
   styleUrls: ['./properties.page.scss'],
 })
-export class PropertiesPage implements OnInit, OnDestroy {
-  @ViewChild('propertyLists') propertyListsComponent: PropertiesListComponent;
-  public progressBar = false;
-  public search = '';
-  public properties: Property[] = [];
-  public ownedPropertiesOnly = signal(false);
-  public filterBy: PropertyType[] = [];
+export class PropertiesPage implements OnInit {
+  public search = signal<string>('');
+  public filterBy = signal<PropertyType[]>([]);
+  public sortBy = signal<string>('latest');
+  public isLoading = toSignal<boolean>(
+    this.propertiesService.properties$.pipe(map((item) => !!(item.length < 1)))
+  );
   public filters = [
     {
       value: PropertyType.residential,
-      label: 'Residential'
+      label: 'Residential type',
     },
     {
       value: PropertyType.commercial,
-      label: 'Commercial'
+      label: 'Commercial type',
     },
     {
       value: PropertyType.industrial,
-      label: 'Industrial'
+      label: 'Industrial type',
     },
     {
       value: PropertyType.land,
-      label: 'Land'
+      label: 'Land type',
+    },
+    {
+      value: TransactionType.forSale,
+      label: 'For Sale',
+    },
+    {
+      value: TransactionType.forRent,
+      label: 'For Rent',
     },
   ];
-  public sortBy = 'latest';
   public sorts = [
     {
       value: 'latest',
-      label: 'Latest'
+      label: 'Latest',
     },
     {
       value: 'name',
-      label: 'Name'
+      label: 'Name',
     },
     {
       value: 'price',
-      label: 'Price'
-    }
+      label: 'Price',
+    },
   ];
   public user: User;
-  private unSubscribe$ = new Subject<void>();
+  private queryParams = toSignal(this.activatedRoutes.queryParams);
 
   constructor(
     public modalController: ModalController,
     private userService: UserService,
     private router: Router,
     private toastCtrl: ToastController,
-  ) { }
+    private propertiesService: PropertiesService,
+    private activatedRoutes: ActivatedRoute
+  ) {}
 
-  async ngOnInit() {
-    this.userService.user$.pipe(takeUntil(this.unSubscribe$)).subscribe((val) => {
-      this.user = val
-    })
-  }
-
-  ngOnDestroy(): void {
-      this.unSubscribe$.next();
-      this.unSubscribe$.complete();
+  ngOnInit(): void {
+    this.setCurrentParams();
   }
 
   async presentModal() {
     const user = this.userService.user;
     if (!user) {
       this.router.navigateByUrl('/user/signin');
-      this.toastCtrl.create({
-        message: 'Please sign in, to continue',
-        duration: 3000,
-        color: 'danger'
-      }).then(toast => toast.present());
+      this.toastCtrl
+        .create({
+          message: 'Please sign in, to continue',
+          duration: 3000,
+          color: 'danger',
+        })
+        .then((toast) => toast.present());
       return;
     }
     const modalPropertiesNew = await this.modalController.create({
-      component: PropertiesNewComponent
+      component: PropertiesNewComponent,
     });
     await modalPropertiesNew.present();
     const { data } = await modalPropertiesNew.onDidDismiss();
@@ -98,20 +112,48 @@ export class PropertiesPage implements OnInit, OnDestroy {
     }
   }
 
-  public async presentLoading() {
-    this.progressBar = true;
-    setTimeout(() => this.progressBar = false, 1500);
+  public setFilters(
+    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>
+  ): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { filter: value.length ? value.join() : null },
+      queryParamsHandling: 'merge',
+    });
   }
 
-  public switchOwnedProperty(event: CustomEvent) {
-    this.ownedPropertiesOnly.set(event.detail.checked)
-    this.propertyListsComponent.setOwnedPropertiesOnly(event.detail.checked)
+  public setSort(event: IonSelectCustomEvent<SelectChangeEventDetail>): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { sort: value },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  public setSearchedText(
+    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
+  ): void {
+    const value = event.detail.value;
+    this.router.navigate([window.location.pathname], {
+      queryParams: { search: value || null },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private setCurrentParams() {
+    const { filter, sort } = this.queryParams();
+    if (filter) {
+      this.filterBy.set([...filter.split(',')]);
+    }
+    if (sort) {
+      this.sortBy.set(sort || 'latest');
+    }
   }
 
   private async presentUploadModal(property: Property) {
     const modalUploads = await this.modalController.create({
       component: PropertiesUploadsComponent,
-      componentProps: { property }
+      componentProps: { property },
     });
     await modalUploads.present();
   }

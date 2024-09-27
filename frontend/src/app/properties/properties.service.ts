@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
@@ -16,15 +16,20 @@ const propertyUrl = environment.api.server + 'properties';
 export class PropertiesService {
   public readonly properties$: Observable<Property[]>;
   private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
+  private loading = signal(false);
 
   constructor(private http: HttpClient, private userService: UserService) {
     this.properties$ = this.propertiesSub.asObservable();
     this.fetchProperties().then((res) => {
+      this.loading.set(true);
       if (res.status === 200) {
         this.properties = res.data;
       }
+      this.loading.set(false);
     });
   }
+
+  public isLoading = computed(() => this.loading());
 
   public get properties(): Property[] {
     return this.propertiesSub.getValue();
