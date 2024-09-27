@@ -18,9 +18,9 @@ export class EnquiriesListComponent {
   public enquiriesList = computed<Enquiry[]>(() => {
     let temp = this.enquiries();
     const { search, sort, filter } = this.queryParams();
-    if(sort) temp = this.sortEnquiries(sort);
     if (search) temp = this.searchEnquiries(search);
     if (filter) temp = this.filterEnquiries(filter, temp);
+    temp = this.sortEnquiries(sort, temp);
     return temp;
   });
 
@@ -39,14 +39,14 @@ export class EnquiriesListComponent {
     this.router.navigate(['/enquiries', enquiry.enquiry_id]);
   }
 
-  private sortEnquiries(sortBy: string = '') {
+  private sortEnquiries(sortBy: string = 'latest', enquiries: Enquiry[] = []) {
     switch (sortBy) {
       case 'title':
-        return sortListByName(this.enquiries(), { property: 'title' });
+        return sortListByName(enquiries, { property: 'title' });
       case 'oldest':
-        return sortListByDate(this.enquiries(), { latest: false, property: 'createdAt' });
+        return sortListByDate(enquiries, { latest: false, property: 'createdAt' });
       default:
-        return sortListByDate(this.enquiries(), { property: 'createdAt' });
+        return sortListByDate(enquiries, { property: 'createdAt' });
     }
   }
 
