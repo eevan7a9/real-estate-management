@@ -3,20 +3,14 @@
     class="tag"
     [ngClass]="[
       userService.user?.user_id === property.user_id
-        ? 'bg-slate-500'
+        ? 'bg-primary'
         : property.transactionType === transactionType.forRent
         ? 'bg-warning'
         : 'bg-success'
     ]"
   >
     <span *ngIf="userService.user?.user_id === property.user_id">
-      Owned |
-      <small>
-        For
-        {{
-          property.transactionType === transactionType.forRent ? "Rent" : "Sale"
-        }}
-      </small>
+      Owned 
     </span>
 
     <span

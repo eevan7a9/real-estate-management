@@ -87,8 +87,17 @@
 
     <ion-grid>
       <ion-row class="ion-align-items-center ion-margin-top hide-on-mobile">
-        <ion-col class="heading ion-padding-horizontal">
-          List of Properties
+        <ion-col class="heading ion-padding-horizontal flex items-center">
+          <span class="mr-3">List of Properties</span>
+   
+          <!-- Cards Display Options -->
+          <ion-button class="ml-2" (click)="displayOption.set(displayType.CardView)" [disabled]="displayOption() === 'cards'" size="small" class="display-option-btn">
+            <ion-icon name="grid-outline"></ion-icon>
+          </ion-button>
+          <!-- List Display Options -->
+          <ion-button (click)="displayOption.set(displayType.ListView)" [disabled]="displayOption() === 'list'" size="small" class="display-option-btn">
+            <ion-icon name="reorder-four-outline"></ion-icon>
+          </ion-button>
         </ion-col>
 
         <ion-col class="ion-padding-horizontal">
@@ -103,7 +112,10 @@
         </ion-col>
       </ion-row>
       <!-- Card List of Properties -->
-      <app-properties-list #propertyLists></app-properties-list>
+      <app-properties-list
+        [displayOption]="displayOption()"
+        #propertyLists
+      ></app-properties-list>
     </ion-grid>
   </div>
 </ion-content>

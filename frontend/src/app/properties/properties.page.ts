@@ -5,7 +5,7 @@ import {
   SelectChangeEventDetail,
   ToastController,
 } from '@ionic/angular';
-import { PropertyType, TransactionType } from '../shared/enums/property';
+import { PropertiesDisplayOption, PropertyType, TransactionType } from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
@@ -33,6 +33,11 @@ export class PropertiesPage implements OnInit {
   public isLoading = toSignal<boolean>(
     this.propertiesService.properties$.pipe(map((item) => !!(item.length < 1)))
   );
+  public displayOption = signal<PropertiesDisplayOption>(
+    PropertiesDisplayOption.ListView
+  );
+
+  public displayType = PropertiesDisplayOption;
   public filters = [
     {
       value: PropertyType.residential,

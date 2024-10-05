@@ -18,3 +18,8 @@ export enum PaymentFrequency {
   weekly = 'weekly',
   daily = 'daily',
 }
+
+export enum PropertiesDisplayOption {
+  CardView = 'cards',
+  ListView = 'list'
+}

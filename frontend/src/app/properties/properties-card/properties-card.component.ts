@@ -19,7 +19,7 @@ export class PropertiesCardComponent {
     public userService: UserService
   ) { }
 
-  public selectProperty(property: Property) {
+  public selectProperty(property: Property): void {
     this.router.navigate(['/properties', property.property_id]);
   }
 }

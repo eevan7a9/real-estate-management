@@ -1,0 +1,35 @@
+<ion-card (click)="selectProperty(property())">
+  <ion-card-content>
+    <div class="flex gap-x-1">
+      <ion-badge
+        class="bg-primary h-5"
+        *ngIf="showOwnedBadge && user()?.user_id === property().user_id"
+      >
+        Owned
+      </ion-badge>
+      <app-property-badge [type]="property()?.type"></app-property-badge>
+    </div>
+
+    <div class="flex items-center text-[14px]">
+      <ion-text class="lg:text-[16px]">
+        {{
+          property().name?.length > 30
+            ? property().name.slice(0, 30) + "..."
+            : property().name
+        }}
+      </ion-text>
+
+      <ion-text class="hidden md:block">
+        {{
+          property().description?.length > 40
+            ? property().description.slice(0, 40) + "..."
+            : property().description
+        }}
+      </ion-text>
+
+      <span class="ml-auto mr-0">
+        {{ property().createdAt | date }}
+      </span>
+    </div>
+  </ion-card-content>
+</ion-card>

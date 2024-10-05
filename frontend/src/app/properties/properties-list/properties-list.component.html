@@ -1,34 +1,25 @@
-@if(!horizontalSlide) {
-  <ion-row class="ion-content-scroll-host">
-    <ion-col
-      size="12"
-      [sizeSm]="singleCol ? 12 : 6"
-      [sizeMd]="singleCol ? 12 : 4"
-      [sizeLg]="singleCol ? 12 : 6"
-      [sizeXl]="singleCol ? 12 : 3"
-      *ngFor="let item of prprtyList()"
-    >
-      <app-properties-card [property]="item"></app-properties-card>
-    </ion-col>
+<!-- Cards View -->
+<ion-row class="ion-content-scroll-host" *ngIf="displayOption() === 'cards'">
+  <ion-col
+    size="12"
+    [sizeSm]="singleCol() ? 12 : 6"
+    [sizeMd]="singleCol() ? 12 : 4"
+    [sizeLg]="singleCol() ? 12 : 6"
+    [sizeXl]="singleCol() ? 12 : 3"
+    *ngFor="let item of propertiesList()"
+  >
+    <app-properties-card [property]="item"></app-properties-card>
+  </ion-col>
+</ion-row>
 
-    <ion-col
-      size="12"
-      [sizeMd]="singleCol ? 12 : 6"
-      [sizeLg]="singleCol ? 12 : 4"
-      [sizeXl]="singleCol ? 12 : 3"
-      class="card-view-all"
-      *ngIf="limit"
-    >
-      <ion-card style="height: 100%">
-        <ion-card-content>
-          <ion-button color="primary" fill="outline" routerLink="/properties">
-            View All
-          </ion-button>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+<!-- List View -->
+ @if(displayOption() === 'list') {
+  @for (item of propertiesList(); track $index) {
+    <app-properties-list-item [showOwnedBadge]="true" [property]="item"></app-properties-list-item>
+  }
+ }
 
+@if (!disableInfinitLoader) {
   <ion-row>
     <ion-infinite-scroll
       #IonInfiniteScroll
@@ -43,27 +34,4 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-row>
-} @else {
-  <app-div-horizontal-slide style="background-color: aqua; height: 100%">
-    <div
-      *ngFor="let item of prprtyList().slice(0, 6)"
-      class="card-slider ion-margin-vertical"
-    >
-      <div class="property-card">
-        <app-properties-card [property]="item"></app-properties-card>
-      </div>
-    </div>
-  
-    <div class="card-slider card-view-all ion-margin-vertical">
-      <ion-card style="height: 100%">
-        <ion-card-content style="width: 230px">
-          <div>
-            <ion-button color="primary" fill="outline" routerLink="/properties">
-              View All
-            </ion-button>
-          </div>
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </app-div-horizontal-slide>
 }

@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PropertyType } from '../shared/enums/property';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Property } from '../shared/interface/property';
+import { PropertiesService } from '../properties/properties.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.scss'],
 })
-export class MapPage implements OnInit {
-
+export class MapPage {
+  public properties = toSignal<Property[]>(this.propertiesService.properties$);
   public visibleType = [
     PropertyType.residential.toString(),
     PropertyType.commercial.toString(),
@@ -15,10 +18,7 @@ export class MapPage implements OnInit {
     PropertyType.land.toString()
   ];
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  constructor(private propertiesService: PropertiesService) { }
 
   setVisibleMarkerType(event: { type: string; isChecked: boolean }) {
     if (!event.isChecked) {

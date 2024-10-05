@@ -1,4 +1,4 @@
-import { Component, computed, Input, ViewChild } from '@angular/core';
+import { Component, computed, input, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Property } from 'src/app/shared/interface/property';
 import {
@@ -9,8 +9,11 @@ import {
 import { PropertiesService } from '../properties.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { PropertyType, TransactionType } from 'src/app/shared/enums/property';
-import { UserService } from 'src/app/user/user.service';
+import {
+  PropertiesDisplayOption,
+  PropertyType,
+  TransactionType,
+} from 'src/app/shared/enums/property';
 
 @Component({
   selector: 'app-properties-list',
@@ -21,29 +24,31 @@ export class PropertiesListComponent {
   @ViewChild('IonInfiniteScroll', { static: false })
   infinityScroll: IonInfiniteScroll;
 
-  @Input() singleCol = false;
-  @Input() horizontalSlide = false;
-  @Input() limit = 0;
+  public singleCol = input<boolean>(false);
+  public horizontalSlide = input<boolean>(false);
+  public limit = input<number>(0);
+  public disableInfinitLoader = input<boolean>(false);
+  public displayOption = input<PropertiesDisplayOption>(
+    PropertiesDisplayOption.CardView
+  );
 
-  public displayedItems: Property[] = [];
-  public maxDisplayed = 8;
+  public properties = toSignal<Property[]>(this.propertiesService.properties$);
+  private queryParams = toSignal(this.activatedRoute.queryParams);
 
-  public prprties = toSignal<Property[]>(this.propertiesService.properties$);
-  public prprtyList = computed<Property[]>(() => {
-    let temp = this.prprties();
+  public propertiesList = computed<Property[]>(() => {
+    let temp = this.limit()
+      ? this.properties().slice(0, this.limit())
+      : this.properties();
     const { sort, search, filter } = this.queryParams();
     if (search) temp = this.searchProperties(search, temp);
     if (filter) temp = this.filterProperties(filter, temp);
     temp = this.sortProperties(sort || 'latest', temp);
     return temp;
   });
-  private queryParams = toSignal(this.activatedRoute.queryParams);
-  private user = toSignal(this.userService.user$);
 
   constructor(
     private propertiesService: PropertiesService,
-    private activatedRoute: ActivatedRoute,
-    private userService: UserService
+    private activatedRoute: ActivatedRoute
   ) {}
 
   public loadMoreProperty(): void {
