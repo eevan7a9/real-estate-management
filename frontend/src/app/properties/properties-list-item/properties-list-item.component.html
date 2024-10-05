@@ -1,9 +1,9 @@
-<ion-card (click)="selectProperty(property())">
+<ion-card (click)="selectProperty(property())" class="shadow-none border-[1px]">
   <ion-card-content>
     <div class="flex gap-x-1">
       <ion-badge
         class="bg-primary h-5"
-        *ngIf="showOwnedBadge && user()?.user_id === property().user_id"
+        *ngIf="enableOwnedBadge && user()?.user_id === property().user_id"
       >
         Owned
       </ion-badge>
@@ -32,7 +32,7 @@
             : property().name
         }}
       </ion-text>
-
+      <span class="px-2">|</span>
       <ion-text class="hidden md:block">
         {{
           property().description?.length > 40

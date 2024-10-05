@@ -15,7 +15,7 @@ export class PropertiesListItemComponent {
   public user = toSignal<User>(this.userService.user$, {
     initialValue: undefined,
   });
-  @Input() showOwnedBadge = false;
+  @Input() enableOwnedBadge = false;
 
   constructor(private router: Router, private userService: UserService) {}
 

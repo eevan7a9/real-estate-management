@@ -32,6 +32,7 @@
           <app-properties-list
             class="properties-list"
             [singleCol]="true"
+            [properties]="properties()"
             [limit]="4"
             [disableInfinitLoader]="true"
           ></app-properties-list>
@@ -59,7 +60,7 @@
         <div class="w-full mb-[60px]">
           <app-div-horizontal-slide>
             <div
-              *ngFor="let item of properties().slice(0, 6)"
+              *ngFor="let item of properties()?.slice(0, 6)"
               class="card-slider ion-margin-vertical"
             >
               <div class="property-card">

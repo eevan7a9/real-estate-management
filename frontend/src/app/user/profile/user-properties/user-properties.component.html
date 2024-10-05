@@ -1,0 +1,10 @@
+@if(properties()?.length) {
+  <app-properties-list
+    [properties]="properties()"
+    [displayOption]="propertiesDisplayOption.ListView"
+  ></app-properties-list>
+} @else {
+  <div class="h-[100px] flex items-center justify-center">
+    <h1>EMPTY<ion-icon name="alert-circle-outline"></ion-icon></h1>
+  </div>
+}

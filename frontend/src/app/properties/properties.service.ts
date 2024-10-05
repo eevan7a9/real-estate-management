@@ -14,29 +14,40 @@ const propertyUrl = environment.api.server + 'properties';
   providedIn: 'root',
 })
 export class PropertiesService {
-  public readonly properties$: Observable<Property[]>;
-  private readonly propertiesSub = new BehaviorSubject<Property[]>([]);
-  private loading = signal(false);
+  public isLoading = signal(false);
+  public readonly properties$: Observable<Property[] | undefined>;
+  public readonly propertiesOwned$: Observable<Property[] | undefined>;
+
+  private propertiesSub = new BehaviorSubject<Property[] | undefined>(undefined);
+  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(undefined);
 
   constructor(private http: HttpClient, private userService: UserService) {
     this.properties$ = this.propertiesSub.asObservable();
+    this.propertiesOwned$ = this.propertiesOwnedSub.asObservable();
+
     this.fetchProperties().then((res) => {
-      this.loading.set(true);
+      this.isLoading.set(true);
       if (res.status === 200) {
         this.properties = res.data;
       }
-      this.loading.set(false);
+      this.isLoading.set(false);
     });
   }
 
-  public isLoading = computed(() => this.loading());
-
-  public get properties(): Property[] {
+  public get properties(): Property[] | undefined {
     return this.propertiesSub.getValue();
   }
 
   public set properties(property: Property[]) {
     this.propertiesSub.next(property);
+  }
+
+  public get propertiesOwned(): Property[] | undefined {
+    return this.propertiesOwnedSub.getValue();
+  }
+
+  public set propertiesOwned(property: Property[]) {
+    this.propertiesOwnedSub.next(property);
   }
 
   public async fetchProperties(): Promise<ApiResponse<Property[]>> {
@@ -129,7 +140,7 @@ export class PropertiesService {
       const res = await firstValueFrom(
         this.http.delete<ApiResponse<Property>>(url, requestOptions({ token }))
       );
-      return res
+      return res;
     } catch (error) {
       console.error(error);
     }
@@ -151,6 +162,21 @@ export class PropertiesService {
       return res;
     } catch (error) {
       console.error(error);
+      return error.error || error;
+    }
+  }
+
+  public async getOwnedProperties(): Promise<ApiResponse<Property[]>> {
+    try {
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<Property[]>>(
+          propertyUrl + '/me',
+          requestOptions({ token: this.userService.token })
+        )
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
       return error.error || error;
     }
   }

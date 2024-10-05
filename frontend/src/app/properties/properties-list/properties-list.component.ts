@@ -32,10 +32,15 @@ export class PropertiesListComponent {
     PropertiesDisplayOption.CardView
   );
 
-  public properties = toSignal<Property[]>(this.propertiesService.properties$);
+  public properties = input<Property[]>();
+  public enableOwnedBadge = input<boolean>(false);
   private queryParams = toSignal(this.activatedRoute.queryParams);
 
   public propertiesList = computed<Property[]>(() => {
+    if(!this.properties()) {
+      return [];
+    }
+
     let temp = this.limit()
       ? this.properties().slice(0, this.limit())
       : this.properties();
@@ -49,7 +54,7 @@ export class PropertiesListComponent {
   constructor(
     private propertiesService: PropertiesService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   public loadMoreProperty(): void {
     console.log('loadMore');

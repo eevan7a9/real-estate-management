@@ -15,7 +15,10 @@
 <!-- List View -->
  @if(displayOption() === 'list') {
   @for (item of propertiesList(); track $index) {
-    <app-properties-list-item [showOwnedBadge]="true" [property]="item"></app-properties-list-item>
+    <app-properties-list-item 
+      [enableOwnedBadge]="enableOwnedBadge()" 
+      [property]="item"
+    ></app-properties-list-item>
   }
  }
 

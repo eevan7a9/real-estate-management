@@ -15,3 +15,19 @@ export const getPropertiesOpts = (handler) => ({
   },
   handler: handler,
 });
+
+export const getMyPropertiesOpts = (fastify, handler) => ({
+  preValidation: [fastify.authenticate],
+  schema: {
+    response: {
+      200: responseSuccess({
+        data: {
+          type: "array",
+          items: propertyProperties,
+        }
+      }),
+      400: responseError(),
+    },
+  },
+  handler: handler,
+});

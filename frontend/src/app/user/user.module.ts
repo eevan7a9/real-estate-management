@@ -13,6 +13,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { ProfileComponent } from './profile/profile.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { ActivityTimelineComponent } from './profile/activity-timeline/activity-timeline.component';
+import { UserPropertiesComponent } from './profile/user-properties/user-properties.component';
+import { PropertiesPageModule } from '../properties/properties.module';
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import { ActivityTimelineComponent } from './profile/activity-timeline/activity-
     FormsModule,
     IonicModule,
     UserPageRoutingModule,
-    SharedModule
+    SharedModule,
+    PropertiesPageModule
   ],
   declarations: [
     UserPage,
@@ -29,7 +32,8 @@ import { ActivityTimelineComponent } from './profile/activity-timeline/activity-
     ChangePasswordComponent,
     ProfileComponent,
     NotificationsComponent,
-    ActivityTimelineComponent
+    ActivityTimelineComponent,
+    UserPropertiesComponent
   ]
 })
 export class UserPageModule { }

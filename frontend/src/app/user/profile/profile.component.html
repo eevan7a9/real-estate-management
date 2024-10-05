@@ -5,7 +5,7 @@
         <ion-col size="12" sizeMd="4">
           <ion-card class="shadow-none">
             <ion-card-header class="ion-no-padding">
-              <ion-card-title class="ion-padding"> My Profile, </ion-card-title>
+              <ion-card-title class="ion-padding"></ion-card-title>
               <div class="profile-img-container">
                 <img [src]="imgUrl" />
               </div>
@@ -48,7 +48,11 @@
             </ion-card-header>
 
             <ion-card-content>
-              <form (submit)="submit()" [formGroup]="userForm" class="form-information">
+              <form
+                (submit)="submit()"
+                [formGroup]="userForm"
+                class="form-information"
+              >
                 <ion-item lines="none">
                   <ion-input
                     labelPlacement="floating"
@@ -127,17 +131,13 @@
               </div>
             </ion-card-header>
 
-            @if (isActivityActive()) {
-            <ion-card-content class="ml-8">
-              <app-activity-timeline />
+            <ion-card-content class="ml-8 min-h-[400px]">
+              @if (isActivityActive()) {
+                <app-activity-timeline />
+              } @else {
+                <app-user-properties></app-user-properties>
+              }
             </ion-card-content>
-            } @else {
-            <ion-card-content class="ml-8">
-              <div class="h-[100px] flex items-center justify-center">
-                <h1>EMPTY<ion-icon name="alert-circle-outline"></ion-icon></h1>
-              </div>
-            </ion-card-content>
-            }
           </ion-card>
         </ion-col>
       </ion-row>

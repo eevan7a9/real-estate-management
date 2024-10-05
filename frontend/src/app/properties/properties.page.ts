@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ModalController,
@@ -30,12 +30,11 @@ export class PropertiesPage implements OnInit {
   public search = signal<string>('');
   public filterBy = signal<PropertyType[]>([]);
   public sortBy = signal<string>('latest');
-  public isLoading = toSignal<boolean>(
-    this.propertiesService.properties$.pipe(map((item) => !!(item.length < 1)))
-  );
+  public isLoading = computed<boolean>(() => this.propertiesService.isLoading());
   public displayOption = signal<PropertiesDisplayOption>(
     PropertiesDisplayOption.CardView
   );
+  public properties = toSignal(this.propertiesService.properties$);
 
   public displayType = PropertiesDisplayOption;
   public filters = [
