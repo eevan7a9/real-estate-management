@@ -159,11 +159,9 @@ export class PropertiesNewComponent implements OnInit {
     const res = await this.propertiesService.addProperty(property);
     if (res.status === 200 || res.status === 201) {
       this.modalCtrl.dismiss(res.data);
-      this.presentToast(res.message);
-      this.propertiesService.properties = [...this.propertiesService.properties, res.data];
-    } else {
-      this.presentToast(res.message, 'danger');
+      this.propertiesService.addPropertyToState(res.data);
     }
+    this.presentToast(res.message, res.status !== 201 ? 'danger' : 'success');
   }
 
   private async presentToast(message: string, color = 'success', duration = 3000) {

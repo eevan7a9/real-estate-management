@@ -34,6 +34,7 @@ export class PropertiesListComponent {
 
   public properties = input<Property[]>();
   public enableOwnedBadge = input<boolean>(false);
+  public enablePopupOptions = input<boolean>(false);
   private queryParams = toSignal(this.activatedRoute.queryParams);
 
   public propertiesList = computed<Property[]>(() => {

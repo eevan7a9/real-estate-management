@@ -109,9 +109,7 @@ export class PropertiesDetailComponent implements OnInit {
   private async deleteProperty(id: string): Promise<void> {
     const res = await this.propertiesService.removeProperty(id);
     if (res.status === 200) {
-      this.propertiesService.properties = this.propertiesService.properties.filter(
-        (property) => property.property_id !== res.data.property_id
-      );
+      this.propertiesService.removePropertyFromState(id);
       const toast = await this.toastCtrl.create({
         message: res.message,
         color: res.status === 200 ? 'success' : 'danger',

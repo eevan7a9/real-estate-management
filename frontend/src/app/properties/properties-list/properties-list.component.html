@@ -13,14 +13,15 @@
 </ion-row>
 
 <!-- List View -->
- @if(displayOption() === 'list') {
+@if(displayOption() === 'list') {
   @for (item of propertiesList(); track $index) {
     <app-properties-list-item 
-      [enableOwnedBadge]="enableOwnedBadge()" 
       [property]="item"
+      [enableOwnedBadge]="enableOwnedBadge()" 
+      [enablePopupOptions]="enablePopupOptions()"
     ></app-properties-list-item>
   }
- }
+}
 
 @if (!disableInfinitLoader) {
   <ion-row>

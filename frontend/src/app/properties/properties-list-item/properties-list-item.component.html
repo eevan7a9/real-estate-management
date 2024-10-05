@@ -1,4 +1,4 @@
-<ion-card (click)="selectProperty(property())" class="shadow-none border-[1px]">
+<ion-card (click)="selectProperty(property())" class="shadow-none border-[1px] cursor-pointer">
   <ion-card-content>
     <div class="flex gap-x-1">
       <ion-badge
@@ -19,9 +19,17 @@
         For {{ property().transactionType }}
       </ion-badge>
 
-      <span class="ml-auto mr-0">
+      <span class="ml-auto mr-0" [ngClass]="{ 'mr-9': isOwner() }">
         {{ property().createdAt | date }}
       </span>
+
+      <button
+        (click)="openPopup($event)"
+        class="bg-gray-300 duration-300 ease-in-out transition-colors hover:bg-gray-400 absolute rounded-full p-2 top-2 right-3 flex justify-center items-center"
+        *ngIf="isOwner()"
+      >
+        <ion-icon color="dark" name="ellipsis-vertical-outline"></ion-icon>
+      </button>
     </div>
 
     <div class="flex items-center text-[14px]">
