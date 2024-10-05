@@ -24,7 +24,7 @@
                       (ionChange)="itemClicked($event, item.notification_id)" labelPlacement="end" justify="start"
                       alignment="center">
                       <div class="flex items-center">
-                        <div>{{ item.message }} {{ item.notification_id }}</div>
+                        <div>{{ item.message }}</div>
                         <div class="absolute right-3 gap-2 flex items-center justify-around">
                           <ion-badge [color]="getItemBadge(item.type)">
                             {{ item.type }}
