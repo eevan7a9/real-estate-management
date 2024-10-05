@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { firstValueFrom, map } from 'rxjs';
 
@@ -42,13 +42,6 @@ export class AppComponent implements OnInit {
     { title: 'Settings', url: '/settings', icon: 'cog' },
   ];
 
-  public appLowerPages: NavLinks[] = [
-    { title: 'About', url: '/about', icon: 'help-circle' },
-    { title: 'Account', url: '/user/account', icon: 'person', signIn: true },
-    { title: 'Register', url: '/user/register', icon: 'create', guest: true },
-    { title: 'Sign In', url: '/user/signin', icon: 'log-in', guest: true },
-  ];
-
   public unreadEnquiries = toSignal(
     this.enquiriesService.enquiries$.pipe(
       map((enquiries) => enquiries.filter((item) => this.isUnread(item)).length)
@@ -64,6 +57,20 @@ export class AppComponent implements OnInit {
   );
 
   public user = signal<UserDetails>(undefined);
+  public appLowerPages = computed<NavLinks[]>(() => {
+    const pages =  [
+      { title: 'About', url: '/about', icon: 'help-circle' },
+    ]
+    if(this.user()) {
+      return [...pages, 
+        { title: 'Account', url: '/user/account', icon: 'person'}
+      ];
+    }
+    return [...pages, 
+      { title: 'Register', url: '/user/register', icon: 'create' },
+      { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
+    ];
+  });
 
   constructor(
     private platform: Platform,
@@ -90,6 +97,7 @@ export class AppComponent implements OnInit {
     this.userService.user$.subscribe((user) => {
       if (!user) {
         console.log('Unkown User...');
+        this.user.set(undefined);
         this.webSocket.disconnect();
         this.enquiriesService.resetState();
         this.notificationsService.resetState();
@@ -110,10 +118,10 @@ export class AppComponent implements OnInit {
 
   public isHidden(link: NavLinks): boolean {
     if (link.signIn) {
-      return !this.user;
+      return !this.user();
     }
     if (link.guest) {
-      return !!this.user;
+      return !!this.user();
     }
     return false;
   }

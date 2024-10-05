@@ -40,40 +40,40 @@
         </ion-list>
 
         <ion-list id="labels-list">
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of appLowerPages; let i = index"
-            [hidden]="isHidden(p)"
-          >
-            <ion-item
-              routerDirection="root"
-              [routerLink]="[p.url]"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
-            >
-              <ion-icon
-                slot="start"
-                [ios]="p.icon + '-outline'"
-                [md]="p.icon + '-sharp'"
-              ></ion-icon>
-              <ion-label>{{ p.title || "Menu Item" }}</ion-label>
-              <ion-badge slot="end" *ngIf="p.title === 'Account' && unreadNotifications()">
-                {{ unreadNotifications() }}
-              </ion-badge>
-            </ion-item>
-          </ion-menu-toggle>
+          @for (page of appLowerPages(); track $index) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item
+                routerDirection="root"
+                [routerLink]="[page.url]"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+              >
+                <ion-icon
+                  slot="start"
+                  [ios]="page.icon + '-outline'"
+                  [md]="page.icon + '-sharp'"
+                ></ion-icon>
+                <ion-label>{{ page.title || "Menu Item" }}</ion-label>
+                <ion-badge slot="end" *ngIf="page.title === 'Account' && unreadNotifications()">
+                  {{ unreadNotifications() }}
+                </ion-badge>
 
-          <ion-menu-toggle auto-hide="false" [hidden]="!user">
-            <ion-item button (click)="signOut()" lines="none" bu detail="false">
-              <ion-icon
-                slot="start"
-                [ios]="'log-out' + '-outline'"
-                [md]="'log-out' + '-sharp'"
-              ></ion-icon>
-              <ion-label>Sign Out</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+          @if(user()) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item button (click)="signOut()" lines="none" bu detail="false">
+                <ion-icon
+                  slot="start"
+                  [ios]="'log-out' + '-outline'"
+                  [md]="'log-out' + '-sharp'"
+                ></ion-icon>
+                <ion-label>Sign Out</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
         </ion-list>
       </ion-content>
     </ion-menu>
