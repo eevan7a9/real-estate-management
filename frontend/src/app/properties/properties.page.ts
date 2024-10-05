@@ -34,7 +34,7 @@ export class PropertiesPage implements OnInit {
     this.propertiesService.properties$.pipe(map((item) => !!(item.length < 1)))
   );
   public displayOption = signal<PropertiesDisplayOption>(
-    PropertiesDisplayOption.ListView
+    PropertiesDisplayOption.CardView
   );
 
   public displayType = PropertiesDisplayOption;

@@ -8,6 +8,20 @@
         Owned
       </ion-badge>
       <app-property-badge [type]="property()?.type"></app-property-badge>
+      |
+      <ion-badge
+        class="h-5"
+        [ngClass]="{
+          'bg-success': property().transactionType === 'sale',
+          'bg-warning': property().transactionType === 'rent'
+        }"
+      >
+        For {{ property().transactionType }}
+      </ion-badge>
+
+      <span class="ml-auto mr-0">
+        {{ property().createdAt | date }}
+      </span>
     </div>
 
     <div class="flex items-center text-[14px]">
@@ -27,8 +41,8 @@
         }}
       </ion-text>
 
-      <span class="ml-auto mr-0">
-        {{ property().createdAt | date }}
+      <span class="ml-auto mr-0 font-semibold">
+        {{ property().price | currency : "PHP" }}
       </span>
     </div>
   </ion-card-content>
