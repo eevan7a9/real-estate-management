@@ -1,34 +1,36 @@
 @if (activities().length) {
-  <ol class="relative border-s border-primary-tint dark:border-primary">
-    @for (activity of activities(); track $index) {
-    <li class="mb-10 ms-4">
-      <div
-        class="absolute w-3 h-3 md:w-5 md:h-5 bg-gray-200 rounded-full mt-1.5 -start-1.5 md:-start-2.5 border border-primary-tint dark:border-gray-900 dark:bg-primary">
-      </div>
-
-      <time class="text-sm font-normal leading-none text-gray-400 dark:text-gray-500 md:!text-[1rem]">
-        {{ activity.createdAt }}
-      </time>
-
-      <p class="!text-[16px] md:!text-[18px] !mt-1">
-        {{ activity.description }}
-      </p>
-
-      <button type="button" (click)="viewProperty(activity)"
-        class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
-        *ngIf="activity.property_id && activity.action !== actionType.PropertyDelete"
-        >
-        View Property
-      </button>
-      <button type="button" (click)="viewEnquiry(activity)"
-        class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
-        *ngIf="activity.enquiry_id && activity.action !== actionType.EnquiryDelte"
-        >
-        View Enquiry
-      </button>
-    </li>
-    }
-  </ol>
+  <div class="pl-8">
+    <ol class="relative border-s border-primary-tint dark:border-primary">
+      @for (activity of activities(); track $index) {
+      <li class="mb-10 ms-4">
+        <div
+          class="absolute w-3 h-3 md:w-5 md:h-5 bg-gray-200 rounded-full mt-1.5 -start-1.5 md:-start-2.5 border border-primary-tint dark:border-gray-900 dark:bg-primary">
+        </div>
+  
+        <time class="text-sm font-normal leading-none text-gray-400 dark:text-gray-500 md:!text-[1rem]">
+          {{ activity.createdAt }}
+        </time>
+  
+        <p class="!text-[16px] md:!text-[18px] !mt-1">
+          {{ activity.description }}
+        </p>
+  
+        <button type="button" (click)="viewProperty(activity)"
+          class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
+          *ngIf="activity.property_id && activity.action !== actionType.PropertyDelete"
+          >
+          View Property
+        </button>
+        <button type="button" (click)="viewEnquiry(activity)"
+          class="inline-flex mt-2 bg-primary text-white px-3 py-2 rounded-md"
+          *ngIf="activity.enquiry_id && activity.action !== actionType.EnquiryDelte"
+          >
+          View Enquiry
+        </button>
+      </li>
+      }
+    </ol>
+  </div>
 } @else {
 <ul>
   <li class="h-[100px] flex items-center justify-center">
