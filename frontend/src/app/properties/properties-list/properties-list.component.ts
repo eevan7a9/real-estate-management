@@ -1,108 +1,84 @@
-import { Component, computed, input, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  model,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Property } from 'src/app/shared/interface/property';
-import {
-  sortListByDate,
-  sortListByName,
-  sortListByNumber,
-} from 'src/app/shared/utility';
-import { PropertiesService } from '../properties.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import { PropertiesDisplayOption } from 'src/app/shared/enums/property';
+import { PropertiesService } from '../properties.service';
+import { debounce } from 'src/app/shared/utility/helpers';
 import {
-  PropertiesDisplayOption,
-  PropertyType,
-  TransactionType,
-} from 'src/app/shared/enums/property';
+  filterProperties,
+  searchProperties,
+  sortProperties,
+} from 'src/app/shared/utility/properties';
 
 @Component({
   selector: 'app-properties-list',
   templateUrl: './properties-list.component.html',
   styleUrls: ['./properties-list.component.scss'],
 })
-export class PropertiesListComponent {
+export class PropertiesListComponent implements OnInit {
   @ViewChild('IonInfiniteScroll', { static: false })
   infinityScroll: IonInfiniteScroll;
 
   public singleCol = input<boolean>(false);
   public horizontalSlide = input<boolean>(false);
   public limit = input<number>(0);
-  public disableInfinitLoader = input<boolean>(false);
+  public enableOwnedBadge = input<boolean>(false);
+  public enablePopupOptions = input<boolean>(false);
   public displayOption = input<PropertiesDisplayOption>(
     PropertiesDisplayOption.CardView
   );
-
   public properties = input<Property[]>();
-  public enableOwnedBadge = input<boolean>(false);
-  public enablePopupOptions = input<boolean>(false);
-  private queryParams = toSignal(this.activatedRoute.queryParams);
+  public disableInfinitScroll = model(false);
 
   public propertiesList = computed<Property[]>(() => {
-    if(!this.properties()) {
+    if (!this.properties()) {
       return [];
     }
-
     let temp = this.limit()
       ? this.properties().slice(0, this.limit())
       : this.properties();
     const { sort, search, filter } = this.queryParams();
-    if (search) temp = this.searchProperties(search, temp);
-    if (filter) temp = this.filterProperties(filter, temp);
-    temp = this.sortProperties(sort || 'latest', temp);
+    if (search) temp = searchProperties(search, temp);
+    if (filter) temp = filterProperties(filter, temp);
+    temp = sortProperties(sort || 'latest', temp);
     return temp;
   });
 
+  private queryParams = toSignal(this.activatedRoute.queryParams);
+
   constructor(
-    private propertiesService: PropertiesService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private propertiesService: PropertiesService
+  ) {}
 
-  public loadMoreProperty(): void {
-    console.log('loadMore');
-  }
-
-  private searchProperties(text: string, properties: Property[]): Property[] {
-    return properties.filter((item: Property) => {
-      const name = item.name.toLowerCase();
-      const address = item.address.toLowerCase();
-      return name.includes(text) || address.includes(text);
-    });
-  }
-
-  private filterProperties(
-    filter: string,
-    properties: Property[] = []
-  ): Property[] {
-    if (!filter) return;
-    const sale = filter.includes(TransactionType.forSale);
-    const rent = filter.includes(TransactionType.forRent);
-    const propertyType =
-      filter.includes(PropertyType.commercial) ||
-      filter.includes(PropertyType.industrial) ||
-      filter.includes(PropertyType.land) ||
-      filter.includes(PropertyType.residential);
-
-    return properties.filter((prprty) => {
-      if (sale && prprty.transactionType !== TransactionType.forSale)
-        return false;
-      if (rent && prprty.transactionType !== TransactionType.forRent)
-        return false;
-      if (propertyType && !filter.includes(prprty.type)) return false;
-      return true;
-    });
-  }
-
-  private sortProperties(
-    sortBy: string,
-    properties: Property[] = []
-  ): Property[] {
-    switch (sortBy) {
-      case 'name':
-        return sortListByName(properties, { property: 'name' });
-      case 'price':
-        return sortListByNumber(properties, { property: 'price' });
-      default:
-        return sortListByDate(properties, { property: 'updatedAt' });
+  ngOnInit(): void {
+    if (!this.propertiesService.properties.length) {
+      this.loadMoreProperty();
     }
   }
+
+  public loadMoreProperty = debounce(async () => {
+    this.propertiesService.isLoading.set(true);
+    const { sort } = this.queryParams();
+    const res = await this.propertiesService.fetchProperties(sort);
+    if (res.status !== 200) return;
+
+    const { items, hasMore, ...lastFetched } = res.data;
+    this.propertiesService.setPropertiesState(items, lastFetched);
+    await this.infinityScroll.complete();
+    this.propertiesService.isLoading.set(false);
+    if (!hasMore) {
+      this.disableInfinitScroll.set(true);
+    }
+    console.log('New items loaded...');
+  }, 1000);
 }

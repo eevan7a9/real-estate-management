@@ -25,8 +25,9 @@ export class UserPropertiesComponent implements OnInit {
 
   private async getOwnedProperties(): Promise<void> {
     this.propertiesService.isLoading.set(true);
-    const res = await this.propertiesService.getOwnedProperties();
+    const res = await this.propertiesService.fetchOwnedProperties();
     this.propertiesService.isLoading.set(false);
+
     if (res.status === 200) {
       this.propertiesService.propertiesOwned = res.data;
     }

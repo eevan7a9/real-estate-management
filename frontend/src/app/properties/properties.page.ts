@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   ModalController,
@@ -12,7 +12,6 @@ import { UserService } from '../user/user.service';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
 import { User } from '../shared/interface/user';
-import { map } from 'rxjs';
 import {
   IonSearchbarCustomEvent,
   IonSelectCustomEvent,
@@ -20,6 +19,7 @@ import {
 } from '@ionic/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PropertiesService } from './properties.service';
+import { PropertiesListComponent } from './properties-list/properties-list.component';
 
 @Component({
   selector: 'app-properties',
@@ -27,9 +27,12 @@ import { PropertiesService } from './properties.service';
   styleUrls: ['./properties.page.scss'],
 })
 export class PropertiesPage implements OnInit {
+  @ViewChild('propertyLists') propertyLists: PropertiesListComponent;
   public search = signal<string>('');
   public filterBy = signal<PropertyType[]>([]);
   public sortBy = signal<string>('latest');
+  public disableInfinitScroll = signal(false);
+
   public isLoading = computed<boolean>(() => this.propertiesService.isLoading());
   public displayOption = signal<PropertiesDisplayOption>(
     PropertiesDisplayOption.CardView
@@ -78,6 +81,7 @@ export class PropertiesPage implements OnInit {
     },
   ];
   public user: User;
+
   private queryParams = toSignal(this.activatedRoutes.queryParams);
 
   constructor(
@@ -124,6 +128,9 @@ export class PropertiesPage implements OnInit {
       queryParams: { filter: value.length ? value.join() : null },
       queryParamsHandling: 'merge',
     });
+    this.propertiesService.resetState();
+    this.propertyLists.loadMoreProperty();
+    this.disableInfinitScroll.set(false);
   }
 
   public setSort(event: IonSelectCustomEvent<SelectChangeEventDetail>): void {
@@ -132,6 +139,9 @@ export class PropertiesPage implements OnInit {
       queryParams: { sort: value },
       queryParamsHandling: 'merge',
     });
+    this.propertiesService.resetState();
+    this.propertyLists.loadMoreProperty();
+    this.disableInfinitScroll.set(false);
   }
 
   public setSearchedText(

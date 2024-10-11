@@ -23,19 +23,18 @@
   }
 }
 
-@if (!disableInfinitLoader) {
-  <ion-row>
-    <ion-infinite-scroll
-      #IonInfiniteScroll
-      threshold="80px"
-      (ionInfinite)="loadMoreProperty()"
+<ion-row>
+  <ion-infinite-scroll
+    #IonInfiniteScroll
+    threshold="80px"
+    (ionInfinite)="loadMoreProperty()"
+    [disabled]="disableInfinitScroll()"
+  >
+    <ion-infinite-scroll-content
+      [ngClass]="{ 'py-12': !disableInfinitScroll() }"
+      loadingSpinner="bubbles"
+      loadingText="Loading data..."
     >
-      <ion-infinite-scroll-content
-        class="py-12"
-        loadingSpinner="bubbles"
-        loadingText="Loading data..."
-      >
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-row>
-}
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-row>

@@ -18,24 +18,24 @@ export class PropertiesService {
   public readonly properties$: Observable<Property[] | undefined>;
   public readonly propertiesOwned$: Observable<Property[] | undefined>;
 
-  private propertiesSub = new BehaviorSubject<Property[] | undefined>(undefined);
-  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(undefined);
+  private propertiesSub = new BehaviorSubject<Property[] | undefined>(
+    undefined
+  );
+  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(
+    undefined
+  );
+  private lastCreatedAt: string;
+  private lastPrice: string | number;
+  private lastName: string;
+  private limit = 30;
 
   constructor(private http: HttpClient, private userService: UserService) {
     this.properties$ = this.propertiesSub.asObservable();
     this.propertiesOwned$ = this.propertiesOwnedSub.asObservable();
-
-    this.fetchProperties().then((res) => {
-      this.isLoading.set(true);
-      if (res.status === 200) {
-        this.properties = res.data;
-      }
-      this.isLoading.set(false);
-    });
   }
 
-  public get properties(): Property[] | undefined {
-    return this.propertiesSub.getValue();
+  public get properties(): Property[] {
+    return this.propertiesSub.getValue() || [];
   }
 
   public set properties(property: Property[]) {
@@ -50,10 +50,43 @@ export class PropertiesService {
     this.propertiesOwnedSub.next(property);
   }
 
-  public async fetchProperties(): Promise<ApiResponse<Property[]>> {
+  public async fetchProperties(
+    sort = 'latest',
+    filter?: string[]
+  ): Promise<
+    ApiResponse<{
+      items: Property[];
+      lastCreatedAt?: string;
+      lastPrice?: string;
+      lastName?: string;
+      hasMore?: boolean;
+    }>
+  > {
     try {
+      const params = new URLSearchParams();
+      params.append('limit', this.limit.toString());
+      params.append('sort', sort);
+
+      if (this.lastCreatedAt) {
+        params.append('lastCreatedAt', this.lastCreatedAt);
+      }
+      if (this.lastPrice) {
+        params.append('lastPrice', this.lastPrice.toString());
+      }
+      if (this.lastName) {
+        params.append('lastName', this.lastName);
+      }
+      const newUrl = `${propertyUrl}?${params.toString()}`;
       const res = await firstValueFrom(
-        this.http.get<ApiResponse<Property[]>>(propertyUrl)
+        this.http.get<
+          ApiResponse<{
+            items: Property[];
+            lastCreatedAt?: string;
+            lastPrice?: string;
+            lastName?: string;
+            hasMore?: boolean;
+          }>
+        >(newUrl)
       );
       return res;
     } catch (error) {
@@ -166,7 +199,7 @@ export class PropertiesService {
     }
   }
 
-  public async getOwnedProperties(): Promise<ApiResponse<Property[]>> {
+  public async fetchOwnedProperties(): Promise<ApiResponse<Property[]>> {
     try {
       const res = await firstValueFrom(
         this.http.get<ApiResponse<Property[]>>(
@@ -193,5 +226,30 @@ export class PropertiesService {
     this.propertiesOwned = this.propertiesOwned.filter(
       (property) => property.property_id !== property_id
     );
+  }
+
+  public resetState(opts?: { skipOwned: false }): void {
+    this.properties = [];
+    this.lastName = '';
+    this.lastPrice = '';
+    this.lastCreatedAt = '';
+    if (!opts?.skipOwned) {
+      this.propertiesOwned = [];
+    }
+  }
+
+  public setPropertiesState(
+    properties: Property[],
+    last?: {
+      lastCreatedAt?: string;
+      lastPrice?: string | number;
+      lastName?: string;
+    }
+  ) {
+    this.properties = [...this.properties, ...properties];
+    this.lastCreatedAt = last.lastCreatedAt ? last.lastCreatedAt : '';
+    this.lastPrice = last.lastPrice ? last.lastPrice : '';
+    this.lastName = last.lastName ? last.lastName : '';
+    return;
   }
 }
