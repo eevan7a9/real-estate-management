@@ -27,7 +27,7 @@ export class PropertiesService {
   private lastCreatedAt: string;
   private lastPrice: string | number;
   private lastName: string;
-  private limit = 30;
+  private limit = 12;
 
   constructor(private http: HttpClient, private userService: UserService) {
     this.properties$ = this.propertiesSub.asObservable();
@@ -52,7 +52,8 @@ export class PropertiesService {
 
   public async fetchProperties(
     sort = 'latest',
-    filter?: string[]
+    filter?: string,
+    search?: string
   ): Promise<
     ApiResponse<{
       items: Property[];
@@ -66,7 +67,12 @@ export class PropertiesService {
       const params = new URLSearchParams();
       params.append('limit', this.limit.toString());
       params.append('sort', sort);
-
+      if(search) {
+        params.append('search', search);
+      }
+      if(filter?.length) {
+        params.append('filter', filter);
+      }
       if (this.lastCreatedAt) {
         params.append('lastCreatedAt', this.lastCreatedAt);
       }

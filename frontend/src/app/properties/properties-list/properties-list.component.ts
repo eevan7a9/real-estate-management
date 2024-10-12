@@ -68,10 +68,9 @@ export class PropertiesListComponent implements OnInit {
 
   public loadMoreProperty = debounce(async () => {
     this.propertiesService.isLoading.set(true);
-    const { sort } = this.queryParams();
-    const res = await this.propertiesService.fetchProperties(sort);
+    const { sort, filter, search } = this.queryParams();
+    const res = await this.propertiesService.fetchProperties(sort, filter, search);
     if (res.status !== 200) return;
-
     const { items, hasMore, ...lastFetched } = res.data;
     this.propertiesService.setPropertiesState(items, lastFetched);
     await this.infinityScroll.complete();
@@ -79,6 +78,6 @@ export class PropertiesListComponent implements OnInit {
     if (!hasMore) {
       this.disableInfinitScroll.set(true);
     }
-    console.log('New items loaded...');
+    console.log('New items loaded...', res.data);
   }, 1000);
 }

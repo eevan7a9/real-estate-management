@@ -7,9 +7,9 @@ export function searchProperties(
   properties: Property[]
 ): Property[] {
   return properties.filter((item: Property) => {
-    const name = item.name.toLowerCase();
-    const address = item.address.toLowerCase();
-    return name.includes(text) || address.includes(text);
+    const name = item.name?.toLowerCase();
+    const address = item.address?.toLowerCase();
+    return name?.includes(text) || address?.includes(text);
   });
 }
 

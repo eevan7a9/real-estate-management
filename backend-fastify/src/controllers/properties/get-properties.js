@@ -7,6 +7,8 @@ import { Property } from "../../models/property.js";
  */
 export const getProperties = async function (req, res) {
   const {
+    search = "",
+    filter = "",
     sort = "latest",
     limit = 4,
     lastCreatedAt,
@@ -14,45 +16,17 @@ export const getProperties = async function (req, res) {
     lastName,
   } = req.query;
 
-  let sortOrder;
-  let sortField;
-
-  switch (sort) {
-    case "name":
-      sortField = "name";
-      sortOrder = 1; // Ascending order (A-Z)
-      break;
-    case "price":
-      sortField = "price";
-      sortOrder = -1; // highest to lowest
-      break;
-    case "latest":
-    default:
-      sortField = "createdAt";
-      sortOrder = -1; // newest first
-      break;
-  }
-  const filterQuery = {};
-  let rangeQuery = {};
-
-  if (sort === "price" && lastPrice && lastCreatedAt) {
-    rangeQuery = {
-      price: { $lte: lastPrice },
-      createdAt: { $ne: new Date(lastCreatedAt) },
-    };
-  } else if (sort === "latest" && lastCreatedAt) {
-    rangeQuery = {
-      createdAt: { $lt: new Date(lastCreatedAt) },
-    };
-  } else if (sort === "name" && lastName) {
-    rangeQuery = {
-      name: { $gt: lastName },
-    };
-  }
+  const { sortOrder, sortField } = composeSort(sort);
+  const rangeQuery = composeRangeQuery(sort, {
+    lastCreatedAt,
+    lastPrice,
+    lastName,
+  });
+  const filterQuery = composeFilterQuery(filter, search);
   const query = { ...filterQuery, ...rangeQuery };
 
   const properties = await Property.find(query)
-    .select("property_id name createdAt price")
+    // .select("property_id name createdAt price type transactionType")
     .limit(parseInt(limit))
     .sort({ [sortField]: sortOrder, _id: 1 }) // Use _id for tie-breaking in the sort
     .collation({ locale: "en", strength: 2 });
@@ -93,5 +67,77 @@ export const getMyProperties = async function (req, res) {
   } catch (error) {
     console.error("\n", error);
     return res.status(500).send({ message: "Error: Something went wrong" });
+  }
+};
+
+/**
+ *
+ * @param {string} filter
+ * @returns {object}
+ */
+const composeFilterQuery = function (filter, search) {
+  const filterQuery = {};
+  if (filter) {
+    const transactionTypes = [];
+    const propertyTypes = [];
+
+    filter
+      .split(",")
+      .forEach((t) =>
+        t === "sale" || t === "rent"
+          ? transactionTypes.push(t)
+          : propertyTypes.push(t)
+      );
+    if (propertyTypes.length) {
+      filterQuery.type = { $in: propertyTypes };
+    }
+    if (transactionTypes.length) {
+      filterQuery.transactionTypes = { $in: transactionTypes };
+    }
+  }
+  if(search) {
+    filterQuery.$or = [
+      { name: { $regex: search, $options: "i" } }, // Case-insensitive search on name
+      { address: { $regex: search, $options: "i" } }, // Assuming there's a description field
+    ];
+  }
+  return filterQuery;
+};
+
+/**
+ *
+ * @param {string} sort
+ * @param {object} param2
+ * @returns {object}
+ */
+const composeRangeQuery = function (
+  sort,
+  { lastCreatedAt, lastPrice, lastName } = {}
+) {
+  if (sort === "price" && lastPrice && lastCreatedAt) {
+    return {
+      price: { $lte: lastPrice },
+      createdAt: { $ne: new Date(lastCreatedAt) },
+    };
+  } else if (sort === "latest" && lastCreatedAt) {
+    return { createdAt: { $lt: new Date(lastCreatedAt) } };
+  } else if (sort === "name" && lastName) {
+    return { name: { $gt: lastName } };
+  }
+};
+
+/**
+ *
+ * @param {string} sort
+ * @returns {object}
+ */
+const composeSort = function (sort) {
+  switch (sort) {
+    case "name":
+      return { sortField: "name", sortOrder: 1 };
+    case "price":
+      return { sortField: "price", sortOrder: -1 };
+    default:
+      return { sortField: "createdAt", sortOrder: -1 };
   }
 };
