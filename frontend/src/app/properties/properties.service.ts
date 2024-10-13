@@ -234,7 +234,7 @@ export class PropertiesService {
     );
   }
 
-  public resetState(opts?: { skipOwned: false }): void {
+  public resetState(opts?: { skipOwned: boolean }): void {
     this.properties = [];
     this.lastName = '';
     this.lastPrice = '';
