@@ -52,7 +52,7 @@ export class NotificationsComponent {
       });
     } else {
       this.notificationsChecked.update((items) => {
-        items.filter((item) => item !== id);
+        items = items.filter((item) => item !== id);
         return items;
       });
     }
