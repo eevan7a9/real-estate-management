@@ -1,16 +1,18 @@
 <!-- Cards View -->
-<ion-row class="ion-content-scroll-host" *ngIf="displayOption() === 'cards'">
-  <ion-col
-    size="12"
-    [sizeSm]="singleCol() ? 12 : 6"
-    [sizeMd]="singleCol() ? 12 : 4"
-    [sizeLg]="singleCol() ? 12 : 6"
-    [sizeXl]="singleCol() ? 12 : 3"
-    *ngFor="let item of propertiesList()"
-  >
-    <app-properties-card [property]="item"></app-properties-card>
-  </ion-col>
-</ion-row>
+@if(displayOption() === 'cards') {
+  <ion-row class="ion-content-scroll-host">
+    <ion-col
+      size="12"
+      [sizeSm]="singleCol() ? 12 : 6"
+      [sizeMd]="singleCol() ? 12 : 4"
+      [sizeLg]="singleCol() ? 12 : 6"
+      [sizeXl]="singleCol() ? 12 : 3"
+      *ngFor="let item of propertiesList()"
+    >
+      <app-properties-card [property]="item"></app-properties-card>
+    </ion-col>
+  </ion-row>
+}
 
 <!-- List View -->
 @if(displayOption() === 'list') {

@@ -32,11 +32,12 @@ export class PropertiesPage implements OnInit {
   public filterBy = signal<PropertyType[]>([]);
   public sortBy = signal<string>('latest');
   public disableInfinitScroll = signal(false);
-
-  public isLoading = computed<boolean>(() => this.propertiesService.isLoading());
   public displayOption = signal<PropertiesDisplayOption>(
     PropertiesDisplayOption.CardView
   );
+
+  public isLoading = computed<boolean>(() => this.propertiesService.isLoading());
+
   public properties = toSignal(this.propertiesService.properties$);
 
   public displayType = PropertiesDisplayOption;
@@ -128,7 +129,7 @@ export class PropertiesPage implements OnInit {
       queryParams: { filter: value.length ? value.join() : null },
       queryParamsHandling: 'merge',
     });
-    this.propertiesService.resetState();
+    this.propertiesService.resetState({ skipOwned: true});
     this.propertyLists.loadMoreProperty();
     this.disableInfinitScroll.set(false);
   }
@@ -139,7 +140,7 @@ export class PropertiesPage implements OnInit {
       queryParams: { sort: value },
       queryParamsHandling: 'merge',
     });
-    this.propertiesService.resetState();
+    this.propertiesService.resetState({ skipOwned: true});
     this.propertyLists.loadMoreProperty();
     this.disableInfinitScroll.set(false);
   }
@@ -152,6 +153,9 @@ export class PropertiesPage implements OnInit {
       queryParams: { search: value || null },
       queryParamsHandling: 'merge',
     });
+    this.propertiesService.resetState({ skipOwned: true});
+    this.propertyLists.loadMoreProperty();
+    this.disableInfinitScroll.set(false);
   }
 
   private setCurrentParams() {
