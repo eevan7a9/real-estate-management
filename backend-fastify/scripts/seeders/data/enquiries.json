@@ -1,0 +1,100 @@
+[
+  {
+    "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mi orci, finibus non lorem eu, sollicitudin feugiat nulla. Aliquam erat volutpat. Etiam id malesuada dolor. Praesent iaculis luctus risus. Aliquam efficitur, tellus at euismod mollis, risus eros ultrices massa, a finibus sem elit ultricies metus?</p><p>&nbsp;</p><p>Etiam id malesuada dolor?</p>",
+    "email": "test@email.com",
+    "title": "How much is added for reservation",
+    "topic": "sales",
+    "read": true,
+    "property": {
+      "property_id": "ap133488-sad-5a85d4247196",
+      "name": "Konoha S.Eastern Appartment"
+    },
+    "users": {
+      "from": {
+        "user_id": "u01",
+        "keep": true
+      },
+      "to": {
+        "user_id": "u02",
+        "keep": true
+      }
+    }
+  },
+  {
+    "enquiry_id": "5d2f21fd-ae71-49f1-9364-35d4c21b4c04",
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mi orci, finibus non lorem eu, sollicitudin feugiat nulla. Aliquam erat volutpat. Etiam id malesuada dolor?</p><p>&nbsp;</p><p><i>Quisque ullamcorper dolor vel fringilla varius. Maecenas volutpat nisl a augue consectetur malesuada. Suspendisse porttitor ut ipsum a scelerisque.</i></p>",
+    "email": "test@email.com",
+    "title": "Do you accept crypto Payment?",
+    "topic": "information",
+    "read": true,
+    "property": {
+      "property_id": "62130ae8-de7c-47f0-afa6-4f19828b5d23",
+      "name": "Industrial building - Dummy"
+    },
+    "users": {
+      "from": {
+        "user_id": "u01",
+        "keep": true
+      },
+      "to": {
+        "user_id": "u03",
+        "keep": true
+      }
+    }
+  },
+  {
+    "enquiry_id": "df4673c7-0989-4e73-a7d9-a6e6cca482ad",
+    "content": "<p>Duis posuere, nulla sit amet pellentesque convallis, mauris lacus malesuada sem, sed eleifend elit purus molestie ex. Duis vel luctus risus, sit amet viverra risus</p>",
+    "email": "john_doe@email.com",
+    "title": "There are No extra charge",
+    "topic": "information",
+    "read": true,
+    "property": {
+      "property_id": "ap133488-sad-5a85d4247196",
+      "name": "Konoha S.Eastern Appartment"
+    },
+    "replyTo": {
+      "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
+      "title": "How much is added for reservation",
+      "topic": "sales"
+    },
+    "users": {
+      "from": {
+        "user_id": "u02",
+        "keep": true
+      },
+      "to": {
+        "user_id": "u01",
+        "keep": true
+      }
+    }
+  },
+  {
+    "enquiry_id": "43376608-37cb-4015-ad09-95e074c4d1a3",
+    "content": "<p>+639909123</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>&nbsp;</p>",
+    "email": "john_doe@email.com",
+    "title": "Lets Schedule a call?",
+    "topic": "information",
+    "read": true,
+    "property": {
+      "property_id": "ap133488-sad-5a85d4247196",
+      "name": "Konoha S.Eastern Appartment"
+    },
+    "replyTo": {
+      "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
+      "title": "How much is added for reservation",
+      "topic": "sales"
+    },
+    "users": {
+      "from": {
+        "user_id": "u02",
+        "keep": true
+      },
+      "to": {
+        "user_id": "u01",
+        "keep": true
+      }
+    }
+  }
+]
