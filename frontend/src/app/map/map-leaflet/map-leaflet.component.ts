@@ -148,7 +148,9 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     let industrial = [];
     let land = [];
 
-    const group = this.properties.reduce((arr, acc): any => {
+    if(!this.properties) return;
+    
+    const group = this.properties?.reduce((arr, acc): any => {
       arr[acc.type] = [...arr[acc.type] || [], acc];
       return arr;
     }, {});
