@@ -19,7 +19,7 @@ export class PropertiesListItemComponent {
     initialValue: undefined,
   });
   public isOwner = computed(
-    () => this.user().user_id === this.property().user_id
+    () => this.user()?.user_id === this.property().user_id
   );
   @Input() enableOwnedBadge = true;
 
@@ -29,7 +29,7 @@ export class PropertiesListItemComponent {
     private popoverCtrler: PopoverController,
     private toastCtrl: ToastController,
     private propertiesService: PropertiesService
-  ) {}
+  ) { }
 
   public selectProperty(property: Property): void {
     this.router.navigate(['/properties', property.property_id]);
