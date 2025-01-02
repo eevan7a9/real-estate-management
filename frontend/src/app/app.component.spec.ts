@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,13 +14,12 @@ describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
 
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        ReactiveFormsModule, HttpClientModule],
-      providers: [ Storage ]
-    }).compileComponents();
+    declarations: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [RouterTestingModule.withRoutes([]),
+        ReactiveFormsModule],
+    providers: [Storage, provideHttpClient(withInterceptorsFromDi())]
+}).compileComponents();
   }));
 
   it('should create the app', waitForAsync(() => {
