@@ -1,0 +1,67 @@
+[
+  {
+    "user_id": "u01",
+    "fullName": "test tester",
+    "email": "test@email.com",
+    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "properties": ["106ab526-72af-4446-9550-998a48d98c0c"],
+    "activities": [
+      {
+        "action": "ENQUIRY_NEW",
+        "description": "Enquiry sent to property [Konoha S.E...] regarding a topic about sales.",
+        "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa"
+      },
+      {
+        "action": "USER_LOGIN",
+        "description": "User test@email.com signed in."
+      },
+      {
+        "action": "ENQUIRY_NEW",
+        "description": "Enquiry sent to property [Storage Fa...] regarding a topic about information.",
+        "enquiry_id": "bfe4fd29-863c-4740-9155-a36bb2de101c"
+      }
+    ],
+    "notifications": []
+  },
+  {
+    "user_id": "u02",
+    "fullName": "john doe",
+    "email": "john_doe@email.com",
+    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "properties": [
+      "comerc-434343",
+      "comerc-7537a514453e",
+      "ap2as488-cba6-4b5a-8ef9",
+      "ap133488-sad-5a85d4247196",
+      "08633488-cba6-4b5a-8ef9-5a85d4247196",
+      "8eca0691-5a3e-46a2-b4db-87d4f536af1b",
+      "8faf2abc-5e01-420b-a232-1ce300d70c84",
+      "b7973ec5-2931-4040-a846-a0271153718d",
+      "b6af25b9-bbc8-4f4a-a297-9f02ca43089d",
+      "4b58df58-3e8d-453e-9802-7537a514453e"
+    ],
+    "activities": [],
+    "notifications": []
+  },
+  {
+    "user_id": "u03",
+    "fullName": "jane doe",
+    "email": "jane_doe@email.com",
+    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "properties": [
+      "fef95dc0-0131-46b4-aa63-09f19898a0c8",
+      "62130ae8-de7c-47f0-afa6-4f19828b5d23"
+    ],
+    "activities": [],
+    "notifications": []
+  },
+  {
+    "user_id": "u04",
+    "fullName": "bread doe",
+    "email": "bread_doe@email.com",
+    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "properties": [],
+    "activities": [],
+    "notifications": []
+  }
+]
