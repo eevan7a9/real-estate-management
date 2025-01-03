@@ -8,8 +8,20 @@ export const environment = {
     server: 'http://localhost:8000/',
     mapKey: '',
     googleAuthClientId: '',
-    webSocketUrl: "ws://localhost:8000/websocket"
-  }
+    webSocketUrl: 'ws://localhost:8000/websocket',
+  },
+  map: {
+    // Add the map tiles to show base on theme
+    tiles: {
+      default:
+        'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=',
+      dark: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=',
+    },
+  },
+  features: {
+    demoMode: false,
+    demoRestrictedMessage: 'This feature is restricted in demo mode.',
+  },
 };
 
 /*

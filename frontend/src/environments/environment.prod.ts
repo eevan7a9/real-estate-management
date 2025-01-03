@@ -4,6 +4,16 @@ export const environment = {
     server: 'http://localhost:8000/',
     mapKey: '',
     googleAuthClientId: '',
-    webSocketUrl: ''
-  }
+    webSocketUrl: '',
+  },
+  map: {
+    tiles: {
+      default: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      dark: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    },
+  },
+  features: {
+    demoMode: false,
+    demoRestrictedMessage: 'This feature is restricted in demo mode.',
+  },
 };
