@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
@@ -11,10 +11,11 @@ import { EnquiriesService } from '../enquiries.service';
   templateUrl: './enquiries-list-item.component.html',
   styleUrls: ['./enquiries-list-item.component.scss'],
 })
-export class EnquiriesListItemComponent implements OnInit {
+export class EnquiriesListItemComponent {
 
-  @Input() enquiry: Enquiry;
-  public sent = false;
+  public enquiry = input<Enquiry>();
+  // public sent = false;
+  public sent = computed(() => this.userService.user.user_id === this.enquiry().users.from.user_id)
 
   constructor(
     private enquiriesService: EnquiriesService,
@@ -25,9 +26,11 @@ export class EnquiriesListItemComponent implements OnInit {
     public userService: UserService
   ) { }
 
-  ngOnInit() {
-    this.sent = this.userService.user.user_id === this.enquiry.users.from.user_id;
-  }
+  /** 
+  *  ngOnInit() {
+  *   this.sent = this.userService.user.user_id === this.enquiry().users.from.user_id;
+  *  }
+  */
 
   public async actionPopup(ev: Event, enqId: string) {
     ev.stopPropagation();
@@ -98,13 +101,13 @@ export class EnquiriesListItemComponent implements OnInit {
       component: EnquiriesReplyModalComponent,
       componentProps: {
         title: 'Reply Enquiry',
-        property: this.enquiry?.property,
+        property: this.enquiry().property,
         replyTo: {
-          enquiry_id: this.enquiry.enquiry_id,
-          title: this.enquiry.title,
-          topic: this.enquiry.topic
+          enquiry_id: this.enquiry().enquiry_id,
+          title: this.enquiry().title,
+          topic: this.enquiry().topic
         },
-        userTo: this.enquiry.users?.from?.user_id
+        userTo: this.enquiry().users?.from?.user_id
       }
     });
     return await modal.present();

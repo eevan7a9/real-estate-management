@@ -45,6 +45,7 @@ export class PropertiesListItemComponent {
         report: false,
       },
       translucent: true,
+      trigger: "popup-trigger-button"
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();

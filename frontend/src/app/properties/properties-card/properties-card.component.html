@@ -1,6 +1,6 @@
-<ion-card>
+<ion-card class="relative m-0 w-full">
   <div
-    class="tag"
+    class="tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
     [ngClass]="[
       userService.user?.user_id === property.user_id
         ? 'bg-primary'
@@ -36,7 +36,7 @@
 
   <ion-card-header>
     <app-property-badge [type]="property?.type"></app-property-badge>
-    <ion-card-title class="name">
+    <ion-card-title class="text-[16px] sm:text-[20px] text-ellipsis line-clamp-1">
       {{ property?.name }}
     </ion-card-title>
 
@@ -46,11 +46,11 @@
   </ion-card-header>
 
   <ion-card-content>
-    <div class="desc">
+    <div class="line-clamp-3 text-ellipsis overflow-hidden h-full max-h-[200px]">sad
       {{ property?.description }}
     </div>
 
-    <div class="price">
+    <div class="price font-bold sm:text-[18px] mt-4">
       {{ property?.price | currency : "PHP" }}
       <span
         class="capitalize text-[16px]"

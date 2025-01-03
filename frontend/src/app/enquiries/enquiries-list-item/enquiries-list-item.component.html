@@ -1,23 +1,23 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title>
-      <ion-badge class="badge ion-margin-end" color="light" *ngIf="this.sent">
+      <ion-badge class="badge ion-margin-end" color="light" *ngIf="this.sent()">
         Sent
       </ion-badge>
-      <ion-badge class="badge ion-margin-end" color="light" *ngIf="!this.sent">
+      <ion-badge class="badge ion-margin-end" color="light" *ngIf="!this.sent()">
         Received
       </ion-badge>
       <ion-badge
         class="badge-unread ion-text-uppercase"
         color="medium"
-        *ngIf="!this.sent && !enquiry.read"
+        *ngIf="!this.sent() && !enquiry().read"
       >
         Unread
       </ion-badge>
     </ion-card-title>
 
     <button
-      (click)="actionPopup($event, enquiry.enquiry_id)"
+      (click)="actionPopup($event, enquiry().enquiry_id)"
       class="bg-gray-300 absolute rounded-full p-2 top-2 right-3 flex justify-center items-center"
     >
       <ion-icon color="dark" name="ellipsis-vertical-outline"></ion-icon>
@@ -28,19 +28,19 @@
     <ion-grid class="ion-no-padding ion-no-margin">
       <ion-row>
         <ion-col size="12" sizeLg="4" class="message-title-text">
-          <ion-text type="dark" >{{ this.enquiry.title || "None" }}</ion-text>
+          <ion-text type="dark" >{{ this.enquiry().title || "None" }}</ion-text>
         </ion-col>
 
         <ion-col size="*" sizeLg="2">
-          <app-enquiry-badge [topic]="enquiry.topic" class="ion-margin-top"></app-enquiry-badge>
+          <app-enquiry-badge [topic]="enquiry().topic" class="ion-margin-top"></app-enquiry-badge>
         </ion-col>
 
         <ion-col size="12" sizeLg="4" class="ion-text-lg-center">
-          <ion-text>{{ enquiry.email }}</ion-text>
+          <ion-text>{{ enquiry().email }}</ion-text>
         </ion-col>
 
         <ion-col size="12" sizeLg="2">
-          <ion-text>{{ enquiry.createdAt | date }}</ion-text>
+          <ion-text>{{ enquiry().createdAt | date }}</ion-text>
         </ion-col>
       </ion-row>
     </ion-grid>

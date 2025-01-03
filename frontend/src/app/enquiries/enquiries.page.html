@@ -61,8 +61,7 @@
   @if (!user()) {
     <app-need-signin-continue></app-need-signin-continue>
   }
-
-  <div class="enquiries-container" *ngIf="user()">
+  <div class="max-w-screen-2xl mx-auto h-full" *ngIf="user()">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"

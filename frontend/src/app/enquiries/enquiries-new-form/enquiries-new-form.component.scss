@@ -16,7 +16,8 @@ body.dark :host ::ng-deep {
       background: var(--ion-color-step-50);
     }
     &.ck-focused {
-      background: var(--ion-color-light);
+      background: var(--ion-color-dark);
+      background-color: var(--ion-color-dark);
     }
   }
 }

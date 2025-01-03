@@ -1,37 +1,40 @@
 <ion-list>
-  <ion-list-header class="heading-popup">Select Action:</ion-list-header>
+  <ion-list-header class="font-bold min-h-0 pb-1 pt-3">
+    Select Action:
+  </ion-list-header>
+
   <ion-item *ngIf="message">
     <ion-button expand="block" color="success" (click)="close('message')">
-      <ion-icon
-        name="chatbubble-ellipses-outline"
-        style="margin: 0 8px 0 0"
-      ></ion-icon>
+      <ion-icon name="chatbubble-ellipses-outline" class="mr-2"></ion-icon>
       Message
     </ion-button>
   </ion-item>
 
   <ion-item *ngIf="edit">
     <ion-button expand="block" color="primary" (click)="close('edit')">
-      <ion-icon name="pencil-outline" style="margin: 0 8px 0 0"></ion-icon>
+      <ion-icon name="pencil-outline" class="mr-2"></ion-icon>
       Edit
     </ion-button>
   </ion-item>
 
   <ion-item *ngIf="report">
     <ion-button expand="block" color="warning" (click)="close('report')">
-      <ion-icon name="flag-outline" style="margin: 0 8px 0 0"></ion-icon>
+      <ion-icon name="flag-outline" class="mr-2"></ion-icon>
       Report
     </ion-button>
   </ion-item>
 
   <ion-item *ngIf="delete">
     <ion-button expand="block" color="danger" (click)="close('delete')">
-      <ion-icon name="trash-outline" style="margin: 0 8px 0 0"></ion-icon>
+      <ion-icon name="trash-outline" class="mr-2"></ion-icon>
       Delete
     </ion-button>
   </ion-item>
 
-  <ion-item lines="none" detail="false" button (click)="close()">
-    Close
+  <ion-item lines="none" detail="false">
+    <ion-button fill="clear" class="text-dark dark:text-light" (click)="close()">
+      <ion-icon name="close-outline" class="mr-2"></ion-icon>
+      Close
+    </ion-button>
   </ion-item>
 </ion-list>

@@ -15,6 +15,8 @@ const propertyUrl = environment.api.server + 'properties';
 })
 export class PropertiesService {
   public isLoading = signal(false);
+  public hasMore = signal(true);
+
   public readonly properties$: Observable<Property[] | undefined>;
   public readonly propertiesOwned$: Observable<Property[] | undefined>;
 

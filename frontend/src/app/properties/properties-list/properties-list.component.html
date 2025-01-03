@@ -30,7 +30,7 @@
     #IonInfiniteScroll
     threshold="80px"
     (ionInfinite)="loadMoreProperty()"
-    [disabled]="disableInfinitScroll()"
+    [disabled]="disableInfinitScroll() || hasNoMore()"
   >
     <ion-infinite-scroll-content
       [ngClass]="{ 'py-12': !disableInfinitScroll() }"

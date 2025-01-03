@@ -1,42 +1,7 @@
-ion-card {
-  position: relative;
-  width: 100%;
-  margin: 0;
-}
-
 .tag {
-  position: absolute;
-  padding: 8px 16px;
-  font-size: 20px;
-  font-weight: 900;
   color: var(--ion-color-primary-contrast);
-  border-bottom-right-radius: 12px;
-}
-
-.name {
-  overflow: hidden;
-  width: 100%;
-  font-size: 24px;
-  height: 28px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-}
-.desc {
-  overflow: hidden;
-  width: 100%;
-  min-height: 68px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
 }
 
 .price {
-  margin: 16px 0 0 0;
-  font-size: 18px;
-  font-weight: bold;
   color: var(--ion-text-color-step-50);
 }
