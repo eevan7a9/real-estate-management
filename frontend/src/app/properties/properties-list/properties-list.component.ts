@@ -78,6 +78,5 @@ export class PropertiesListComponent implements OnInit {
     if (!hasMore) {
       this.disableInfinitScroll.set(true);
     }
-    console.log('New items loaded...', res.data);
   }, 1000);
 }
