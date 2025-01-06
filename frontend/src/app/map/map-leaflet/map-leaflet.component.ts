@@ -51,10 +51,10 @@ export class MapLeafletComponent implements OnInit, OnChanges {
     });
     this.initMap().then(() => {
 
-      this.map.on('dragend', () => {
-        const center = this.map.getCenter();
-        console.log('drag ended.', center);
-      });
+      // this.map.on('dragend', () => {
+      //   const center = this.map.getCenter();
+      //   console.log('drag ended.', center);
+      // });
       const lat = this.activatedRoutes.snapshot.queryParamMap.get('lat');
       const lng = this.activatedRoutes.snapshot.queryParamMap.get('lng');
       if (lat && lng) {

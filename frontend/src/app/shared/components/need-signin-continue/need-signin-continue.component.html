@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Content Restricted</ion-title>
     <ion-buttons slot="end">
-      <ion-button> 
+      <ion-button>
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -10,11 +10,21 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="security-container">
-    <div class="content">
-      <h1 class="security-heading">HOLD UP!!!</h1>
-      <h4 class="security-sub-heading">YOU NEED TO SIGN IN TO CONTINUE</h4>
-      <ion-button (click)="goSignin()" size="large"> SIGN IN </ion-button>
+  <div class="flex flex-col justify-center items-center h-full">
+    <div class="text-center px-3 py-4">
+      <ion-img
+        src="../../../../assets/images/security.svg"
+        class="max-w-[400px] xl:max-w-[500px]"
+      />
+
+      <h4 class="sm:text-[20px] font-bold">YOU NEED TO SIGN IN TO CONTINUE</h4>
+
+      <ion-button
+        (click)="goSignin()"
+        class="w-full max-w-[300px] mt-2 sm:mt-4 md:text-[20px]"
+      >
+        SIGN IN
+      </ion-button>
     </div>
   </div>
 </ion-content>

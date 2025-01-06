@@ -224,16 +224,20 @@ export class PropertiesService {
 
   public addPropertyToState(property: Property) {
     this.properties = [...this.properties, property];
-    this.propertiesOwned = [...this.propertiesOwned, property];
+    if(this.propertiesOwned) {
+      this.propertiesOwned = [...this.propertiesOwned, property];
+    }
   }
 
   public removePropertyFromState(property_id: string) {
     this.properties = this.properties.filter(
       (property) => property.property_id !== property_id
     );
-    this.propertiesOwned = this.propertiesOwned.filter(
-      (property) => property.property_id !== property_id
-    );
+    if(this.propertiesOwned) {
+      this.propertiesOwned = this.propertiesOwned.filter(
+        (property) => property.property_id !== property_id
+      );
+    }
   }
 
   public resetState(opts?: { skipOwned: boolean }): void {

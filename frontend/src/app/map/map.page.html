@@ -28,7 +28,7 @@
         </section>
 
         <!-- Side section for vertical property list -->
-        <div class="hidden lg:block w-[400px] overflow-y-auto">
+        <div class="hidden lg:block w-full max-w-[380px] overflow-y-auto">
           <app-properties-list
             class="properties-list"
             [singleCol]="true"
@@ -37,41 +37,38 @@
             [disableInfinitScroll]="true"
           ></app-properties-list>
 
-          <ion-card class="!h-[525px] !mx-2">
-            <ion-card-content
-              class="min-h-[506px] flex items-center justify-center"
-            >
-              <div>
-                <ion-button
-                  color="primary"
-                  fill="outline"
-                  routerLink="/properties"
-                >
-                  View All
-                </ion-button>
-              </div>
-            </ion-card-content>
-          </ion-card>
-      </div>
+          <div class="pt-1">
+            <ion-card class="!h-[525px] !mx-2">
+              <ion-card-content
+                class="min-h-[506px] flex items-center justify-center"
+              >
+                <div>
+                  <ion-button
+                    color="primary"
+                    fill="outline"
+                    routerLink="/properties"
+                  >
+                    View All
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
       </ion-col>
 
       <!-- Mobile Screen Only -->
       <ion-col size="12" class="ion-hide-lg-up">
         <div class="w-full mb-[60px]">
           <app-div-horizontal-slide>
-            <div
-              *ngFor="let item of properties()?.slice(0, 6)"
-              class="card-slider ion-margin-vertical"
-            >
-              <div class="property-card">
-                <app-properties-card [property]="item"></app-properties-card>
-              </div>
+            <div *ngFor="let item of properties()?.slice(0, 6)" class="min-w-[320px] px-2">
+              <app-properties-card [property]="item"></app-properties-card>
             </div>
-
-            <div class="card-slider mt-3">
-              <ion-card class="!h-[526px] mx-0">
+            
+            <div>
+              <ion-card class="relative !m-0 h-full w-full">
                 <ion-card-content
-                  class="w-[230px] min-h-[506px] flex items-center justify-center"
+                  class="w-[300px] h-full flex items-center justify-center"
                 >
                   <div>
                     <ion-button

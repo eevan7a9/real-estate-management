@@ -1,28 +1,26 @@
 <!-- Cards View -->
 @if(displayOption() === 'cards') {
-  <ion-row class="ion-content-scroll-host">
-    <ion-col
-      size="12"
-      [sizeSm]="singleCol() ? 12 : 6"
-      [sizeMd]="singleCol() ? 12 : 4"
-      [sizeLg]="singleCol() ? 12 : 6"
-      [sizeXl]="singleCol() ? 12 : 3"
-      *ngFor="let item of propertiesList()"
+  <section class="ion-content-scroll-host flex justify-center items-center py-4 md:py-3">
+    <ul
+      class="grid grid-cols-1 gap-4"
+      [ngClass]="{ 'md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4': !singleCol() }"
     >
-      <app-properties-card [property]="item"></app-properties-card>
-    </ion-col>
-  </ion-row>
+      <li *ngFor="let item of propertiesList()" class="col-span-1">
+        <app-properties-card [property]="item"></app-properties-card>
+      </li>
+    </ul>
+  </section>
 }
 
 <!-- List View -->
-@if(displayOption() === 'list') {
+@if(displayOption() === 'list') { 
   @for (item of propertiesList(); track $index) {
-    <app-properties-list-item 
+    <app-properties-list-item
       [property]="item"
-      [enableOwnedBadge]="enableOwnedBadge()" 
+      [enableOwnedBadge]="enableOwnedBadge()"
       [enablePopupOptions]="enablePopupOptions()"
     ></app-properties-list-item>
-  }
+  } 
 }
 
 <ion-row>

@@ -1,4 +1,4 @@
-<ion-card class="relative m-0 w-full">
+<ion-card class="relative !m-0 flex flex-col w-full max-w-[360px] h-full">
   <div
     class="tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
     [ngClass]="[
@@ -45,12 +45,12 @@
     </div>
   </ion-card-header>
 
-  <ion-card-content>
-    <div class="line-clamp-3 text-ellipsis overflow-hidden h-full max-h-[200px]">sad
+  <ion-card-content class="flex flex-col px-3 flex-grow">
+    <div class="line-clamp-3 text-ellipsis overflow-hidden h-auto max-h-[100px] mb-3">
       {{ property?.description }}
     </div>
 
-    <div class="price font-bold sm:text-[18px] mt-4">
+    <div class="price font-bold sm:text-[18px] mt-auto">
       {{ property?.price | currency : "PHP" }}
       <span
         class="capitalize text-[16px]"
@@ -59,6 +59,7 @@
         | {{ property.paymentFrequency }}
       </span>
     </div>
+
     <ion-button
       (click)="selectProperty(property)"
       expand="block"
