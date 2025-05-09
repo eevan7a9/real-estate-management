@@ -10,9 +10,10 @@ import { MapPopupComponent } from '../map-popup/map-popup.component';
 import { MapService } from '../map.service';
 
 @Component({
-  selector: 'app-map-leaflet',
-  templateUrl: './map-leaflet.component.html',
-  styleUrls: ['./map-leaflet.component.scss'],
+    selector: 'app-map-leaflet',
+    templateUrl: './map-leaflet.component.html',
+    styleUrls: ['./map-leaflet.component.scss'],
+    standalone: false
 })
 export class MapLeafletComponent implements OnInit, OnChanges {
 

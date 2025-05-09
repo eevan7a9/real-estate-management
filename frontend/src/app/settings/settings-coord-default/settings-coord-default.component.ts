@@ -5,9 +5,10 @@ import { Coord } from 'src/app/shared/interface/map';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
-  selector: 'app-settings-coord-default',
-  templateUrl: './settings-coord-default.component.html',
-  styleUrls: ['./settings-coord-default.component.scss'],
+    selector: 'app-settings-coord-default',
+    templateUrl: './settings-coord-default.component.html',
+    styleUrls: ['./settings-coord-default.component.scss'],
+    standalone: false
 })
 export class SettingsCoordDefaultComponent implements OnInit {
 

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
-  selector: 'app-properties-gallery',
-  templateUrl: './properties-gallery.component.html',
-  styleUrls: ['./properties-gallery.component.scss'],
+    selector: 'app-properties-gallery',
+    templateUrl: './properties-gallery.component.html',
+    styleUrls: ['./properties-gallery.component.scss'],
+    standalone: false
 })
 export class PropertiesGalleryComponent implements OnInit {
   @Input() images: string[] = [];

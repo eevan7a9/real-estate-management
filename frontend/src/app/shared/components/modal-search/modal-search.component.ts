@@ -2,9 +2,10 @@ import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-modal-search',
-  templateUrl: './modal-search.component.html',
-  styleUrls: ['./modal-search.component.scss'],
+    selector: 'app-modal-search',
+    templateUrl: './modal-search.component.html',
+    styleUrls: ['./modal-search.component.scss'],
+    standalone: false
 })
 export class ModalSearchComponent implements OnInit, AfterViewInit {
 

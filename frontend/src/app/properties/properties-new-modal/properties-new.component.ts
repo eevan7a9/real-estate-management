@@ -8,9 +8,10 @@ import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/
 import { Property } from 'src/app/shared/interface/property';
 
 @Component({
-  selector: 'app-properties-new',
-  templateUrl: './properties-new.component.html',
-  styleUrls: ['./properties-new.component.scss'],
+    selector: 'app-properties-new',
+    templateUrl: './properties-new.component.html',
+    styleUrls: ['./properties-new.component.scss'],
+    standalone: false
 })
 export class PropertiesNewComponent implements OnInit {
   public propertyForm: UntypedFormGroup;

@@ -7,9 +7,10 @@ import cities from 'src/app/shared/data/php-cities';
 import { Coord } from 'src/app/shared/interface/map';
 
 @Component({
-  selector: 'app-map-search-field',
-  templateUrl: './map-search-field.component.html',
-  styleUrls: ['./map-search-field.component.scss'],
+    selector: 'app-map-search-field',
+    templateUrl: './map-search-field.component.html',
+    styleUrls: ['./map-search-field.component.scss'],
+    standalone: false
 })
 export class MapSearchFieldComponent implements OnInit {
 

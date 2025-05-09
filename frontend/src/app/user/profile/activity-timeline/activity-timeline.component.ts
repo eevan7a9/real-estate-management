@@ -6,9 +6,10 @@ import { ActivityType } from 'src/app/shared/enums/activity';
 import { Activity } from 'src/app/shared/interface/activities';
 
 @Component({
-  selector: 'app-activity-timeline',
-  templateUrl: './activity-timeline.component.html',
-  styleUrls: ['./activity-timeline.component.scss'],
+    selector: 'app-activity-timeline',
+    templateUrl: './activity-timeline.component.html',
+    styleUrls: ['./activity-timeline.component.scss'],
+    standalone: false
 })
 export class ActivityTimelineComponent {
   public actionType = ActivityType;

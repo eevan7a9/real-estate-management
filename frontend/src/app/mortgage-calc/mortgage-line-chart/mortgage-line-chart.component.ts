@@ -5,9 +5,10 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 Chart.register(...registerables);
 
 @Component({
-  selector: 'app-mortgage-line-chart',
-  templateUrl: './mortgage-line-chart.component.html',
-  styleUrls: ['./mortgage-line-chart.component.scss'],
+    selector: 'app-mortgage-line-chart',
+    templateUrl: './mortgage-line-chart.component.html',
+    styleUrls: ['./mortgage-line-chart.component.scss'],
+    standalone: false
 })
 export class MortgageLineChartComponent implements OnInit {
 

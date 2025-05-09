@@ -5,9 +5,10 @@ import { PropertiesDisplayOption } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 
 @Component({
-  selector: 'app-user-properties',
-  templateUrl: './user-properties.component.html',
-  styleUrls: ['./user-properties.component.scss'],
+    selector: 'app-user-properties',
+    templateUrl: './user-properties.component.html',
+    styleUrls: ['./user-properties.component.scss'],
+    standalone: false
 })
 export class UserPropertiesComponent implements OnInit {
   public properties = toSignal<Property[]>(

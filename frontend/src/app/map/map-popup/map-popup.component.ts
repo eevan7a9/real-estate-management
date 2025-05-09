@@ -4,9 +4,10 @@ import { PropertiesService } from 'src/app/properties/properties.service';
 import { Property } from 'src/app/shared/interface/property';
 
 @Component({
-  selector: 'app-map-popup',
-  templateUrl: './map-popup.component.html',
-  styleUrls: ['./map-popup.component.scss'],
+    selector: 'app-map-popup',
+    templateUrl: './map-popup.component.html',
+    styleUrls: ['./map-popup.component.scss'],
+    standalone: false
 })
 export class MapPopupComponent implements OnInit {
   @Input() property: Property;

@@ -5,9 +5,10 @@ import { Property } from '../shared/interface/property';
 import { PropertiesService } from '../properties/properties.service';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.page.html',
-  styleUrls: ['./map.page.scss'],
+    selector: 'app-map',
+    templateUrl: './map.page.html',
+    styleUrls: ['./map.page.scss'],
+    standalone: false
 })
 export class MapPage {
   public properties = toSignal<Property[]>(this.propertiesService.properties$);

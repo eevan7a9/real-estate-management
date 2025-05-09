@@ -4,9 +4,10 @@ import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
 
 @Component({
-  selector: 'app-properties-uploads',
-  templateUrl: './properties-uploads.component.html',
-  styleUrls: ['./properties-uploads.component.scss'],
+    selector: 'app-properties-uploads',
+    templateUrl: './properties-uploads.component.html',
+    styleUrls: ['./properties-uploads.component.scss'],
+    standalone: false
 })
 export class PropertiesUploadsComponent implements OnInit {
   @Input() property: Property;

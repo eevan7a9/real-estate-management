@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-need-signin-continue',
-  templateUrl: './need-signin-continue.component.html',
-  styleUrls: ['./need-signin-continue.component.scss'],
+    selector: 'app-need-signin-continue',
+    templateUrl: './need-signin-continue.component.html',
+    styleUrls: ['./need-signin-continue.component.scss'],
+    standalone: false
 })
 export class NeedSigninContinueComponent implements OnInit {
   constructor(private router: Router, private modalCtrl: ModalController) {}

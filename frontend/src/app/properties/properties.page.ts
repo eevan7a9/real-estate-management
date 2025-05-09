@@ -22,9 +22,10 @@ import { PropertiesService } from './properties.service';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 
 @Component({
-  selector: 'app-properties',
-  templateUrl: './properties.page.html',
-  styleUrls: ['./properties.page.scss'],
+    selector: 'app-properties',
+    templateUrl: './properties.page.html',
+    styleUrls: ['./properties.page.scss'],
+    standalone: false
 })
 export class PropertiesPage implements OnInit {
   @ViewChild('propertyLists') propertyLists: PropertiesListComponent;

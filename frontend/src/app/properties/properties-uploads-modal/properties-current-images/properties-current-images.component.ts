@@ -13,10 +13,11 @@ import { register } from 'swiper/element/bundle';
 register();
 
 @Component({
-  selector: 'app-properties-current-images',
-  templateUrl: './properties-current-images.component.html',
-  styleUrls: ['./properties-current-images.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+    selector: 'app-properties-current-images',
+    templateUrl: './properties-current-images.component.html',
+    styleUrls: ['./properties-current-images.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class PropertiesCurrentImagesComponent implements OnInit {
   @Input() images: string[] = [];

@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-alert-card',
-  templateUrl: './alert-card.component.html',
-  styleUrls: ['./alert-card.component.scss'],
+    selector: 'app-alert-card',
+    templateUrl: './alert-card.component.html',
+    styleUrls: ['./alert-card.component.scss'],
+    standalone: false
 })
 export class AlertCardComponent implements OnInit {
   @Input() color = 'danger';

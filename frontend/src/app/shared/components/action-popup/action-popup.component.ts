@@ -4,9 +4,10 @@ import { PopoverController, ToastController } from '@ionic/angular';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
-  selector: 'app-action-popup',
-  templateUrl: './action-popup.component.html',
-  styleUrls: ['./action-popup.component.scss'],
+    selector: 'app-action-popup',
+    templateUrl: './action-popup.component.html',
+    styleUrls: ['./action-popup.component.scss'],
+    standalone: false
 })
 export class ActionPopupComponent implements OnInit {
   @Input() message = true;
