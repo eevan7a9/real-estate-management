@@ -1,0 +1,54 @@
+ion-card {
+  display: block;
+  height: 100%;
+}
+ion-card-header {
+  background-color: var(--ion-color-primary);
+}
+.total-month ion-label {
+  font-weight: 600;
+}
+.total-month ion-input {
+  font-weight: 600;
+  font-size: 20px;
+}
+.total-month ion-input ion-icon {
+  color: var(--ion-color-dark);
+}
+.total-month.simple ion-label {
+  font-weight: 600;
+  font-size: 18px;
+}
+.total-month.simple ion-input {
+  font-size: 16px;
+}
+.total-lifetime ion-label {
+  font-size: 20px;
+  --color: var(--ion-color-dark);
+}
+.view-more {
+  padding: 0;
+  text-align: center;
+}
+.view-more a {
+  cursor: pointer;
+  font-size: 14px;
+}
+@media (max-width: 600px) {
+  ion-card {
+    padding: 0 0 8px 0;
+    margin: 16px 0 0 0;
+  }
+  icon-card-content {
+    padding: 0;
+  }
+  .total-month ion-label {
+    font-weight: normal;
+    font-size: 18px;
+    --color: var(--ion-color-dark);
+  }
+  .total-month ion-input {
+    font-weight: normal;
+    font-size: 18px;
+  }
+}

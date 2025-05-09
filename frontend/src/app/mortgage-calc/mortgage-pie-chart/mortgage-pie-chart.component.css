@@ -1,0 +1,17 @@
+ion-card {
+  box-shadow: none;
+}
+.chart-container {
+  width: 100%;
+  height: 100%;
+}
+#myChart {
+  height: 100%;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  ion-card, ion-card-content {
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+}

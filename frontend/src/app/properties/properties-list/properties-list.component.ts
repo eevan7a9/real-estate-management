@@ -22,7 +22,7 @@ import {
 @Component({
     selector: 'app-properties-list',
     templateUrl: './properties-list.component.html',
-    styleUrls: ['./properties-list.component.scss'],
+    styleUrls: ['./properties-list.component.css'],
     standalone: false
 })
 export class PropertiesListComponent implements OnInit {

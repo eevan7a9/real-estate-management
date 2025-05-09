@@ -5,7 +5,7 @@ import { Property } from 'src/app/shared/interface/property';
 @Component({
     selector: 'app-enquiries-reply-modal',
     templateUrl: './enquiries-reply-modal.component.html',
-    styleUrls: ['./enquiries-reply-modal.component.scss'],
+    styleUrls: ['./enquiries-reply-modal.component.css'],
     standalone: false
 })
 export class EnquiriesReplyModalComponent implements OnInit {

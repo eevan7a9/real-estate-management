@@ -8,7 +8,7 @@ import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
-    styleUrls: ['./change-password.component.scss'],
+    styleUrls: ['./change-password.component.css'],
     standalone: false
 })
 export class ChangePasswordComponent implements OnInit {

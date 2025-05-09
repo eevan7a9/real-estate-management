@@ -7,7 +7,7 @@ Chart.register(...registerables);
 @Component({
     selector: 'app-mortgage-pie-chart',
     templateUrl: './mortgage-pie-chart.component.html',
-    styleUrls: ['./mortgage-pie-chart.component.scss'],
+    styleUrls: ['./mortgage-pie-chart.component.css'],
     standalone: false
 })
 export class MortgagePieChartComponent implements OnInit {

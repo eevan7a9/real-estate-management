@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-enquiries-list',
     templateUrl: './enquiries-list.component.html',
-    styleUrls: ['./enquiries-list.component.scss'],
+    styleUrls: ['./enquiries-list.component.css'],
     standalone: false
 })
 export class EnquiriesListComponent {

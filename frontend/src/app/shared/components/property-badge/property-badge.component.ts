@@ -4,7 +4,7 @@ import { PropertyType } from '../../enums/property';
 @Component({
     selector: 'app-property-badge',
     templateUrl: './property-badge.component.html',
-    styleUrls: ['./property-badge.component.scss'],
+    styleUrls: ['./property-badge.component.css'],
     standalone: false
 })
 export class PropertyBadgeComponent implements OnInit {

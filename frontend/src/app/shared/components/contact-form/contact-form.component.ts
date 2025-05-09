@@ -5,7 +5,7 @@ import { ToastController } from '@ionic/angular';
 @Component({
     selector: 'app-contact-form',
     templateUrl: './contact-form.component.html',
-    styleUrls: ['./contact-form.component.scss'],
+    styleUrls: ['./contact-form.component.css'],
     standalone: false
 })
 export class ContactFormComponent implements OnInit {

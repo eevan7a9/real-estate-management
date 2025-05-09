@@ -4,7 +4,7 @@ import { EnquiryTopic } from '../../enums/enquiry';
 @Component({
     selector: 'app-enquiry-badge',
     templateUrl: './enquiry-badge.component.html',
-    styleUrls: ['./enquiry-badge.component.scss'],
+    styleUrls: ['./enquiry-badge.component.css'],
     standalone: false
 })
 export class EnquiryBadgeComponent implements OnInit {

@@ -5,7 +5,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 @Component({
     selector: 'app-settings-theme',
     templateUrl: './settings-theme.component.html',
-    styleUrls: ['./settings-theme.component.scss'],
+    styleUrls: ['./settings-theme.component.css'],
     standalone: false
 })
 export class SettingsThemeComponent implements AfterViewInit {

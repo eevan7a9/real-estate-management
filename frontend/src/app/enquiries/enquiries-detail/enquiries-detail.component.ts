@@ -13,7 +13,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-enquiries-detail',
     templateUrl: './enquiries-detail.component.html',
-    styleUrls: ['./enquiries-detail.component.scss'],
+    styleUrls: ['./enquiries-detail.component.css'],
     standalone: false
 })
 export class EnquiriesDetailComponent implements OnInit {

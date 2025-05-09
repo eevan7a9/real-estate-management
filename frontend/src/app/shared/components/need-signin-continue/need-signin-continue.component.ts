@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular';
 @Component({
     selector: 'app-need-signin-continue',
     templateUrl: './need-signin-continue.component.html',
-    styleUrls: ['./need-signin-continue.component.scss'],
+    styleUrls: ['./need-signin-continue.component.css'],
     standalone: false
 })
 export class NeedSigninContinueComponent implements OnInit {

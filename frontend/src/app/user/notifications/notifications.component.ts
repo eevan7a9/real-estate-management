@@ -17,7 +17,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.scss'],
+    styleUrls: ['./notifications.component.css'],
     standalone: false
 })
 export class NotificationsComponent {

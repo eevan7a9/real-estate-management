@@ -15,7 +15,7 @@ import { TransactionType } from 'src/app/shared/enums/property';
 @Component({
     selector: 'app-properties-detail',
     templateUrl: './properties-detail.component.html',
-    styleUrls: ['./properties-detail.component.scss'],
+    styleUrls: ['./properties-detail.component.css'],
     standalone: false
 })
 export class PropertiesDetailComponent implements OnInit {

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-div-horizontal-slide',
     templateUrl: './div-horizontal-slide.component.html',
-    styleUrls: ['./div-horizontal-slide.component.scss'],
+    styleUrls: ['./div-horizontal-slide.component.css'],
     standalone: false
 })
 export class DivHorizontalSlideComponent {

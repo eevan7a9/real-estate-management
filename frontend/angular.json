@@ -31,9 +31,9 @@
               }
             ],
             "styles": [
-              "src/theme/variables.scss",
+              "src/theme/variables.css",
               "./node_modules/leaflet/dist/leaflet.css",
-              "src/global.scss"
+              "src/global.css"
             ],
             "scripts": [
               "node_modules/marked/marked.min.js",
@@ -171,10 +171,10 @@
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
-      "styleext": "scss"
+      "styleext": "css"
     },
     "@ionic/angular-toolkit:page": {
-      "styleext": "scss"
+      "styleext": "css"
     },
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true

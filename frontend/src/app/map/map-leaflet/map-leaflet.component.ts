@@ -12,7 +12,7 @@ import { MapService } from '../map.service';
 @Component({
     selector: 'app-map-leaflet',
     templateUrl: './map-leaflet.component.html',
-    styleUrls: ['./map-leaflet.component.scss'],
+    styleUrls: ['./map-leaflet.component.css'],
     standalone: false
 })
 export class MapLeafletComponent implements OnInit, OnChanges {

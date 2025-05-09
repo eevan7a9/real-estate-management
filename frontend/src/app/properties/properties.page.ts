@@ -24,7 +24,7 @@ import { PropertiesListComponent } from './properties-list/properties-list.compo
 @Component({
     selector: 'app-properties',
     templateUrl: './properties.page.html',
-    styleUrls: ['./properties.page.scss'],
+    styleUrls: ['./properties.page.css'],
     standalone: false
 })
 export class PropertiesPage implements OnInit {

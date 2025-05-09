@@ -11,7 +11,7 @@ interface Markers {
 @Component({
     selector: 'app-map-markers-legend',
     templateUrl: './map-markers-legend.component.html',
-    styleUrls: ['./map-markers-legend.component.scss'],
+    styleUrls: ['./map-markers-legend.component.css'],
     standalone: false
 })
 export class MapMarkersLegendComponent implements OnInit {

@@ -11,7 +11,7 @@ declare let google: any;
 @Component({
     selector: 'app-signin',
     templateUrl: './signin.component.html',
-    styleUrls: ['./signin.component.scss'],
+    styleUrls: ['./signin.component.css'],
     standalone: false
 })
 export class SigninComponent implements OnInit, AfterViewInit {

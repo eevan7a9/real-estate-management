@@ -9,7 +9,7 @@ import { Coord } from 'src/app/shared/interface/map';
 @Component({
     selector: 'app-map-search-field',
     templateUrl: './map-search-field.component.html',
-    styleUrls: ['./map-search-field.component.scss'],
+    styleUrls: ['./map-search-field.component.css'],
     standalone: false
 })
 export class MapSearchFieldComponent implements OnInit {

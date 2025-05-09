@@ -15,7 +15,7 @@ import { NeedSigninContinueComponent } from 'src/app/shared/components/need-sign
 @Component({
     selector: 'app-enquiries-new-form',
     templateUrl: './enquiries-new-form.component.html',
-    styleUrls: ['./enquiries-new-form.component.scss'],
+    styleUrls: ['./enquiries-new-form.component.css'],
     standalone: false
 })
 export class EnquiriesNewFormComponent {

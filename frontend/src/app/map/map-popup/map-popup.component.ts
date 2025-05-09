@@ -6,7 +6,7 @@ import { Property } from 'src/app/shared/interface/property';
 @Component({
     selector: 'app-map-popup',
     templateUrl: './map-popup.component.html',
-    styleUrls: ['./map-popup.component.scss'],
+    styleUrls: ['./map-popup.component.css'],
     standalone: false
 })
 export class MapPopupComponent implements OnInit {

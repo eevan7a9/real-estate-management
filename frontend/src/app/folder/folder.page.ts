@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-folder',
     templateUrl: './folder.page.html',
-    styleUrls: ['./folder.page.scss'],
+    styleUrls: ['./folder.page.css'],
     standalone: false
 })
 export class FolderPage implements OnInit {

@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 @Component({
     selector: 'app-alert-card',
     templateUrl: './alert-card.component.html',
-    styleUrls: ['./alert-card.component.scss'],
+    styleUrls: ['./alert-card.component.css'],
     standalone: false
 })
 export class AlertCardComponent implements OnInit {

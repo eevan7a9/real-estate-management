@@ -7,7 +7,7 @@ import { StorageService } from 'src/app/shared/services/storage/storage.service'
 @Component({
     selector: 'app-settings-coord-default',
     templateUrl: './settings-coord-default.component.html',
-    styleUrls: ['./settings-coord-default.component.scss'],
+    styleUrls: ['./settings-coord-default.component.css'],
     standalone: false
 })
 export class SettingsCoordDefaultComponent implements OnInit {

@@ -15,7 +15,7 @@ register();
 @Component({
     selector: 'app-properties-current-images',
     templateUrl: './properties-current-images.component.html',
-    styleUrls: ['./properties-current-images.component.scss'],
+    styleUrls: ['./properties-current-images.component.css'],
     encapsulation: ViewEncapsulation.None,
     standalone: false
 })

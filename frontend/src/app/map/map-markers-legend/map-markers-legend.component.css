@@ -1,0 +1,33 @@
+.map-marker-info {
+  z-index: 400;
+  position: absolute;
+  right: 0;
+  bottom: 24px;
+  background-color: transparent;
+  padding: 4px;
+}
+.map-marker-info ion-item {
+  --background: rgba(255, 255, 255, 0.185);
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 4px;
+  --padding-end: 0;
+  --color: var(--ion-color-dark);
+  -webkit-text-stroke: 1px var(--ion-color-dark);
+  font-size: 13px;
+  line-height: 15px;
+}
+.map-marker-info ion-item img {
+  height: 30px;
+  width: 30px;
+}
+.map-marker-info ion-item ion-checkbox {
+  margin-right: 6px;
+}
+@media (max-width: 992px) {
+  .text {
+    display: none;
+  }
+}

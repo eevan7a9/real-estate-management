@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
     selector: 'app-properties-gallery',
     templateUrl: './properties-gallery.component.html',
-    styleUrls: ['./properties-gallery.component.scss'],
+    styleUrls: ['./properties-gallery.component.css'],
     standalone: false
 })
 export class PropertiesGalleryComponent implements OnInit {

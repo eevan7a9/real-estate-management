@@ -7,7 +7,7 @@ import { Property } from 'src/app/shared/interface/property';
 @Component({
     selector: 'app-user-properties',
     templateUrl: './user-properties.component.html',
-    styleUrls: ['./user-properties.component.scss'],
+    styleUrls: ['./user-properties.component.css'],
     standalone: false
 })
 export class UserPropertiesComponent implements OnInit {

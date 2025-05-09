@@ -6,7 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-user',
     templateUrl: './user.page.html',
-    styleUrls: ['./user.page.scss'],
+    styleUrls: ['./user.page.css'],
     standalone: false
 })
 export class UserPage {

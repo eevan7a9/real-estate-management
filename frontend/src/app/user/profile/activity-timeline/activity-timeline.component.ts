@@ -8,7 +8,7 @@ import { Activity } from 'src/app/shared/interface/activities';
 @Component({
     selector: 'app-activity-timeline',
     templateUrl: './activity-timeline.component.html',
-    styleUrls: ['./activity-timeline.component.scss'],
+    styleUrls: ['./activity-timeline.component.css'],
     standalone: false
 })
 export class ActivityTimelineComponent {

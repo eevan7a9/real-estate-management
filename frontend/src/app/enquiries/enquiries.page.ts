@@ -21,7 +21,7 @@ import {
 @Component({
     selector: 'app-enquiries',
     templateUrl: './enquiries.page.html',
-    styleUrls: ['./enquiries.page.scss'],
+    styleUrls: ['./enquiries.page.css'],
     standalone: false
 })
 export class EnquiriesPage implements AfterViewInit {

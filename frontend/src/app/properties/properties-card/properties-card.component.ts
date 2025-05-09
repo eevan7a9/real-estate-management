@@ -8,7 +8,7 @@ import { UserService } from 'src/app/user/user.service';
 @Component({
     selector: 'app-properties-card',
     templateUrl: './properties-card.component.html',
-    styleUrls: ['./properties-card.component.scss'],
+    styleUrls: ['./properties-card.component.css'],
     standalone: false
 })
 export class PropertiesCardComponent {

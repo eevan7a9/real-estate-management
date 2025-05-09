@@ -5,7 +5,7 @@ import { Coord } from 'src/app/shared/interface/map';
 @Component({
     selector: 'app-properties-coordinates',
     templateUrl: './properties-coordinates.component.html',
-    styleUrls: ['./properties-coordinates.component.scss'],
+    styleUrls: ['./properties-coordinates.component.css'],
     standalone: false
 })
 export class PropertiesCoordinatesComponent implements OnInit {

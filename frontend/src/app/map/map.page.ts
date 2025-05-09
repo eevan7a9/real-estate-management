@@ -7,7 +7,7 @@ import { PropertiesService } from '../properties/properties.service';
 @Component({
     selector: 'app-map',
     templateUrl: './map.page.html',
-    styleUrls: ['./map.page.scss'],
+    styleUrls: ['./map.page.css'],
     standalone: false
 })
 export class MapPage {

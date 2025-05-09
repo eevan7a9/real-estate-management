@@ -7,7 +7,7 @@ Chart.register(...registerables);
 @Component({
     selector: 'app-mortgage-line-chart',
     templateUrl: './mortgage-line-chart.component.html',
-    styleUrls: ['./mortgage-line-chart.component.scss'],
+    styleUrls: ['./mortgage-line-chart.component.css'],
     standalone: false
 })
 export class MortgageLineChartComponent implements OnInit {

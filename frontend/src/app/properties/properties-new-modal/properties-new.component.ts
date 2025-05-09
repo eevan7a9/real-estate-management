@@ -10,7 +10,7 @@ import { Property } from 'src/app/shared/interface/property';
 @Component({
     selector: 'app-properties-new',
     templateUrl: './properties-new.component.html',
-    styleUrls: ['./properties-new.component.scss'],
+    styleUrls: ['./properties-new.component.css'],
     standalone: false
 })
 export class PropertiesNewComponent implements OnInit {

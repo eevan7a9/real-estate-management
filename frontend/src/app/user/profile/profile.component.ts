@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
+    styleUrls: ['./profile.component.css'],
     standalone: false
 })
 export class ProfileComponent {

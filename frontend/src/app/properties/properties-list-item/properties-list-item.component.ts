@@ -11,7 +11,7 @@ import { PropertiesService } from '../properties.service';
 @Component({
     selector: 'app-properties-list-item',
     templateUrl: './properties-list-item.component.html',
-    styleUrls: ['./properties-list-item.component.scss'],
+    styleUrls: ['./properties-list-item.component.css'],
     standalone: false
 })
 export class PropertiesListItemComponent {
