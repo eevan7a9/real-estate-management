@@ -30,10 +30,6 @@
 /* variables */
 @import "./theme/variables.css";
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
  /* overide style */
 .my-custom-alert-class {
   .alert-danger-text {
