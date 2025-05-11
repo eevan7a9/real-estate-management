@@ -4,6 +4,9 @@
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
+    "tailwind:init": "tailwindcss init",
+    "tailwind:build": "tailwindcss -i ./src/tailwind.css -o ./src/tailwind-generated.css",
+    "tailwind:watch": "tailwindcss -i ./src/tailwind.css -o ./src/tailwind-generated.css --watch",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -31,6 +34,7 @@
     "@ionic/core": "^8.2.2",
     "@ionic/storage-angular": "^4.0.0",
     "@ngx-markdown/core": "^0.2.2",
+    "@tailwindcss/cli": "^4.1.6",
     "@types/google.maps": "^3.51.0",
     "chart.js": "^3.5.1",
     "leaflet": "^1.9.3",
@@ -38,6 +42,7 @@
     "ngx-markdown": "^19.1.1",
     "rxjs": "^7.5.0",
     "swiper": "^11.0.4",
+    "tailwindcss": "^4.1.6",
     "tslib": "^2.3.1",
     "zone.js": "^0.15.0"
   },

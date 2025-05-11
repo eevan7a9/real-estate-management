@@ -33,6 +33,7 @@
             "styles": [
               "src/theme/variables.css",
               "./node_modules/leaflet/dist/leaflet.css",
+              "src/tailwind-generated.css",
               "src/global.css"
             ],
             "scripts": [
