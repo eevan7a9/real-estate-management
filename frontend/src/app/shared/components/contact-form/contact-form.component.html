@@ -1,6 +1,6 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-title class="ion-text-capitalize"> Contact Form </ion-card-title>
+    <ion-card-title class="capitalize text-[20px] lg:text-[24px] px-3 lg:px-6 pt-4"> Contact Form </ion-card-title>
   </ion-card-header>
 
   <ion-card-content>
@@ -57,7 +57,7 @@
         </div>
       </ion-list>
 
-      <ion-button expand="block" type="submit" [disabled]="sent">
+      <ion-button class="mt-4" expand="block" type="submit" [disabled]="sent">
         {{ sent ? "Message Sent" : "Send message" }}
       </ion-button>
     </form>

@@ -30,7 +30,7 @@
                 [ios]="p.icon + '-outline'"
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
-              <ion-label>{{ p.title || "Menu Item" }}</ion-label>
+              <ion-label class="mx-2  lg:mx-3">{{ p.title || "Menu Item" }}</ion-label>
               <!-- badge counter for unread messages -->
               <ion-badge slot="end" *ngIf="p.title === 'Enquiries' && unreadEnquiries()">
                 {{ unreadEnquiries() }}
@@ -54,7 +54,7 @@
                   [ios]="page.icon + '-outline'"
                   [md]="page.icon + '-sharp'"
                 ></ion-icon>
-                <ion-label>{{ page.title || "Menu Item" }}</ion-label>
+                <ion-label class="mx-2 lg:mx-3">{{ page.title || "Menu Item" }}</ion-label>
                 <ion-badge slot="end" *ngIf="page.title === 'Account' && unreadNotifications()">
                   {{ unreadNotifications() }}
                 </ion-badge>
@@ -70,7 +70,7 @@
                   [ios]="'log-out' + '-outline'"
                   [md]="'log-out' + '-sharp'"
                 ></ion-icon>
-                <ion-label>Sign Out</ion-label>
+                <ion-label class="mx-2 lg:mx-3">Sign Out</ion-label>
               </ion-item>
             </ion-menu-toggle>
           }

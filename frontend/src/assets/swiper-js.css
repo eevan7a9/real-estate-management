@@ -27,7 +27,7 @@ swiper-slide {
 
   text-align: center;
   box-sizing: border-box;
-  padding: 30px;
+  padding: 0;
 }
 
 swiper-slide img {

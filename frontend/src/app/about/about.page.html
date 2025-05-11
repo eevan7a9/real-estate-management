@@ -1,24 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>About Page</ion-title>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">
+      About Page
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="about-container">
+  <div class="about-container px-3 lg:px-5">
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card class="ion-margin-top pb-32">
+          <ion-card class="shadow-none ion-margin-top p-4 mb-16">
             <ion-card-header>
-              <ion-card-title class="heading-card">Application</ion-card-title>
+              <ion-card-title
+                class="text-[24px] lg:text-[28px] xl:text-[34px] font-bold"
+              >
+                Application
+              </ion-card-title>
             </ion-card-header>
             <div class="separator-line"></div>
             <ion-card-content class="ion-padding-horizontal">
-              <p class="text">
+              <p class="md:text-[16px]! font-light!">
                 <ion-text type="dark">
                   A online property management solution for real estate and
                   physical property management. This can include residential,
@@ -26,7 +29,7 @@
                   connect property managers and potential buyers.
                 </ion-text>
               </p>
-              <p class="text ion-padding-top">
+              <p class="ion-padding-top md:text-[16px]! font-light!">
                 <ion-text type="dark">
                   Whether you operate 1 to 100 properties this app will help you
                   advertise, manage and sell your properties to potential
@@ -42,20 +45,24 @@
           <img src="assets/images/about/about-map.svg" alt="map image" />
         </ion-col>
         <ion-col size="12" sizeLg="6">
-          <ion-card class="pb-32">
+          <ion-card class="shadow-none p-4 mb-32">
             <ion-card-header>
-              <ion-card-title class="heading-card">MAP VIEW</ion-card-title>
+              <ion-card-title
+                class="text-[24px] lg:text-[28px] xl:text-[34px] font-bold"
+              >
+                MAP VIEW
+              </ion-card-title>
             </ion-card-header>
             <div class="separator-line"></div>
             <ion-card-content class="ion-padding-bottom">
-              <p class="text">
+              <p class="md:text-[16px]! font-light!">
                 <ion-text type="dark">
                   Maps can be a useful tool for viewing properties location &
                   filter them by types. this also help us to know distances so
                   that we know how far away one thing is from another.
                 </ion-text>
               </p>
-              <p class="text ion-padding-top">
+              <p class="ion-padding-top md:text-[16px]! font-light!">
                 <ion-text type="dark">
                   You might not necessarily want to find the fastest route from
                   property A to property B, you might want to take the scenic
@@ -75,46 +82,56 @@
       TRY US NOW
     </ion-button>
   </div>
-  <div class="about-container">
-    <ion-grid class="feature-section">
+  <div class="about-container px-3 lg:px-5 pt-8">
+    <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card class="pb-32">
+          <ion-card class="shadow-none p-4 mb-24">
             <ion-card-header>
-              <ion-card-title class="heading-card"> PROPERTIES </ion-card-title>
+              <ion-card-title
+                class="text-[24px] lg:text-[28px] xl:text-[34px] font-bold"
+              >
+                PROPERTIES
+              </ion-card-title>
             </ion-card-header>
             <div class="separator-line"></div>
             <ion-card-content class="ion-padding-bottom">
-              <p class="text">
+              <p class="text-[16px] lg:text-[18px] font-light">
                 <ion-text type="dark">
-                  <strong>
+                  <strong class="text-[18px]">
                     Do you spend way too much time looking for a Real Estate
                     Property to buy?
                   </strong>
                   <br />
-                  dont worry we have you covered, We have hundreds of high
-                  quality properties ready to sell. you can use the search field
-                  to find properties and to see basic information(price,
-                  address, types, etc...) about the desired property.
+                  <p class="md:text-[16px]!">
+                    dont worry we have you covered, We have hundreds of high
+                    quality properties ready to sell. you can use the search
+                    field to find properties and to see basic information(price,
+                    address, types, etc...) about the desired property.
+                  </p>
                 </ion-text>
               </p>
               <p class="text ion-padding-top">
                 <ion-text type="dark">
-                  <strong>Do you own a property you wanted to sell?</strong>
+                  <strong class="text-[18px]">
+                    Do you own a property you wanted to sell?
+                  </strong>
                   <br />
-                  Our application will help advertise your property to potential
-                  buyers.
+                  <p class="md:text-[16px]!">
+                    Our application will help advertise your property to
+                    potential buyers.
+                  </p>
                 </ion-text>
               </p>
             </ion-card-content>
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col size="12" sizeLg="4">
-          <ion-card class="border-[1px] border-gray-200">
+      <ion-row class="feature-section">
+        <ion-col size="12" sizeLg="4" class="p-1">
+          <ion-card class="shadow-none border-[1px] border-gray-200">
             <ion-card-header>
-              <ion-card-title>
+              <ion-card-title class="px-3 md:px-4 py-3">
                 <ion-text color="primary">Connect</ion-text> with people
               </ion-card-title>
             </ion-card-header>
@@ -123,10 +140,10 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="12" sizeLg="4">
-          <ion-card class="border-[1px] border-gray-200">
+        <ion-col size="12" sizeLg="4" class="p-1">
+          <ion-card class="shadow-none border-[1px] border-gray-200">
             <ion-card-header>
-              <ion-card-title>
+              <ion-card-title class="px-3 md:px-4 py-3">
                 <ion-text color="primary">Buy</ion-text> new properties
               </ion-card-title>
             </ion-card-header>
@@ -135,10 +152,10 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
-        <ion-col size="12" sizeLg="4">
-          <ion-card class="border-[1px] border-gray-200">
+        <ion-col size="12" sizeLg="4" class="p-1">
+          <ion-card class="shadow-none border-[1px] border-gray-200">
             <ion-card-header>
-              <ion-card-title>
+              <ion-card-title class="px-3 md:px-4 py-3">
                 <ion-text color="primary">Sell</ion-text> your properties
               </ion-card-title>
             </ion-card-header>
@@ -153,15 +170,15 @@
   </div>
 
   <div class="contact-section">
-    <ion-grid>
-      <ion-row>
+    <ion-grid class="max-w-screen-2xl mx-auto">
+      <ion-row class="py-3 lg:py-5">
         <ion-col size="12" sizeLg="5" sizeXl="6" class="left-side">
           <div class="heading">Let's get in touch</div>
-          <div class="sub-heading">
+          <div class="sub-heading text-2xl">
             Have an inquiry or some feedback for us?
           </div>
         </ion-col>
-        <ion-col size="12" sizeLg="7" sizeXl="6">
+        <ion-col size="12" sizeLg="7" sizeXl="6" class="px-3 lg:px-6">
           <app-contact-form> </app-contact-form>
         </ion-col>
       </ion-row>

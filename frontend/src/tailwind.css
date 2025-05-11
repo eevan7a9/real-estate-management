@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Dark Mode is Manual Toggled */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --breakpoint-sm: 36rem; /* 576px */
   --breakpoint-md: 48rem; /* 768px */
@@ -26,6 +29,11 @@
   --color-dark: #222428;
   --color-dark-shade: #1e2023;
   --color-dark-tint: #383a3e;
+
+
+  --color-danger: #eb445a;
+  --color-danger-shade: #cf3c4f;
+  --color-danger-tint: #ed576b;
 
   --color-success: #29c065;
   --color-warning: #ffc409;

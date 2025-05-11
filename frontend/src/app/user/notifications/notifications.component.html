@@ -2,10 +2,10 @@
   <div class="notification-container ion-padding-vertical">
     <ion-grid>
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" class="px-3 lg:px-8">
           <ion-card>
             <ion-card-header class="flex flex-row justify-between items-center">
-              <ion-card-title class="text-[24px]"> Notifications
+              <ion-card-title class="text-[24px] px-3 lg:px-8 pt-6"> Notifications
                 <small *ngIf="notificationsChecked().length"> - Selected ( {{ notificationsChecked().length }} )</small>
               </ion-card-title>
 
@@ -26,7 +26,7 @@
                       <div class="flex items-center">
                         <div>{{ item.message }}</div>
                         <div class="absolute right-3 gap-2 flex items-center justify-around">
-                          <ion-badge [color]="getItemBadge(item.type)">
+                          <ion-badge class="p-1" [color]="getItemBadge(item.type)">
                             {{ item.type }}
                           </ion-badge>
                           {{ item.createdAt | date }}
@@ -47,3 +47,5 @@
     </ion-grid>
   </div>
 </ion-content>
+
+<app-footer></app-footer>

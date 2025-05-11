@@ -1,5 +1,5 @@
-<div class="ion-padding-vertical">
-  <ion-card class="labels-card ion-hide-lg-down">
+<div class="pt-8 xl:pt-12 px-3 md:px-5">
+  <ion-card class="labels-card ion-hide-lg-down mb-3">
     <ion-card-content>
       <ion-grid>
         <ion-row>
@@ -26,13 +26,14 @@
   </ion-card>
 
   @if (enquiriesList().length) {
+  <div class="flex flex-col gap-2 lg:gap-3">
     @for (item of enquiriesList(); track $index) {
-      <app-enquiries-list-item [enquiry]="item" class="ion-margin-vertical"
-        (click)="selectEnquiry(item)"></app-enquiries-list-item>
+      <app-enquiries-list-item [enquiry]="item" (click)="selectEnquiry(item)" />
     }
+  </div>
   } @else {
-    <div class="font-semibold py-8 text-center text-[24px] dark:text-gray-300">
-      Currently empty.
-    </div>
+  <div class="font-semibold py-8 text-center text-[24px] dark:text-gray-300">
+    Currently empty.
+  </div>
   }
 </div>

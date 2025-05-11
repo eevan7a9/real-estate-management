@@ -2,8 +2,8 @@
   <div class="profile-container ion-padding-vertical">
     <ion-grid>
       <ion-row>
-        <ion-col size="12" sizeMd="4">
-          <ion-card class="shadow-none">
+        <ion-col size="12" sizeMd="4" class="px-3 md:pr-1 md:pl-3">
+          <ion-card class="shadow-none h-full">
             <ion-card-header class="ion-no-padding">
               <ion-card-title class="ion-padding"></ion-card-title>
               <div class="profile-img-container">
@@ -41,10 +41,10 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size="12" sizeMd="8">
-          <ion-card class="shadow-none">
+        <ion-col size="12" sizeMd="8" class="px-3 md:pr-3 md:pl-1">
+          <ion-card class="shadow-none h-full">
             <ion-card-header>
-              <ion-card-title> My Information </ion-card-title>
+              <ion-card-title class="px-3 xl:px-4 text-[16px] md:text-[18px] pt-3 xl:pt-4"> My Information </ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
@@ -106,7 +106,7 @@
       </ion-row>
 
       <ion-row>
-        <ion-col size="12" class="">
+        <ion-col size="12" class="mt-8 px-3">
           <ion-card class="shadow-none">
             <ion-card-header>
               <div
@@ -131,7 +131,7 @@
               </div>
             </ion-card-header>
 
-            <ion-card-content class="min-h-[400px]">
+            <ion-card-content class="min-h-[400px] pt-6!">
               @if (isActivityActive()) {
                 <app-activity-timeline />
               } @else {

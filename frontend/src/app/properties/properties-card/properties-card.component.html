@@ -1,4 +1,6 @@
-<ion-card class="relative !m-0 flex flex-col w-full max-w-[360px] h-full">
+<ion-card
+  class="relative m-0! flex flex-col w-full max-w-[360px] h-full shadow-none outline outline-slate-200 dark:outline-slate-800"
+>
   <div
     class="tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
     [ngClass]="[
@@ -9,9 +11,7 @@
         : 'bg-success'
     ]"
   >
-    <span *ngIf="userService.user?.user_id === property.user_id">
-      Owned 
-    </span>
+    <span *ngIf="userService.user?.user_id === property.user_id"> Owned </span>
 
     <span
       class="capitalize"
@@ -34,9 +34,11 @@
     />
   </div>
 
-  <ion-card-header>
+  <ion-card-header class="py-2 px-3">
     <app-property-badge [type]="property?.type"></app-property-badge>
-    <ion-card-title class="text-[16px] sm:text-[20px] text-ellipsis line-clamp-1">
+    <ion-card-title
+      class="text-[16px] sm:text-[20px] text-ellipsis line-clamp-1"
+    >
       {{ property?.name }}
     </ion-card-title>
 
@@ -46,8 +48,12 @@
   </ion-card-header>
 
   <ion-card-content class="flex flex-col px-3 flex-grow">
-    <div class="line-clamp-3 text-ellipsis overflow-hidden h-auto max-h-[100px] mb-3">
-      {{ property?.description }}
+    <div
+      class="line-clamp-3 text-ellipsis overflow-hidden h-[100px] mb-3"
+    >
+      <p class="line-clamp-3 text-ellipsis overflow-hidden h-[60px]">
+        {{ property?.description }}
+      </p>
     </div>
 
     <div class="price font-bold sm:text-[18px] mt-auto">

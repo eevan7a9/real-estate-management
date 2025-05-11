@@ -7,11 +7,6 @@ ion-grid {
 ion-row {
   height: 100%;
 }
-.enquire-container {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-}
 .property-identity {
   box-shadow: none;
   margin: 12px 0 16px 0;
@@ -43,21 +38,19 @@ ion-row {
   display: flex;
   align-items: center;
 }
-.property-address {
+/* .property-address {
   box-shadow: none;
   margin: 16px 0;
-}
-.property-address ion-card-content {
+} */
+/* .property-address ion-card-content {
   font-size: 18px;
   font-weight: normal;
-}
-.property-price {
+} */
+/* .property-price {
   box-shadow: none;
   margin: 16px 0;
-}
-.property-price .price {
-  font-size: 24px;
-  font-weight: 600;
+} */
+.price {
   color: var(--ion-text-color-step-100);
 }
 .enquiry-section {

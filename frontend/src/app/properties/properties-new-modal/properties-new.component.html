@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title>Add new property</ion-title>
+    <ion-title class="px-3">Add new property</ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
@@ -17,13 +17,10 @@
 </ion-header>
 
 <ion-content>
-  <form
-    [formGroup]="propertyForm"
-    class="bg-slate-100 dark:bg-dark ion-padding"
-  >
+  <form [formGroup]="propertyForm" class="bg-slate-100 dark:bg-dark">
     <!-- STEP ONE -->
-    <section *ngIf="step === 1" class="">
-      <ion-list class="bg-white dark:bg-[#1e1e1e]">
+    <section *ngIf="step === 1">
+      <ion-list class="bg-white dark:bg-[#1e1e1e] pl-3!">
         <ion-item lines="none">
           <ion-input
             type="text"
@@ -61,9 +58,9 @@
         </ion-item>
       </ion-list>
 
-      <ion-list class="py-0 mt-3">
+      <ion-list class="mt-3! pl-3!">
         <ion-radio-group formControlName="type">
-          <ion-list-header>
+          <ion-list-header class="px-2 md:text-[20px]">
             <ion-label>Type</ion-label>
           </ion-list-header>
 
@@ -78,14 +75,15 @@
               id="radio"
               [label]="type.label"
               [value]="type.value"
+              class="mx-2"
             ></ion-radio>
           </ion-item>
         </ion-radio-group>
       </ion-list>
 
-      <ion-list class="py-0 mt-3">
+      <ion-list class="py-0 pl-3! mt-3">
         <ion-radio-group formControlName="transactionType">
-          <ion-list-header>
+          <ion-list-header class="px-2 md:text-[20px]">
             <ion-label>Transaction Type</ion-label>
           </ion-list-header>
 
@@ -98,6 +96,7 @@
             <ion-radio
               slot="start"
               id="radio"
+              class="mx-2"
               [label]="transaction.label"
               [value]="transaction.value"
             ></ion-radio>
@@ -107,7 +106,7 @@
     </section>
     <!-- STEP TWO -->
     <section *ngIf="step === 2">
-      <ion-list class="bg-white dark:bg-[#1e1e1e]">
+      <ion-list class="bg-white dark:bg-[#1e1e1e] pl-3!">
         <ion-item
           lines="none"
           *ngIf="propertyForm.get('transactionType').value === 'rent'"
@@ -165,7 +164,7 @@
       </ion-list>
 
       <div class="bg-white dark:bg-[#1e1e1e] p-2 sm:p-3 mt-3">
-        <div class="flex items-center">
+        <div class="flex items-center py-2">
           <span class="text-[18px] dark:text-light mr-2">
             Set Marker Position:
           </span>

@@ -10,13 +10,13 @@ ion-content {
   max-width: 1600px;
   margin: 0 auto;
 }
-.note-container {
+/* .note-container {
   background: var(--ion-color-light-shade);
   border-radius: 6px;
   padding: 16px;
   display: flex;
   color: var(--ion-color-danger);
-}
+} */
 .note-container .icon-container {
   height: 100%;
   padding-top: 2px;

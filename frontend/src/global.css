@@ -29,8 +29,9 @@
 @import "./assets/swiper-js.css";
 /* variables */
 @import "./theme/variables.css";
+@import "tailwind.css";
 
- /* overide style */
+/* overide style */
 .my-custom-alert-class {
   .alert-danger-text {
     --color: var(--ion-color-danger);
@@ -38,7 +39,7 @@
   }
 }
 
- /* GLOBAL STYLE */
+/* GLOBAL STYLE */
 .show-on-mobile {
   display: none;
 }

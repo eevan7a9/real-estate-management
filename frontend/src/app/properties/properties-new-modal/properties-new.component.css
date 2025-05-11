@@ -1,4 +1,4 @@
-.coord-heading {
+/* .coord-heading {
   padding: 24px 0 16px 0;
   display: flex;
   align-items: center;
@@ -7,13 +7,13 @@
   text-transform: capitalize;
   font-weight: 600;
   margin-right: 8px;
-}
-.coord-input {
+} */
+/* .coord-input {
   display: flex;
-}
-.coord-input ion-item {
+} */
+/* .coord-input ion-item {
   width: 95%;
-}
+} */
 ion-list-header {
   --color: #8794a4;
 }
@@ -29,12 +29,17 @@ ion-item ion-label {
 }
 ion-item ion-input,
 ion-item ion-textarea {
-  --padding-start: 12px !important;
+  /* --padding-start: 12px !important; */
   padding: 6px;
   box-sizing: border-box;
   border-radius: 4px;
   margin-top: 8px;
 }
+
+ion-item ion-textarea {
+  padding-left: 0;
+}
+
 ion-item ion-input::placeholder,
 ion-item ion-textarea::placeholder {
   font-size: 15px;

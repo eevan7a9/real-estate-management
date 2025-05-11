@@ -1,5 +1,5 @@
 <ion-card class="ion-no-padding ion-no-margin">
-  <div class="ion-text-right" *ngIf="showEdit">
+  <div class="ion-text-right" *ngIf="showEdit()">
     <ion-button
       size="small"
       fill="clear"
@@ -11,27 +11,39 @@
     </ion-button>
   </div>
 
-  <ion-card-content class="gallery-container">
-    <div class="selected-image ion-padding-vertical death">
-      <img [src]="imagePresented" alt="image" />
+  <ion-card-content class="gallery-container p-0! lg:p-3!">
+    <div class="relative flex justify-center h-[350px] sm:h-[550px] mb-3">
+      <div
+        class="absolute inset-0 z-0 bg-center bg-cover blur-xs scale-100 opacity-70"
+        [style.backgroundImage]="
+          'url(' + (imagePresented || 'https://placehold.co/1200x300') + ')'
+        "
+      ></div>
+      <img
+        [src]="imagePresented"
+        alt="image"
+        class="w-auto h-full object-cover z-10"
+      />
     </div>
 
     <swiper-container
       pagination="true"
       pagination-clickable="true"
-      space-between="30"
+      space-between="20"
       slides-per-view="auto"
-      *ngIf="images?.length > 1"
+      *ngIf="images()?.length > 1"
     >
-      <swiper-slide *ngFor="let image of images" class="swiper">
-        <div class="swipers-image" (click)="setSelected(image)">
-          <img
-            [style.backgroundImage]="getImage(image)"
-            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            alt="image"
-          />
+      <swiper-slide *ngFor="let image of images()" class="swiper">
+        <div
+          class="swipers-image"
+          (click)="setSelected(image || 'assets/images/no-image.jpeg')"
+        >
           <div
-            class="cover-img"
+            [style.backgroundImage]="`url(${image})`"
+            class="rounded-lg w-full h-full bg-cover bg-center"
+          ></div>
+          <div
+            class="cover-img rounded-lg"
             [ngClass]="{ selected: imagePresented === image }"
           ></div>
         </div>

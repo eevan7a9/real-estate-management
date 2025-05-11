@@ -10,9 +10,9 @@
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="enquiry()">
-  <div class="max-w-[1600px] my-0 mx-auto">
+  <div class="max-w-screen-2xl my-0 mx-auto flex flex-col gap-4">
     <ion-card class="ion-no-padding border-[1px] border-gray-300 shadow-none">
-      <ion-card-header>
+      <ion-card-header class="px-3 lg:px-5 py-4">
         <ion-card-title class="flex items-center">
           <ion-text type="dark">{{ enquiry().property?.name }}</ion-text>
           <ion-button
@@ -26,16 +26,16 @@
         </ion-card-title>
 
         <ion-card-subtitle
-          class="ion-text-capitalize topic-subtitle flex gap-3 items-center"
+          class="ion-text-capitalize topic-subtitle flex gap-3 items-center mt-3"
         >
           Topic -
-          <ion-badge color="primary" class="py-2 px-3">{{ enquiry().topic }}</ion-badge>
+          <ion-badge color="primary" class="py-1 px-3">{{ enquiry().topic }}</ion-badge>
         </ion-card-subtitle>
       </ion-card-header>
     </ion-card>
 
-    <ion-card class="shadow-none border-[1px] border-gray-300">
-      <ion-card-header class="border-b-[1px] border-gray-300">
+    <ion-card class="shadow-none border-[1px] border-gray-300 mt">
+      <ion-card-header class="border-b-[1px] border-gray-300 px-3 lg:px-5 py-4">
         <ion-card-subtitle class="ion-text-capitalize" *ngIf="enquiry().replyTo">
           <button
             class="p-0 text-[16px] bg-transparent ellipsis"
@@ -51,7 +51,7 @@
         <ion-card-title class="ion-margin-top">
           {{ enquiry().title }}
         </ion-card-title>
-        <ion-card-subtitle> {{ enquiry().createdAt | date }}</ion-card-subtitle>
+        <ion-card-subtitle class="text-[14px] font-light mt-2"> {{ enquiry().createdAt | date }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
@@ -80,7 +80,7 @@
         color="light"
         (click)="report(enquiry().enquiry_id)"
         *ngIf="!sentByMe()"
-        class="ml-auto"
+        class="ml-auto mr-3"
       >
         <ion-icon name="flag-outline" color="danger"></ion-icon>
         <ion-text color="danger"> Report </ion-text>

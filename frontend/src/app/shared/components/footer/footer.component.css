@@ -1,14 +1,5 @@
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  .title {
-    font-size: 14px;
-  }
-  .source {
-    a {
-      font-size: 12px;
-    }
-  }
+ion-footer, ion-toolbar {
+  --box-shadow: none !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
 }

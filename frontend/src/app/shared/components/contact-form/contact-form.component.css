@@ -1,14 +1,12 @@
-ion-card {
-  ion-card-title {
-    font-size: 32px;
-    font-weight: bold;
-  }
-  ion-item {
-    margin: 0 0 8px;
-  }
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
-.alert-errors {
-  width: 100%;
-  margin: 6px 0 0 0;
+.footer-content .title {
+  font-size: 14px;
+}
+.footer-content .source a {
+  font-size: 12px;
 }

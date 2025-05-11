@@ -100,7 +100,7 @@ export class PropertiesNewComponent implements OnInit {
   public async submit(): Promise<void> {
     if (this.step === 1 && this.validateStepOne()) {
       this.step = 2;
-      return 
+      return
     } else if (this.step === 2 && this.validateStepTwo()) {
       this.isSubmit = true;
       const ft = this.propertyForm.get('features').value;
