@@ -1,0 +1,94 @@
+ion-content {
+  --background: var(--ion-background-color-step-100);
+}
+.tab-button {
+  --border-radius: 0;
+}
+.profile-container {
+  min-height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.profile-img-container {
+  padding: 16px 0;
+}
+.profile-img-container img {
+  border-radius: 16px;
+  height: auto;
+  width: 100%;
+  max-height: 300px;
+  max-width: 300px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.image-input {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-colo-light);
+}
+.app-use-info {
+  padding: 16px 0;
+}
+.app-use-info .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+.app-use-info .item ion-icon {
+  font-size: 24px;
+  margin-right: 4px;
+}
+.app-use-info .item ion-text {
+  font-size: 16px;
+  margin-right: 4px;
+}
+.form-information ion-item {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  margin: 0 0 16px 0;
+}
+.form-information ion-item ion-label {
+  --color: #8794a4;
+}
+.form-information ion-item ion-input, .form-information ion-item ion-textarea {
+  --padding-start: 12px;
+  padding: 6px;
+  border: 1px solid rgba(0, 57, 100, 0.418);
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+.form-information ion-item ion-input::placeholder, .form-information ion-item ion-textarea::placeholder {
+  font-size: 15px;
+}
+.activities-section {
+  margin: 90px 0 0 0;
+}
+.activities-section .heading {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 0 24px 0;
+  border-bottom: 5px solid var(--ion-color-primary);
+}
+.activities-section .activities-empty {
+  height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.activities-section .activities-empty h1 {
+  display: flex;
+  align-items: center;
+  font-size: 35px;
+  letter-spacing: 1.5px;
+}
+.activities-section .activities-empty h1 ion-icon {
+  font-size: 50px;
+}

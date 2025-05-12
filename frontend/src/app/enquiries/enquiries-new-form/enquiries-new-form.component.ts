@@ -13,9 +13,10 @@ import { UserService } from 'src/app/user/user.service';
 import { NeedSigninContinueComponent } from 'src/app/shared/components/need-signin-continue/need-signin-continue.component';
 
 @Component({
-  selector: 'app-enquiries-new-form',
-  templateUrl: './enquiries-new-form.component.html',
-  styleUrls: ['./enquiries-new-form.component.scss'],
+    selector: 'app-enquiries-new-form',
+    templateUrl: './enquiries-new-form.component.html',
+    styleUrls: ['./enquiries-new-form.component.css'],
+    standalone: false
 })
 export class EnquiriesNewFormComponent {
   @Input() property: Partial<Property>;

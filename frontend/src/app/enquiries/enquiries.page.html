@@ -1,56 +1,64 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Enquiries Page</ion-title>
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">Enquiries Page</ion-title>
+
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar>
+
+  <ion-toolbar class="px-2 xl:px-3">
     <ion-searchbar
       clearIcon
       debounce="1300"
       [value]="search()"
       animated
+      class="border-2 border-slate-200 dark:border-slate-800 rounded-2xl"
       placeholder="Search Enquiry"
       (ionChange)="setSearchedText($event)"
-    ></ion-searchbar>
+    />
+
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeMd="6">
-          <ion-item lines="none">
-            <ion-select
-              multiple="true"
-              [value]="filterBy()"
-              label="Filter by:"
-              (ionChange)="setFilters($event)"
-            >
-              <ion-select-option
-                *ngFor="let filter of filters"
-                [value]="filter.value"
+          <ion-list>
+            <ion-item lines="none">
+              <ion-select
+                multiple="true"
+                [value]="filterBy()"
+                label="Filter:"
+                (ionChange)="setFilters($event)"
               >
-                {{filter.label}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+                <ion-select-option
+                  *ngFor="let filter of filters"
+                  [value]="filter.value"
+                >
+                  {{filter.label}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
         </ion-col>
 
         <ion-col size="12" sizeMd="6">
-          <ion-item lines="none">
-            <ion-select
-              [value]="sortBy()"
-              okText="Okay"
-              label="Sort by:"
-              cancelText="Dismiss"
-              (ionChange)="setSort($event)"
-            >
-              <ion-select-option
-                *ngFor="let sort of sorts"
-                [value]="sort.value"
+          <ion-list>
+            <ion-item lines="none">
+              <ion-select
+                [value]="sortBy()"
+                okText="Okay"
+                label="Sort by:"
+                cancelText="Dismiss"
+                (ionChange)="setSort($event)"
               >
-                {{ sort.label}}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+                <ion-select-option
+                  *ngFor="let sort of sorts"
+                  [value]="sort.value"
+                >
+                  {{ sort.label}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>

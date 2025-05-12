@@ -7,9 +7,10 @@ import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/
 import { PropertiesService } from '../properties.service';
 
 @Component({
-  selector: 'app-properties-edit',
-  templateUrl: './properties-edit.component.html',
-  styleUrls: ['./properties-edit.component.scss'],
+    selector: 'app-properties-edit',
+    templateUrl: './properties-edit.component.html',
+    styleUrls: ['./properties-edit.component.css'],
+    standalone: false
 })
 export class PropertiesEditComponent implements OnInit {
   public propertyForm: UntypedFormGroup;

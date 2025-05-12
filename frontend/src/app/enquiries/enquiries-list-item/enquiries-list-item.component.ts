@@ -7,9 +7,10 @@ import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries
 import { EnquiriesService } from '../enquiries.service';
 
 @Component({
-  selector: 'app-enquiries-list-item',
-  templateUrl: './enquiries-list-item.component.html',
-  styleUrls: ['./enquiries-list-item.component.scss'],
+    selector: 'app-enquiries-list-item',
+    templateUrl: './enquiries-list-item.component.html',
+    styleUrls: ['./enquiries-list-item.component.css'],
+    standalone: false
 })
 export class EnquiriesListItemComponent {
 

@@ -8,9 +8,10 @@ import { NotificationsService } from '../notifications/notifications.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.css'],
+    standalone: false
 })
 export class ProfileComponent {
   public imgUrl: any = './assets/images/avatar.png';

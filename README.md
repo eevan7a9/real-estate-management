@@ -20,7 +20,8 @@ connect property managers and potential buyers.
 
 ### **Frontend**
 - [Ionic 8+](https://ionicframework.com/)
-- [Angular 17+](https://angular.io/)
+- [Angular 19+](https://angular.io/)
+- [tailwindcss 4+](https://tailwindcss.com/)
 - [leaflet 1.7+](https://leafletjs.com/)
 - [chartjs 3.5+](https://www.chartjs.org/)
 
@@ -61,6 +62,15 @@ $ npm install
 
 # serve frontend
 $ ionic serve
+```
+
+Tailwindcss Build Styles
+```
+# Build to Generate styles
+$ npm run tailwind:build
+
+# Build to Generate styles & Watch
+$ npm run tailwind:watch
 ```
 
 <br>

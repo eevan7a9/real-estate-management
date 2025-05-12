@@ -19,9 +19,10 @@ import {
 } from '@ionic/core';
 
 @Component({
-  selector: 'app-enquiries',
-  templateUrl: './enquiries.page.html',
-  styleUrls: ['./enquiries.page.scss'],
+    selector: 'app-enquiries',
+    templateUrl: './enquiries.page.html',
+    styleUrls: ['./enquiries.page.css'],
+    standalone: false
 })
 export class EnquiriesPage implements AfterViewInit {
   @ViewChild(EnquiriesListComponent) enquiriesList: EnquiriesListComponent;

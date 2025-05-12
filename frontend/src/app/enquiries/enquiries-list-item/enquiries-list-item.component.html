@@ -1,14 +1,14 @@
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>
-      <ion-badge class="badge ion-margin-end" color="light" *ngIf="this.sent()">
-        Sent
+<ion-card
+  class="shadow-none border-[1px] border-slate-200 dark:border-slate-800"
+>
+  <ion-card-header class="mt-0 mb-2 md:mb-3">
+    <ion-card-title class="flex items-center pl-2 pt-2 lg:pl-3 lg:pt-3">
+      <ion-badge class="badge mr-2 p-1 font-light capitalize" color="light">
+        {{ this.sent() ? "sent" : "received" }}
       </ion-badge>
-      <ion-badge class="badge ion-margin-end" color="light" *ngIf="!this.sent()">
-        Received
-      </ion-badge>
+
       <ion-badge
-        class="badge-unread ion-text-uppercase"
+        class="p-1 font-light capitalize"
         color="medium"
         *ngIf="!this.sent() && !enquiry().read"
       >
@@ -18,7 +18,7 @@
 
     <button
       (click)="actionPopup($event, enquiry().enquiry_id)"
-      class="bg-gray-300 absolute rounded-full p-2 top-2 right-3 flex justify-center items-center"
+      class="bg-gray-300 absolute rounded-full! size-[30px] xl:size-[40px] p-2 top-2 right-3 flex justify-center items-center"
     >
       <ion-icon color="dark" name="ellipsis-vertical-outline"></ion-icon>
     </button>
@@ -27,12 +27,15 @@
   <ion-card-content>
     <ion-grid class="ion-no-padding ion-no-margin">
       <ion-row>
-        <ion-col size="12" sizeLg="4" class="message-title-text">
-          <ion-text type="dark" >{{ this.enquiry().title || "None" }}</ion-text>
+        <ion-col size="12" sizeLg="4" class="md:text-[16px] font-medium">
+          <ion-text type="dark">{{ this.enquiry().title || "None" }}</ion-text>
         </ion-col>
 
         <ion-col size="*" sizeLg="2">
-          <app-enquiry-badge [topic]="enquiry().topic" class="ion-margin-top"></app-enquiry-badge>
+          <app-enquiry-badge
+            [topic]="enquiry().topic"
+            class="ion-margin-top"
+          ></app-enquiry-badge>
         </ion-col>
 
         <ion-col size="12" sizeLg="4" class="ion-text-lg-center">

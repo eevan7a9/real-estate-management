@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { EnquiryTopic } from '../../enums/enquiry';
 
 @Component({
-  selector: 'app-enquiry-badge',
-  templateUrl: './enquiry-badge.component.html',
-  styleUrls: ['./enquiry-badge.component.scss'],
+    selector: 'app-enquiry-badge',
+    templateUrl: './enquiry-badge.component.html',
+    styleUrls: ['./enquiry-badge.component.css'],
+    standalone: false
 })
 export class EnquiryBadgeComponent implements OnInit {
 

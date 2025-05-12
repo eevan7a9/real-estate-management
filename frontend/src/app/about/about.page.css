@@ -1,0 +1,67 @@
+ion-content {
+  padding: 0;
+  margin: 0;
+}
+.about-container {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.separator-line {
+  padding: 3px;
+  width: 250px;
+  border-radius: 2px;
+  background: var(--ion-color-primary);
+}
+.map-container {
+  display: flex;
+  justify-content: center;
+}
+.try-us-section {
+  display: flex;
+  justify-content: center;
+  padding: 100px 0;
+  margin: 52px 0 0 0;
+  background: url(../../assets/images/about/about-bg-contact.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.feature-section ion-card-title {
+  font-size: 18px;
+}
+.feature-section ion-card-title.heading-card {
+  font-size: 42px;
+  font-weight: bold;
+}
+.feature-section ion-card-title ion-text {
+  font-weight: bold;
+  font-size: 32px;
+}
+.feature-section .features {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+}
+.contact-section {
+  background: var(--ion-color-primary);
+  background: url(../../assets/images/about/about-bg-contact.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left;
+  padding: 16px 0;
+}
+.contact-section .left-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.contact-section .left-side .heading {
+  font-size: 32px;
+  color: aliceblue;
+  font-weight: 700;
+}
+.contact-section .left-side .sub-heading {
+  color: #c9ccce;
+  letter-spacing: 0.8px;
+}

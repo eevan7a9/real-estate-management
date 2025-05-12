@@ -9,9 +9,10 @@ import { UserService } from 'src/app/user/user.service';
 import { PropertiesService } from '../properties.service';
 
 @Component({
-  selector: 'app-properties-list-item',
-  templateUrl: './properties-list-item.component.html',
-  styleUrls: ['./properties-list-item.component.scss'],
+    selector: 'app-properties-list-item',
+    templateUrl: './properties-list-item.component.html',
+    styleUrls: ['./properties-list-item.component.css'],
+    standalone: false
 })
 export class PropertiesListItemComponent {
   public property = input<Property>();

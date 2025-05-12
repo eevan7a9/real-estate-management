@@ -1,0 +1,71 @@
+/* @import "~swiper/scss"; */
+/* @import "~@ionic/angular/css/ionic-swiper"; */
+/*
+.gallery-container .selected-image {
+  display: flex;
+  justify-content: center;
+  height: 550px;
+} */
+/* .gallery-container .selected-image img {
+  width: 100%;
+  background-color: var(--ion-background-color-step-100);
+  object-fit: contain;
+} */
+swiper-container {
+  width: 100%;
+  height: 250px;
+}
+swiper-slide {
+  max-width: 300px;
+  padding: 0;
+}
+swiper-slide .swipers-image {
+  width: 100%;
+  height: 100%;
+}
+swiper-slide .swipers-image img {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+swiper-slide .swipers-image .cover-img {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(51, 51, 51, 0.63);
+  background-size: cover;
+}
+swiper-slide .swipers-image .cover-img.selected {
+  background-color: rgba(11, 114, 211, 0.219);
+  opacity: 0.7;
+}
+swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+ion-card {
+  box-shadow: none;
+}
+ion-card .edit-btn {
+  margin: 8px 16px 0px;
+}
+ion-card .edit-btn ion-text {
+  margin-right: 4px;
+}
+/* @media (max-width: 500px) {
+  ion-card {
+    box-shadow: none;
+  }
+  ion-card .gallery-container .selected-image {
+    height: 350px;
+  }
+} */

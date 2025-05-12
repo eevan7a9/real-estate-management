@@ -9,9 +9,10 @@ interface Markers {
 }
 
 @Component({
-  selector: 'app-map-markers-legend',
-  templateUrl: './map-markers-legend.component.html',
-  styleUrls: ['./map-markers-legend.component.scss'],
+    selector: 'app-map-markers-legend',
+    templateUrl: './map-markers-legend.component.html',
+    styleUrls: ['./map-markers-legend.component.css'],
+    standalone: false
 })
 export class MapMarkersLegendComponent implements OnInit {
   @Output() toggledMarker = new EventEmitter<{ type: string; isChecked: boolean }>();

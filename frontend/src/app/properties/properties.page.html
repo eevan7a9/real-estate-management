@@ -1,21 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Properties Page </ion-title>
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">Properties Page</ion-title>
 
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar>
+  <ion-toolbar class="px-2 xl:px-3">
     <ion-searchbar
       inputmode="text"
       clearIcon
       debounce="700"
       animated
+      class="border-2 border-slate-200 dark:border-slate-800 rounded-2xl"
       (ionChange)="setSearchedText($event)"
       placeholder="Search Property"
-    ></ion-searchbar>
+    />
 
     <ion-grid>
       <ion-row>
@@ -78,7 +79,7 @@
 </ion-fab>
 
 <ion-content>
-  <div class="properties-container">
+  <div class="properties-container pt-8 xl:pt-12">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
@@ -86,10 +87,10 @@
     ></ion-progress-bar>
 
     <ion-grid>
-      <ion-row class="ion-align-items-center ion-margin-top hide-on-mobile">
-        <ion-col class="heading ion-padding-horizontal flex items-center">
-          <span class="mr-3">List of Properties</span>
-   
+      <ion-row class="ion-align-items-center hide-on-mobile mb-3 lg:mb-5">
+        <ion-col class="heading ion-padding-horizontal flex items-center gap-1">
+          <span class="mr-3 text-[20px] lg:text-[24px] lg:font-medium">List of Properties</span>
+
           <!-- Cards Display Options -->
           <ion-button class="ml-2" (click)="displayOption.set(displayType.CardView)" [disabled]="displayOption() === 'cards'" size="small" class="display-option-btn">
             <ion-icon name="grid-outline"></ion-icon>

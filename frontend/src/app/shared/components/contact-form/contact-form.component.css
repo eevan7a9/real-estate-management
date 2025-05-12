@@ -1,0 +1,12 @@
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.footer-content .title {
+  font-size: 14px;
+}
+.footer-content .source a {
+  font-size: 12px;
+}

@@ -8,9 +8,10 @@ import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/
 import { Property } from 'src/app/shared/interface/property';
 
 @Component({
-  selector: 'app-properties-new',
-  templateUrl: './properties-new.component.html',
-  styleUrls: ['./properties-new.component.scss'],
+    selector: 'app-properties-new',
+    templateUrl: './properties-new.component.html',
+    styleUrls: ['./properties-new.component.css'],
+    standalone: false
 })
 export class PropertiesNewComponent implements OnInit {
   public propertyForm: UntypedFormGroup;
@@ -99,7 +100,7 @@ export class PropertiesNewComponent implements OnInit {
   public async submit(): Promise<void> {
     if (this.step === 1 && this.validateStepOne()) {
       this.step = 2;
-      return 
+      return
     } else if (this.step === 2 && this.validateStepTwo()) {
       this.isSubmit = true;
       const ft = this.propertyForm.get('features').value;

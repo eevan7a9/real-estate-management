@@ -13,9 +13,10 @@ import { PropertiesGalleryComponent } from '../properties-gallery/properties-gal
 import { TransactionType } from 'src/app/shared/enums/property';
 
 @Component({
-  selector: 'app-properties-detail',
-  templateUrl: './properties-detail.component.html',
-  styleUrls: ['./properties-detail.component.scss'],
+    selector: 'app-properties-detail',
+    templateUrl: './properties-detail.component.html',
+    styleUrls: ['./properties-detail.component.css'],
+    standalone: false
 })
 export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;

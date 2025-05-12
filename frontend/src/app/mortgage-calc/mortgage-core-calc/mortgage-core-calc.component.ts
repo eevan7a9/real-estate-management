@@ -3,9 +3,10 @@ import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 
 @Component({
-  selector: 'app-mortgage-core-calc',
-  templateUrl: './mortgage-core-calc.component.html',
-  styleUrls: ['./mortgage-core-calc.component.scss']
+    selector: 'app-mortgage-core-calc',
+    templateUrl: './mortgage-core-calc.component.html',
+    styleUrls: ['./mortgage-core-calc.component.css'],
+    standalone: false
 })
 export class MortgageCoreCalcComponent implements AfterViewInit {
   @Input() payPerYear = 12;

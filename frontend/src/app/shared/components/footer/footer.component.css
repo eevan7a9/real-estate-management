@@ -1,0 +1,5 @@
+ion-footer, ion-toolbar {
+  --box-shadow: none !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}

@@ -20,9 +20,10 @@ import {
 } from 'src/app/shared/utility/properties';
 
 @Component({
-  selector: 'app-properties-list',
-  templateUrl: './properties-list.component.html',
-  styleUrls: ['./properties-list.component.scss'],
+    selector: 'app-properties-list',
+    templateUrl: './properties-list.component.html',
+    styleUrls: ['./properties-list.component.css'],
+    standalone: false
 })
 export class PropertiesListComponent implements OnInit {
   @ViewChild('IonInfiniteScroll', { static: false })

@@ -29,9 +29,10 @@ interface NavLinks {
 }
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   public appPages: NavLinks[] = [
@@ -62,11 +63,11 @@ export class AppComponent implements OnInit {
       { title: 'About', url: '/about', icon: 'help-circle' },
     ]
     if(this.user()) {
-      return [...pages, 
+      return [...pages,
         { title: 'Account', url: '/user/account', icon: 'person'}
       ];
     }
-    return [...pages, 
+    return [...pages,
       { title: 'Register', url: '/user/register', icon: 'create' },
       { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
     ];

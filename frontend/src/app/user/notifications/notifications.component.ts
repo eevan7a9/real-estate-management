@@ -15,9 +15,10 @@ import { debounce } from 'src/app/shared/utility/helpers';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss'],
+    selector: 'app-notifications',
+    templateUrl: './notifications.component.html',
+    styleUrls: ['./notifications.component.css'],
+    standalone: false
 })
 export class NotificationsComponent {
   public notifications = toSignal<Notification[]>(

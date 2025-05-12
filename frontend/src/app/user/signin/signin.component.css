@@ -1,0 +1,56 @@
+ion-content {
+  --background: var(--ion-background-color-step-100);
+}
+.signin-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100% - 56px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signin-card {
+  width: 100%;
+  max-width: 400px;
+}
+.signin-card ion-item {
+  margin-top: 8px;
+  --background: var(--ion-background-color-step-100);
+}
+.logo-container {
+  margin: 30px auto 0;
+  max-width: 200px;
+  text-align: center;
+}
+.alert-errors {
+  width: 100%;
+  margin: 6px 0 0 0;
+}
+.ask-register {
+  width: 100%;
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+}
+.ask-register a {
+  margin-left: 6px;
+}
+.social-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 600px) {
+  ion-content {
+    --background: var(--ion-color-dark-contrast);
+  }
+  .signin-card {
+    margin: 0;
+    box-shadow: none;
+    min-height: 100%;
+    width: 100%;
+    max-width: 400px;
+  }
+}

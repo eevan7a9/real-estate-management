@@ -8,9 +8,10 @@ import { UserService } from "../../user/user.service";
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-enquiries-list',
-  templateUrl: './enquiries-list.component.html',
-  styleUrls: ['./enquiries-list.component.scss'],
+    selector: 'app-enquiries-list',
+    templateUrl: './enquiries-list.component.html',
+    styleUrls: ['./enquiries-list.component.css'],
+    standalone: false
 })
 export class EnquiriesListComponent {
   @Output() isLoading = new EventEmitter<boolean>();

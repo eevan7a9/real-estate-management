@@ -1,0 +1,18 @@
+ion-content {
+  --background: var(--ion-background-color-step-100);
+  --height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.properties-container {
+  height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+ion-searchbar {
+  --box-shadow: none;
+}
+
+.display-option-btn {
+  --box-shadow: none;
+}

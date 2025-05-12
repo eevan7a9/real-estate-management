@@ -1,0 +1,78 @@
+ion-content {
+  --background: var(--ion-background-color-step-100);
+}
+ion-grid {
+  height: 100%;
+}
+ion-row {
+  height: 100%;
+}
+.property-identity {
+  box-shadow: none;
+  margin: 12px 0 16px 0;
+}
+.property-identity .name {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.property-identity .name .action-btn {
+  --box-shadow: none;
+}
+.property-identity .type {
+  margin-top: 8px;
+  font-size: 18px;
+}
+.property-features ion-card-content .item {
+  font-size: 14px;
+  font-weight: 400;
+  margin-right: 8px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  --padding-top: 6px;
+  --padding-bottom: 6px;
+}
+.property-features ion-card-content .item div {
+  display: flex;
+  align-items: center;
+}
+/* .property-address {
+  box-shadow: none;
+  margin: 16px 0;
+} */
+/* .property-address ion-card-content {
+  font-size: 18px;
+  font-weight: normal;
+} */
+/* .property-price {
+  box-shadow: none;
+  margin: 16px 0;
+} */
+.price {
+  color: var(--ion-text-color-step-100);
+}
+.enquiry-section {
+  margin: 36px 0;
+  padding: 16px 0 0 0;
+  box-shadow: none;
+  border-top: 3px solid var(--ion-color-primary);
+}
+.find-map-card {
+  margin-top: 24px;
+  box-shadow: none;
+}
+.find-map-card ion-card-header {
+  background: var(--ion-color-primary);
+}
+.find-map-card ion-card-content p {
+  padding: 24px 16px 16px;
+}
+.find-map-card ion-card-content ion-button {
+  text-transform: capitalize;
+  --color: var(--ion-color-light);
+}
+.find-map-card ion-card-content ion-button ion-icon {
+  margin-right: 8px;
+}

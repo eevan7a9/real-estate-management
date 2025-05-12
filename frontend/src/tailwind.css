@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Dark Mode is Manual Toggled */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --breakpoint-sm: 36rem; /* 576px */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 62rem; /* 992px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-2xl: 96rem; /* 1536px */
+
+  --color-primary: #1c56af;
+  --color-primary-shade: #194c9a;
+  --color-primary-tint: #3367b7;
+
+  --color-secondary: #36abe0;
+  --color-secondary-shade: #36abe0;
+  --color-secondary-tint: #50c8ff;
+
+  --color-tertiary: #9006f6;
+  --color-tertiary-shade: #7f05d8;
+  --color-tertiary-tint: #9b1ff7;
+
+  --color-light: #f4f5f8;
+  --color-light-shade: #d7d8da;
+  --color-light-tint: #f5f6f9;
+
+  --color-dark: #222428;
+  --color-dark-shade: #1e2023;
+  --color-dark-tint: #383a3e;
+
+
+  --color-danger: #eb445a;
+  --color-danger-shade: #cf3c4f;
+  --color-danger-tint: #ed576b;
+
+  --color-success: #29c065;
+  --color-warning: #ffc409;
+  --color-link: #1c7fff;
+}
