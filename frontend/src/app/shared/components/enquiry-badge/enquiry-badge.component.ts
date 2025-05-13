@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { EnquiryTopic } from '../../enums/enquiry';
 
 @Component({
@@ -9,13 +9,13 @@ import { EnquiryTopic } from '../../enums/enquiry';
 })
 export class EnquiryBadgeComponent implements OnInit {
 
-  @Input() topic = 'residential';
+  public topic = input('residential');
   constructor() { }
 
   ngOnInit() { }
 
   topicColor() {
-    switch (this.topic) {
+    switch (this.topic()) {
       case EnquiryTopic.info:
         return 'secondary';
       case EnquiryTopic.sales:
@@ -30,7 +30,7 @@ export class EnquiryBadgeComponent implements OnInit {
   }
 
   topicLabel() {
-    switch (this.topic) {
+    switch (this.topic()) {
       case EnquiryTopic.info:
         return 'Enquire Information';
       case EnquiryTopic.sales:

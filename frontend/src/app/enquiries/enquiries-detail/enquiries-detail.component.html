@@ -10,88 +10,137 @@
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="enquiry()">
-  <div class="max-w-screen-2xl my-0 mx-auto flex flex-col gap-4">
-    <ion-card class="ion-no-padding border-[1px] border-gray-300 shadow-none">
-      <ion-card-header class="px-3 lg:px-5 py-4">
-        <ion-card-title class="flex items-center">
-          <ion-text type="dark">{{ enquiry().property?.name }}</ion-text>
-          <ion-button
-            size="small"
-            fill="outline"
-            class="text-[12px] font-normal ml-3"
-            (click)="gotToProperty(enquiry().property.property_id)"
-          >
-            View Property
-          </ion-button>
-        </ion-card-title>
-
-        <ion-card-subtitle
-          class="ion-text-capitalize topic-subtitle flex gap-3 items-center mt-3"
+  <ion-grid class="max-w-screen-2xl my-0 mx-auto h-full xl:pt-12">
+    <ion-row class="h-full">
+      <ion-col class="flex flex-col gap-4" size="12" sizeXl="7">
+        <h1
+          class="px-3 xl:text-[20px]! mb-3! pb-4 border-b border-slate-200 dark:border-slate-700"
         >
-          Topic -
-          <ion-badge color="primary" class="py-1 px-3">{{ enquiry().topic }}</ion-badge>
-        </ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
+          @if(sentByMe()) {
+            Enquiry Sent By You
+          } @else {
+            Enquiry Message From
+            <a class="text-link!" [href]="'mailto:' + enquiry().email">
+              {{ enquiry().email }}
+            </a>
+          }
+        </h1>
 
-    <ion-card class="shadow-none border-[1px] border-gray-300 mt">
-      <ion-card-header class="border-b-[1px] border-gray-300 px-3 lg:px-5 py-4">
-        <ion-card-subtitle class="ion-text-capitalize" *ngIf="enquiry().replyTo">
-          <button
-            class="p-0 text-[16px] bg-transparent ellipsis"
-            (click)="goToEnquiry(enquiry().replyTo.enquiry_id)"
+        <ion-card
+          class="ion-no-padding border-[1px] border-slate-200 dark:border-slate-800 shadow-none"
+        >
+          <ion-card-header class="px-3 lg:px-5 py-4">
+            <ion-card-title class="flex justify-between items-center">
+              <ion-text type="dark">{{ enquiry().property?.name }}</ion-text>
+              <ion-button
+                size="small"
+                fill="outline"
+                class="text-[12px] font-normal ml-3"
+                (click)="gotToProperty(enquiry().property.property_id)"
+              >
+                View Property
+              </ion-button>
+            </ion-card-title>
+
+            <ion-card-subtitle
+              class="ion-text-capitalize topic-subtitle flex gap-3 items-center mt-3"
+            >
+              <app-enquiry-badge [topic]="enquiry().topic"></app-enquiry-badge>
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+
+        <ion-card
+          class="shadow-none border-[1px] border-slate-200 dark:border-slate-800 mt"
+        >
+          <ion-card-header
+            class="border-b-[1px] border-slate-200 dark:border-slate-800 px-3 lg:px-5 py-4"
           >
-            <ion-icon name="arrow-redo" color="primary"></ion-icon>
-            <span class="dark:text-light">
-              [Response to] - {{ enquiry().replyTo.title }}
-            </span>
-          </button>
-        </ion-card-subtitle>
+            <ion-card-subtitle
+              class="ion-text-capitalize"
+              *ngIf="enquiry().replyTo"
+            >
+              <button
+                class="p-0 text-[16px] bg-transparent ellipsis"
+                (click)="goToEnquiry(enquiry().replyTo.enquiry_id)"
+              >
+                <ion-icon name="arrow-redo" color="primary"></ion-icon>
+                <span class="text-link hover:underline">
+                  [Response to] - {{ enquiry().replyTo.title }}
+                </span>
+              </button>
+            </ion-card-subtitle>
 
-        <ion-card-title class="ion-margin-top">
-          {{ enquiry().title }}
-        </ion-card-title>
-        <ion-card-subtitle class="text-[14px] font-light mt-2"> {{ enquiry().createdAt | date }}</ion-card-subtitle>
-      </ion-card-header>
+            <ion-card-title class="ion-margin-top">
+              {{ enquiry().title }}
+            </ion-card-title>
+            <ion-card-subtitle class="text-[14px] font-light mt-2">
+              {{ enquiry().createdAt | date }}</ion-card-subtitle
+            >
+          </ion-card-header>
 
-      <ion-card-content>
-        <div class="px-4 pb-2 pt-8 min-h-fit rounded-2xl text-dark dark:text-light">
-          <markdown [data]="enquiry().content"></markdown>
+          <ion-card-content>
+            <div
+              class="px-4 pb-2 pt-8 min-h-fit rounded-2xl text-dark dark:text-light"
+            >
+              <markdown [data]="enquiry().content"></markdown>
+            </div>
+
+            <a class="ion-padding">
+              -
+              <a
+                [href]="'mailto:' + enquiry().email"
+                class="text-link! underline"
+              >
+                {{ enquiry().email }}
+              </a>
+              <span *ngIf="sentByMe()">(You)</span>
+            </a>
+          </ion-card-content>
+        </ion-card>
+
+        <div class="flex pl-2 items-center mt-3">
+          <ion-button
+            color="primary"
+            (click)="createEnquiryModal()"
+            *ngIf="!sentByMe()"
+          >
+            <ion-icon name="create-outline"></ion-icon>
+            Reply
+          </ion-button>
+
+          <ion-button
+            color="light"
+            (click)="report(enquiry().enquiry_id)"
+            *ngIf="!sentByMe()"
+            class="ml-auto mr-3"
+          >
+            <ion-icon name="flag-outline" color="danger"></ion-icon>
+            <ion-text color="danger"> Report </ion-text>
+          </ion-button>
+
+          <ion-button color="danger" (click)="delete(enquiry().enquiry_id)">
+            <ion-icon name="trash-outline" color="light"></ion-icon>
+            <ion-text color="light"> Delete </ion-text>
+          </ion-button>
         </div>
+      </ion-col>
 
-        <a class="ion-padding text-link underline">
-          - {{ enquiry().email }}
-          <span *ngIf="sentByMe()">(You)</span>
-        </a>
-      </ion-card-content>
-    </ion-card>
-
-    <div class="flex pl-2 items-center">
-      <ion-button
-        color="primary"
-        (click)="createEnquiryModal()"
-        *ngIf="!sentByMe()"
-      >
-        <ion-icon name="create-outline"></ion-icon>
-        Reply
-      </ion-button>
-
-      <ion-button
-        color="light"
-        (click)="report(enquiry().enquiry_id)"
-        *ngIf="!sentByMe()"
-        class="ml-auto mr-3"
-      >
-        <ion-icon name="flag-outline" color="danger"></ion-icon>
-        <ion-text color="danger"> Report </ion-text>
-      </ion-button>
-
-      <ion-button color="danger" (click)="delete(enquiry().enquiry_id)">
-        <ion-icon name="trash-outline" color="light"></ion-icon>
-        <ion-text color="light"> Delete </ion-text>
-      </ion-button>
-    </div>
-  </div>
+      <ion-col class="h-full" size="12" sizeXl="5">
+        <section
+          class="h-full flex flex-col pt-8 mt-8 border-t xl:border-t-0 border-slate-300 dark:border-slate-700 xl:pt-0 xl:mt-0"
+        >
+          <!-- <h1 class="xl:text-[20px]! mb-3! xl:px-5">Related Enquiries:</h1> -->
+          <div class="grow pb-[100px]  xl:px-5">
+            <app-enquiries-related-list
+              [propertyId]="enquiry().property.property_id"
+              [enquiryId]="enquiry().enquiry_id"
+            />
+          </div>
+        </section>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-content *ngIf="!enquiry() && ready()">
@@ -109,3 +158,5 @@
     </ion-card>
   </div>
 </ion-content>
+
+<app-footer></app-footer>

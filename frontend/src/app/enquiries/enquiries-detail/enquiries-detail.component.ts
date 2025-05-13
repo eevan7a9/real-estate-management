@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 
@@ -21,6 +21,12 @@ export class EnquiriesDetailComponent implements OnInit {
   public user = toSignal<User>(this.userService.user$);
   public paramId = toSignal(this.route.paramMap);
   public ready = signal<boolean>(false);
+  public sentByMe = computed(() => {
+    if (this.user && this.enquiry) {
+      return this.user().user_id === this.enquiry().users.from.user_id;
+    }
+    return false;
+  })
 
   constructor(
     public location: Location,
@@ -60,12 +66,12 @@ export class EnquiriesDetailComponent implements OnInit {
     }
   }
 
-  public sentByMe(): boolean {
-    if (this.user && this.enquiry) {
-      return this.user().user_id === this.enquiry().users.from.user_id;
-    }
-    return false;
-  }
+  // public sentByMe(): boolean {
+  //   if (this.user && this.enquiry) {
+  //     return this.user().user_id === this.enquiry().users.from.user_id;
+  //   }
+  //   return false;
+  // }
 
   public async report(enqId: string) {
     const alert = await this.alertCtrl.create({

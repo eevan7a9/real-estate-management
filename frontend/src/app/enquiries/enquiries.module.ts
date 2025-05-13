@@ -15,6 +15,7 @@ import { EnquiriesNewFormComponent } from './enquiries-new-form/enquiries-new-fo
 import { EnquiriesListItemComponent } from './enquiries-list-item/enquiries-list-item.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MarkdownModule } from 'ngx-markdown';
+import { EnquiriesRelatedListComponent } from './enquiries-related-list/enquiries-related-list.component';
 
 @NgModule({
   imports: [
@@ -33,9 +34,11 @@ import { MarkdownModule } from 'ngx-markdown';
     EnquiriesDetailComponent,
     EnquiriesReplyModalComponent,
     EnquiriesNewFormComponent,
+    EnquiriesRelatedListComponent
   ],
   exports: [
-    EnquiriesNewFormComponent
+    EnquiriesNewFormComponent,
+    EnquiriesRelatedListComponent
   ]
 })
 export class EnquiriesPageModule { }

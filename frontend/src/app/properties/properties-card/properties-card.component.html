@@ -2,7 +2,7 @@
   class="relative m-0! flex flex-col w-full max-w-[360px] h-full shadow-none outline outline-slate-200 dark:outline-slate-800"
 >
   <div
-    class="tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
+    class="z-10 tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
     [ngClass]="[
       userService.user?.user_id === property.user_id
         ? 'bg-primary'
@@ -21,17 +21,18 @@
     </span>
   </div>
 
-  <div class="h-[230px]">
-    <img
-      class="w-full h-full object-cover"
-      [src]="property?.images[0]"
-      *ngIf="property?.images?.length"
-    />
-    <img
-      class="w-full h-full object-cover"
-      [src]="'assets/images/no-image.jpeg'"
-      *ngIf="!property?.images || !property?.images.length"
-    />
+  <div class="h-[230px] overflow-hidden cursor-pointer group" (click)="selectProperty(property)">
+    @if (!property?.images || !property?.images.length) {
+      <img
+        class="w-full h-full object-cover"
+        [src]="'assets/images/no-image.jpeg'"
+      />
+    } @else {
+      <img
+        class="w-full h-full object-cover group-hover:scale-125 transition-all ease-in-out duration-300"
+        [src]="property?.images[0]"
+      />
+    }
   </div>
 
   <ion-card-header class="py-2 px-3">
