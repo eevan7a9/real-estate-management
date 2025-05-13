@@ -15,17 +15,6 @@ ion-card ion-card-content .line-chart.blur {
   filter: blur(4px);
   -webkit-filter: blur(4px);
 }
-ion-card ion-card-content .overlay-cover {
-  background-color: rgba(0, 0, 0, 0.027);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 ion-card ion-card-content .overlay-cover ion-button {
   --padding-start: 30px;
   --padding-end: 16px;

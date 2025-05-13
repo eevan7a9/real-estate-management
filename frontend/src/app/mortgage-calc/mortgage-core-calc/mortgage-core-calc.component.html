@@ -1,10 +1,14 @@
-<ion-card [style.box-shadow]="!boxShadow ? 'none' : ''" class="max-h-[520px]">
+<ion-card
+  [style.box-shadow]="!boxShadow ? 'none' : ''"
+  class="max-h-[520px] border border-slate-200 dark:border-slate-800"
+>
   <ion-card-header class="px-4 py-2 xl:py-3">
     <ion-card-title color="light">
       Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
     </ion-card-title>
   </ion-card-header>
-  <ion-card-content  class="">
+
+  <ion-card-content class="">
     <form [formGroup]="mortgageForm">
       <ion-grid>
         <ion-row>
@@ -13,6 +17,7 @@
               <ion-item>
                 <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
                 <ion-input
+                  class="py-1!"
                   clearInput
                   debounce="1000"
                   labelPlacement="stacked"
@@ -30,6 +35,7 @@
             <ion-item>
               <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
               <ion-input
+                class="py-1!"
                 clearInput
                 debounce="1000"
                 labelPlacement="stacked"
@@ -55,6 +61,7 @@
             <ion-item>
               <span class="ion-margin-end">%</span>
               <ion-input
+                class="py-1!"
                 debounce="500"
                 type="number"
                 min="0"
@@ -72,8 +79,9 @@
 
           <ion-col size="6">
             <ion-item>
-              <span class="ion-margin-end">%</span>
+              <ion-icon class="ion-margin-end" name="calendar-number-outline" slot="start"></ion-icon>
               <ion-input
+                class="py-1!"
                 debounce="500"
                 type="number"
                 min="0"
@@ -95,6 +103,7 @@
             <ion-item>
               <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
               <ion-input
+                class="py-1!"
                 debounce="1000"
                 type="number"
                 min="0"
@@ -112,6 +121,7 @@
             <ion-item>
               <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
               <ion-input
+                class="py-1!"
                 type="number"
                 min="0"
                 debounce="1000"
@@ -130,25 +140,38 @@
           <ion-col size="12" [sizeMd]="simpleMode ? 12 : 6">
             <ion-list>
               <ion-item
-              lines="none"
-              class="total-month"
-              [class]="simpleMode ? 'simple' : ''"
-            >
-              <ion-input
-                [value]="monthlyPayment"
-                labelPlacement="stacked"
-                label="Monthly"
-                readonly
+                lines="none"
+                class="total-month"
+                [class]="simpleMode ? 'simple' : ''"
               >
-              </ion-input>
-            </ion-item>
+                <ion-icon
+                  aria-hidden="true"
+                  name="cash-outline"
+                  slot="start"
+                  class="mr-2"
+                ></ion-icon>
+                <ion-input
+                  class="py-1! font-bold md:text-[20px]!"
+                  [value]="monthlyPayment"
+                  labelPlacement="stacked"
+                  label="Monthly"
+                  readonly
+                >
+                </ion-input>
+              </ion-item>
             </ion-list>
           </ion-col>
 
           <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">
             <ion-item lines="none" class="total-lifetime">
-              <!-- <ion-label position="stacked">Total lifetime</ion-label> -->
+              <ion-icon
+                aria-hidden="true"
+                name="cash-outline"
+                slot="start"
+                class="mr-2"
+              ></ion-icon>
               <ion-input
+                class="py-1! font-bold md:text-[20px]!"
                 [value]="lifetimePayment"
                 labelPlacement="stacked"
                 label="Total lifetime"
@@ -158,7 +181,10 @@
             </ion-item>
           </ion-col>
 
-          <ion-col class="view-more" *ngIf="simpleMode">
+          <ion-col
+            class="flex justify-center border-t border-slate-200 dark:border-slate-800 pt-3"
+            *ngIf="simpleMode"
+          >
             <a routerLink="/mortgage-calc">Mortgage Calculator</a>
           </ion-col>
         </ion-row>

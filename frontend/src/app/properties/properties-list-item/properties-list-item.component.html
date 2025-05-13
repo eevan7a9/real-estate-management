@@ -36,8 +36,8 @@
       </button>
     </div>
 
-    <div class="flex items-center text-[14px] lg:mt-3">
-      <ion-text class="lg:text-[16px]">
+    <div class="flex items-center text-[14px] lg:mt-2 text-dark! dark:text-white">
+      <ion-text class="text-[16px] lg:text-[18px] font-light">
         {{
           property().name?.length > 30
             ? property().name.slice(0, 30) + "..."
@@ -45,7 +45,7 @@
         }}
       </ion-text>
       <span class="px-2">|</span>
-      <ion-text class="hidden md:block">
+      <ion-text class="hidden md:block md:text-[18px] font-light">
         {{
           property().description?.length > 40
             ? property().description.slice(0, 40) + "..."
@@ -53,7 +53,7 @@
         }}
       </ion-text>
 
-      <span class="ml-auto mr-0 font-semibold">
+      <span class="ml-auto mr-0 md:text-[18px] xl:text-[20px] font-light">
         {{ property().price | currency : "PHP" }}
       </span>
     </div>

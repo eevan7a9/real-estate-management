@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card class="relative border border-slate-200 dark:border-slate-800">
   <ion-card-content class="no-pads" style="height: 100%">
     <div class="chart-container">
       <canvas
@@ -8,8 +8,11 @@
       ></canvas>
     </div>
 
-    <div class="overlay-cover" *ngIf="showReCalculate">
-      <ion-button (click)="requestAmortizationSchedule()">
+    <div
+      class="absolute top-0 h-full w-full bg-dark/30 flex justify-center items-center"
+      *ngIf="showReCalculate"
+    >
+      <ion-button class="ion-padding" (click)="requestAmortizationSchedule()">
         Re-Calculate
         <ion-icon name="trending-up-outline"></ion-icon>
       </ion-button>
