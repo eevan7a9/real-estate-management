@@ -92,10 +92,6 @@ export class EnquiriesNewFormComponent {
     this.presentToast('Success, message is sent.');
   }
 
-  public onReady(e: unknown) {
-    console.log(e);
-  }
-
   private async presentToast(
     message: string,
     duration = 3000,

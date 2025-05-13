@@ -1,3 +1,9 @@
 ion-button {
   --box-shadow: none;
 }
+ion-content {
+  /* --background: var(--ion-background-color-step-100); */
+  --height: 100%;
+  margin: 0;
+  padding: 0;
+}

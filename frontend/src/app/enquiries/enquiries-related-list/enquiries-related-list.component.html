@@ -1,0 +1,72 @@
+<div class="h-full">
+  <ion-card class="labels-card ion-hide-lg-down">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="flex justify-between items-center">
+            <ion-text class="text-[19px] font-bold">
+              Related Enquiries:
+            </ion-text>
+
+            <ion-icon name="archive-outline" size="large" color="light"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card
+    class="shadow-none bg-light dark:bg-transparent! h-full! border border-slate-200 dark:border-slate-800"
+    *ngIf="!relatedEnquiries().length"
+  >
+    <ion-card-content class="flex! justify-center! items-center!">
+      <h1
+        class="text-center bg-white dark:bg-dark-shade text-[18px]! font-light! p-6 border border-slate-200 dark:border-slate-800"
+      >
+        Looks like there are no enquiries at the moment. Check back soon!
+      </h1>
+    </ion-card-content>
+  </ion-card>
+
+  <div
+    class="bg-slate-50 dark:bg-transparent flex flex-col gap-2 pt-3 px-3 border border-slate-200 dark:border-slate-700 h-full"
+    *ngIf="relatedEnquiries().length"
+  >
+    @for (enquiry of relatedEnquiries(); track $index) {
+    <ion-card
+      (click)="view(enquiry)"
+      class="p-2 shadow-none border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-shade"
+    >
+      <ion-card-header
+        class="px-3 flex flex-row items-center justify-between py-1"
+      >
+        <p class="text-[14px] text-ellipsis line-clamp-1">
+          {{ enquiry.title }}
+        </p>
+
+        <app-enquiry-badge [topic]="enquiry.topic" />
+      </ion-card-header>
+
+      <ion-card-content class="py-1!">
+        <div class="flex flex-row items-center justify-between">
+          <p class="text-[14px]">
+            From:
+            <a [href]="'mailto:' + enquiry.email">
+              {{ enquiry.email }}
+            </a>
+          </p>
+          <span class="text-[14px] min-w-[100px] text-right">
+            {{ enquiry.createdAt | date }}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    }
+
+    <div
+      class="text-slate-700 dark:text-slate-300 bg-white dark:bg-transparent text-center border border-slate-200 dark:border-slate-800 p-3"
+    >
+      That’s all for now—no more enquiries to load.
+    </div>
+  </div>
+</div>
