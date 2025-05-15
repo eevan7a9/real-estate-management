@@ -15,6 +15,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ActivityTimelineComponent } from './profile/activity-timeline/activity-timeline.component';
 import { UserPropertiesComponent } from './profile/user-properties/user-properties.component';
 import { PropertiesPageModule } from '../properties/properties.module';
+import { ProfileVerifiedComponent } from './profile/profile-verified/profile-verified.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import { PropertiesPageModule } from '../properties/properties.module';
     IonicModule,
     UserPageRoutingModule,
     SharedModule,
-    PropertiesPageModule
+    PropertiesPageModule,
   ],
   declarations: [
     UserPage,
@@ -33,7 +34,8 @@ import { PropertiesPageModule } from '../properties/properties.module';
     ProfileComponent,
     NotificationsComponent,
     ActivityTimelineComponent,
-    UserPropertiesComponent
+    UserPropertiesComponent,
+    ProfileVerifiedComponent,
   ]
 })
 export class UserPageModule { }

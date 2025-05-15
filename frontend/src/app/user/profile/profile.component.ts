@@ -3,15 +3,14 @@ import { UserDetails } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
-import { ActivitiesService } from 'src/app/activities/activities.service';
-import { NotificationsService } from '../notifications/notifications.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-profile',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.css'],
-    standalone: false
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
+  standalone: false,
 })
 export class ProfileComponent {
   public imgUrl: any = './assets/images/avatar.png';
@@ -21,10 +20,9 @@ export class ProfileComponent {
 
   constructor(
     private userService: UserService,
-    private activitiesService: ActivitiesService,
-    private notificationsService: NotificationsService,
     private formBuilder: FormBuilder,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private restriction: RestrictionService
   ) {
     this.userForm = this.formBuilder.group({
       fullName: [
@@ -57,6 +55,9 @@ export class ProfileComponent {
   public async submit(): Promise<void> {
     if (!this.userForm.valid) {
       return;
+    }
+    if (this.restriction.restricted) {
+      return this.restriction.showAlert();
     }
     const res = await this.userService.updateUser(this.userForm.value);
     const status = res.status;

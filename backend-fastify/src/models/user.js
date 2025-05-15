@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema(
     },
     address: {
       type: String
+    },
+    verified: {
+      type: Boolean
     }
   },
   {

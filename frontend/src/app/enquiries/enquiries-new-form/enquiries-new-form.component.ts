@@ -11,6 +11,7 @@ import { Property } from 'src/app/shared/interface/property';
 import { EnquiriesService } from '../enquiries.service';
 import { UserService } from 'src/app/user/user.service';
 import { NeedSigninContinueComponent } from 'src/app/shared/components/need-signin-continue/need-signin-continue.component';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-enquiries-new-form',
@@ -37,7 +38,8 @@ export class EnquiriesNewFormComponent {
     private modalCtrl: ModalController,
     private toastCtrl: ToastController,
     private enquiriesService: EnquiriesService,
-    private userService: UserService
+    private userService: UserService,
+    private restriction: RestrictionService
   ) {
     this.enquiryForm = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(8)]],
@@ -55,6 +57,12 @@ export class EnquiriesNewFormComponent {
       return;
     }
     this.submitting = true;
+
+    if(this.restriction.restricted) {
+      this.modalCtrl.dismiss();
+      return this.restriction.showAlert();
+    }
+
     if (!this.userService.user) {
       const modalNeedSignin = await this.modalCtrl.create({
         component: NeedSigninContinueComponent,

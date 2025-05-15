@@ -6,7 +6,8 @@ export const authProperties = {
     fullName: { type: "string" },
     accessToken: { type: "string" },
     about: { type: "string" },
-    address: { type: "string" }
+    address: { type: "string" },
+    verified: { type: "boolean" }
   },
 };
 Object.freeze(authProperties);

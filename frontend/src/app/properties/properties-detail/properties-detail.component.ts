@@ -11,6 +11,7 @@ import { PropertiesUploadsComponent } from '../properties-uploads-modal/properti
 import { UserService } from 'src/app/user/user.service';
 import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 import { TransactionType } from 'src/app/shared/enums/property';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-properties-detail',
@@ -33,7 +34,8 @@ export class PropertiesDetailComponent implements OnInit {
     private popoverCtrl: PopoverController,
     public modalController: ModalController,
     private toastCtrl: ToastController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private restriction: RestrictionService
   ) { }
 
   async ngOnInit() {
@@ -57,6 +59,9 @@ export class PropertiesDetailComponent implements OnInit {
       return;
     }
     if (data.action === 'delete') {
+      if(this.restriction.restricted) {
+        return this.restriction.showAlert();
+      }
       this.deleteProperty(this.property().property_id)
     }
     if (data.action === 'edit') {

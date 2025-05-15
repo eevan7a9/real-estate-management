@@ -15,19 +15,19 @@
   <ion-tabs>
     <ion-tab-bar slot="top">
       <ion-tab-button tab="profile">
-        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-icon size="large" name="person-circle-outline"></ion-icon>
         <ion-label>Profile</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="change-password">
-        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-icon size="large" name="lock-closed-outline"></ion-icon>
         <ion-label>Change Password</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="notifications">
-        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-icon size="large" name="notifications-outline"></ion-icon>
         <ion-label>Notifications</ion-label>
-        <ion-badge color="primary" *ngIf="unreadNotifications()">
+        <ion-badge class="flex justify-center items-center size-[20px] rounded-full text-[14px]! font-bold bg-red-600" color="primary" *ngIf="unreadNotifications()">
           {{ unreadNotifications() }}
         </ion-badge>
       </ion-tab-button>

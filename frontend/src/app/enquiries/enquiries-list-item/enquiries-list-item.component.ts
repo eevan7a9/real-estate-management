@@ -5,6 +5,7 @@ import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { UserService } from 'src/app/user/user.service';
 import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-enquiries-list-item',
@@ -15,7 +16,6 @@ import { EnquiriesService } from '../enquiries.service';
 export class EnquiriesListItemComponent {
 
   public enquiry = input<Enquiry>();
-  // public sent = false;
   public sent = computed(() => this.userService.user.user_id === this.enquiry().users.from.user_id)
 
   constructor(
@@ -24,14 +24,9 @@ export class EnquiriesListItemComponent {
     private popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
-    public userService: UserService
+    public userService: UserService,
+    private restriction: RestrictionService
   ) { }
-
-  /** 
-  *  ngOnInit() {
-  *   this.sent = this.userService.user.user_id === this.enquiry().users.from.user_id;
-  *  }
-  */
 
   public async actionPopup(ev: Event, enqId: string) {
     ev.stopPropagation();
@@ -60,8 +55,10 @@ export class EnquiriesListItemComponent {
     }
   }
 
-
   public async delete(enqId: string) {
+    if(this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-alert-class',
       header: 'Delete Enquiry',

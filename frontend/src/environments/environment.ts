@@ -19,8 +19,9 @@ export const environment = {
     },
   },
   features: {
-    restrictedMode: false,
-    restrictedMessage: 'This feature is restricted in demo mode.',
+    restrictedMode: true,
+    restrictedHeading: 'Restricted',
+    restrictedMessage: 'This feature is currently disabled in this mode.',
   },
 };
 

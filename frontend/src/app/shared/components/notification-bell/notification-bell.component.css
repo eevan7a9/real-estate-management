@@ -1,0 +1,7 @@
+ion-content {
+  --background: var(--ion-background-color-step-100);
+}
+
+ion-popover {
+  --min-width: 400px;
+}
