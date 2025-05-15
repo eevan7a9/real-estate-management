@@ -29,6 +29,7 @@ export class NotificationsComponent {
   public isLoading = signal<boolean>(false);
 
   private notificationsToRead: string[] = [];
+  private processingNotificationRead = false;
 
   @ViewChildren('notificationElement', { read: ElementRef })
   private notificationElements: QueryList<ElementRef<IonItem>>;
@@ -118,16 +119,18 @@ export class NotificationsComponent {
   }
 
   private setNotificationAsRead = debounce(async () => {
-    if (!this.notificationsToRead.length) {
+    if (!this.notificationsToRead.length || this.processingNotificationRead) {
       return;
     }
+    this.processingNotificationRead = true;
     const res = await this.notificationsService.readNotification(
       this.notificationsToRead
     );
     if (!res.data?.length) {
       return;
     }
-    this.notificationsService.setNotificationsAsReadFromState(res.data.map(item => item.notification_id));
     this.notificationsToRead = [];
+    this.processingNotificationRead = false;
+    this.notificationsService.setNotificationsAsReadFromState(res.data.map(item => item.notification_id));
   }, 3000);
 }
