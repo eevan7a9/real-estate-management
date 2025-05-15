@@ -9,6 +9,7 @@ import { UserService } from 'src/app/user/user.service';
 import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-enquiries-detail',
@@ -37,7 +38,8 @@ export class EnquiriesDetailComponent implements OnInit {
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private restriction: RestrictionService
   ) {
 
   }
@@ -66,13 +68,6 @@ export class EnquiriesDetailComponent implements OnInit {
     }
   }
 
-  // public sentByMe(): boolean {
-  //   if (this.user && this.enquiry) {
-  //     return this.user().user_id === this.enquiry().users.from.user_id;
-  //   }
-  //   return false;
-  // }
-
   public async report(enqId: string) {
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-alert-class',
@@ -98,6 +93,9 @@ export class EnquiriesDetailComponent implements OnInit {
   }
 
   public async delete(enqId: string) {
+    if(this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-alert-class',
       header: 'Delete Enquiry',

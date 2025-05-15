@@ -13,6 +13,7 @@ import { NotificationsService } from './notifications.service';
 import { CheckboxCustomEvent, IonItem, ToastController } from '@ionic/angular';
 import { debounce } from 'src/app/shared/utility/helpers';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-notifications',
@@ -35,7 +36,8 @@ export class NotificationsComponent {
   constructor(
     private notificationsService: NotificationsService,
     private toast: ToastController,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private restriction: RestrictionService
   ) {
     effect(() => {
       if (this.notifications().length) {
@@ -71,6 +73,9 @@ export class NotificationsComponent {
   }
 
   public async deleteSelectedNotfications(): Promise<void> {
+    if(this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
     if (!this.notificationsChecked().length) {
       return;
     }
@@ -79,11 +84,7 @@ export class NotificationsComponent {
       this.notificationsChecked()
     );
     if (res?.status === 200) {
-      this.notificationsService.notifications = this.notifications().filter(
-        (item) => {
-          return !this.notificationsChecked().includes(item.notification_id);
-        }
-      );
+      this.notificationsService.removeNotificationsFromState(this.notificationsChecked());
     }
     const toast = this.toast.create({
       duration: 5000,
@@ -126,18 +127,7 @@ export class NotificationsComponent {
     if (!res.data?.length) {
       return;
     }
-    const readNotifications = res.data;
-    const tempNotifications = this.notifications();
-
-    readNotifications.forEach((item) => {
-      const found = tempNotifications.find(
-        (noti) => noti.notification_id === item.notification_id
-      );
-      if (found) {
-        found.read = true;
-      }
-    });
-    this.notificationsService.notifications = tempNotifications;
+    this.notificationsService.setNotificationsAsReadFromState(res.data.map(item => item.notification_id));
     this.notificationsToRead = [];
   }, 3000);
 }

@@ -6,6 +6,11 @@
         <ion-icon name="arrow-back-outline" style="font-size: 28px"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <ion-buttons slot="end">
+      <app-notification-bell class="lg:mr-3"  />
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -20,7 +25,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeXl="8" class="px-3">
-          <ion-card class="property-identity">
+          <ion-card class="property-identity border border-slate-200 dark:border-slate-800">
             <ion-card-content>
               <div class="name">
                 <ion-text type="dark">{{ property().name }}</ion-text>
@@ -50,7 +55,7 @@
             #propertiesGallery
           ></app-properties-gallery>
 
-          <ion-card class="shadow-none my-4 mx-0">
+          <ion-card class="shadow-none my-4 mx-0 border border-slate-200 dark:border-slate-800">
             <ion-card-header class="px-4 py-2">
               Transaction Type
               <span class="capitalize text-[20px] font-semibold">
@@ -59,7 +64,7 @@
             </ion-card-header>
           </ion-card>
 
-          <ion-card class="shadow-none my-4 mx-0">
+          <ion-card class="shadow-none my-4 mx-0 border border-slate-200 dark:border-slate-800">
             <ion-card-header class="px-4 py-2"> Description </ion-card-header>
             <ion-card-content class="text-[16px]! lg:text-[18px]!">
               {{ property().description }}
@@ -67,7 +72,7 @@
           </ion-card>
 
           <ion-card
-            class="property-features shadow-none my-4 mx-0"
+            class="property-features shadow-none my-4 mx-0 border border-slate-200 dark:border-slate-800"
             *ngIf="property().features && property().features.length"
           >
             <ion-card-header class="px-4 py-2"> Features </ion-card-header>
@@ -85,14 +90,14 @@
             </ion-card-content>
           </ion-card>
 
-          <ion-card class="shadow-none">
+          <ion-card class="shadow-none border border-slate-200 dark:border-slate-800">
             <ion-card-header class="px-4 py-2"> Address </ion-card-header>
             <ion-card-content class="lg:text-[18px]">
               {{ property().address }}
             </ion-card-content>
           </ion-card>
 
-          <ion-card class="shadow-none mt-4" *ngIf="property().price">
+          <ion-card class="shadow-none mt-4 border border-slate-200 dark:border-slate-800" *ngIf="property().price">
             <ion-card-header class="px-4 py-2"> Price </ion-card-header>
             <ion-card-content class="price">
               <span class="text-[20px] lg:text-[24px] font-medium">
@@ -115,7 +120,7 @@
               <app-enquiries-related-list [propertyId]="property().property_id" />
             </div>
           } @else {
-            <ion-card class="enquiry-section">
+            <ion-card class="enquiry-section border border-slate-200 dark:border-slate-800">
               <ion-card-header class="px-4 py-2">
                 <ion-card-title> Enquire for more Information </ion-card-title>
               </ion-card-header>

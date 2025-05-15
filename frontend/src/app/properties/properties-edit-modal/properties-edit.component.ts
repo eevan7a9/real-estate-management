@@ -5,12 +5,13 @@ import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-properties-edit',
-    templateUrl: './properties-edit.component.html',
-    styleUrls: ['./properties-edit.component.css'],
-    standalone: false
+  selector: 'app-properties-edit',
+  templateUrl: './properties-edit.component.html',
+  styleUrls: ['./properties-edit.component.css'],
+  standalone: false
 })
 export class PropertiesEditComponent implements OnInit {
   public propertyForm: UntypedFormGroup;
@@ -73,7 +74,8 @@ export class PropertiesEditComponent implements OnInit {
     private modalCtrl: ModalController,
     private formBuilder: UntypedFormBuilder,
     private propertiesService: PropertiesService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private restriction: RestrictionService
   ) {
     this.propertyForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(4)]],
@@ -169,6 +171,11 @@ export class PropertiesEditComponent implements OnInit {
   }
 
   private async updateProperty(property: Property): Promise<void> {
+    if (this.restriction.restricted) {
+      this.modalCtrl.dismiss();
+      return this.restriction.showAlert();
+    }
+
     const res = await this.propertiesService.updateProperty(property);
     if (res.status === 200 || res.status === 201) {
       const toast = await this.toastCtrl.create({

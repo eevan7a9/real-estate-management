@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
     selector: 'app-properties-uploads',
@@ -17,7 +18,8 @@ export class PropertiesUploadsComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private propertiesService: PropertiesService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private restriction: RestrictionService
   ) { }
 
   ngOnInit() { }
@@ -45,6 +47,9 @@ export class PropertiesUploadsComponent implements OnInit {
   }
 
   public async upload() {
+    if(this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
     if (!this.selectedFiles) {
       return this.presentToast('Please, select images to upload.', 300, 'danger');
     }

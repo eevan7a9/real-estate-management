@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-change-password',
-    templateUrl: './change-password.component.html',
-    styleUrls: ['./change-password.component.css'],
-    standalone: false
+  selector: 'app-change-password',
+  templateUrl: './change-password.component.html',
+  styleUrls: ['./change-password.component.css'],
+  standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
   public error = false;
@@ -19,7 +19,7 @@ export class ChangePasswordComponent implements OnInit {
     private fb: UntypedFormBuilder,
     private user: UserService,
     private toast: ToastController,
-    private router: Router
+    private restriction: RestrictionService,
   ) {
 
     const passwordValidators = [
@@ -52,10 +52,12 @@ export class ChangePasswordComponent implements OnInit {
         duration: 5000,
         color: 'danger'
       });
-      toast.present();
-
-      return;
+      return toast.present();
     }
+    if (this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
+
     const passwordCurrent = this.changePassForm.value.passwordCurrent;
     const passwordNew = this.changePassForm.value.passwordNew;
     const res = await this.user.changePassword(passwordNew, passwordCurrent);

@@ -1,0 +1,72 @@
+<ion-button
+  id="notificationBell"
+  (click)="toggleNotification()"
+  class="p-0! relative"
+  [disabled]="!currUser()?.accessToken"
+  id="notificationBell"
+>
+  @if (currUser()?.accessToken) {
+  <ion-icon name="notifications" color="primary" size="large"></ion-icon>
+  } @else {
+  <ion-icon name="notifications-off" color="primary" size="large"></ion-icon>
+  }
+  <ion-badge
+    class="absolute bg-red-600 text-white font-semibold top-1 -left-2 size-5 text-[12px]! flex justify-center items-center rounded-full border border-slate-200 dark:border-slate-800"
+    *ngIf="unreadNotifications().length"
+  >
+    {{ unreadNotifications().length }}
+  </ion-badge>
+</ion-button>
+
+<ion-popover
+  trigger="notificationBell"
+  triggerAction="click"
+  [isOpen]="isOpen()"
+  (didDismiss)="isOpen.set(false)"
+  side="bottom"
+  alignment="start"
+>
+  <ng-template>
+    <ion-content class="ion-padding min-w-[300px]!">
+      <h1 class="text-[16px]! md:text-[20px]! font-light m-0! p-0!">
+        Notifications
+      </h1>
+      <ion-list lines="none" class="flex! flex-col! gap-1! bg-transparent!">
+        @for (notification of notifications(); track $index) {
+        <ion-item
+          class="group p-2 bg-white dark:bg-dark rounded-md border border-slate-200 dark:border-slate-800 text-[14px]!"
+        >
+          <div class="flex flex-col w-full!">
+            <app-notification-badge [notificationType]="notification.type" />
+            <p
+              class="w-full flex justify-between items-start text-[13px]!"
+              [ngClass]="{ 'font-bold': !notification.read }"
+            >
+              <span class="text-ellipsis line-clamp-1 group-hover:line-clamp-none">
+                {{ notification.message }}
+              </span>
+
+              <button
+                (click)="deleteNotification(notification.notification_id)"
+                class="hover:bg-danger-shade py-1! px-2! ml-1! rounded-md! bg-danger border-slate-200 dark:border-slate-800"
+              >
+                <ion-icon name="trash" size="30px" color="light"></ion-icon>
+              </button>
+            </p>
+          </div>
+        </ion-item>
+        }
+      </ion-list>
+
+      <div class="flex justify-center py-3 w-full">
+        <ion-button
+          (click)="viewAll()"
+          size="small"
+          fill="outline"
+          class="shadow-none"
+          >View All Notifications</ion-button
+        >
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-popover>

@@ -26,7 +26,7 @@ ion-content {
   background-color: var(--ion-color-primary);
   color: var(--ion-colo-light);
 }
-.app-use-info {
+/* .app-use-info {
   padding: 16px 0;
 }
 .app-use-info .item {
@@ -42,7 +42,7 @@ ion-content {
 .app-use-info .item ion-text {
   font-size: 16px;
   margin-right: 4px;
-}
+} */
 .form-information ion-item {
   --inner-padding-end: 0;
   --inner-padding-start: 0;

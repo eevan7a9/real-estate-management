@@ -13,7 +13,7 @@
               </div>
             </div>
           </ion-list-header>
-          <!-- <ion-note></ion-note> -->
+
           <ion-menu-toggle
             auto-hide="false"
             *ngFor="let p of appPages; let i = index"
@@ -55,10 +55,6 @@
                   [md]="page.icon + '-sharp'"
                 ></ion-icon>
                 <ion-label class="mx-2 lg:mx-3">{{ page.title || "Menu Item" }}</ion-label>
-                <ion-badge slot="end" *ngIf="page.title === 'Account' && unreadNotifications()">
-                  {{ unreadNotifications() }}
-                </ion-badge>
-
               </ion-item>
             </ion-menu-toggle>
           }

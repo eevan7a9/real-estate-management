@@ -9,6 +9,7 @@ import {
 import { ToastController } from '@ionic/angular';
 import { PropertiesService } from '../../properties.service';
 import { register } from 'swiper/element/bundle';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 register();
 
@@ -35,7 +36,8 @@ export class PropertiesCurrentImagesComponent implements OnInit {
 
   constructor(
     private propertyService: PropertiesService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private restriction: RestrictionService
   ) {}
 
   ngOnInit() {}
@@ -60,6 +62,9 @@ export class PropertiesCurrentImagesComponent implements OnInit {
   }
 
   public async deleteSelected() {
+    if(this.restriction.restricted) {
+      return this.restriction.showAlert();
+    }
     const { data, message } = await this.propertyService.deletePropertyImage(
       this.selectedImages,
       this.id

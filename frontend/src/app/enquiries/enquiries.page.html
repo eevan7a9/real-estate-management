@@ -3,6 +3,7 @@
     <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">Enquiries Page</ion-title>
 
     <ion-buttons slot="end">
+      <app-notification-bell class="lg:mr-3"  />
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
@@ -69,7 +70,7 @@
   @if (!user()) {
     <app-need-signin-continue></app-need-signin-continue>
   }
-  <div class="max-w-screen-2xl mx-auto h-full pt-8 xl:pt-12" *ngIf="user()">
+  <div class="min-h-screen max-w-screen-2xl mx-auto h-full pt-8 xl:pt-12" *ngIf="user()">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
@@ -80,4 +81,6 @@
       #enquiriesList
     ></app-enquiries-list>
   </div>
+  <app-footer></app-footer>
 </ion-content>
+

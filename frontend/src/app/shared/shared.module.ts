@@ -14,6 +14,8 @@ import { MapSearchFieldComponent } from '../map/map-search-field/map-search-fiel
 import { FooterComponent } from './components/footer/footer.component';
 import { RouterLinkWithHref } from '@angular/router';
 import { NeedSigninContinueComponent } from './components/need-signin-continue/need-signin-continue.component';
+import { NotificationBellComponent } from './components/notification-bell/notification-bell.component';
+import { NotificationBadgeComponent } from './components/notification-badge/notification-badge.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +28,16 @@ import { NeedSigninContinueComponent } from './components/need-signin-continue/n
     MapLeafletComponent,
     MapSearchFieldComponent,
     FooterComponent,
-    NeedSigninContinueComponent
+    NeedSigninContinueComponent,
+    NotificationBellComponent,
+    NotificationBadgeComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterLinkWithHref
+    RouterLinkWithHref,
   ],
   exports: [
     FormsModule,
@@ -47,7 +51,9 @@ import { NeedSigninContinueComponent } from './components/need-signin-continue/n
     MapLeafletComponent,
     MapSearchFieldComponent,
     FooterComponent,
-    NeedSigninContinueComponent
+    NeedSigninContinueComponent,
+    NotificationBellComponent,
+    NotificationBadgeComponent,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

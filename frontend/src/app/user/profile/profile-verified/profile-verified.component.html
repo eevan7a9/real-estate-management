@@ -1,0 +1,12 @@
+<ul class="flex items-center justify-center gap-3 py-3">
+  <li class="flex items-center gap-1">
+    @if(user().verified) {
+    <ion-icon name="checkmark-circle" color="primary" size="large"></ion-icon>
+    } @else {
+    <ion-icon name="close-circle" color="medium" size="large"></ion-icon>
+    }
+    <span class="md:text-[18px] font-bold text-dark dark:text-white">
+      {{ user().verified ? "Account Verified" : "Account Not Verified" }}
+    </span>
+  </li>
+</ul>

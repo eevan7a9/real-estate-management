@@ -70,6 +70,21 @@ export class NotificationsService {
     }
   }
 
+  public removeNotificationsFromState(ids: string[]) {
+    this.notifications = this.notifications.filter((item) => {
+      return !ids.includes(item.notification_id);
+    });
+  }
+
+  public setNotificationsAsReadFromState(ids: string[]) {
+    const updatedNotifications = this.notifications.map(notification =>
+      ids.includes(notification.notification_id)
+        ? { ...notification, read: true }
+        : notification
+    );
+    this.notifications = updatedNotifications;
+  }
+
   public async deleteNotification(id: string | string[]): Promise<ApiResponse> {
     try {
       const res = await firstValueFrom(

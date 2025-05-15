@@ -6,12 +6,13 @@ import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/
 import { PropertiesService } from '../properties.service';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { Property } from 'src/app/shared/interface/property';
+import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-properties-new',
-    templateUrl: './properties-new.component.html',
-    styleUrls: ['./properties-new.component.css'],
-    standalone: false
+  selector: 'app-properties-new',
+  templateUrl: './properties-new.component.html',
+  styleUrls: ['./properties-new.component.css'],
+  standalone: false
 })
 export class PropertiesNewComponent implements OnInit {
   public propertyForm: UntypedFormGroup;
@@ -77,6 +78,7 @@ export class PropertiesNewComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController,
+    private restriction: RestrictionService
   ) {
     this.propertyForm = this.formBuilder.group({
       // Step 1
@@ -100,7 +102,7 @@ export class PropertiesNewComponent implements OnInit {
   public async submit(): Promise<void> {
     if (this.step === 1 && this.validateStepOne()) {
       this.step = 2;
-      return
+      return;
     } else if (this.step === 2 && this.validateStepTwo()) {
       this.isSubmit = true;
       const ft = this.propertyForm.get('features').value;
@@ -110,6 +112,11 @@ export class PropertiesNewComponent implements OnInit {
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty = { ...this.propertyForm.value, ...{ position: { lat, lng }, date: new Date() } };
+
+      if (this.restriction.restricted) {
+        this.modalCtrl.dismiss();
+        return this.restriction.showAlert();
+      }
       await this.addProperty(newProperty);
     } else {
       this.presentToast('Error: Invalid, please fill the form properly', 'danger');

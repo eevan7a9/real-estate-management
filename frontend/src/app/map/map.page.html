@@ -1,9 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]"
-      >Map Page</ion-title
-    >
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">
+      Map Page
+    </ion-title>
     <ion-buttons slot="end">
+      <app-notification-bell class="lg:mr-3" />
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
@@ -42,7 +43,9 @@
           ></app-properties-list>
 
           <div class="pt-1">
-            <ion-card class="shadow-none border border-slate-200 dark:border-slate-800 h-[525px]! mx-2!">
+            <ion-card
+              class="shadow-none border border-slate-200 dark:border-slate-800 h-[525px]! mx-2!"
+            >
               <div class="flex items-center justify-center h-full">
                 <ion-button
                   color="primary"
