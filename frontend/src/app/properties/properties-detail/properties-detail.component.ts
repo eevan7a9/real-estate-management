@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
@@ -14,10 +14,10 @@ import { TransactionType } from 'src/app/shared/enums/property';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-properties-detail',
-    templateUrl: './properties-detail.component.html',
-    styleUrls: ['./properties-detail.component.css'],
-    standalone: false
+  selector: 'app-properties-detail',
+  templateUrl: './properties-detail.component.html',
+  styleUrls: ['./properties-detail.component.css'],
+  standalone: false
 })
 export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
@@ -35,7 +35,8 @@ export class PropertiesDetailComponent implements OnInit {
     public modalController: ModalController,
     private toastCtrl: ToastController,
     private route: ActivatedRoute,
-    private restriction: RestrictionService
+    private restriction: RestrictionService,
+    private alert: AlertController
   ) { }
 
   async ngOnInit() {
@@ -55,25 +56,26 @@ export class PropertiesDetailComponent implements OnInit {
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();
-    if (!data) {
-      return;
-    }
-    if (data.action === 'delete') {
-      if(this.restriction.restricted) {
-        return this.restriction.showAlert();
-      }
-      this.deleteProperty(this.property().property_id)
-    }
-    if (data.action === 'edit') {
-      this.editModal();
-    }
-    if (data.action === 'report') {
-      const toast = await this.toastCtrl.create({
-        message: 'Success, we will take a look at this property.',
-        color: 'danger',
-        duration: 5000
-      });
-      toast.present();
+    switch (data?.action) {
+      case 'delete':
+        if (this.restriction.restricted) {
+          return this.restriction.showAlert();
+        }
+        return this.deleteConfirmation();
+
+      case 'edit':
+        return this.editModal()
+
+      case 'report':
+        this.toastCtrl.create({
+          message: 'Success, we will take a look at this property.',
+          color: 'warning',
+          duration: 5000
+        }).then(e => e.present());
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -112,6 +114,28 @@ export class PropertiesDetailComponent implements OnInit {
     }).finally(() => this.ready.set(true))
   }
 
+  private async deleteConfirmation(): Promise<void> {
+    this.alert.create({
+      cssClass: 'my-custom-alert-class',
+      header: 'Are you sure?',
+      message: 'You are about to delete this property? This action cannot be undone.',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => { },
+        },
+        {
+          text: 'DELETE',
+          role: 'destructive',
+          cssClass: 'alert-danger-text',
+          handler: () => {
+            this.deleteProperty(this.property().property_id);
+          },
+        },
+      ],
+    }).then(e => e.present());
+  }
+
   private async deleteProperty(id: string): Promise<void> {
     const res = await this.propertiesService.removeProperty(id);
     if (res.status === 200) {
@@ -135,7 +159,7 @@ export class PropertiesDetailComponent implements OnInit {
     });
     await modal.present();
     const { data } = await modal.onDidDismiss();
-    if (data.property) {
+    if (data?.property) {
       this.property.set(data.property);
     }
   }

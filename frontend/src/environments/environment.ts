@@ -19,7 +19,7 @@ export const environment = {
     },
   },
   features: {
-    restrictedMode: true,
+    restrictedMode: false,
     restrictedHeading: 'Restricted',
     restrictedMessage: 'This feature is currently disabled in this mode.',
   },
