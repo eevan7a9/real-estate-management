@@ -1,36 +1,53 @@
 <div class="mt-4 xl:mt-5">
   <ion-grid>
     <ion-row class="ion-align-items-center">
-      <ion-col size="12" class="ion-no-padding">
-        <div class="heading flex items-center pb-3">
-          <ion-text type="dark">Change Default Coordinates</ion-text>
-          <ion-button size="small" class="ion-margin-start" (click)="openMap()">
-            open map <ion-icon name="map-outline"></ion-icon>
-          </ion-button>
-        </div>
+      <ion-col size="12" class="ion-no-padding flex flex-col lg:flex-row justify-start! lg:items-center">
+        <ion-text class="mr-2! text-[24px]! font-bold" type="dark">
+          Change Default Coordinates
+        </ion-text>
+
+        <button
+          class="bg-primary text-white flex items-center justify-between w-[140px] px-2! pl-3! py-1! rounded-sm!"
+          (click)="openMap()"
+        >
+          <span class="mr-2 text-[16px]! capitalize">open map</span>
+          <ion-icon name="locate-outline" size="large"></ion-icon>
+        </button>
       </ion-col>
 
       <ion-col size="12" sizeLg="6">
         <ion-list color="light">
           <ion-item>
-          <ion-input color="dark" label="Latitude:" [(ngModel)]="coord.lat"></ion-input>
-        </ion-item>
-      </ion-list>
+            <ion-input
+              color="dark"
+              label="Latitude:"
+              [(ngModel)]="coord.lat"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
       </ion-col>
 
       <ion-col size="12" sizeLg="6">
         <ion-list color="light">
           <ion-item>
-            <ion-input color="dark" label="Longitude:" [(ngModel)]="coord.lng"></ion-input>
+            <ion-input
+              color="dark"
+              label="Longitude:"
+              [(ngModel)]="coord.lng"
+            ></ion-input>
           </ion-item>
         </ion-list>
       </ion-col>
 
       <ion-col size="12" class="mt-3">
-        <ion-button color="primary" (click)="setCoord()">
-          set Coordinates</ion-button
+        <ion-button class="w-full md:w-auto" color="primary" (click)="setCoord()">
+          set Coordinates
+        </ion-button>
+        <ion-button
+          color="light"
+          class="md:ml-3 mt-3 md:mt-0 w-full md:w-auto"
+          (click)="resetCoord()"
         >
-        <ion-button color="light" class="ion-margin-start" (click)="resetCoord()">
           Reset Coordinates
         </ion-button>
       </ion-col>
