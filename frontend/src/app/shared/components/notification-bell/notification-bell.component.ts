@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { map } from 'rxjs';
@@ -36,7 +36,7 @@ export class NotificationBellComponent {
     private router: Router,
     private restriction: RestrictionService
   ) {
-    toObservable(this.isOpen).subscribe((isOpen) => {
+    toObservable(this.isOpen).pipe(takeUntilDestroyed()).subscribe((isOpen) => {
       if (isOpen && this.unreadNotifications().length) {
         this.setReadNotifications();
       }
