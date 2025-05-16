@@ -29,6 +29,8 @@
                 [value]="filterBy()"
                 label="Filter:"
                 (ionChange)="setFilters($event)"
+                okText="Confirm"
+                cancelText="Dismiss"
               >
                 <ion-select-option
                   *ngFor="let filter of filters"
@@ -46,7 +48,7 @@
             <ion-item lines="none">
               <ion-select
                 [value]="sortBy()"
-                okText="Okay"
+                okText="Confirm"
                 label="Sort by:"
                 cancelText="Dismiss"
                 (ionChange)="setSort($event)"

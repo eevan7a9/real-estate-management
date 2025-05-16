@@ -32,7 +32,7 @@
               ></ion-icon>
               <ion-label class="mx-2  lg:mx-3">{{ p.title || "Menu Item" }}</ion-label>
               <!-- badge counter for unread messages -->
-              <ion-badge slot="end" *ngIf="p.title === 'Enquiries' && unreadEnquiries()">
+              <ion-badge class="p-1 font-light" slot="end" *ngIf="p.title === 'Enquiries' && unreadEnquiries()">
                 {{ unreadEnquiries() }}
               </ion-badge>
             </ion-item>
