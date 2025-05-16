@@ -27,10 +27,14 @@
   alignment="start"
 >
   <ng-template>
-    <ion-content class="ion-padding min-w-[300px]!">
+    <ion-content
+      class="ion-padding min-w-[300px]!"
+      *ngIf="notifications().length"
+    >
       <h1 class="text-[16px]! md:text-[20px]! font-light m-0! p-0!">
         Notifications
       </h1>
+
       <ion-list lines="none" class="flex! flex-col! gap-1! bg-transparent!">
         @for (notification of notifications(); track $index) {
         <ion-item
@@ -42,7 +46,9 @@
               class="w-full flex justify-between items-start text-[13px]!"
               [ngClass]="{ 'font-bold': !notification.read }"
             >
-              <span class="text-ellipsis line-clamp-1 group-hover:line-clamp-none">
+              <span
+                class="text-ellipsis line-clamp-1 group-hover:line-clamp-none"
+              >
                 {{ notification.message }}
               </span>
 
@@ -64,9 +70,16 @@
           size="small"
           fill="outline"
           class="shadow-none"
-          >View All Notifications</ion-button
         >
+          View All Notifications
+        </ion-button>
       </div>
     </ion-content>
+
+    <ion-card-content class="text-[18px]!" *ngIf="!notifications().length">
+      <div class="h-[100px] flex justify-center items-center">
+        You have no notifications.
+      </div>
+    </ion-card-content>
   </ng-template>
 </ion-popover>
