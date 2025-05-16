@@ -516,8 +516,8 @@
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
-  .w-\[140px\] {
-    width: 140px;
+  .w-\[150px\] {
+    width: 150px;
   }
   .w-\[180px\] {
     width: 180px;
