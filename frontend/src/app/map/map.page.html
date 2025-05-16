@@ -23,7 +23,7 @@
           ></app-map-search-field>
           <app-map-leaflet
             #mapLeaflet
-            [visibleMarkerType]="visibleType"
+            [visibleMarkerType]="visibleType()"
           ></app-map-leaflet>
           <app-map-markers-legend
             (toggledMarker)="setVisibleMarkerType($event)"
