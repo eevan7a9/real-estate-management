@@ -1,22 +1,45 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/eevan7a9/real-estate-management?style=social)](https://github.com/eevan7a9/real-estate-management/stargazers)
 [![License](https://img.shields.io/badge/License-Apache_License_2.0-blue.svg)](LICENSE)
+
+
 # real-estate-management
 
-A online property management solution for real estate and
-physical property management. This can include residential,
-commercial, and land real estate. a software developed to
-connect property managers and potential buyers.
+A web and mobile property management solution built with Ionic, Angular and Nodejs Fastify.
+Designed for managing residential, commercial, and land properties the app allows users to explore available estates via an interactive map and directly send inquiries to property owners.
+
 
 🚧 **frontend/** work in progress 🚧.
 
 🚧 **backend-fastify/** work in progress 🚧.
 
-**[LIVE DEMO](https://real-estate-management.netlify.app/)**
+### **[LIVE WEB PREVIEW](https://real-estate-management.netlify.app/)**
 
-![Screenshot](https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/social_GKmc-8vHw.jpg?updatedAt=1631134174081)
+# 🎨 Themes
+## 📱 Android (Pixel 7)
+<p float="left">
+  <img src="./screenshots/mobile-light.webp" width="200" style="margin-right: 20px;"/>
+  <img src="./screenshots/mobile-dark.webp" width="200"/>
+</p>
+
+## 💻 Desktop Browser
+### ☀️ Light Theme
+
+<p float="left">
+  <img src="./screenshots/map-light.webp" width="350" style="margin-right:8px" />
+  <img src="./screenshots/list-light.webp" width="350" style="margin-right:8px" />
+  <img src="./screenshots/detail-light.webp" width="350" />
+</p>
+
+### 🌙 Dark Theme
+
+<p float="left">
+  <img src="./screenshots/map-dark.webp" width="350" style="margin-right:8px" />
+  <img src="./screenshots/list-dark.webp" width="350" style="margin-right:8px" />
+  <img src="./screenshots/detail-dark.webp" width="350" />
+</p>
 
 
-## **Dependencies**
+# **🗃️ Dependencies**
 
 ### **Frontend**
 - [Ionic 8+](https://ionicframework.com/)
@@ -30,9 +53,9 @@ connect property managers and potential buyers.
 - [fastify 4+](https://www.fastify.io/)
 - [mongoDB](https://www.mongodb.com/)
 
-# **SETUP**
+# **🧑‍💻 SETUP**
 
-## **Frontend (Part)**
+## **Frontend web setup**
 
 ### **1.1 navigate to `frontend/` directory.**
 
@@ -72,10 +95,31 @@ $ npm run tailwind:build
 # Build to Generate styles & Watch
 $ npm run tailwind:watch
 ```
+## **📱 Android setup**
+
+sync any chages from web to android:
+```
+npx cap sync android
+```
+
+If Android is not available **(Optional)**
+```
+npx cap add android
+```
+
+run to open Android Studio
+```
+npx cap open android
+```
+
+To run the project on Emulator or Device **(Alternative)**
+```
+npx cap run android
+```
 
 <br>
 
-## **Backend-Fastify (Part)**
+## **Backend-Fastify setup**
 ### **1.1 navigate to `backend-fastify/` directory.**
 ```
 cd backend-fastify/
