@@ -13,7 +13,8 @@ export const environment = {
     },
   },
   features: {
-    demoMode: false,
-    demoRestrictedMessage: 'This feature is restricted in demo mode.',
+    restrictedMode: false,
+    restrictedHeading: 'Restricted',
+    restrictedMessage: 'This feature is currently disabled in this mode.',
   },
 };
