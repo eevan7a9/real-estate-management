@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 import { User } from "../../src/models/user.js";
 import { Property } from "../../src/models/property.js";
 import { Enquiry } from "../../src/models/enquiry.js";
-// Import JSON data
-import users from "./data/users.json" assert { type: "json" };
-import properties from "./data/properties.json" assert { type: "json" };
-import enquiries from "./data/enquiries.json" assert { type: "json" };
+
+import users from "./data/users.json" with { type: "json" };
+import properties from "./data/properties.json" with { type: "json" };
+import enquiries from "./data/enquiries.json" with { type: "json" };
 
 dotenv.config();
 

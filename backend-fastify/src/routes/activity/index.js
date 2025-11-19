@@ -11,3 +11,4 @@ export const activitiesRoutes = function (fastify, opts, done) {
   fastify.get("/", getActivitiesOpts(fastify, getActivities));
   done();
 };
+
