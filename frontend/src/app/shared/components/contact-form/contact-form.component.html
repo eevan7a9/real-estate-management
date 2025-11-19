@@ -4,7 +4,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <form [formGroup]="contactForm" (submit)="submit()">
+    <form [formGroup]="contactForm" (ngSubmit)="submit()">
       <ion-list color="light">
         <ion-item>
           <ion-input

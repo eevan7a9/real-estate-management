@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "db:seeder": "node scripts/seeders/index.js"
+    "db:seeder": "node scripts/seeders/index.mjs"
   },
   "keywords": [
     "fastify",
@@ -28,7 +28,7 @@
     "dotenv": "^16.3.1",
     "fastify": "4.28.0",
     "fastify-bcrypt": "^1.0.1",
-    "mongoose": "^7.3.1",
+    "mongodb": "^7.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
