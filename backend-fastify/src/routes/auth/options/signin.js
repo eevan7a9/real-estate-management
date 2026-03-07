@@ -6,7 +6,7 @@ export const signInOpts = (handler) => ({
     response: {
       200: responseSuccess({
         data: authProperties,
-        message: "Success: User password changed!!!"
+        message: "Success: User is now logged in",
       }),
       400: responseError(),
       404: responseError({ status: 404 })

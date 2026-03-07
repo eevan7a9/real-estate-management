@@ -13,11 +13,12 @@ import { isPasswordValid } from "../../utils/users.js";
 export const register = async function (req, res) {
   const { fullName, email, password } = req.body;
   if (fullName && email && password) {
-    if(!isPasswordValid(password)) {
-      return res.status(400).send({ message: "Error: password is not valid" })
+    if (!isPasswordValid(password)) {
+      return res.status(400).send({ message: "Error: password is not valid" });
     }
+
     try {
-      const hashedPassword = await fastify.bcrypt.hash(password);
+      const hashedPassword = await fastify.hashPassword(password);
       const newUser = new User({
         user_id: uuidv4(),
         fullName,

@@ -3,8 +3,10 @@
     "user_id": "u01",
     "fullName": "test tester",
     "email": "test@email.com",
-    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
-    "properties": ["106ab526-72af-4446-9550-998a48d98c0c"],
+    "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
+    "properties": [
+      "106ab526-72af-4446-9550-998a48d98c0c"
+    ],
     "activities": [
       {
         "action": "ENQUIRY_NEW",
@@ -27,7 +29,7 @@
     "user_id": "u02",
     "fullName": "john doe",
     "email": "john_doe@email.com",
-    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
     "properties": [
       "comerc-434343",
       "comerc-7537a514453e",
@@ -47,7 +49,7 @@
     "user_id": "u03",
     "fullName": "jane doe",
     "email": "jane_doe@email.com",
-    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
     "properties": [
       "fef95dc0-0131-46b4-aa63-09f19898a0c8",
       "62130ae8-de7c-47f0-afa6-4f19828b5d23"
@@ -59,7 +61,7 @@
     "user_id": "u04",
     "fullName": "bread doe",
     "email": "bread_doe@email.com",
-    "password": "$2a$12$aTl.102LhEH2A81kotESTuPN47ItWYuDQ6uU6OlUvXBodZqn0Ra8a",
+    "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
     "properties": [],
     "activities": [],
     "notifications": []

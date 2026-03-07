@@ -15,11 +15,9 @@ export const signIn = async function (req, res) {
         // message: "Error: We can't find a user with that e-mail address.",
       });
     }
-    const validPassword = await fastify.bcrypt.compare(
-      password,
-      foundUser.password
-    );
-    if (!validPassword) {
+    const valid = await fastify.verifyPassword(password, foundUser.password);
+
+    if (!valid) {
       return res
         .status(400)
         .send({ message: "Error: Invalid Email or Password." });
@@ -32,7 +30,8 @@ export const signIn = async function (req, res) {
       action: ActivityType.user.login,
       description: activitySigninDescription(foundUser),
       user_id,
-    })
+    });
+
     await foundUser.save();
 
     return res.status(200).send({

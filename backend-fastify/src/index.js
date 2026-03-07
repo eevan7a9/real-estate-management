@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import Fastify from "fastify";
-import FastifyBcrypt from "fastify-bcrypt";
+// import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "@fastify/jwt";
 import FastifyMultipart from "@fastify/multipart";
 import mongoose from "mongoose";
@@ -12,6 +12,7 @@ import { setFastifyCors } from "./cors.js";
 import { setFastifyRoutes } from "./routes/index.js";
 import { setFastifyStatic } from "./static.js";
 import { setFastifyWebsocket } from "./websocket/index.js";
+import passwordPlugin from "./plugins/password.js";
 
 dotenv.config();
 
@@ -21,14 +22,12 @@ dotenv.config();
  */
 export const fastify = await Fastify({ logger: process.env.LOGGER || true });
 
+// We register Argon2 plugin
+await fastify.register(passwordPlugin);
 // We allow Multi Part Form
 fastify.register(FastifyMultipart);
 // We add Secret Key
 fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
-// We add Salt
-fastify.register(FastifyBcrypt, {
-  saltWorkFactor: Number(process.env.SALT) || 12,
-});
 // We register Websocket
 fastify.register(FastifyWebsocket, {
   options: {
