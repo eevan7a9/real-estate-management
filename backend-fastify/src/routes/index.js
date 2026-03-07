@@ -10,9 +10,12 @@ import { notificationsRoutes } from "./notifications/index.js";
  * @param {import("fastify").FastifyInstance} fastify 
  */
 export const setFastifyRoutes = function (fastify) {
-  fastify.get("/", (_, res) => {
+  fastify.get("/", async (req, reply) => {
     console.log("GET Request at base '/'");
-    res.send(true);
+    return {
+      success: true,
+      message: "Welcome to the Real Estate API. Please refer to the documentation for available endpoints.",
+    };
   });
   fastify.register(usersRoutes, { prefix: "/users" });
   fastify.register(authRoutes, { prefix: "/auth" });
