@@ -4,9 +4,10 @@ import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
-import { Property } from '../shared/interface/property';
+import { Property, PropertyEditForm, PropertyCreateForm, PropertyMap } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { requestOptions } from '../shared/utility/requests';
+import { Params } from '@angular/router';
 
 const propertyUrl = environment.api.server + 'properties';
 
@@ -16,22 +17,31 @@ const propertyUrl = environment.api.server + 'properties';
 export class PropertiesService {
   public isLoading = signal(false);
   public hasMore = signal(true);
+  public last = signal<{
+    createdAt?: string;
+    price?: string;
+    name?: string;
+    _id?: string;
+  }>({
+    createdAt: '',
+    price: '',
+    name: '',
+    _id: '',
+  });
 
   public readonly properties$: Observable<Property[] | undefined>;
+  public readonly propertiesMap$: Observable<PropertyMap[] | undefined>;
   public readonly propertiesOwned$: Observable<Property[] | undefined>;
 
-  private propertiesSub = new BehaviorSubject<Property[] | undefined>(
-    undefined
-  );
-  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(
-    undefined
-  );
-  private lastCreatedAt: string;
-  private lastPrice: string | number;
-  private lastName: string;
-  private limit = 12;
+  private propertiesSub = new BehaviorSubject<Property[] | undefined>(undefined);
+  private propertiesMapSub = new BehaviorSubject<PropertyMap[] | undefined>(undefined);
+  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(undefined);
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+  ) {
+    this.propertiesMap$ = this.propertiesMapSub.asObservable();
     this.properties$ = this.propertiesSub.asObservable();
     this.propertiesOwned$ = this.propertiesOwnedSub.asObservable();
   }
@@ -44,6 +54,14 @@ export class PropertiesService {
     this.propertiesSub.next(property);
   }
 
+  public get propertiesMap(): PropertyMap[] {
+    return this.propertiesMapSub.getValue() || [];
+  }
+
+  public set propertiesMap(property: PropertyMap[]) {
+    this.propertiesMapSub.next(property);
+  }
+
   public get propertiesOwned(): Property[] | undefined {
     return this.propertiesOwnedSub.getValue();
   }
@@ -52,216 +70,201 @@ export class PropertiesService {
     this.propertiesOwnedSub.next(property);
   }
 
-  public async fetchProperties(
-    sort = 'latest',
-    filter?: string,
-    search?: string
-  ): Promise<
+  public fetchProperties(params: string): Observable<
     ApiResponse<{
       items: Property[];
       lastCreatedAt?: string;
       lastPrice?: string;
       lastName?: string;
+      last_id?: string;
       hasMore?: boolean;
     }>
   > {
-    try {
-      const params = new URLSearchParams();
-      params.append('limit', this.limit.toString());
-      params.append('sort', sort);
-      if(search) {
-        params.append('search', search);
-      }
-      if(filter?.length) {
-        params.append('filter', filter);
-      }
-      if (this.lastCreatedAt) {
-        params.append('lastCreatedAt', this.lastCreatedAt);
-      }
-      if (this.lastPrice) {
-        params.append('lastPrice', this.lastPrice.toString());
-      }
-      if (this.lastName) {
-        params.append('lastName', this.lastName);
-      }
-      const newUrl = `${propertyUrl}?${params.toString()}`;
-      const res = await firstValueFrom(
-        this.http.get<
-          ApiResponse<{
-            items: Property[];
-            lastCreatedAt?: string;
-            lastPrice?: string;
-            lastName?: string;
-            hasMore?: boolean;
-          }>
-        >(newUrl)
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error?.error || error;
-    }
+    const newUrl = `${propertyUrl}?${params}`;
+    return this.http.get<
+      ApiResponse<{
+        items: Property[];
+        lastCreatedAt?: string;
+        lastPrice?: string;
+        lastName?: string;
+        last_id?: string;
+        hasMore?: boolean;
+      }>
+    >(newUrl);
   }
 
-  public async fetchProperty(id: string): Promise<ApiResponse<Property>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Property>>(propertyUrl + '/' + id)
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error?.error || error;
-    }
+  public fetchMapProperties(): Observable<
+    ApiResponse<PropertyMap[]>
+  > {
+    const url = `${propertyUrl}/map`;
+    return this.http.get<ApiResponse<PropertyMap[]>>(url);
   }
 
-  public async addProperty(property: Property): Promise<ApiResponse<Property>> {
+  public fetchProperty(id: string, params?: URLSearchParams): Observable<ApiResponse<Property>> {
+    const newUrl = `${propertyUrl}/${id}?${params?.toString() || ''}`;
+    return this.http.get<ApiResponse<Property>>(newUrl);
+  }
+
+  public addProperty(property: PropertyCreateForm): Observable<ApiResponse<Property>> {
     const token = this.userService.token;
-    try {
-      const res = await firstValueFrom(
-        this.http.post<ApiResponse<Property>>(
-          propertyUrl,
-          property,
-          requestOptions({ token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error.error;
-    }
+
+    return this.http.post<ApiResponse<Property>>(
+      propertyUrl,
+      property,
+      requestOptions({ token }),
+    );
   }
 
-  public async addPropertyImage(
+  public addPropertyImage(
     files: File[],
-    id: string
-  ): Promise<ApiResponse<string[]>> {
+    id: string,
+  ): Observable<ApiResponse<string[]>> {
     const formData = new FormData();
     files.forEach((file) => {
       formData.append('images', file, file.name);
     });
-    try {
-      const token = this.userService.token;
-      return await firstValueFrom(
-        this.http.post<ApiResponse<string[]>>(
-          propertyUrl + '/upload/images/' + id,
-          formData,
-          requestOptions({ token, contentType: null })
-        )
-      );
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
+
+    const token = this.userService.token;
+    return this.http.post<ApiResponse<string[]>>(
+      propertyUrl + '/upload/images/' + id,
+      formData,
+      requestOptions({ token, contentType: '' }),
+    );
   }
 
   public async deletePropertyImage(
     images: string[],
-    propId: string
-  ): Promise<ApiResponse<string[]>> {
+    propId: string,
+  ): Promise<ApiResponse<string[]> | undefined> {
     const token = this.userService.token;
     try {
       const url = `${propertyUrl}/upload/images/${propId}`;
       const res = await firstValueFrom(
         this.http.delete<ApiResponse<string[]>>(
           url,
-          requestOptions({ token }, { images })
-        )
+          requestOptions({ token }, { images }),
+        ),
       );
       return res;
     } catch (error) {
       console.error(error);
+      return undefined;
     }
   }
 
-  public async removeProperty(propId: string): Promise<ApiResponse<Property>> {
+  public removeProperty(propId: string): Observable<ApiResponse<Property>> {
     const token = this.userService.token;
-    try {
-      const url = `${propertyUrl}/${propId}`;
-      const res = await firstValueFrom(
-        this.http.delete<ApiResponse<Property>>(url, requestOptions({ token }))
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-    }
+    const url = `${propertyUrl}/${propId}`;
+    return this.http.delete<ApiResponse<Property>>(
+      url,
+      requestOptions({ token }),
+    );
   }
 
-  public async updateProperty(
-    updated: Property
-  ): Promise<ApiResponse<Property>> {
+  public updateProperty(updated: PropertyEditForm): Observable<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
-    try {
-      const token = this.userService.token;
-      const res = await firstValueFrom(
-        this.http.patch<ApiResponse<Property>>(
-          url,
-          updated,
-          requestOptions({ token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
+    const token = this.userService.token;
+    return this.http.patch<ApiResponse<Property>>(
+      url,
+      updated,
+      requestOptions({ token }),
+    );
   }
 
-  public async fetchOwnedProperties(): Promise<ApiResponse<Property[]>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Property[]>>(
-          propertyUrl + '/me',
-          requestOptions({ token: this.userService.token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-      return error.error || error;
-    }
+  public fetchOwnedProperties(): Observable<ApiResponse<Property[]>> {
+    return this.http.get<ApiResponse<Property[]>>(
+      propertyUrl + '/me',
+      requestOptions({ token: this.userService.token }),
+    );
   }
 
   public addPropertyToState(property: Property) {
     this.properties = [...this.properties, property];
-    if(this.propertiesOwned) {
+    if (this.propertiesOwned) {
       this.propertiesOwned = [...this.propertiesOwned, property];
     }
   }
 
   public removePropertyFromState(property_id: string) {
     this.properties = this.properties.filter(
-      (property) => property.property_id !== property_id
+      (property) => property.property_id !== property_id,
     );
-    if(this.propertiesOwned) {
+    if (this.propertiesOwned) {
       this.propertiesOwned = this.propertiesOwned.filter(
-        (property) => property.property_id !== property_id
+        (property) => property.property_id !== property_id,
       );
     }
   }
 
   public resetState(opts?: { skipOwned: boolean }): void {
     this.properties = [];
-    this.lastName = '';
-    this.lastPrice = '';
-    this.lastCreatedAt = '';
     if (!opts?.skipOwned) {
       this.propertiesOwned = [];
     }
   }
 
-  public setPropertiesState(
-    properties: Property[],
-    last?: {
-      lastCreatedAt?: string;
-      lastPrice?: string | number;
-      lastName?: string;
+  public async loadMore(queryParams: Params | undefined): Promise<void> {
+    if (!queryParams || this.isLoading() || !this.hasMore()) {
+      return;
     }
-  ) {
-    this.properties = [...this.properties, ...properties];
-    this.lastCreatedAt = last.lastCreatedAt ? last.lastCreatedAt : '';
-    this.lastPrice = last.lastPrice ? last.lastPrice : '';
-    this.lastName = last.lastName ? last.lastName : '';
-    return;
+
+    try {
+      this.isLoading.set(true);
+      const params = this.buildPaginationParams(queryParams);
+      const res = await firstValueFrom(
+        this.fetchProperties(params)
+      );
+
+      const items = res.data?.items ?? [];
+
+      if (items.length) {
+        this.properties = [...this.properties, ...items];
+      }
+
+      this.hasMore.set(Boolean(res.data?.hasMore));
+
+      if (res.data?.hasMore) {
+        this.last.set({
+          createdAt: res.data.lastCreatedAt?.toString(),
+          price: res.data.lastPrice?.toString(),
+          name: res.data.lastName?.toString(),
+          _id: res.data.last_id?.toString(),
+        });
+      }
+
+    } finally {
+      this.isLoading.set(false);
+    }
   }
+
+
+  private buildPaginationParams(queryParams: Params | undefined) {
+    if (!queryParams) return '';
+
+    const { sort, filter, search } = queryParams;
+    const last = this.last();
+
+    const params = new URLSearchParams();
+
+    params.append('limit', '8');
+    params.append('sort', sort || 'latest');
+
+    if (search) params.append('search', search);
+    if (filter?.length) params.append('filter', filter);
+
+    if (last.createdAt)
+      params.append('lastCreatedAt', last.createdAt);
+
+    if (last.price)
+      params.append('lastPrice', last.price);
+
+    if (last.name)
+      params.append('lastName', last.name);
+
+    if (last._id)
+      params.append('last_id', last._id);
+
+    return params.toString();
+  }
+
 }

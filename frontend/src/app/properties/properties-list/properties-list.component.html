@@ -1,9 +1,10 @@
 <!-- Cards View -->
-@if(displayOption() === 'cards') {
-  <section class="ion-content-scroll-host flex justify-center items-center py-4 md:py-3 px-3">
+@if (displayOption() === "cards") {
+  <section
+    class="ion-content-scroll-host flex justify-center items-center py-4 md:py-3 px-3"
+  >
     <ul
-      class="grid grid-cols-1 gap-4"
-      [ngClass]="{ 'md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4': !singleCol() }"
+      class="grid grid-cols-1 gap-y-16 gap-x-2 xl:gap-x-4 2xl:gap-x-6 md:gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
       <li *ngFor="let item of propertiesList()" class="col-span-1">
         <app-properties-card [property]="item"></app-properties-card>
@@ -13,7 +14,7 @@
 }
 
 <!-- List View -->
-@if(displayOption() === 'list') {
+@if (displayOption() === "list") {
   <section class="flex flex-col gap-2 lg:gap-3 px-3">
     @for (item of propertiesList(); track $index) {
       <app-properties-list-item
@@ -29,7 +30,7 @@
   <ion-infinite-scroll
     #IonInfiniteScroll
     threshold="80px"
-    (ionInfinite)="loadMoreProperty()"
+    (ionInfinite)="onLoadMore.emit()"
     [disabled]="disableInfinitScroll() || hasNoMore()"
   >
     <ion-infinite-scroll-content

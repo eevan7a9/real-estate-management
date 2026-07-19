@@ -20,8 +20,8 @@ import { RestrictionService } from 'src/app/shared/services/restriction/restrict
     standalone: false
 })
 export class EnquiriesNewFormComponent {
-  @Input() property: Partial<Property>;
-  @Input() userTo: string;
+  @Input() property: Partial<Property | undefined>;
+  @Input() userTo: string | undefined;
   @Input() replyTo?: {
     enquiry_id: string;
     title: string;
@@ -52,7 +52,7 @@ export class EnquiriesNewFormComponent {
   public async submit() {
     this.enquiryForm.markAllAsTouched();
 
-    if (!this.enquiryForm.valid) {
+    if (!this.enquiryForm.valid || !this.property) {
       this.error = true;
       return;
     }

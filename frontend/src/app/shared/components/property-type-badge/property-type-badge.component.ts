@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PropertyType } from '../../enums/property';
 
 @Component({
-    selector: 'app-property-badge',
-    templateUrl: './property-badge.component.html',
-    styleUrls: ['./property-badge.component.css'],
-    standalone: false
+  selector: 'app-property-type-badge',
+  templateUrl: './property-type-badge.component.html',
+  styleUrls: ['./property-type-badge.component.css'],
+  standalone: false
 })
-export class PropertyBadgeComponent implements OnInit {
+export class PropertyTypeBadgeComponent implements OnInit {
 
   @Input() type = 'residential';
   constructor() { }

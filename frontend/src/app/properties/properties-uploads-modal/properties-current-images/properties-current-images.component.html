@@ -8,7 +8,7 @@
     slides-per-view="auto"
     class="slides"
   >
-    <swiper-slide *ngFor="let image of images">
+    <swiper-slide *ngFor="let image of images()">
       <div
         class="swipers-image"
         (click)="setSelected(image)"

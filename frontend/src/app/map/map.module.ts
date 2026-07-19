@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +12,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MapMarkersLegendComponent } from './map-markers-legend/map-markers-legend.component';
 import { ModalSearchComponent } from '../shared/components/modal-search/modal-search.component';
 import { PropertiesPageModule } from '../properties/properties.module';
+import { MapSidePropertiesComponent } from './map-side-properties/map-side-properties.component';
 
 @NgModule({
   imports: [
@@ -22,11 +23,13 @@ import { PropertiesPageModule } from '../properties/properties.module';
     SharedModule,
     PropertiesPageModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     MapPage,
     MapPopupComponent,
     MapMarkersLegendComponent,
-    ModalSearchComponent
+    ModalSearchComponent,
+    MapSidePropertiesComponent
   ],
 })
 export class MapPageModule { }

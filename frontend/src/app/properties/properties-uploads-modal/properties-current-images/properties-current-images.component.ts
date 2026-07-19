@@ -1,8 +1,10 @@
 import {
   Component,
   EventEmitter,
+  input,
   Input,
   OnInit,
+  output,
   Output,
   ViewEncapsulation,
 } from '@angular/core';
@@ -21,9 +23,9 @@ register();
     standalone: false
 })
 export class PropertiesCurrentImagesComponent implements OnInit {
-  @Input() images: string[] = [];
-  @Input() id: string;
-  @Output() delete = new EventEmitter<string[]>();
+  readonly images = input.required<string[]>();
+  readonly id = input.required<string>();
+  public delete = output<string[]>();
 
   public slideOpts = {
     initialSlide: 0,
@@ -65,18 +67,18 @@ export class PropertiesCurrentImagesComponent implements OnInit {
     if(this.restriction.restricted) {
       return this.restriction.showAlert();
     }
-    const { data, message } = await this.propertyService.deletePropertyImage(
+    const res = await this.propertyService.deletePropertyImage(
       this.selectedImages,
-      this.id
+      this.id()
     );
-    if (data.length) {
+    if (res?.data?.length) {
       const toast = await this.toastCtrl.create({
-        message,
+        message: res.message || 'Success: Image deleted',
         duration: 3000,
         color: 'success',
       });
       toast.present();
-      this.delete.emit(data);
+      this.delete.emit(res.data);
     }
   }
 }

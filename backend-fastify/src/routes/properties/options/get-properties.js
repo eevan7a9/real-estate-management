@@ -40,6 +40,11 @@ export const getPropertiesOpts = (handler) => ({
           description:
             "Name of the last property received (for pagination purposes)",
         },
+        last_id: {
+          type: "string",
+          description:
+            "ID of the last property received (for pagination purposes)",
+        },
       },
     },
     response: {
@@ -54,6 +59,7 @@ export const getPropertiesOpts = (handler) => ({
             lastCreatedAt: { type: "string" },
             lastPrice: { type: "string" },
             lastName: { type: "string" },
+            last_id: { type: "string" },
             hasMore: { type: "boolean" },
           },
         },
@@ -72,6 +78,46 @@ export const getMyPropertiesOpts = (fastify, handler) => ({
         data: {
           type: "array",
           items: propertyProperties,
+        },
+      }),
+      400: responseError(),
+    },
+  },
+  handler: handler,
+});
+
+export const getPropertiesMapOpts = (handler) => ({
+  schema: {
+    response: {
+      200: responseSuccess({
+        data: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              property_id: { type: "string" },
+              name: { type: "string" },
+              type: { type: "string" },
+              position: {
+                type: "object",
+                properties: {
+                  type: {
+                    type: "string",
+                    enum: ["Point"],
+                    default: "Point",
+                  },
+                  coordinates: {
+                    type: "array",
+                    items: { type: "number" },
+                    minItems: 2,
+                    maxItems: 2,
+                    description: "[longitude, latitude]",
+                  },
+                },
+                required: ["type", "coordinates"],
+              },
+            },
+          },
         },
       }),
       400: responseError(),

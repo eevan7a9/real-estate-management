@@ -34,13 +34,8 @@
         <div
           class="hidden lg:block w-full max-w-[380px] overflow-y-auto lg:p-1 xl:p-2"
         >
-          <app-properties-list
-            class="properties-list"
-            [singleCol]="true"
-            [properties]="properties()"
-            [limit]="4"
-            [disableInfinitScroll]="true"
-          ></app-properties-list>
+          <app-map-side-properties></app-map-side-properties>
+
 
           <div class="pt-1">
             <ion-card

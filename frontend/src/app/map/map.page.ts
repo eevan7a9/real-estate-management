@@ -11,7 +11,7 @@ import { PropertiesService } from '../properties/properties.service';
   standalone: false,
 })
 export class MapPage {
-  public properties = toSignal<Property[]>(this.propertiesService.properties$);
+  public properties = toSignal<Property[] | undefined>(this.propertiesService.properties$);
   public visibleType = signal<string[]>([
     PropertyType.residential.toString(),
     PropertyType.commercial.toString(),

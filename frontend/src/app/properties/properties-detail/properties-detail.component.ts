@@ -1,7 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  ModalController,
+  PopoverController,
+  ToastController,
+} from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
 import { PropertiesService } from '../properties.service';
@@ -12,18 +17,25 @@ import { UserService } from 'src/app/user/user.service';
 import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 import { TransactionType } from 'src/app/shared/enums/property';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { firstValueFrom } from 'rxjs';
+import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-alert/confirmation-alert.service';
 
 @Component({
   selector: 'app-properties-detail',
   templateUrl: './properties-detail.component.html',
   styleUrls: ['./properties-detail.component.css'],
-  standalone: false
+  standalone: false,
 })
 export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
-  public property = signal<Property>(undefined);
+  public property = signal<Property | undefined>(undefined);
   public ready = signal(false);
-  public isOwner = computed(() => this.userService.isPropertyOwner(this.property()));
+  public isOwner = computed(() => {
+    if (this.property()) {
+      return this.userService.isPropertyOwner(this.property() as Property);
+    }
+    return false;
+  });
   public transactionType = TransactionType;
 
   constructor(
@@ -36,12 +48,16 @@ export class PropertiesDetailComponent implements OnInit {
     private toastCtrl: ToastController,
     private route: ActivatedRoute,
     private restriction: RestrictionService,
-    private alert: AlertController
-  ) { }
+    private confirmationService: ConfirmationAlertService,
+  ) {
+    this.propertiesGallery = new PropertiesGalleryComponent();
+  }
 
   async ngOnInit() {
     const paramId = this.route.snapshot.paramMap.get('id');
-    this.setPropertyDetails(paramId);
+    if (paramId) {
+      await this.setPropertyDetails(paramId);
+    }
   }
 
   public async actionPopup() {
@@ -61,17 +77,27 @@ export class PropertiesDetailComponent implements OnInit {
         if (this.restriction.restricted) {
           return this.restriction.showAlert();
         }
-        return this.deleteConfirmation();
+        const res = await this.confirmationService.confirm(
+          'Delete Property',
+          'Are you sure you want to delete this property? This action cannot be undone.',
+          'Delete',
+          'Cancel'
+        );
+        if (res) {
+          return this.deleteProperty(this.property()?.property_id || '');
+        }
 
       case 'edit':
-        return this.editModal()
+        return this.editModal();
 
       case 'report':
-        this.toastCtrl.create({
-          message: 'Success, we will take a look at this property.',
-          color: 'warning',
-          duration: 5000
-        }).then(e => e.present());
+        this.toastCtrl
+          .create({
+            message: 'Success, we will take a look at this property.',
+            color: 'warning',
+            duration: 5000,
+          })
+          .then((e) => e.present());
         break;
 
       default:
@@ -80,7 +106,7 @@ export class PropertiesDetailComponent implements OnInit {
   }
 
   public findInMap() {
-    const { lat, lng } = this.property().position;
+    const { coordinates: [lat, lng] } = this.property()?.position || { coordinates: [0, 0] };
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }
 
@@ -92,61 +118,65 @@ export class PropertiesDetailComponent implements OnInit {
       },
     });
     modal.present();
-    modal.onDidDismiss().then(res => {
+    modal.onDidDismiss().then((res) => {
       const deleted = res.data?.deleted || [];
       if (deleted) {
-        this.property.update(value => {
-          value.images = value.images.filter(image => !deleted.includes(image));
+        this.property.update((value) => {
+          if (value) {
+            value.images = value?.images?.filter(
+              (image) => !deleted.includes(image),
+            );
+          }
           return value;
         });
       }
     });
   }
 
-  private setPropertyDetails(id: string): void {
-    this.propertiesService.fetchProperty(id).then((res) => {
-      if (res.status === 200) {
+  private async setPropertyDetails(id: string): Promise<void> {
+    try {
+      const res = await firstValueFrom(
+        this.propertiesService.fetchProperty(id),
+      );
+      if (res.status === 200 && res.data) {
         this.property.set(res.data);
         if (this.propertiesGallery) {
           this.propertiesGallery.setImage();
         }
       }
-    }).finally(() => this.ready.set(true))
-  }
-
-  private async deleteConfirmation(): Promise<void> {
-    this.alert.create({
-      cssClass: 'my-custom-alert-class',
-      header: 'Are you sure?',
-      message: 'You are about to delete this property? This action cannot be undone.',
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => { },
-        },
-        {
-          text: 'DELETE',
-          role: 'destructive',
-          cssClass: 'alert-danger-text',
-          handler: () => {
-            this.deleteProperty(this.property().property_id);
-          },
-        },
-      ],
-    }).then(e => e.present());
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.ready.set(true);
+    }
   }
 
   private async deleteProperty(id: string): Promise<void> {
-    const res = await this.propertiesService.removeProperty(id);
-    if (res.status === 200) {
+    try {
+      const res = await firstValueFrom(
+        this.propertiesService.removeProperty(id)
+      );
+
+      if (res.status !== 200) throw new Error(res.message);
       this.propertiesService.removePropertyFromState(id);
       const toast = await this.toastCtrl.create({
         message: res.message,
-        color: res.status === 200 ? 'success' : 'danger',
-        duration: 4000
+        color: 'success',
+        duration: 4000,
       });
-      toast.present();
+      await toast.present();
       this.router.navigate(['/properties']);
+    } catch (error) {
+      let message = 'An error occurred while deleting the property.';
+      if (error instanceof Error) {
+        message = error.message;
+      }
+      const toast = await this.toastCtrl.create({
+        message: message,
+        color: 'danger',
+        duration: 4000,
+      });
+      return await toast.present();
     }
   }
 
@@ -154,8 +184,8 @@ export class PropertiesDetailComponent implements OnInit {
     const modal = await this.modalController.create({
       component: PropertiesEditComponent,
       componentProps: {
-        property: this.property()
-      }
+        property: this.property(),
+      },
     });
     await modal.present();
     const { data } = await modal.onDidDismiss();

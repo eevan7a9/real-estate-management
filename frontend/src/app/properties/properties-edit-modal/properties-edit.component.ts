@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
-import { Property } from 'src/app/shared/interface/property';
+import { Property, PropertyEditForm } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-properties-edit',
@@ -95,7 +96,16 @@ export class PropertiesEditComponent implements OnInit {
   ngOnInit() {
     if (this.property) {
       const {
-        name, address, description, type, price, paymentFrequency, currency, features, position, transactionType
+        name, 
+        address, 
+        description, 
+        type, 
+        price, 
+        paymentFrequency, 
+        currency, 
+        features, 
+        transactionType,
+        position: { coordinates }
       } = this.property;
 
       this.propertyForm.patchValue(
@@ -109,8 +119,8 @@ export class PropertiesEditComponent implements OnInit {
           currency,
           features: features ? features.join(', ').trim() : '',
           transactionType,
-          lat: position.lat,
-          lng: position.lng
+          lat: coordinates[0],
+          lng: coordinates[1]
         }
       );
     }
@@ -126,7 +136,6 @@ export class PropertiesEditComponent implements OnInit {
       description,
       type,
       transactionType,
-      updatedAt,
       price,
       paymentFrequency,
       currency,
@@ -135,7 +144,7 @@ export class PropertiesEditComponent implements OnInit {
       lng,
     } = this.propertyForm.value;
 
-    const editedProperty: Property = {
+    const editedProperty: PropertyEditForm = {
       property_id: this.property.property_id,
       name,
       address,
@@ -145,9 +154,8 @@ export class PropertiesEditComponent implements OnInit {
       price,
       paymentFrequency,
       currency,
-      updatedAt,
       features: features.split(',').filter((item: string) => item.trim() !== ''),
-      position: { lat, lng },
+      position: { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
       user_id: this.property.user_id
     };
     const updatedProperty = { ...this.property, ...editedProperty };
@@ -170,24 +178,35 @@ export class PropertiesEditComponent implements OnInit {
     }
   }
 
-  private async updateProperty(property: Property): Promise<void> {
+  private async updateProperty(property: PropertyEditForm): Promise<void> {
     if (this.restriction.restricted) {
       this.modalCtrl.dismiss();
       return this.restriction.showAlert();
     }
 
-    const res = await this.propertiesService.updateProperty(property);
-    if (res.status === 200 || res.status === 201) {
+    try {
+      const res = await firstValueFrom(this.propertiesService.updateProperty(property));
+      if (res.status === 200 || res.status === 201) {
+        const toast = await this.toastCtrl.create({
+          message: res.message,
+          duration: 3000,
+          color: 'success'
+        });
+        await toast.present();
+      }
+      this.propertiesService.properties = this.propertiesService.properties.map((property) =>
+        property.property_id === res.data.property_id ? res.data : property
+      );
+      this.modalCtrl.dismiss({ property: res.data });
+    } catch (error) {
+      console.error(error);
       const toast = await this.toastCtrl.create({
-        message: res.message,
+        message: error?.message || 'Error: Something went wrong, please try again later.',
         duration: 3000,
-        color: 'success'
+        color: 'danger'
       });
       await toast.present();
+      this.modalCtrl.dismiss();
     }
-    this.propertiesService.properties = this.propertiesService.properties.map((property) =>
-      property.property_id === res.data.property_id ? res.data : property
-    );
-    this.modalCtrl.dismiss({ property: res.data });
   }
 }

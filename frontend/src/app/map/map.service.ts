@@ -13,7 +13,8 @@ export class MapService {
   addTiles(map: L.Map, isDark = false) {
     const mapTiles = isDark ? environment.map.tiles.dark : environment.map.tiles.default;
     const tiles = L.tileLayer(mapTiles, {
-      maxZoom: 20,
+      maxZoom: 21,
+      minZoom: 17,
       attribution: `
       '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>,
       &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>
@@ -23,7 +24,7 @@ export class MapService {
     tiles.addTo(map);
   }
 
-  addMarker(map: L.Map, coord: Coord, options = { icon: null, popup: null }): L.Marker {
+  addMarker(map: L.Map, coord: Coord, options: { icon: L.Icon<L.IconOptions> | null, popup: HTMLElement | null } = { icon: null, popup: null }): L.Marker {
     const marker = L.marker([coord.lat, coord.lng], { ...(options.icon ? { icon: options.icon } : '') });
     if (options.popup) {
       // marker.bindPopup(options.popup.location.nativeElement);
@@ -31,8 +32,13 @@ export class MapService {
     }
     // add click event
     marker.on('click', () => {
-      // console.log(coord);
-      map.flyTo(coord, 19);
+      const zoom = 19;
+      const point = map.project(marker.getLatLng(), zoom);
+      // Move the center down by 150px so the marker appears lower on screen
+      point.y -= 150;
+      const target = map.unproject(point, zoom);
+
+      map.flyTo(target, zoom);
     });
     return marker;
   }

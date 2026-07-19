@@ -1,79 +1,88 @@
-<ion-card
-  class="relative m-0! flex flex-col w-full max-w-[360px] h-full shadow-none outline outline-slate-200 dark:outline-slate-800"
->
-  <div
-    class="z-10 tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
-    [ngClass]="[
-      userService.user?.user_id === property.user_id
-        ? 'bg-primary'
-        : property.transactionType === transactionType.forRent
-        ? 'bg-warning'
-        : 'bg-success'
-    ]"
+@if (property(); as property) {
+  <ion-card
+    class="relative m-0! flex flex-col w-full max-w-90 h-full shadow-none outline outline-slate-200 dark:outline-slate-800"
   >
-    <span *ngIf="userService.user?.user_id === property.user_id"> Owned </span>
-
-    <span
-      class="capitalize"
-      *ngIf="userService.user?.user_id !== property.user_id"
-    >
-      For {{ property.transactionType }}
-    </span>
-  </div>
-
-  <div class="h-[230px] overflow-hidden cursor-pointer group" (click)="selectProperty(property)">
-    @if (!property?.images || !property?.images.length) {
-      <img
-        class="w-full h-full object-cover"
-        [src]="'assets/images/no-image.jpeg'"
-      />
-    } @else {
-      <img
-        class="w-full h-full object-cover group-hover:scale-125 transition-all ease-in-out duration-300"
-        [src]="property?.images[0]"
-      />
-    }
-  </div>
-
-  <ion-card-header class="py-2 px-3">
-    <app-property-badge [type]="property?.type"></app-property-badge>
-    <ion-card-title
-      class="text-[16px] sm:text-[20px] text-ellipsis line-clamp-1"
-    >
-      {{ property?.name }}
-    </ion-card-title>
-
-    <div>
-      {{ property?.createdAt | date }}
-    </div>
-  </ion-card-header>
-
-  <ion-card-content class="flex flex-col px-3 flex-grow">
     <div
-      class="line-clamp-3 text-ellipsis overflow-hidden h-[100px] mb-3"
+      class="z-10 tag absolute rounded-br-lg py-1 px-3 sm:px-3 sm:text-[18px] font-bold bg-opacity-80"
+      [ngClass]="[
+        userService.user?.user_id === property?.user_id
+          ? 'bg-primary'
+          : property?.transactionType === transactionType.forRent
+            ? 'bg-warning'
+            : 'bg-success',
+      ]"
     >
-      <p class="line-clamp-3 text-ellipsis overflow-hidden h-[60px]">
-        {{ property?.description }}
-      </p>
-    </div>
+      <span *ngIf="userService.user?.user_id === property.user_id">
+        Owned
+      </span>
 
-    <div class="price font-bold sm:text-[18px] mt-auto">
-      {{ property?.price | currency : "PHP" }}
       <span
-        class="capitalize text-[16px]"
-        *ngIf="property.transactionType === transactionType.forRent"
+        class="capitalize"
+        *ngIf="userService.user?.user_id !== property.user_id"
       >
-        | {{ property.paymentFrequency }}
+        For {{ property.transactionType }}
       </span>
     </div>
 
-    <ion-button
-      (click)="selectProperty(property)"
-      expand="block"
-      class="ion-margin-top"
-      color="primary"
+    <div
+      class="h-57.5 overflow-hidden cursor-pointer group"
+      (click)="selectProperty(property.property_id || '')"
     >
-      View property
-    </ion-button>
-  </ion-card-content>
-</ion-card>
+      @if (!property.images || !property.images.length) {
+        <img
+          class="w-full h-full object-cover"
+          [src]="'assets/images/no-image.jpeg'"
+        />
+      } @else {
+        <img
+          class="w-full h-full object-cover group-hover:scale-125 transition-all ease-in-out duration-300"
+          [src]="property.images[0] || ''"
+        />
+      }
+    </div>
+
+    <ion-card-header class="py-2 px-3">
+      <app-property-type-badge
+        [type]="property?.type"
+      ></app-property-type-badge>
+      <ion-card-title
+        class="text-[16px] sm:text-[20px] text-ellipsis line-clamp-1"
+      >
+        {{ property.name }}
+      </ion-card-title>
+
+      <div>
+        {{ property.createdAt | date }}
+      </div>
+    </ion-card-header>
+
+    <ion-card-content class="flex flex-col px-3 grow">
+      <div class="line-clamp-3 text-ellipsis overflow-hidden h-20 md:h-25 mb-3">
+        <p
+          class="line-clamp-2 md:line-clamp-3 text-ellipsis overflow-hidden h-15"
+        >
+          {{ property.description }}
+        </p>
+      </div>
+
+      <div class="price font-bold text-[18px] sm:text-[20px] mt-auto">
+        {{ property.price | currency: "PHP" }}
+        <span
+          class="capitalize"
+          *ngIf="property.transactionType === transactionType.forRent"
+        >
+          | {{ property.paymentFrequency }}
+        </span>
+      </div>
+
+      <ion-button
+        (click)="selectProperty(property.property_id)"
+        expand="block"
+        class="ion-margin-top"
+        color="primary"
+      >
+        View property
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+}

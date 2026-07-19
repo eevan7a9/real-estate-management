@@ -16,7 +16,7 @@ export function searchProperties(
 export function filterProperties(
   filter: string,
   properties: Property[] = []
-): Property[] {
+): Property[] | undefined {
   if (!filter) return;
   const sale = filter.includes(TransactionType.forSale);
   const rent = filter.includes(TransactionType.forRent);

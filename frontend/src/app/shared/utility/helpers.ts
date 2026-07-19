@@ -1,8 +1,11 @@
-export function debounce(func: Function, wait: number) {
+export function debounce<T extends (...args: any[]) => void>(
+  fn: T,
+  delay: number
+) {
   let timeout: ReturnType<typeof setTimeout>;
-  return function (...args: any[]) {
-    const context = this;
+
+  return (...args: Parameters<T>) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
+    timeout = setTimeout(() => fn(...args), delay);
   };
 }

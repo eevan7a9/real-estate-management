@@ -80,14 +80,14 @@
 </ion-fab>
 
 <ion-content>
-  <div class="properties-container pt-8 xl:pt-12">
+  <div class="pt-4 2xl:pt-8">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
-      *ngIf="isLoading()"
+      *ngIf="status().isLoading"
     ></ion-progress-bar>
 
-    <ion-grid>
+    <ion-grid class="max-w-screen-xl pt-4 mx-auto">
       <ion-row class="ion-align-items-center hide-on-mobile mb-3 lg:mb-5">
         <ion-col class="heading ion-padding-horizontal flex items-center gap-1">
           <span class="mr-3 text-[20px] lg:text-[24px] lg:font-medium">List of Properties</span>
@@ -118,6 +118,8 @@
         [displayOption]="displayOption()"
         [properties]="properties()"
         [enableOwnedBadge]="true"
+        [hasMore]="status().hasMore"
+        (onLoadMore)="loadMoreProperty()"
         [(disableInfinitScroll)]="disableInfinitScroll"
         #propertyLists
       ></app-properties-list>

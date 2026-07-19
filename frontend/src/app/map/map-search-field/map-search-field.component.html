@@ -5,7 +5,8 @@
   <input
     type="text"
     placeholder="Search Cities.."
-    (focus)="showSearchModal()"
+    (click)="showSearchModal()"
+    maxlength="1"
     [(ngModel)]="field"
   />
 </div>

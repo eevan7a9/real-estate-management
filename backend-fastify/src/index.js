@@ -20,23 +20,33 @@ dotenv.config();
  * The Fastify instance.
  * @type {import('fastify').FastifyInstance}
  */
-export const fastify = await Fastify({ logger: process.env.LOGGER || true });
+export const fastify = await Fastify({
+  logger: process.env.LOGGER || true,
+  bodyLimit: 2 * 1024 * 1024, // 2MB
+});
 
 // We register Argon2 plugin
 await fastify.register(passwordPlugin);
+
 // We allow Multi Part Form
-fastify.register(FastifyMultipart);
-// We add Secret Key
-fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
-// We register Websocket
-fastify.register(FastifyWebsocket, {
-  options: {
-    clientTracking: true
+await fastify.register(FastifyMultipart, {
+  limits: {
+    fileSize: 2 * 1024 * 1024, // 2MB per file
+    files: 10,
   }
 });
 
+// We add Secret Key
+await fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
+// We register Websocket
+await fastify.register(FastifyWebsocket, {
+  options: {
+    clientTracking: true,
+  },
+});
+
 // We register authenticate
-fastify.decorate("authenticate", async function (request, reply) {
+await fastify.decorate("authenticate", async function (request, reply) {
   try {
     const user = await request.jwtVerify();
     request.user = user;
@@ -69,7 +79,7 @@ mongoose
         },
         () => {
           console.log("Listening on PORT: " + PORT);
-        }
+        },
       );
     } catch (error) {
       fastify.log.error(error);

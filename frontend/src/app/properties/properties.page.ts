@@ -5,13 +5,17 @@ import {
   SelectChangeEventDetail,
   ToastController,
 } from '@ionic/angular';
-import { PropertiesDisplayOption, PropertyType, TransactionType } from '../shared/enums/property';
+import {
+  PropertiesDisplayOption,
+  PropertyType,
+  TransactionType,
+} from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
-import { User } from '../shared/interface/user';
+
 import {
   IonSearchbarCustomEvent,
   IonSelectCustomEvent,
@@ -20,26 +24,37 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PropertiesService } from './properties.service';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
+import { debounce } from '../shared/utility/helpers';
 
 @Component({
-    selector: 'app-properties',
-    templateUrl: './properties.page.html',
-    styleUrls: ['./properties.page.css'],
-    standalone: false
+  selector: 'app-properties',
+  templateUrl: './properties.page.html',
+  styleUrls: ['./properties.page.css'],
+  standalone: false,
 })
 export class PropertiesPage implements OnInit {
-  @ViewChild('propertyLists') propertyLists: PropertiesListComponent;
+  @ViewChild('propertyLists') propertyLists!: PropertiesListComponent;
   public search = signal<string>('');
   public filterBy = signal<PropertyType[]>([]);
   public sortBy = signal<string>('latest');
   public disableInfinitScroll = signal(false);
+
   public displayOption = signal<PropertiesDisplayOption>(
-    PropertiesDisplayOption.CardView
+    PropertiesDisplayOption.CardView,
   );
 
-  public isLoading = computed<boolean>(() => this.propertiesService.isLoading());
+  public properties = toSignal<Property[] | undefined>(this.propertiesService.properties$, {
+    initialValue: undefined,
+  });
 
-  public properties = toSignal(this.propertiesService.properties$);
+  public status = computed(() => {
+    return {
+      isLoading: this.propertiesService.isLoading(),
+      hasMore: this.propertiesService.hasMore(),
+    }
+  });
+
+  private limit = 8;
 
   public displayType = PropertiesDisplayOption;
   public filters = [
@@ -82,7 +97,7 @@ export class PropertiesPage implements OnInit {
       label: 'Price',
     },
   ];
-  public user: User;
+  // public user: User;
 
   private queryParams = toSignal(this.activatedRoutes.queryParams);
 
@@ -92,11 +107,15 @@ export class PropertiesPage implements OnInit {
     private router: Router,
     private toastCtrl: ToastController,
     private propertiesService: PropertiesService,
-    private activatedRoutes: ActivatedRoute
-  ) {}
+    private activatedRoutes: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
     this.setCurrentParams();
+    if (!this.propertiesService.properties.length) {
+      console.log('load more...');
+      this.loadMoreProperty();
+    }
   }
 
   async presentModal() {
@@ -123,15 +142,15 @@ export class PropertiesPage implements OnInit {
   }
 
   public setFilters(
-    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>
+    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>,
   ): void {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { filter: value.length ? value.join() : null },
       queryParamsHandling: 'merge',
     });
-    this.propertiesService.resetState({ skipOwned: true});
-    this.propertyLists.loadMoreProperty();
+    this.resetPageState();
+    this.loadMoreProperty();
     this.disableInfinitScroll.set(false);
   }
 
@@ -141,26 +160,35 @@ export class PropertiesPage implements OnInit {
       queryParams: { sort: value },
       queryParamsHandling: 'merge',
     });
-    this.propertiesService.resetState({ skipOwned: true});
-    this.propertyLists.loadMoreProperty();
+    this.resetPageState();
+    this.loadMoreProperty();
     this.disableInfinitScroll.set(false);
   }
 
   public setSearchedText(
-    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
+    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>,
   ): void {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { search: value || null },
       queryParamsHandling: 'merge',
     });
-    this.propertiesService.resetState({ skipOwned: true});
-    this.propertyLists.loadMoreProperty();
+    this.resetPageState();
+    this.loadMoreProperty();
     this.disableInfinitScroll.set(false);
   }
 
+  public loadMoreProperty = debounce(async () => {
+    console.log('load more...');
+    await this.propertiesService.loadMore(this.queryParams());
+    await this.propertyLists.setInfinityScrollComplete();
+  }, 1000);
+
   private setCurrentParams() {
-    const { filter, sort } = this.queryParams();
+    const queryParams = this.queryParams();
+    if (!queryParams) return;
+
+    const { filter, sort } = queryParams;
     if (filter) {
       this.filterBy.set([...filter.split(',')]);
     }
@@ -175,5 +203,16 @@ export class PropertiesPage implements OnInit {
       componentProps: { property },
     });
     await modalUploads.present();
+  }
+
+  private resetPageState() {
+    this.propertiesService.properties = [];
+    this.propertiesService.last.set({
+      createdAt: '',
+      price: '',
+      name: '',
+      _id: '',
+    });
+    this.propertiesService.hasMore.set(true);
   }
 }

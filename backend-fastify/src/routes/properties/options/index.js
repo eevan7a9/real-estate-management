@@ -1,4 +1,4 @@
-import { getPropertiesOpts, getMyPropertiesOpts } from "./get-properties.js";
+import { getPropertiesOpts, getMyPropertiesOpts, getPropertiesMapOpts} from "./get-properties.js";
 import { getPropertyOpts } from "./get-property.js";
 import { createPropertyOpts } from "./create-property.js";
 import { updatePropertyOpts } from "./update-property.js";
@@ -14,4 +14,5 @@ export {
   deletePropertyOpts,
   uploadImagesOpts,
   deleteImagesOpts,
+  getPropertiesMapOpts,
 };

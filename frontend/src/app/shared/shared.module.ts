@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActionPopupComponent } from './components/action-popup/action-popup.component';
-import { PropertyBadgeComponent } from './components/property-badge/property-badge.component';
 import { DivHorizontalSlideComponent } from './components/div-horizontal-slide/div-horizontal-slide.component';
 import { AlertCardComponent } from './components/alert-card/alert-card.component';
 import { ContactFormComponent } from './components/contact-form/contact-form.component';
@@ -16,11 +15,12 @@ import { RouterLinkWithHref } from '@angular/router';
 import { NeedSigninContinueComponent } from './components/need-signin-continue/need-signin-continue.component';
 import { NotificationBellComponent } from './components/notification-bell/notification-bell.component';
 import { NotificationBadgeComponent } from './components/notification-badge/notification-badge.component';
+import { PropertyTypeBadgeComponent } from './components/property-type-badge/property-type-badge.component';
 
 @NgModule({
   declarations: [
     ActionPopupComponent,
-    PropertyBadgeComponent,
+    PropertyTypeBadgeComponent,
     DivHorizontalSlideComponent,
     AlertCardComponent,
     ContactFormComponent,
@@ -43,7 +43,7 @@ import { NotificationBadgeComponent } from './components/notification-badge/noti
     FormsModule,
     ReactiveFormsModule,
     ActionPopupComponent,
-    PropertyBadgeComponent,
+    PropertyTypeBadgeComponent,
     DivHorizontalSlideComponent,
     AlertCardComponent,
     ContactFormComponent,
@@ -56,4 +56,4 @@ import { NotificationBadgeComponent } from './components/notification-badge/noti
     NotificationBadgeComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }

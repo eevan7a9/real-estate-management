@@ -1,34 +1,36 @@
 <ion-card
   (click)="selectProperty(property())"
-  class="shadow-none border-[1px] border-slate-200 dark:border-slate-800 cursor-pointer"
+  class="shadow-none border border-slate-200 dark:border-slate-800 cursor-pointer"
 >
   <ion-card-content>
     <div class="flex gap-x-1">
       <ion-badge
         class="bg-primary h-5 p-1"
-        *ngIf="enableOwnedBadge && user()?.user_id === property().user_id"
+        *ngIf="enableOwnedBadge() && user()?.user_id === property()?.user_id"
       >
         Owned
       </ion-badge>
-      <app-property-badge [type]="property()?.type"></app-property-badge>
+      <app-property-type-badge
+        [type]="property()?.type || ''"
+      ></app-property-type-badge>
       |
       <ion-badge
         class="h-5 p-1"
         [ngClass]="{
-          'bg-success': property().transactionType === 'sale',
-          'bg-warning': property().transactionType === 'rent'
+          'bg-success': property()?.transactionType === 'sale',
+          'bg-warning': property()?.transactionType === 'rent',
         }"
       >
-        For {{ property().transactionType }}
+        For {{ property()?.transactionType }}
       </ion-badge>
 
       <span class="ml-auto mr-0" [ngClass]="{ 'mr-9': isOwner() }">
-        {{ property().createdAt | date }}
+        {{ property()?.createdAt | date }}
       </span>
 
       <button
         (click)="openPopup($event)"
-        class="bg-gray-300 size-[30px] duration-300 ease-in-out transition-colors hover:bg-gray-400 absolute rounded-full! p-2 top-2 right-3 flex justify-center items-center"
+        class="bg-gray-300 size-7.5 duration-300 ease-in-out transition-colors hover:bg-gray-400 absolute rounded-full! p-2 top-2 right-3 flex justify-center items-center"
         *ngIf="isOwner()"
         id="popup-trigger-button"
       >
@@ -36,26 +38,24 @@
       </button>
     </div>
 
-    <div class="flex items-center text-[14px] lg:mt-2 text-dark! dark:text-white">
-      <ion-text class="text-[16px] lg:text-[18px] font-light">
-        {{
-          property().name?.length > 30
-            ? property().name.slice(0, 30) + "..."
-            : property().name
-        }}
-      </ion-text>
-      <span class="px-2">|</span>
-      <ion-text class="hidden md:block md:text-[18px] font-light">
-        {{
-          property().description?.length > 40
-            ? property().description.slice(0, 40) + "..."
-            : property().description
-        }}
-      </ion-text>
+    <div
+      class="flex items-center md:items-start text-[14px] lg:mt-2 text-dark dark:text-white"
+    >
+      <div
+        class="text-[16px] lg:text-[18px] font-light text-ellipsis line-clamp-1 min-w-[300px]"
+      >
+        {{ property()?.name }}
+      </div>
 
-      <span class="ml-auto mr-0 md:text-[18px] xl:text-[20px] font-light">
-        {{ property().price | currency : "PHP" }}
-      </span>
+      <span class="px-2">|</span>
+
+      <p class="hidden md:block flex-1 min-w-0 line-clamp-2!">
+        {{ property()?.description }}
+      </p>
+
+      <div class="ml-auto mr-0 md:text-[18px] xl:text-[20px] font-light">
+        {{ property()?.price | currency: "PHP" }}
+      </div>
     </div>
   </ion-card-content>
 </ion-card>

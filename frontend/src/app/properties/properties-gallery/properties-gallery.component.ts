@@ -23,6 +23,6 @@ export class PropertiesGalleryComponent implements OnInit {
   }
 
   public setImage() {
-    this.imagePresented = this.images()[0] || 'assets/images/no-image.jpeg';
+    this.imagePresented = this.images()?.[0] || 'assets/images/no-image.jpeg';
   }
 }

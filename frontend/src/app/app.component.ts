@@ -29,10 +29,10 @@ interface NavLinks {
 }
 
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.css'],
+  standalone: false
 })
 export class AppComponent implements OnInit {
   public appPages: NavLinks[] = [
@@ -57,19 +57,19 @@ export class AppComponent implements OnInit {
     { initialValue: 0 }
   );
 
-  public user = signal<UserDetails>(undefined);
+  public user = signal<UserDetails | undefined>(undefined);
   public appLowerPages = computed<NavLinks[]>(() => {
-    const pages =  [
+    const pages = [
       { title: 'About', url: '/about', icon: 'help-circle' },
     ]
-    if(this.user()) {
+    if (this.user()) {
       return [...pages,
-        { title: 'Account', url: '/user/account', icon: 'person'}
+      { title: 'Account', url: '/user/account', icon: 'person' }
       ];
     }
     return [...pages,
-      { title: 'Register', url: '/user/register', icon: 'create' },
-      { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
+    { title: 'Register', url: '/user/register', icon: 'create' },
+    { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
     ];
   });
 
@@ -154,17 +154,17 @@ export class AppComponent implements OnInit {
 
   private async setUserProfile(): Promise<void> {
     const res = await this.userService.getCurrentUser();
-    if (res.status === 200) {
+    if (res.status === 200 && res.data) {
       const { activities, notifications, ...user } = res.data
       this.user.set(user);
-      this.activitiesService.activities = activities;
-      this.notificationsService.notifications = notifications;
+      this.activitiesService.activities = activities || [];
+      this.notificationsService.notifications = notifications || [];
     }
   }
 
   private fetchEnquiries(): void {
     this.enquiriesService.fetchEnquiries().then((res) => {
-      if (res?.status === 200) {
+      if (res?.status === 200 && res?.data) {
         this.enquiriesService.enquiries = res.data;
       }
     }).finally(() => this.enquiriesService.initialFetchDone.set(true));
@@ -180,9 +180,11 @@ export class AppComponent implements OnInit {
   }
 
   private checkServer() {
-    firstValueFrom(this.http.get(environment.api.server)).then((data) =>
-      console.log(data)
-    );
+    firstValueFrom(
+      this.http.get<null | { message: string; success: boolean }>(
+        environment.api.server,
+      ),
+    ).then((data) => console.log(data));
   }
 
   private isUnread(enquiry: Enquiry) {

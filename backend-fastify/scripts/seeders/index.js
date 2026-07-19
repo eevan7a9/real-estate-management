@@ -1,13 +1,15 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import fs from "fs/promises";
 // Import Models
 import { User } from "../../src/models/user.js";
 import { Property } from "../../src/models/property.js";
 import { Enquiry } from "../../src/models/enquiry.js";
+
 // Import JSON data
-import users from "./data/users.json" assert { type: "json" };
-import properties from "./data/properties.json" assert { type: "json" };
-import enquiries from "./data/enquiries.json" assert { type: "json" };
+const users = JSON.parse(await fs.readFile(new URL("./data/users.json", import.meta.url), "utf-8"));
+const properties = JSON.parse(await fs.readFile(new URL("./data/properties.json", import.meta.url), "utf-8"));
+const enquiries = JSON.parse(await fs.readFile(new URL("./data/enquiries.json", import.meta.url), "utf-8"));
 
 dotenv.config();
 

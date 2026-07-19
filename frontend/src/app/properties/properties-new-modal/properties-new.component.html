@@ -65,7 +65,7 @@
           </ion-list-header>
 
           <ion-item
-            class="!m-0"
+            class="m-0!"
             lines="none"
             *ngFor="let type of propertyTypes"
           >
@@ -88,7 +88,7 @@
           </ion-list-header>
 
           <ion-item
-            class="!m-0"
+            class="m-0!"
             lines="none"
             *ngFor="let transaction of transactionType"
           >
@@ -109,7 +109,7 @@
       <ion-list class="bg-white dark:bg-[#1e1e1e] pl-3!">
         <ion-item
           lines="none"
-          *ngIf="propertyForm.get('transactionType').value === 'rent'"
+          *ngIf="propertyForm.get('transactionType')?.value === 'rent'"
         >
           <ion-select
             label="Payment Frequency"

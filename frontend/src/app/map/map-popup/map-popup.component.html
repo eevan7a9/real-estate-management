@@ -1,23 +1,67 @@
-<div class="popup-container">
-  <div *ngIf="property; else noProperty">
-    <div class="name">{{ property?.name }}</div>
-    <div class="type">
-      <app-property-badge [type]="property.type"></app-property-badge>
-    </div>
-    <div class="address">
-      {{ property?.address }}
-    </div>
-    <ion-button
-      color="primary"
-      expand="block"
-      size="small"
-      (click)="viewMore()"
-    >
-      View More
-    </ion-button>
-  </div>
+<div class="w-full">
+  @if (property) {
+    <div class="space-y-1">
+      <div class="text-[16px] md:text-[18px] font-bold">
+        {{ propertyDetails()?.name }}
+      </div>
+      <div>
+        <app-property-type-badge
+          [type]="property.type"
+        ></app-property-type-badge>
+      </div>
 
-  <ng-template #noProperty>
-    <strong>No Property Data</strong>
-  </ng-template>
+      <div class="h-62.5 relative">
+        <swiper-container
+          class="w-full h-full z-0"
+          navigation="true"
+          pagination="true"
+        >
+          @for (image of propertyDetails()?.images; track $index) {
+            <swiper-slide
+              class="flex items-center justify-center text-center size-full"
+            >
+              <img
+                [src]="image"
+                class="min-w-full min-h-full block object-cover"
+                [alt]="propertyDetails()?.name"
+              />
+            </swiper-slide>
+          }
+        </swiper-container>
+
+        <div
+          class="bg-slate-100/80 absolute z-10 bottom-0 left-0 p-2 rounded-tr-md"
+        >
+          <span class="font-bold text-[18px]">
+            {{ propertyDetails()?.price | currency: "PHP" }}
+          </span>
+        </div>
+      </div>
+
+      <div class="font-light text-[15px] lg:text-[16px]">
+        {{ propertyDetails()?.address }}
+      </div>
+
+      @if (isLoading()) {
+        <div
+          class="bg-red-100 flex justify-center items-center pt-2 pb-4 rounded-md"
+        >
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+        </div>
+      }
+
+      <ion-button
+        color="primary"
+        expand="block"
+        size="small"
+        (click)="viewMore()"
+      >
+        View More
+      </ion-button>
+    </div>
+  } @else {
+    <ng-template #noProperty>
+      <strong>No Property Data</strong>
+    </ng-template>
+  }
 </div>

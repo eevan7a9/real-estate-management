@@ -1,6 +1,7 @@
 export const propertyProperties = {
   type: "object",
   properties: {
+    _id: { type: "string" },
     property_id: { type: "string" },
     name: { type: "string" },
     address: { type: "string" },
@@ -9,7 +10,21 @@ export const propertyProperties = {
     transactionType: { type: "string" },
     position: {
       type: "object",
-      properties: { lat: { type: "number" }, lng: { type: "number" } },
+      properties: {
+        type: {
+          type: "string",
+          enum: ["Point"],
+          default: "Point",
+        },
+        coordinates: {
+          type: "array",
+          items: { type: "number" },
+          minItems: 2,
+          maxItems: 2,
+          description: "[longitude, latitude]",
+        },
+      },
+      required: ["type", "coordinates"],
     },
     price: { type: "number" },
     paymentFrequency: { type: "string" },
@@ -26,3 +41,22 @@ export const propertyProperties = {
   },
 };
 Object.freeze(propertyProperties);
+
+export const propertyPopupProperties = {
+  type: "object",
+  properties: {
+    property_id: { type: "string" },
+    name: { type: "string" },
+    address: { type: "string" },
+    description: { type: "string" },
+    type: { type: "string" },
+    transactionType: { type: "string" },
+    price: { type: "number" },
+    paymentFrequency: { type: "string" },
+    profileImage: { type: "string" },
+    images: { type: "array" },
+    currency: { type: "string" },
+    user_id: { type: "string" },
+  },
+};
+Object.freeze(propertyPopupProperties);

@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PropertyBadgeComponent } from './property-badge.component';
+import { MapSidePropertiesComponent } from './map-side-properties.component';
 
-describe('PropertyBadgeComponent', () => {
-  let component: PropertyBadgeComponent;
-  let fixture: ComponentFixture<PropertyBadgeComponent>;
+describe('MapSidePropertiesComponent', () => {
+  let component: MapSidePropertiesComponent;
+  let fixture: ComponentFixture<MapSidePropertiesComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyBadgeComponent ],
+      declarations: [ MapSidePropertiesComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PropertyBadgeComponent);
+    fixture = TestBed.createComponent(MapSidePropertiesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

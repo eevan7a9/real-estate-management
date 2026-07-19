@@ -1,0 +1,13 @@
+<section
+  class="ion-content-scroll-host flex justify-center items-center py-4 md:py-3 px-3"
+>
+  <ul
+    class="grid grid-cols-1 gap-y-16 gap-x-2 xl:gap-x-4 2xl:gap-x-6 md:gap-y-8"
+  >
+    @for (item of propertiesList(); track $index) {
+      <li class="col-span-1">
+        <app-properties-card [property]="item"></app-properties-card>
+      </li>
+    }
+  </ul>
+</section>

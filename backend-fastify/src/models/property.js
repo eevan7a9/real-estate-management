@@ -12,7 +12,17 @@ const propertySchema = new mongoose.Schema(
       enum: ["sale", "rent"],
       required: true,
     },
-    position: { lat: Number, lng: Number },
+    position: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        default: "Point",
+      },
+      coordinates: {
+        type: [Number], // [lng, lat]
+        required: true,
+      },
+    },
     price: { type: Number },
     paymentFrequency: {
       type: String,
@@ -29,6 +39,8 @@ const propertySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
+
+propertySchema.index({ position: "2dsphere" });
 export const Property = mongoose.model("Property", propertySchema);

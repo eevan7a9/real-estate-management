@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { User, UserDetails, UserSignedIn } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
 import { ApiResponse } from '../shared/interface/api-response';
-import { requestOptions } from '../shared/utility/requests';
+import { errorHandler, requestOptions } from '../shared/utility/requests';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 const url = environment.api.server;
 
@@ -16,13 +17,16 @@ const url = environment.api.server;
   providedIn: 'root',
 })
 export class UserService {
-  public user$: Observable<UserSignedIn>;
-  private readonly userSub = new BehaviorSubject<UserSignedIn>(null);
+  public user$: Observable<UserSignedIn | undefined>;
+  private readonly userSub = new BehaviorSubject<UserSignedIn | undefined>(
+    undefined,
+  );
 
   constructor(
     private http: HttpClient,
     private storage: StorageService,
     private router: Router,
+    private toastCtrl: ToastController,
   ) {
     this.user$ = this.userSub.asObservable();
     // Access Stored User
@@ -35,21 +39,24 @@ export class UserService {
     });
   }
 
-  public get user(): User {
+  public get user(): User | undefined {
     return this.userSub.getValue();
   }
 
   public get token(): string {
-    return this.userSub.getValue().accessToken;
+    return this.userSub.getValue()?.accessToken || '';
   }
 
   public async signOut(): Promise<void> {
-    this.userSub.next(null);
+    this.userSub.next(undefined);
     this.storage.removeUser();
     this.router.navigate(['/user/signin'], { replaceUrl: true });
   }
 
-  public async signIn(email: string, password: string): Promise<ApiResponse<UserSignedIn>> {
+  public async signIn(
+    email: string,
+    password: string,
+  ): Promise<ApiResponse<UserSignedIn | undefined>> {
     try {
       const result = await firstValueFrom(
         this.http.post<ApiResponse<UserSignedIn>>(
@@ -58,18 +65,32 @@ export class UserService {
             email,
             password,
           },
-          requestOptions({ contentType: 'application/json' })
-        )
+          requestOptions({ contentType: 'application/json' }),
+        ),
       );
-      await this.setUser(result.data);
+      if (result && result.data) await this.setUser(result.data);
       return result;
-    } catch (error) {
-      console.error('err', error);
-      return error.error;
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Sign-in error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+
+      return response;
     }
   }
 
-  public async register(fullName: string, email: string, password: string): Promise<ApiResponse<UserSignedIn>> {
+  public async register(
+    fullName: string,
+    email: string,
+    password: string,
+  ): Promise<ApiResponse<UserSignedIn>> {
     try {
       const result = await firstValueFrom(
         this.http.post<ApiResponse<UserSignedIn>>(
@@ -79,70 +100,158 @@ export class UserService {
             email,
             password,
           },
-          requestOptions({ contentType: 'application/json' })
-        )
+          requestOptions({ contentType: 'application/json' }),
+        ),
       );
-      await this.setUser(result.data);
+      if (result && result.data) await this.setUser(result.data);
       return result;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Register error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+
+      return response;
     }
   }
 
-  public async googleAuth(payload: GoogleAuthResponse): Promise<ApiResponse<UserSignedIn>> {
+  public async googleAuth(
+    payload: GoogleAuthResponse,
+  ): Promise<ApiResponse<UserSignedIn>> {
     try {
       const result = await firstValueFrom(
-        this.http.post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload)
+        this.http.post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload),
       );
-      await this.setUser(result.data);
+      if (result && result.data) await this.setUser(result.data);
+      else {
+        this.toastCtrl
+          .create({
+            message: 'Failed to authenticate with Google.',
+            duration: 3000,
+            color: 'danger',
+          })
+          .then((toast) => toast.present());
+      }
       return result;
-    } catch (error) {
-      console.error('google-auth error:', error);
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Google Auth error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+      return response;
     }
   }
 
-  public isPropertyOwner(property: Property): boolean {
+  public isPropertyOwner(property: Property): boolean | undefined {
     return this.user && this.user?.user_id === property?.user_id;
   }
 
-  public async changePassword(passwordNew: string, passwordCurrent: string): Promise<ApiResponse> {
+  public async changePassword(
+    passwordNew: string,
+    passwordCurrent: string,
+  ): Promise<ApiResponse> {
     try {
-      const res = await firstValueFrom(this.http.post<ApiResponse>(url + 'auth/change-password',
-        { passwordCurrent, passwordNew },
-        requestOptions({ token: this.token, contentType: 'application/json' })
-      ));
+      const res = await firstValueFrom(
+        this.http.post<ApiResponse>(
+          url + 'auth/change-password',
+          { passwordCurrent, passwordNew },
+          requestOptions({
+            token: this.token,
+            contentType: 'application/json',
+          }),
+        ),
+      );
       return res;
-    } catch (error) {
-      console.error(error);
-      return error.error;
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Change Password error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+      return response;
     }
   }
 
   public async updateUser(user: Partial<User>): Promise<ApiResponse<User>> {
     try {
       const res = await firstValueFrom(
-        this.http.patch<ApiResponse<User>>(url + 'users/me', user, requestOptions({ token: this.token }))
+        this.http.patch<ApiResponse<User>>(
+          url + 'users/me',
+          user,
+          requestOptions({ token: this.token }),
+        ),
       );
       return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Update User error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+      return response;
     }
   }
 
   public async getCurrentUser(): Promise<ApiResponse<UserDetails>> {
     try {
-      const res = await firstValueFrom(this.http.get<ApiResponse<UserDetails>>(url + 'users/me', requestOptions({ token: this.token })));
+      const res = await firstValueFrom(
+        this.http.get<ApiResponse<UserDetails>>(
+          url + 'users/me',
+          requestOptions({ token: this.token }),
+        ),
+      );
       return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
+    } catch (error: unknown) {
+      let response = {
+        status: 500,
+        message: 'An unknown error occurred.',
+        error: { status: 500, message: 'An unknown error occurred.' },
+      };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('Get Current User error:', response.message);
+        this.showToast(response.message, 'danger');
+      }
+      return response;
     }
   }
 
   public async setUser(user: UserSignedIn) {
     this.userSub.next({ ...this.userSub.value, ...user });
     await this.storage.setUser(user);
+  }
+
+  private async showToast(
+    message: string,
+    color: 'success' | 'danger' = 'success',
+  ) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 3000,
+      color,
+    });
+    await toast.present();
   }
 }

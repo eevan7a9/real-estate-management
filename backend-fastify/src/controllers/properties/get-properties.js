@@ -14,6 +14,7 @@ export const getProperties = async function (req, res) {
     lastCreatedAt,
     lastPrice,
     lastName,
+    last_id,
   } = req.query;
 
   const { sortOrder, sortField } = composeSort(sort);
@@ -21,32 +22,53 @@ export const getProperties = async function (req, res) {
     lastCreatedAt,
     lastPrice,
     lastName,
+    last_id,
   });
+
   const filterQuery = composeFilterQuery(filter, search);
   const query = { ...filterQuery, ...rangeQuery };
 
   const properties = await Property.find(query)
-    // .select("property_id name createdAt price type transactionType")
     .limit(parseInt(limit))
-    .sort({ [sortField]: sortOrder, _id: 1 }) // Use _id for tie-breaking in the sort
+    .sort({ [sortField]: sortOrder, _id: sortOrder })
     .collation({ locale: "en", strength: 2 });
 
-  const { price, name, createdAt } = properties[properties.length - 1] || {};
-  const lastFetchedPrice = price;
-  const lastFetchedName = name;
-  const lastFetchedCreatedAt = createdAt;
+  const { price, name, createdAt, _id } =
+    properties[properties.length - 1] || {};
+
   const hasMore = !!(price || name || createdAt);
 
   return res.status(200).send({
     data: {
       items: properties,
-      ...(sort === "price" && { lastPrice: lastFetchedPrice }),
-      ...(sort === "name"
-        ? { lastName: lastFetchedName }
-        : { lastCreatedAt: lastFetchedCreatedAt }),
+      lastPrice: price,
+      lastName: name,
+      lastCreatedAt: createdAt,
+      last_id: _id,
       hasMore,
     },
   });
+};
+
+/**
+ * @param {import("fastify/types/request.js").FastifyRequest} req
+ * @param {import("fastify/types/reply.js").FastifyReply} res
+ * @returns
+ */
+export const getPropertiesMap = async function (req, res) {
+  try {
+    const properties = await Property.find({}).select({
+      property_id: 1,
+      name: 1,
+      type: 1,
+      position: 1,
+    });
+    return res.status(200).send({ data: properties });
+  } catch (error) {
+    let message = error.message || "Error: Something went wrong";
+    console.error("getPropertiesMap\n", error);
+    return res.status(500).send({ message });
+  }
 };
 
 /**
@@ -65,7 +87,7 @@ export const getMyProperties = async function (req, res) {
       data: properties,
     });
   } catch (error) {
-    console.error("\n", error);
+    console.error("getMyProperties\n", error);
     return res.status(500).send({ message: "Error: Something went wrong" });
   }
 };
@@ -78,24 +100,25 @@ export const getMyProperties = async function (req, res) {
 const composeFilterQuery = function (filter, search) {
   const filterQuery = {};
   if (filter) {
-    const transactionTypes = [];
-    const propertyTypes = [];
+    const transactionType = []; // ex. transactionTypes [ 'sale' ]
+    const propertyTypes = []; // ex. propertyTypes [ 'industrial', 'land' ]
 
     filter
       .split(",")
       .forEach((t) =>
         t === "sale" || t === "rent"
-          ? transactionTypes.push(t)
-          : propertyTypes.push(t)
+          ? transactionType.push(t)
+          : propertyTypes.push(t),
       );
+
     if (propertyTypes.length) {
       filterQuery.type = { $in: propertyTypes };
     }
-    if (transactionTypes.length) {
-      filterQuery.transactionTypes = { $in: transactionTypes };
+    if (transactionType.length) {
+      filterQuery.transactionType = { $in: transactionType };
     }
   }
-  if(search) {
+  if (search) {
     filterQuery.$or = [
       { name: { $regex: search, $options: "i" } }, // Case-insensitive search on name
       { address: { $regex: search, $options: "i" } }, // Assuming there's a description field
@@ -112,18 +135,41 @@ const composeFilterQuery = function (filter, search) {
  */
 const composeRangeQuery = function (
   sort,
-  { lastCreatedAt, lastPrice, lastName } = {}
+  { lastCreatedAt, lastPrice, lastName, last_id } = {},
 ) {
-  if (sort === "price" && lastPrice && lastCreatedAt) {
-    return {
-      price: { $lte: lastPrice },
-      createdAt: { $ne: new Date(lastCreatedAt) },
-    };
+  if (sort === "price" && lastPrice) {
+    if (last_id) {
+      return {
+        $or: [
+          { price: { $lt: lastPrice } },
+          { price: lastPrice, _id: { $lt: last_id } },
+        ],
+      };
+    }
+    return { price: { $lt: lastPrice } };
   } else if (sort === "latest" && lastCreatedAt) {
+    if (last_id) {
+      return {
+        $or: [
+          { createdAt: { $lt: new Date(lastCreatedAt) } },
+          { createdAt: new Date(lastCreatedAt), _id: { $lt: last_id } },
+        ],
+      };
+    }
     return { createdAt: { $lt: new Date(lastCreatedAt) } };
   } else if (sort === "name" && lastName) {
+    if (last_id) {
+      return {
+        $or: [
+          { name: { $gt: lastName } },
+          { name: lastName, _id: { $gt: last_id } },
+        ],
+      };
+    }
     return { name: { $gt: lastName } };
   }
+
+  return {};
 };
 
 /**
