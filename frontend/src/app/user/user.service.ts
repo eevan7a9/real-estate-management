@@ -7,7 +7,7 @@ import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
 import { ApiResponse } from '../shared/interface/api-response';
-import { errorHandler, requestOptions } from '../shared/utility/requests';
+import { baseRequestResponse, errorHandler, requestOptions } from '../shared/utility/requests';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
@@ -71,11 +71,7 @@ export class UserService {
       if (result && result.data) await this.setUser(result.data);
       return result;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Sign-in error:', response.message);
@@ -106,11 +102,7 @@ export class UserService {
       if (result && result.data) await this.setUser(result.data);
       return result;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Register error:', response.message);
@@ -140,11 +132,7 @@ export class UserService {
       }
       return result;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Google Auth error:', response.message);
@@ -175,11 +163,7 @@ export class UserService {
       );
       return res;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Change Password error:', response.message);
@@ -200,11 +184,7 @@ export class UserService {
       );
       return res;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Update User error:', response.message);
@@ -224,11 +204,7 @@ export class UserService {
       );
       return res;
     } catch (error: unknown) {
-      let response = {
-        status: 500,
-        message: 'An unknown error occurred.',
-        error: { status: 500, message: 'An unknown error occurred.' },
-      };
+      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('Get Current User error:', response.message);

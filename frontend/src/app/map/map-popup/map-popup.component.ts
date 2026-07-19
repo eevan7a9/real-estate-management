@@ -12,8 +12,8 @@ import { PropertyMap, PropertyMapPopup } from 'src/app/shared/interface/property
   standalone: false
 })
 export class MapPopupComponent implements OnInit {
-  public isLoading = signal<boolean>(false);
   @Input() property: PropertyMap | undefined;
+  public isLoading = signal<boolean>(false);
   public propertyDetails = signal<PropertyMapPopup | undefined>(undefined);
 
   constructor(

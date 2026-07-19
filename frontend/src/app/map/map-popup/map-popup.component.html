@@ -11,23 +11,33 @@
       </div>
 
       <div class="h-62.5 relative">
-        <swiper-container
-          class="w-full h-full z-0"
-          navigation="true"
-          pagination="true"
-        >
-          @for (image of propertyDetails()?.images; track $index) {
-            <swiper-slide
-              class="flex items-center justify-center text-center size-full"
-            >
-              <img
-                [src]="image"
-                class="min-w-full min-h-full block object-cover"
-                [alt]="propertyDetails()?.name"
-              />
-            </swiper-slide>
-          }
-        </swiper-container>
+        @if (propertyDetails()?.images?.length) {
+          <swiper-container
+            class="w-full h-full z-0"
+            navigation="true"
+            pagination="true"
+          >
+            @for (image of propertyDetails()?.images; track $index) {
+              <swiper-slide
+                class="flex items-center justify-center text-center size-full"
+              >
+                <img
+                  [src]="image"
+                  class="min-w-full min-h-full block object-cover object-center"
+                  [alt]="propertyDetails()?.name"
+                />
+              </swiper-slide>
+            }
+          </swiper-container>
+        } @else {
+          <div class="h-full relative overflow-hidden border border-slate-300">
+            <img
+              src='assets/images/no-image.jpeg'
+              class="min-w-full min-h-full block object-cover object-center"
+              [alt]="propertyDetails()?.name"
+            />
+          </div>
+        }
 
         <div
           class="bg-slate-100/80 absolute z-10 bottom-0 left-0 p-2 rounded-tr-md"
