@@ -17,6 +17,7 @@ export const createEnquiry = async function (req, res) {
   if (!title || !content || !topic || !email || !userTo) {
     return res.status(400).send({ message: "Some fields are missing!" });
   }
+
   const userFrom = req.user.id;
 
   if (userFrom === userTo) {
@@ -26,7 +27,9 @@ export const createEnquiry = async function (req, res) {
   }
 
   // const targetUser = await User.findOne({ user_id: userTo });
-  const users = await User.find({ $or: [{user_id: userFrom}, { user_id: userTo}]});
+  const users = await User.find({
+    $or: [{ user_id: userFrom }, { user_id: userTo }],
+  });
   if (users.length < 2) {
     return res.status(404).send({ message: "Target users are not found." });
   }
@@ -47,17 +50,28 @@ export const createEnquiry = async function (req, res) {
     const user = users.find((item) => item.user_id === userFrom);
     const activity = addActivity(user, {
       action: ActivityType.enquiry.new,
-      description: activityEnquiryDescription(ActivityType.enquiry.new, newEnquiry),
+      description: activityEnquiryDescription(
+        ActivityType.enquiry.new,
+        newEnquiry,
+      ),
       enquiry_id: newEnquiry.enquiry_id,
-    })
+    });
     await user.save();
 
     // Send Websocket Notification to update User activity.
     if (activity) {
-      sendTargetedNotification(SocketNotificationType.activity, activity, userFrom);
+      sendTargetedNotification(
+        SocketNotificationType.activity,
+        activity,
+        userFrom,
+      );
     }
     // Send Enquiry notification to Intended User.
-    sendTargetedNotification(SocketNotificationType.enquiry, newEnquiry, userTo);
+    sendTargetedNotification(
+      SocketNotificationType.enquiry,
+      newEnquiry,
+      userTo,
+    );
 
     res.status(201).send({ data: newEnquiry });
     return;

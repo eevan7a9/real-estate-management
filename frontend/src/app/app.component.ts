@@ -163,10 +163,12 @@ export class AppComponent implements OnInit {
   }
 
   private fetchEnquiries(): void {
-    this.enquiriesService.fetchEnquiries().then((res) => {
+    firstValueFrom(this.enquiriesService.fetchEnquiries()).then((res) => {
       if (res?.status === 200 && res?.data) {
         this.enquiriesService.enquiries = res.data;
       }
+    }).catch(() => {
+      console.error('Error fetching enquiries.');
     }).finally(() => this.enquiriesService.initialFetchDone.set(true));
   }
 

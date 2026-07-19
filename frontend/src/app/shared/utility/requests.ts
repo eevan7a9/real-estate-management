@@ -39,3 +39,9 @@ export const errorHandler = (err: HttpErrorResponse): {
     error: error.error || error
   };
 };
+
+export const baseRequestResponse = {
+  status: 500,
+  message: 'An unknown error occurred.',
+  error: { status: 500, message: 'An unknown error occurred.' },
+};

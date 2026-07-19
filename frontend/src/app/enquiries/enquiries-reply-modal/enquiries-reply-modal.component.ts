@@ -10,13 +10,13 @@ import { Property } from 'src/app/shared/interface/property';
 })
 export class EnquiriesReplyModalComponent implements OnInit {
   @Input() title = 'Create Enquiry';
-  @Input() property: Partial<Property>;
+  @Input() property!: Partial<Property>;
   @Input() replyTo?: {
     enquiry_id: string;
     title: string;
     topic: string;
   };
-  @Input() userTo: string;
+  @Input() userTo!: string;
 
   constructor(
     private modalCtrl: ModalController,

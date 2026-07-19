@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 import { Enquiry, EnquiryCreate } from '../shared/interface/enquiry';
@@ -16,11 +16,14 @@ const enquiryUrl = environment.api.server + 'enquiries';
 export class EnquiriesService {
   public initialFetchDone = signal<boolean>(false);
   public readonly enquiries$: Observable<Enquiry[]>;
-  public readonly enquiry$: Observable<Enquiry>;
+  public readonly enquiry$: Observable<Enquiry | null>;
   private readonly enquiriesSub = new BehaviorSubject<Enquiry[]>([]);
-  private readonly enquirySub = new BehaviorSubject<Enquiry>(null);
+  private readonly enquirySub = new BehaviorSubject<Enquiry | null>(null);
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+  ) {
     this.enquiries$ = this.enquiriesSub.asObservable();
     this.enquiry$ = this.enquirySub.asObservable();
   }
@@ -33,49 +36,24 @@ export class EnquiriesService {
     this.enquiriesSub.next(enquiries);
   }
 
-  public get enquiry(): Enquiry | null {
-    return this.enquirySub.getValue();
+  public fetchEnquiries(): Observable<ApiResponse<Enquiry[]>> {
+    return this.http.get<ApiResponse<Enquiry[]>>(
+      enquiryUrl,
+      requestOptions({ token: this.userService.token }),
+    );
   }
 
-  public set enquiry(enquiry: Enquiry) {
-    this.enquirySub.next(enquiry);
+  public fetchEnquiry(enqId: string): Observable<ApiResponse<Enquiry>> {
+    return this.http.get<ApiResponse<Enquiry>>(
+      enquiryUrl + '/' + enqId,
+      requestOptions({ token: this.userService.token }),
+    );
   }
 
-  public async fetchEnquiries(): Promise<ApiResponse<Enquiry[]>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Enquiry[]>>(
-          enquiryUrl,
-          requestOptions({ token: this.userService.token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
-  }
-
-  public async fetchEnquiry(enqId: string): Promise<ApiResponse<Enquiry>> {
-    try {
-      const token = this.userService.token;
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Enquiry>>(
-          enquiryUrl + '/' + enqId,
-          requestOptions({ token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
-  }
-
-  public async createEnquiry(
+  public createEnquiry(
     enquiry: EnquiryCreate,
-    property: Partial<Property>
-  ): Promise<ApiResponse<Enquiry>> {
+    property: Partial<Property>,
+  ): Observable<ApiResponse<Enquiry>> {
     const token = this.userService.token;
     const formData = {
       ...enquiry,
@@ -84,60 +62,35 @@ export class EnquiriesService {
         name: property.name,
       },
     };
-    try {
-      const res = await firstValueFrom(
-        this.http.post<ApiResponse<Enquiry>>(
-          enquiryUrl,
-          formData,
-          requestOptions({ token })
-        )
-      );
-      this.insertEnquiryToState(res.data);
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
+    return this.http.post<ApiResponse<Enquiry>>(
+      enquiryUrl,
+      formData,
+      requestOptions({ token }),
+    );
   }
 
-  public async removeEnquiry(enqId: string): Promise<ApiResponse> {
+  public removeEnquiry(enqId: string): Observable<ApiResponse | undefined> {
     const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
-    try {
-      const res = await firstValueFrom(
-        this.http.delete<ApiResponse>(url, requestOptions({ token }))
-      );
-      if (res && res.status === 200) {
-        this.enquiries = this.enquiries.filter(
-          (enquiry) => enquiry.enquiry_id !== enqId
-        );
-        return res;
-      }
-    } catch (error) {
-      console.error(error);
-      return error.error || error;
-    }
+    return this.http.delete<ApiResponse>(url, requestOptions({ token }));
   }
 
-  public async readEnquiry(enqId: string): Promise<void> {
+  public readEnquiry(
+    enqId: string,
+  ): Observable<ApiResponse<Enquiry> | undefined> {
     const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
-    try {
-      const { data } = await firstValueFrom(
-        this.http.patch<ApiResponse<Enquiry>>(
-          url,
-          { read: true },
-          requestOptions({ token })
-        )
-      );
-      // UPDATE ENQUIRIES && CURRENT ENQUIRY
-      this.enquiries = this.enquiries.map((enquiry) =>
-        enquiry.enquiry_id === enqId ? data : enquiry
-      );
-      this.enquiry = data;
-    } catch (error) {
-      console.error(error);
-    }
+    return this.http.patch<ApiResponse<Enquiry>>(
+      url,
+      { read: true },
+      requestOptions({ token }),
+    );
+  }
+
+  public updateEnquiriesState(enquiry: Enquiry): void {
+    this.enquiries = this.enquiries.map((enq) =>
+      enq.enquiry_id === enquiry.enquiry_id ? enquiry : enq,
+    );
   }
 
   public resetState(): void {
@@ -147,5 +100,11 @@ export class EnquiriesService {
 
   public insertEnquiryToState(enquiry: Enquiry): void {
     this.enquiries = [enquiry, ...this.enquiries];
+  }
+
+  public removeEnquiryFromState(enqId: string): void {
+    this.enquiries = this.enquiries.filter(
+      (enquiry) => enquiry.enquiry_id !== enqId,
+    );
   }
 }

@@ -8,7 +8,11 @@
               Related Enquiries:
             </ion-text>
 
-            <ion-icon name="archive-outline" size="large" color="light"></ion-icon>
+            <ion-icon
+              name="archive-outline"
+              size="large"
+              color="light"
+            ></ion-icon>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -33,34 +37,34 @@
     *ngIf="relatedEnquiries().length"
   >
     @for (enquiry of relatedEnquiries(); track $index) {
-    <ion-card
-      (click)="view(enquiry)"
-      class="p-2 shadow-none border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-shade"
-    >
-      <ion-card-header
-        class="px-3 flex flex-row items-center justify-between py-1"
+      <ion-card
+        (click)="view(enquiry)"
+        class="p-2 shadow-none border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-dark-shade"
       >
-        <p class="text-[14px] text-ellipsis line-clamp-1">
-          {{ enquiry.title }}
-        </p>
-
-        <app-enquiry-badge [topic]="enquiry.topic" />
-      </ion-card-header>
-
-      <ion-card-content class="py-1!">
-        <div class="flex flex-row items-center justify-between">
-          <p class="text-[14px]">
-            From:
-            <a [href]="'mailto:' + enquiry.email">
-              {{ enquiry.email }}
-            </a>
+        <ion-card-header
+          class="px-3 flex flex-row items-center justify-between py-1"
+        >
+          <p class="text-[14px] text-ellipsis line-clamp-1">
+            {{ enquiry.title }}
           </p>
-          <span class="text-[14px] min-w-[100px] text-right">
-            {{ enquiry.createdAt | date }}
-          </span>
-        </div>
-      </ion-card-content>
-    </ion-card>
+
+          <app-enquiry-badge [topic]="enquiry.topic" />
+        </ion-card-header>
+
+        <ion-card-content class="py-1!">
+          <div class="flex flex-row items-center justify-between">
+            <p class="text-[14px]">
+              From:
+              <a [href]="'mailto:' + enquiry.email">
+                {{ enquiry.email }}
+              </a>
+            </p>
+            <span class="text-[14px] min-w-25 text-right">
+              {{ enquiry.createdAt | date }}
+            </span>
+          </div>
+        </ion-card-content>
+      </ion-card>
     }
 
     <div

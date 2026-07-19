@@ -8,17 +8,20 @@ import { UserService } from "../../user/user.service";
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'app-enquiries-list',
-    templateUrl: './enquiries-list.component.html',
-    styleUrls: ['./enquiries-list.component.css'],
-    standalone: false
+  selector: 'app-enquiries-list',
+  templateUrl: './enquiries-list.component.html',
+  styleUrls: ['./enquiries-list.component.css'],
+  standalone: false
 })
 export class EnquiriesListComponent {
   @Output() isLoading = new EventEmitter<boolean>();
   public isReceived = signal(false);
   public enquiriesList = computed<Enquiry[]>(() => {
+    const params = this.queryParams();
     let temp = this.enquiries();
-    const { search, sort, filter } = this.queryParams();
+    if (!params) return temp || [];
+
+    const { search, sort, filter } = params;
     if (search) temp = this.searchEnquiries(search);
     if (filter) temp = this.filterEnquiries(filter, temp);
     temp = this.sortEnquiries(sort, temp);
@@ -27,7 +30,7 @@ export class EnquiriesListComponent {
 
   private enquiries = toSignal<Enquiry[]>(this.enquiriesService.enquiries$);
   private queryParams = toSignal(this.activatedRoute.queryParams);
-  private userId = toSignal(this.userService.user$.pipe(map(item => item.user_id)), { initialValue: '' });
+  private userId = toSignal(this.userService.user$.pipe(map(item => item?.user_id)), { initialValue: '' });
 
   constructor(
     private enquiriesService: EnquiriesService,
@@ -66,11 +69,11 @@ export class EnquiriesListComponent {
 
   private searchEnquiries(searchText: string = ''): Enquiry[] {
     const textToFind = searchText.toLowerCase();
-    return this.enquiries().filter((item: Enquiry) => {
+    return this.enquiries()?.filter((item: Enquiry) => {
       const title = item.title.toLowerCase();
       const email = item.email.toLowerCase();
       console.log(title.includes(textToFind), email.includes(textToFind));
       return title.includes(textToFind) || email.includes(textToFind);
-    });
+    }) || [];
   }
 }

@@ -22,12 +22,13 @@
   <div class="ion-margin-top">
     <ckeditor
       [editor]="Editor"
+      [config]="editorConfig"
       formControlName="content"
       class="ckeditor ion-margin-top"
     ></ckeditor>
   </div>
 
-  <div class="alert-errors" *ngIf="error && enquiryForm.get('content').errors">
+  <div class="alert-errors" *ngIf="error() && enquiryForm.get('content')?.errors">
     Message content is too short.
   </div>
 
@@ -51,7 +52,7 @@
     (click)="submit()"
     class="ion-margin"
     color="success"
-    [disabled]="submitting"
+    [disabled]="submitting()"
   >
     Submit
   </ion-button>

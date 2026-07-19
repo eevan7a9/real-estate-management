@@ -19,13 +19,13 @@ import {
 } from '@ionic/core';
 
 @Component({
-    selector: 'app-enquiries',
-    templateUrl: './enquiries.page.html',
-    styleUrls: ['./enquiries.page.css'],
-    standalone: false
+  selector: 'app-enquiries',
+  templateUrl: './enquiries.page.html',
+  styleUrls: ['./enquiries.page.css'],
+  standalone: false
 })
 export class EnquiriesPage implements AfterViewInit {
-  @ViewChild(EnquiriesListComponent) enquiriesList: EnquiriesListComponent;
+  @ViewChild(EnquiriesListComponent) enquiriesList!: EnquiriesListComponent;
   public search = signal<string>('');
   public filterBy = signal<string[]>([]);
   public sortBy = signal<string>('latest');
@@ -82,10 +82,13 @@ export class EnquiriesPage implements AfterViewInit {
     private userService: UserService,
     private router: Router,
     private enquiriesService: EnquiriesService
-  ) {}
+  ) { }
 
   public ngAfterViewInit(): void {
-    const { filter, sort, search } = this.queryParams();
+    const params = this.queryParams();
+    if (!params) return;
+
+    const { filter, sort, search } = params;
     if (filter?.length) this.filterBy.set(filter.split(','));
     if (sort) this.sortBy.set(sort);
     if (search) this.search.set(search);

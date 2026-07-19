@@ -1,10 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, signal } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { IonInput, ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Property } from 'src/app/shared/interface/property';
@@ -12,26 +12,47 @@ import { EnquiriesService } from '../enquiries.service';
 import { UserService } from 'src/app/user/user.service';
 import { NeedSigninContinueComponent } from 'src/app/shared/components/need-signin-continue/need-signin-continue.component';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { baseRequestResponse, errorHandler } from '@app/shared/utility/requests';
+import { HttpErrorResponse } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
-    selector: 'app-enquiries-new-form',
-    templateUrl: './enquiries-new-form.component.html',
-    styleUrls: ['./enquiries-new-form.component.css'],
-    standalone: false
+  selector: 'app-enquiries-new-form',
+  templateUrl: './enquiries-new-form.component.html',
+  styleUrls: ['./enquiries-new-form.component.css'],
+  standalone: false
 })
 export class EnquiriesNewFormComponent {
-  @Input() property: Partial<Property | undefined>;
-  @Input() userTo: string | undefined;
-  @Input() replyTo?: {
+  public property = input<Partial<Property | undefined>>(undefined);
+  public userTo = input<string | undefined>(undefined);
+  public replyTo = input<{
     enquiry_id: string;
     title: string;
     topic: string;
-  };
+  } | undefined>(undefined);
 
-  public error = false;
-  public submitting = false;
+  public error = signal(false);
+  public submitting = signal(false);
   public enquiryForm: UntypedFormGroup;
   public Editor = ClassicEditor;
+
+  public editorConfig = {
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      'link',
+      'bulletedList',
+      'numberedList',
+      '|',
+      'blockQuote',
+      'insertTable',
+      '|',
+      'undo',
+      'redo'
+    ]
+  };
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -51,14 +72,15 @@ export class EnquiriesNewFormComponent {
 
   public async submit() {
     this.enquiryForm.markAllAsTouched();
+    const property = this.property();
 
-    if (!this.enquiryForm.valid || !this.property) {
-      this.error = true;
+    if (!this.enquiryForm.valid || !property) {
+      this.error.set(true);
       return;
     }
-    this.submitting = true;
+    this.submitting.set(true);
 
-    if(this.restriction.restricted) {
+    if (this.restriction.restricted) {
       this.modalCtrl.dismiss();
       return this.restriction.showAlert();
     }
@@ -76,28 +98,42 @@ export class EnquiriesNewFormComponent {
     }
 
     const enquiryForm = {
-      userTo: this.userTo,
+      userTo: this.userTo(),
       ...this.enquiryForm.value,
-      ...(this.replyTo ? { replyTo: this.replyTo } : ''),
+      ...(this.replyTo() ? { replyTo: this.replyTo() } : ''),
     };
 
-    const res = await this.enquiriesService.createEnquiry(
-      enquiryForm,
-      this.property
-    );
+    console.log('Enquiry form data:', enquiryForm);
+    console.log('Property data:', property);
 
-    if (!res || res.status !== 201) {
-      const msg = 'Error: Something went wrong, please try again later.';
-      this.presentToast(`Error: ${res.message || msg}`, 3000, 'danger');
-      return;
+    try {
+      const res = await firstValueFrom(this.enquiriesService.createEnquiry(
+        enquiryForm,
+        property
+      ));
+      if (res.data) {
+        this.enquiriesService.insertEnquiryToState(res.data);
+      }
+      //checks if component is in modal
+      const hasModal = await this.modalCtrl.getTop();
+      if (hasModal) {
+        this.modalCtrl.dismiss();
+      }
+      this.enquiryForm.reset();
+      this.presentToast('Success, message is sent.');
+    } catch (error: unknown) {
+      let response = { ...baseRequestResponse };
+      if (error instanceof HttpErrorResponse) {
+        response = errorHandler(error);
+        console.error('fetchEnquiries error:', response.message);
+        this.toastCtrl.create({
+          message: response.message,
+          duration: 3000,
+          color: 'danger'
+        }).then(toast => toast.present());
+      }
+      console.error('Error Creating Enquiry:', response.message);
     }
-    //checks if component is in modal
-    const hasModal = await this.modalCtrl.getTop();
-    if (hasModal) {
-      this.modalCtrl.dismiss();
-    }
-    this.enquiryForm.reset();
-    this.presentToast('Success, message is sent.');
   }
 
   private async presentToast(

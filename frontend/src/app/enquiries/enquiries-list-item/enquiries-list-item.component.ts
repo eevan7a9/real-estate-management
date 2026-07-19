@@ -1,31 +1,36 @@
 import { Component, computed, input } from '@angular/core';
-import { AlertController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 import { ActionPopupComponent } from 'src/app/shared/components/action-popup/action-popup.component';
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { UserService } from 'src/app/user/user.service';
 import { EnquiriesReplyModalComponent } from '../enquiries-reply-modal/enquiries-reply-modal.component';
 import { EnquiriesService } from '../enquiries.service';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-alert/confirmation-alert.service';
+import { baseRequestResponse, errorHandler } from '@app/shared/utility/requests';
+
 
 @Component({
-    selector: 'app-enquiries-list-item',
-    templateUrl: './enquiries-list-item.component.html',
-    styleUrls: ['./enquiries-list-item.component.css'],
-    standalone: false
+  selector: 'app-enquiries-list-item',
+  templateUrl: './enquiries-list-item.component.html',
+  styleUrls: ['./enquiries-list-item.component.css'],
+  standalone: false
 })
 export class EnquiriesListItemComponent {
 
   public enquiry = input<Enquiry>();
-  public sent = computed(() => this.userService.user.user_id === this.enquiry().users.from.user_id)
+  public sent = computed(() => this.userService.user?.user_id === this.enquiry()?.users.from.user_id)
 
   constructor(
+    public userService: UserService,
     private enquiriesService: EnquiriesService,
-    private alertCtrl: AlertController,
     private popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
-    public userService: UserService,
-    private restriction: RestrictionService
+    private restriction: RestrictionService,
+    private confirmationAlert: ConfirmationAlertService
   ) { }
 
   public async actionPopup(ev: Event, enqId: string) {
@@ -48,41 +53,42 @@ export class EnquiriesListItemComponent {
       return;
     }
     if (data.action === 'delete') {
-      this.delete(enqId);
+      if (this.restriction.restricted) {
+        return this.restriction.showAlert();
+      }
+      this.confirmationAlert.confirm(
+        'Delete Enquiry',
+        'Are you sure you want to delete this enquiry?',
+        'Delete',
+        'Cancel'
+      )
+        .then(async (confirmed) => {
+          if (confirmed) {
+            try {
+              const res = await firstValueFrom(this.enquiriesService.removeEnquiry(enqId));
+              if (res.status === 200) {
+                this.enquiriesService.removeEnquiryFromState(enqId);
+                this.presentToast('Enquiry is deleted successfully.');
+              }
+            } catch (error: unknown) {
+              let response = { ...baseRequestResponse };
+              if (error instanceof HttpErrorResponse) {
+                response = errorHandler(error);
+                console.error('fetchEnquiries error:', response.message);
+                this.toastCtrl.create({
+                  message: response.message,
+                  duration: 3000,
+                  color: 'danger'
+                }).then(toast => toast.present());
+              }
+              console.error('Error Deleting Enquiry:', response.message);
+            }
+          }
+        })
     }
     if (data.action === 'message') {
       this.createEnquiryModal();
     }
-  }
-
-  public async delete(enqId: string) {
-    if(this.restriction.restricted) {
-      return this.restriction.showAlert();
-    }
-    const alert = await this.alertCtrl.create({
-      cssClass: 'my-custom-alert-class',
-      header: 'Delete Enquiry',
-      // subHeader: 'Subtitle',
-      message: 'Are you sure you want to delete this Enquiry?',
-      buttons: [
-        {
-          text: 'Cancel'
-        }, {
-          text: 'DELETE',
-          cssClass: 'alert-danger-text',
-          handler: async () => {
-            const res = await this.enquiriesService.removeEnquiry(enqId);
-            if (!res || res.status !== 200) {
-              const msg = 'Error: Something went wrong, please try again later.';
-              this.presentToast(`${res.message || msg}`, 3000, 'danger');
-              return;
-            }
-            return this.presentToast(res.message);
-          }
-        }
-      ]
-    });
-    await alert.present();
   }
 
   public async presentToast(message: string, duration = 3000, color = 'success') {
@@ -95,17 +101,20 @@ export class EnquiriesListItemComponent {
   }
 
   public async createEnquiryModal() {
+    const enquiry = this.enquiry();
+    if (!enquiry) return;
+
     const modal = await this.modalCtrl.create({
       component: EnquiriesReplyModalComponent,
       componentProps: {
         title: 'Reply Enquiry',
-        property: this.enquiry().property,
+        property: enquiry.property,
         replyTo: {
-          enquiry_id: this.enquiry().enquiry_id,
-          title: this.enquiry().title,
-          topic: this.enquiry().topic
+          enquiry_id: enquiry.enquiry_id,
+          title: enquiry.title,
+          topic: enquiry.topic
         },
-        userTo: this.enquiry().users?.from?.user_id
+        userTo: enquiry.users?.from?.user_id
       }
     });
     return await modal.present();

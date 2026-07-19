@@ -22,11 +22,11 @@ export class EnquiriesRelatedListComponent {
 
   public relatedEnquiries = computed<Enquiry[]>(() => {
     if (!this.propertyId()) return [];
-    return this.enquiries().filter(
+    return this.enquiries()?.filter(
       (enq) =>
         enq.property.property_id === this.propertyId() &&
         (!this.enquiryId() || enq.enquiry_id !== this.enquiryId())
-    );
+    ) || [];
   });
 
   public view(enquiry: Enquiry) {
