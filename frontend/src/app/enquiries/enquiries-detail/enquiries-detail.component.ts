@@ -12,7 +12,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-alert/confirmation-alert.service';
 import { firstValueFrom } from 'rxjs';
-import { baseRequestResponse, errorHandler } from '@app/shared/utility/requests';
+import { errorHandler } from '@app/shared/utility/requests';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -112,17 +112,15 @@ export class EnquiriesDetailComponent implements OnInit {
               this.presentToast('Enquiry is deleted successfully.');
             }
           } catch (error: unknown) {
-            let response = { ...baseRequestResponse };
             if (error instanceof HttpErrorResponse) {
-              response = errorHandler(error);
-              console.error('fetchEnquiries error:', response.message);
+              let response = errorHandler(error);
               this.toastCtrl.create({
                 message: response.message,
                 duration: 3000,
                 color: 'danger'
               }).then(toast => toast.present());
             }
-            console.error('Error Deleting Enquiry:', response.message);
+            console.error('Error Deleting Enquiry:', error);
           }
         }
       })
@@ -164,30 +162,24 @@ export class EnquiriesDetailComponent implements OnInit {
     }
     try {
       const res = await firstValueFrom(this.enquiriesService.fetchEnquiry(enquiryId));
-      if (res.status === 200) {
-        this.enquiry.set(res.data);
-      }
+      if (res.status === 200) this.enquiry.set(res.data);
     } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('fetchEnquiries error:', response.message);
+        const response = errorHandler(error);
         this.toastCtrl.create({
           message: response.message,
           duration: 3000,
           color: 'danger'
         }).then(toast => toast.present());
       }
-      console.error('Error fetching enquiry details:', response.message);
+      console.error('Error fetching enquiry details:', error);
     }
   }
 
   private setEnquiryRead(enquiry: Enquiry): void {
     if (enquiry && !enquiry?.read && enquiry?.users?.to.user_id === this.user()?.user_id) {
-      firstValueFrom(this.enquiriesService.readEnquiry(enquiry.enquiry_id)).then((res) => {
-        this.enquiriesService.updateEnquiriesState(res?.data as Enquiry);
-        this.enquiry.set(res?.data);
-      });
+      firstValueFrom(this.enquiriesService.readEnquiry(enquiry.enquiry_id))
+        .then((res) => this.enquiry.set(res?.data));
     }
   }
 }

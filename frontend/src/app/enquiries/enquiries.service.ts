@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 import { Enquiry, EnquiryCreate } from '../shared/interface/enquiry';
@@ -66,13 +66,15 @@ export class EnquiriesService {
       enquiryUrl,
       formData,
       requestOptions({ token }),
-    );
+    ).pipe(tap((res) => res?.data && this.insertEnquiryToState(res?.data)));
   }
 
   public removeEnquiry(enqId: string): Observable<ApiResponse | undefined> {
     const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
-    return this.http.delete<ApiResponse>(url, requestOptions({ token }));
+    return this.http.delete<ApiResponse>(url, requestOptions({ token })).pipe(
+      tap(() => this.removeEnquiryFromState(enqId))
+    );
   }
 
   public readEnquiry(
@@ -84,7 +86,7 @@ export class EnquiriesService {
       url,
       { read: true },
       requestOptions({ token }),
-    );
+    ).pipe(tap((res) => res?.data && this.updateEnquiriesState(res?.data)));
   }
 
   public updateEnquiriesState(enquiry: Enquiry): void {

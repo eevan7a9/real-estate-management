@@ -71,17 +71,15 @@ export class EnquiriesListItemComponent {
                 this.presentToast('Enquiry is deleted successfully.');
               }
             } catch (error: unknown) {
-              let response = { ...baseRequestResponse };
               if (error instanceof HttpErrorResponse) {
-                response = errorHandler(error);
-                console.error('fetchEnquiries error:', response.message);
+                const response = errorHandler(error);
                 this.toastCtrl.create({
                   message: response.message,
                   duration: 3000,
                   color: 'danger'
                 }).then(toast => toast.present());
               }
-              console.error('Error Deleting Enquiry:', response.message);
+              console.error('Error Deleting Enquiry:', error);
             }
           }
         })

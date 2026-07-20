@@ -112,7 +112,7 @@ export class EnquiriesNewFormComponent {
         property
       ));
       if (res.data) {
-        this.enquiriesService.insertEnquiryToState(res.data);
+        this.presentToast('Success, message is sent.');
       }
       //checks if component is in modal
       const hasModal = await this.modalCtrl.getTop();
@@ -120,7 +120,6 @@ export class EnquiriesNewFormComponent {
         this.modalCtrl.dismiss();
       }
       this.enquiryForm.reset();
-      this.presentToast('Success, message is sent.');
     } catch (error: unknown) {
       let response = { ...baseRequestResponse };
       if (error instanceof HttpErrorResponse) {
