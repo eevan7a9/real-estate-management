@@ -1,4 +1,4 @@
-@if (activities().length) {
+@if (activities()?.length) {
   <div class="pl-8">
     <ol class="relative border-s border-primary-tint dark:border-primary">
       @for (activity of activities(); track $index) {
@@ -11,8 +11,8 @@
           {{ activity.createdAt }}
         </time>
 
-        <p class="text-[16px]! md:text-[18px]! mt-1! text-gray-700">
-          {{ activity.description }}
+        <p class="text-[16px]! md:text-[18px]! mt-1! text-gray-700 dark:text-gray-400">
+          {{ activity.description }} sad
         </p>
 
         <button type="button" (click)="viewProperty(activity)"

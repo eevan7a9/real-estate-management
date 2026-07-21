@@ -29,7 +29,7 @@
             </ion-item>
             <div
               class="alert-errors"
-              *ngIf="error && signinForm.get('email').errors"
+              *ngIf="error && signinForm.get('email')?.errors"
             >
               <app-alert-card content="Email is not valid."></app-alert-card>
             </div>

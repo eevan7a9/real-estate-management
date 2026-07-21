@@ -29,15 +29,15 @@
   <ng-template>
     <ion-content
       class="ion-padding min-w-[300px]!"
-      *ngIf="notifications().length"
+      *ngIf="notifications()?.length"
     >
       <h1 class="text-[16px]! md:text-[20px]! font-light m-0! p-0!">
         Notifications
       </h1>
 
-      <ion-list lines="none" class="flex! flex-col! gap-1! bg-transparent!">
+      <ul lines="none" class="flex! flex-col! gap-1! bg-transparent!">
         @for (notification of notifications(); track $index) {
-        <ion-item
+        <li
           class="group p-2 bg-white dark:bg-dark rounded-md border border-slate-200 dark:border-slate-800 text-[14px]!"
         >
           <div class="flex flex-col w-full!">
@@ -60,9 +60,9 @@
               </button>
             </p>
           </div>
-        </ion-item>
+        </li>
         }
-      </ion-list>
+      </ul>
 
       <div class="flex justify-center py-3 w-full">
         <ion-button
@@ -76,7 +76,7 @@
       </div>
     </ion-content>
 
-    <ion-card-content class="text-[18px]!" *ngIf="!notifications().length">
+    <ion-card-content class="text-[18px]!" *ngIf="!notifications()?.length">
       <div class="h-[100px] flex justify-center items-center">
         You have no notifications.
       </div>

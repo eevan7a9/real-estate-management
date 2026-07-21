@@ -12,7 +12,6 @@ export const signIn = async function (req, res) {
       return res.status(400).send({
         // error: "Internal Server Error",
         message: "Error: Invalid Email or Password.",
-        // message: "Error: We can't find a user with that e-mail address.",
       });
     }
     const valid = await fastify.verifyPassword(password, foundUser.password);
@@ -41,6 +40,7 @@ export const signIn = async function (req, res) {
       },
     });
   } catch (error) {
+    console.log("\n\nError signing in:\n", error);
     return res.status(404).send({ message: "Error: Something went wrong." });
   }
 };

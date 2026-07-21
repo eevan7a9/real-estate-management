@@ -28,7 +28,7 @@
               </ion-button>
             </ion-card-header>
 
-            @if (notifications().length) {
+            @if (notifications()?.length) {
             <ion-card-content class="my-0!">
               <ion-list class="max-h-125 overflow-y-auto">
                 <ion-item
@@ -39,7 +39,7 @@
                 >
                   <ion-checkbox
                     class="relative px-3 py-2"
-                    [ngClass]="{ 'bg-gray-300 bg-opacity-30': !item.read }"
+                    [ngClass]="{ 'bg-gray-300 dark:bg-gray-700 bg-opacity-30': !item.read }"
                     (ionChange)="itemClicked($event, item.notification_id)"
                     labelPlacement="end"
                     justify="start"

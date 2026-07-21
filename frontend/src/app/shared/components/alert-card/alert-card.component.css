@@ -17,19 +17,19 @@
 }
 
 .danger {
-  border-color: var(--ion-color-danger);
-  background: #ed576b5d;
+  border: none;
+  background: #fffffff3;
   color: var(--ion-color-danger-shade);
 }
 
 .warning {
-  border-color: var(--ion-color-warning);
-  background: #e0ae0852;
+  border: none;
+  background: #fffffff3;
   color: var(--ion-color-warning-shade);
 }
 
 .success {
-  border-color: var(--ion-color-success);
-  background: #28ba6246;
+  border: none;
+  background: #fffffff3;
   color: var(--ion-color-success-shade);
 }

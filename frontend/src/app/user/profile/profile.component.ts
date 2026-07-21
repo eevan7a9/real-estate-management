@@ -5,6 +5,9 @@ import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { firstValueFrom } from 'rxjs';
+import { errorHandler } from '@app/shared/utility/requests';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -59,19 +62,28 @@ export class ProfileComponent {
     if (this.restriction.restricted) {
       return this.restriction.showAlert();
     }
-    const res = await this.userService.updateUser(this.userForm.value);
-    const status = res.status;
-    console.log(res);
-    if (status === 200) {
-      const updatedUser = { ...res.data, accessToken: this.userService.token };
-      this.userService.setUser(updatedUser);
+    try {
+      const res = await firstValueFrom(this.userService.updateUser(this.userForm.value));
+      const { status, message } = res;
+      if (status === 200) {
+        return this.toastCtrl.create({
+          message: message || 'Profile updated successfully',
+          color: 'success',
+          duration: 5000,
+        }).then((toast) => toast.present());
+      }
+      console.error('Update User error:', message);
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        let { message } = errorHandler(error);
+        this.toastCtrl.create({
+          message,
+          color: 'danger',
+          duration: 5000,
+        }).then((toast) => toast.present());
+      }
+      console.error('Update User error:', error);
     }
-    const toast = this.toastCtrl.create({
-      message: res.message,
-      color: status === 200 ? 'success' : 'danger',
-      duration: 5000,
-    });
-    (await toast).present();
   }
 
   public toggleActivityPropertyTab(): void {

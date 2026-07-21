@@ -7,7 +7,8 @@ export const authProperties = {
     accessToken: { type: "string" },
     about: { type: "string" },
     address: { type: "string" },
-    verified: { type: "boolean" }
+    verified: { type: "boolean" },
+    googleAuth: { type: "boolean" },
   },
 };
 Object.freeze(authProperties);

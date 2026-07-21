@@ -26,7 +26,7 @@ export const changePassword = async function (req, res) {
       });
     }
 
-    const validPasswordCurrent = await fastify.bcrypt.compare(passwordCurrent, foundUser.password);
+    const validPasswordCurrent = await fastify.verifyPassword(passwordCurrent, foundUser.password);
     if (!validPasswordCurrent) {
       return res.status(400).send({ message: "Error: Current password is not valid." });
     }
@@ -35,7 +35,7 @@ export const changePassword = async function (req, res) {
       return res.status(400).send({ message: "Error: New password is not valid." });
     }
 
-    const hashedPassword = await fastify.bcrypt.hash(passwordNew);
+    const hashedPassword = await fastify.hashPassword(passwordNew);
     foundUser.password = hashedPassword;
     // Add notification
     const notification = addNotification(foundUser, {
@@ -51,8 +51,11 @@ export const changePassword = async function (req, res) {
     });
     await foundUser.save();
 
-    return res.status(200).send({});
+    return res.status(200).send({
+      message: "Success: Your password has been successfully updated.",
+    });
   } catch (error) {
+    console.error("\n\nError changing password:\n", error);
     return res.status(400).send({ message: "Error: Something went wrong." });
   }
 };

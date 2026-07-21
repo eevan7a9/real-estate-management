@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
 import { isPasswordValid } from "../../utils/users.js";
+import { UserAuthProvider } from "../../enums/users.js";
 
 /**
  * Registers a new user.
@@ -24,12 +25,13 @@ export const register = async function (req, res) {
         fullName,
         email: email.toLowerCase(),
         password: hashedPassword,
+        authProvider: UserAuthProvider.local,
       });
       const { user_id } = await newUser.save();
       const accessToken = fastify.jwt.sign({ id: newUser.user_id });
-      return res
-        .status(201)
-        .send({ user_id, email: email.toLowerCase(), fullName, accessToken });
+      return res.status(201).send({
+        data: { user_id, email: email.toLowerCase(), fullName, accessToken },
+      });
     } catch (error) {
       return res.send(error);
     }

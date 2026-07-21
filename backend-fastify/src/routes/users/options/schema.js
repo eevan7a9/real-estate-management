@@ -5,6 +5,10 @@ export const userProperties = {
   fullName: { type: "string" },
   about: { type: "string" },
   address: { type: "string" },
+
+  authProvider: { type: "string" },
+  googleId: { type: "string" },
+
   verified: { type: "boolean" },
 };
 Object.freeze(userProperties);

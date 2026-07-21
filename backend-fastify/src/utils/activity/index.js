@@ -1,4 +1,5 @@
 import { ActivityType } from "../../enums/activity.js";
+import { UserAuthProvider } from "../../enums/users.js";
 
 import {
   enquiryDescriptionCreate,
@@ -69,7 +70,7 @@ export const activityPropertyDescription = function (
     price: 0,
     paymentFrequency: "",
     currency: "",
-  }
+  },
 ) {
   switch (action) {
     case ActivityType.property.new:
@@ -87,10 +88,16 @@ export const activityPropertyDescription = function (
 };
 
 /**
- * 
- * @param {User} user 
+ *
+ * @param {User} user
  * @returns {string}
  */
-export const activitySigninDescription = function(user) {
-  return `User ${user.email} signed in.`
-}
+export const activitySigninDescription = function (
+  user,
+  authProvider = "local",
+) {
+  if (authProvider === UserAuthProvider.google) {
+    return `User ${user.email} signed in with Google.`;
+  }
+  return `User ${user.email} signed in.`;
+};

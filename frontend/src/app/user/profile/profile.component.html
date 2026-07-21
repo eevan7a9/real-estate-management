@@ -1,15 +1,15 @@
 <ion-content *ngIf="user">
-  <div class="profile-container ion-padding-vertical">
+  <div class="w-full max-w-screen-xl mx-auto ion-padding-vertical">
     <ion-grid>
       <ion-row>
         <ion-col size="12" sizeMd="4" class="px-3 md:pr-1 md:pl-3">
           <ion-card
             class="shadow-none h-full border border-slate-200 dark:border-slate-800"
           >
-            <ion-card-header class="ion-no-padding">
+            <ion-card-header class="mb-2">
               <ion-card-title class="ion-padding"></ion-card-title>
-              <div class="profile-img-container">
-                <img [src]="imgUrl" />
+              <div class="p-2 border relative overflow-hidden rounded-full mx-auto size-[250px] lg:size-[320px]">
+                <img [src]="imgUrl" class="object-cover h-full w-full" />
               </div>
             </ion-card-header>
 
@@ -47,7 +47,11 @@
               >
                 My Information
               </ion-card-title>
-              <ion-icon name="person-circle-outline" color="light" size="large"></ion-icon>
+              <ion-icon
+                name="person-circle-outline"
+                color="light"
+                size="large"
+              ></ion-icon>
             </ion-card-header>
 
             <ion-card-content class="pt-4!">
@@ -140,9 +144,9 @@
 
             <ion-card-content class="min-h-[400px] pt-6!">
               @if (isActivityActive()) {
-              <app-activity-timeline />
+                <app-activity-timeline />
               } @else {
-              <app-user-properties></app-user-properties>
+                <app-user-properties></app-user-properties>
               }
             </ion-card-content>
           </ion-card>

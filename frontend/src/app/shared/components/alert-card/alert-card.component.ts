@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'app-alert-card',
@@ -6,11 +6,9 @@ import { Component, Input, OnInit } from '@angular/core';
     styleUrls: ['./alert-card.component.css'],
     standalone: false
 })
-export class AlertCardComponent implements OnInit {
+export class AlertCardComponent {
   @Input() color = 'danger';
   @Input() content = 'Alert Something is wrong';
+
   constructor() { }
-
-  ngOnInit() { }
-
 }

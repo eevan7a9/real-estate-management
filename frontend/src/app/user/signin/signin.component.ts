@@ -5,14 +5,17 @@ import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { GoogleAuthResponse } from 'src/app/shared/interface/google';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user.service';
+import { firstValueFrom } from 'rxjs';
+import { errorHandler } from '@app/shared/utility/requests';
+import { HttpErrorResponse } from '@angular/common/http';
 // CDN - https://accounts.google.com/gsi/client
 declare let google: any;
 
 @Component({
-    selector: 'app-signin',
-    templateUrl: './signin.component.html',
-    styleUrls: ['./signin.component.css'],
-    standalone: false
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.css'],
+  standalone: false
 })
 export class SigninComponent implements OnInit, AfterViewInit {
   public error = false;
@@ -52,16 +55,22 @@ export class SigninComponent implements OnInit, AfterViewInit {
     const loading = await this.presentLoading();
     loading.present();
 
-    const { email, password } = this.signinForm.value;
-    const result = await this.user.signIn(email, password);
-    
-    loading.dismiss();
-
-    if (result.status === 200) {
-      this.showToast('Success, You are logged in');
-      this.router.navigate(['/map'], { replaceUrl: true });
-    } else {
-      this.showToast(result.message, 'danger');
+    try {
+      const { email, password } = this.signinForm.value;
+      const result = await firstValueFrom(this.user.signIn(email, password));
+      loading.dismiss();
+      if (result.status === 200) {
+        this.showToast('Success, You are logged in');
+        this.router.navigate(['/map'], { replaceUrl: true });
+      } else {
+        this.showToast(result.message, 'danger');
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const { message } = errorHandler(error);
+        this.showToast(message, 'danger');
+      }
+      console.error('Sign-in error:', error);
     }
   }
 
@@ -88,11 +97,20 @@ export class SigninComponent implements OnInit, AfterViewInit {
     // Here will be your response from Google.
     const loading = await this.presentLoading();
     loading.present();
-    const user = await this.user.googleAuth(response);
-    if (user) {
-      await this.showToast('Success, You are logged in');
-      this.router.navigateByUrl('/map');
-      loading.dismiss();
+    try {
+      const res = await firstValueFrom(this.user.googleAuth(response));
+      console.log('Google Auth result:', res);
+      if (res.data) {
+        await this.showToast('Success, You are logged in');
+        this.router.navigateByUrl('/map');
+        loading.dismiss();
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const { message } = errorHandler(error);
+        this.showToast(message, 'danger');
+      }
+      console.error('Google Auth error:', error);
     }
   }
 
@@ -103,7 +121,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private async showToast(message, color = 'success') {
+  private async showToast(message: string, color = 'success') {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2000,

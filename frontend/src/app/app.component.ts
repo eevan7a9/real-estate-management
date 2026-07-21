@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { firstValueFrom, map } from 'rxjs';
@@ -17,6 +17,7 @@ import { Enquiry } from './shared/interface/enquiry';
 import { register } from 'swiper/element/bundle';
 import { NotificationsService } from './user/notifications/notifications.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { errorHandler } from './shared/utility/requests';
 
 register();
 
@@ -153,12 +154,24 @@ export class AppComponent implements OnInit {
   }
 
   private async setUserProfile(): Promise<void> {
-    const res = await this.userService.getCurrentUser();
-    if (res.status === 200 && res.data) {
-      const { activities, notifications, ...user } = res.data
-      this.user.set(user);
-      this.activitiesService.activities = activities || [];
-      this.notificationsService.notifications = notifications || [];
+    try {
+      const res = await firstValueFrom(this.userService.getCurrentUser());
+      if (res.status === 200 && res.data) {
+        const { activities, notifications, ...user } = res.data
+        this.user.set(user);
+        this.activitiesService.activities = activities || [];
+        this.notificationsService.notifications = notifications || [];
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const { message } = errorHandler(error);
+        this.toastController.create({
+          message,
+          color: 'danger',
+          duration: 5000,
+        }).then((toast) => toast.present());
+      }
+      console.error('Get Current User error:', error);
     }
   }
 

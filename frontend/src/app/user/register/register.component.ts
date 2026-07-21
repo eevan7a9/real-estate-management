@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
@@ -8,14 +8,17 @@ import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { UserService } from '../user.service';
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
+import { firstValueFrom } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorHandler } from '@app/shared/utility/requests';
 
 @Component({
-    selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css'],
-    standalone: false
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
+  standalone: false
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   public error = false;
   public registerForm: UntypedFormGroup;
 
@@ -60,8 +63,6 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
-
   public async submit() {
     if (this.registerForm.invalid) {
       this.error = true;
@@ -71,15 +72,23 @@ export class RegisterComponent implements OnInit {
     loading.present();
 
     const { fullName, email, password } = this.registerForm.value;
-    const result = await this.user.register(fullName, email, password);
-    if (!result.error) {
+    try {
+      const result = await firstValueFrom(this.user.register(fullName, email, password));
+      if (!result.error && result.data) {
+        await this.showToast('Success, registration is complete.');
+        await this.router.navigateByUrl('/user/account/profile');
+      } else {
+        await this.showToast(result.message, 'danger');
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const { message } = errorHandler(error);
+        this.showToast(message, 'danger');
+      }
+      console.error('Register error:', error);
+    } finally {
       loading.dismiss();
-      await this.showToast('Success, registration is complete.');
-      await this.router.navigateByUrl('/user/account/profile');
-      return;
     }
-    await this.showToast('Error:' + result.error.message, 'danger');
-    loading.dismiss();
   }
 
   private async presentLoading() {

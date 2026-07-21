@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, concatMap, from, map, tap } from 'rxjs';
 import { User, UserDetails, UserSignedIn } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
 import { ApiResponse } from '../shared/interface/api-response';
-import { baseRequestResponse, errorHandler, requestOptions } from '../shared/utility/requests';
+import { requestOptions } from '../shared/utility/requests';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
@@ -53,176 +53,106 @@ export class UserService {
     this.router.navigate(['/user/signin'], { replaceUrl: true });
   }
 
-  public async signIn(
+  public signIn(
     email: string,
     password: string,
-  ): Promise<ApiResponse<UserSignedIn | undefined>> {
-    try {
-      const result = await firstValueFrom(
-        this.http.post<ApiResponse<UserSignedIn>>(
-          url + 'auth/signin',
-          {
-            email,
-            password,
-          },
-          requestOptions({ contentType: 'application/json' }),
-        ),
+  ): Observable<ApiResponse<UserSignedIn | undefined>> {
+    return this.http
+      .post<ApiResponse<UserSignedIn>>(
+        url + 'auth/signin',
+        {
+          email,
+          password,
+        },
+        requestOptions({ contentType: 'application/json' }),
+      )
+      .pipe(
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
       );
-      if (result && result.data) await this.setUser(result.data);
-      return result;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Sign-in error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-
-      return response;
-    }
   }
 
-  public async register(
+  public register(
     fullName: string,
     email: string,
     password: string,
-  ): Promise<ApiResponse<UserSignedIn>> {
-    try {
-      const result = await firstValueFrom(
-        this.http.post<ApiResponse<UserSignedIn>>(
-          url + 'auth/register',
-          {
-            fullName,
-            email,
-            password,
-          },
-          requestOptions({ contentType: 'application/json' }),
-        ),
+  ): Observable<ApiResponse<UserSignedIn>> {
+    return this.http
+      .post<ApiResponse<UserSignedIn>>(
+        url + 'auth/register',
+        {
+          fullName,
+          email,
+          password,
+        },
+        requestOptions({ contentType: 'application/json' }),
+      )
+      .pipe(
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
       );
-      if (result && result.data) await this.setUser(result.data);
-      return result;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Register error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-
-      return response;
-    }
   }
 
-  public async googleAuth(
+  public googleAuth(
     payload: GoogleAuthResponse,
-  ): Promise<ApiResponse<UserSignedIn>> {
-    try {
-      const result = await firstValueFrom(
-        this.http.post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload),
+  ): Observable<ApiResponse<UserSignedIn>> {
+    return this.http
+      .post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload)
+      .pipe(
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
       );
-      if (result && result.data) await this.setUser(result.data);
-      else {
-        this.toastCtrl
-          .create({
-            message: 'Failed to authenticate with Google.',
-            duration: 3000,
-            color: 'danger',
-          })
-          .then((toast) => toast.present());
-      }
-      return result;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Google Auth error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-      return response;
-    }
   }
 
   public isPropertyOwner(property: Property): boolean | undefined {
     return this.user && this.user?.user_id === property?.user_id;
   }
 
-  public async changePassword(
+  public changePassword(
     passwordNew: string,
     passwordCurrent: string,
-  ): Promise<ApiResponse> {
-    try {
-      const res = await firstValueFrom(
-        this.http.post<ApiResponse>(
-          url + 'auth/change-password',
-          { passwordCurrent, passwordNew },
-          requestOptions({
-            token: this.token,
-            contentType: 'application/json',
-          }),
-        ),
-      );
-      return res;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Change Password error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-      return response;
-    }
+  ): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      url + 'auth/change-password',
+      { passwordCurrent, passwordNew },
+      requestOptions({
+        token: this.token,
+        contentType: 'application/json',
+      }),
+    );
   }
 
-  public async updateUser(user: Partial<User>): Promise<ApiResponse<User>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.patch<ApiResponse<User>>(
-          url + 'users/me',
-          user,
-          requestOptions({ token: this.token }),
-        ),
+  public updateUser(user: Partial<User>): Observable<ApiResponse<User>> {
+    return this.http
+      .patch<
+        ApiResponse<User>
+      >(url + 'users/me', user, requestOptions({ token: this.token }))
+      .pipe(
+        tap((res) => {
+          if (res.status !== 200) return;
+          const updatedUser = { ...res.data, accessToken: this.token };
+          this.setUser(updatedUser);
+        }),
       );
-      return res;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Update User error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-      return response;
-    }
   }
 
-  public async getCurrentUser(): Promise<ApiResponse<UserDetails>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<UserDetails>>(
-          url + 'users/me',
-          requestOptions({ token: this.token }),
-        ),
-      );
-      return res;
-    } catch (error: unknown) {
-      let response = { ...baseRequestResponse };
-      if (error instanceof HttpErrorResponse) {
-        response = errorHandler(error);
-        console.error('Get Current User error:', response.message);
-        this.showToast(response.message, 'danger');
-      }
-      return response;
-    }
+  public getCurrentUser(): Observable<ApiResponse<UserDetails>> {
+    return this.http.get<ApiResponse<UserDetails>>(
+      url + 'users/me',
+      requestOptions({ token: this.token }),
+    );
   }
 
-  public async setUser(user: UserSignedIn) {
-    this.userSub.next({ ...this.userSub.value, ...user });
-    await this.storage.setUser(user);
+  public async setUser(user?: UserSignedIn): Promise<void> {
+    if (user) {
+      this.userSub.next({ ...this.userSub.value, ...user });
+      return await this.storage.setUser(user);
+    }
+    this.userSub.next(undefined);
+    await this.storage.removeUser();
   }
 
   private async showToast(
     message: string,
     color: 'success' | 'danger' = 'success',
-  ) {
+  ): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
       duration: 3000,

@@ -4,6 +4,9 @@ import { UserService } from '../user.service';
 import { ToastController } from '@ionic/angular';
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
+import { firstValueFrom } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { errorHandler } from '@app/shared/utility/requests';
 
 @Component({
   selector: 'app-change-password',
@@ -60,18 +63,29 @@ export class ChangePasswordComponent implements OnInit {
 
     const passwordCurrent = this.changePassForm.value.passwordCurrent;
     const passwordNew = this.changePassForm.value.passwordNew;
-    const res = await this.user.changePassword(passwordNew, passwordCurrent);
-    this.changePassForm.reset();
+    try {
+      const res = await firstValueFrom(this.user.changePassword(passwordNew, passwordCurrent));
+      this.changePassForm.reset();
+      console.log('Change Password response:', res);
 
-    const toast = await this.toast.create({
-      message: res.message,
-      duration: 5000,
-      color: res.status === 200 ? 'success' : 'danger'
-    });
-    toast.present();
-
-    if (res.status === 200) {
-      this.user.signOut();
+      if (res.status === 200) {
+        this.user.signOut();
+      }
+      this.toast.create({
+        message: res.message,
+        duration: 5000,
+        color: res.status === 200 ? 'success' : 'danger'
+      }).then(toast => toast.present());
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse) {
+        const response = errorHandler(error);
+        this.toast.create({
+          message: response.message,
+          duration: 5000,
+          color: 'danger'
+        }).then(toast => toast.present());
+      }
+      console.error('Change Password error:', error);
     }
   }
 }

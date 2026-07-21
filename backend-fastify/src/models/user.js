@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 import { activitySchema } from "./subdocuments/activity.js";
 import { notificationSchema } from "./subdocuments/notification.js";
+import { UserAuthProvider } from "../enums/users.js";
 
 const userSchema = new mongoose.Schema(
   {
     user_id: {
       type: String,
       required: true,
+      unique: true,
     },
     fullName: {
       type: String,
@@ -18,6 +20,16 @@ const userSchema = new mongoose.Schema(
       required: true,
       match: /.+\@.+\..+/,
       unique: true,
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // allows many documents without this field
+    },
+    authProvider: {
+      type: String,
+      enum: [UserAuthProvider.local, UserAuthProvider.google],
+      default: UserAuthProvider.local,
     },
     password: {
       type: String,
@@ -40,18 +52,23 @@ const userSchema = new mongoose.Schema(
       ],
     },
     about: {
-      type: String
+      type: String,
+      maxlength: [1000, "About cannot exceed 1000 characters"],
     },
     address: {
-      type: String
+      type: String,
+      maxlength: [300, "Address cannot exceed 300 characters"],
     },
     verified: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
+    googleAuth: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 function arrayLimitActivities(val) {
