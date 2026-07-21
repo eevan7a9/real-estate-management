@@ -17,13 +17,9 @@ export class MapSidePropertiesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('Loading properties from map-side-properties component',
-      this.propertiesService.properties.length
-    );
     if (!this.propertiesService.properties.length) {
       console.log('Loading properties from map-side-properties component');
       this.propertiesService.loadMore({});
     }
   }
-
 }

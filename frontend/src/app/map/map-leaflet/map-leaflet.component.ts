@@ -44,7 +44,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   private storage = inject(StorageService);
   private activatedRoutes = inject(ActivatedRoute);
 
-  private moveEndTimeout: number | undefined;
+  private moveEndTimeout: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
     this.activatedRoutes.queryParamMap.pipe(takeUntilDestroyed())

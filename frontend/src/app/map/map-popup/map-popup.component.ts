@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
@@ -11,7 +11,7 @@ import { PropertyMap, PropertyMapPopup } from 'src/app/shared/interface/property
   styleUrls: ['./map-popup.component.css'],
   standalone: false
 })
-export class MapPopupComponent implements OnInit {
+export class MapPopupComponent {
   @Input() property: PropertyMap | undefined;
   public isLoading = signal<boolean>(false);
   public propertyDetails = signal<PropertyMapPopup | undefined>(undefined);
@@ -22,10 +22,6 @@ export class MapPopupComponent implements OnInit {
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController,
   ) { }
-
-  ngOnInit() {
-    console.log("MapPopupComponent property:", this.property);
-  }
 
   viewMore() {
     this.router.navigate(['/properties', this.property?.property_id]);
