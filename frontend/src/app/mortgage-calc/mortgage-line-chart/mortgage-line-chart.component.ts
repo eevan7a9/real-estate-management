@@ -130,12 +130,12 @@ export class MortgageLineChartComponent implements OnInit {
     }, 600);
   }
 
-  scheduleIsChanged() {
-    if (!this.isChanged) {
-      this.showReCalculate = false;
-      this.isChanged = true;
-      return;
-    }
-    this.showReCalculate = true;
-  }
+  // scheduleIsChanged() {
+  //   if (!this.isChanged) {
+  //     this.showReCalculate = false;
+  //     this.isChanged = true;
+  //     return;
+  //   }
+  //   this.showReCalculate = true;
+  // }
 }

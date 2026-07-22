@@ -1,22 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 Chart.register(...registerables);
 
 @Component({
-    selector: 'app-mortgage-pie-chart',
-    templateUrl: './mortgage-pie-chart.component.html',
-    styleUrls: ['./mortgage-pie-chart.component.css'],
-    standalone: false
+  selector: 'app-mortgage-pie-chart',
+  templateUrl: './mortgage-pie-chart.component.html',
+  styleUrls: ['./mortgage-pie-chart.component.css'],
+  standalone: false
 })
-export class MortgagePieChartComponent implements OnInit {
-
+export class MortgagePieChartComponent {
   private pieChart: Chart<'doughnut'>;
   constructor(private storage: StorageService) { }
 
-  ngOnInit() { }
   async setChart(event) {
+    console.log('pie chart event', event);
+    this.pieChart?.destroy();
+
     const { totalMonth, interest, tax, insurance } = event;
     if (this.pieChart) {
       this.pieChart.destroy();

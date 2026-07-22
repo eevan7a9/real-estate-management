@@ -1,10 +1,10 @@
 <ion-card
-  [style.box-shadow]="!boxShadow ? 'none' : ''"
+  [style.box-shadow]="!boxShadow() ? 'none' : ''"
   class="max-h-[520px] border border-slate-200 dark:border-slate-800"
 >
   <ion-card-header class="px-4 py-2 xl:py-3">
     <ion-card-title color="light">
-      Monthly {{ simpleMode ? "" : "& Lifetime" }} payments
+      Monthly {{ simpleMode() ? "" : "& Lifetime" }} payments
     </ion-card-title>
   </ion-card-header>
 
@@ -65,13 +65,12 @@
                 debounce="500"
                 type="number"
                 min="0"
-                max="20"
+                max="99"
                 step=".1"
                 labelPlacement="stacked"
-                label="Interest Rate :"
+                label="Interest Rate (max: 99%)"
                 formControlName="interest"
                 inputmode="numeric"
-                (ionChange)="getMonthlyCalculate()"
               >
               </ion-input>
             </ion-item>
@@ -79,33 +78,36 @@
 
           <ion-col size="6">
             <ion-item>
-              <ion-icon class="ion-margin-end" name="calendar-number-outline" slot="start"></ion-icon>
+              <ion-icon
+                class="ion-margin-end"
+                name="calendar-number-outline"
+                slot="start"
+              ></ion-icon>
               <ion-input
                 class="py-1!"
                 debounce="500"
                 type="number"
                 min="0"
-                max="30"
+                max="50"
                 step=".5"
                 labelPlacement="stacked"
-                label="Loan Term :"
+                label="Loan Term (max: 50 years)"
                 formControlName="term"
                 inputmode="numeric"
-                (ionChange)="getMonthlyCalculate()"
               >
               </ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="!simpleMode">
+        <ion-row *ngIf="!simpleMode()">
           <ion-col size="12">
             <ion-item>
               <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
               <ion-input
                 class="py-1!"
                 debounce="1000"
-                type="number"
+                type="text"
                 min="0"
                 value="mortgageForm.get('propertyTax').value"
                 formControlName="propertyTax"
@@ -122,7 +124,7 @@
               <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
               <ion-input
                 class="py-1!"
-                type="number"
+                type="text"
                 min="0"
                 debounce="1000"
                 value="mortgageForm.get('insurance').value"
@@ -137,12 +139,12 @@
         </ion-row>
 
         <ion-row class="ion-align-items-center">
-          <ion-col size="12" [sizeMd]="simpleMode ? 12 : 6">
+          <ion-col size="12" [sizeMd]="simpleMode() ? 12 : 6">
             <ion-list>
               <ion-item
                 lines="none"
                 class="total-month"
-                [class]="simpleMode ? 'simple' : ''"
+                [class]="simpleMode() ? 'simple' : ''"
               >
                 <ion-icon
                   aria-hidden="true"
@@ -152,7 +154,7 @@
                 ></ion-icon>
                 <ion-input
                   class="py-1! font-bold md:text-[20px]!"
-                  [value]="monthlyPayment"
+                  [value]="monthlyPayment()"
                   labelPlacement="stacked"
                   label="Monthly"
                   readonly
@@ -162,7 +164,7 @@
             </ion-list>
           </ion-col>
 
-          <ion-col size="12" sizeMd="6" *ngIf="!simpleMode">
+          <ion-col size="12" sizeMd="6" *ngIf="!simpleMode()">
             <ion-item lines="none" class="total-lifetime">
               <ion-icon
                 aria-hidden="true"
@@ -172,7 +174,7 @@
               ></ion-icon>
               <ion-input
                 class="py-1! font-bold md:text-[20px]!"
-                [value]="lifetimePayment"
+                [value]="lifetimePayment()"
                 labelPlacement="stacked"
                 label="Total lifetime"
                 readonly
@@ -183,7 +185,7 @@
 
           <ion-col
             class="flex justify-center border-t border-slate-200 dark:border-slate-800 pt-3"
-            *ngIf="simpleMode"
+            *ngIf="simpleMode()"
           >
             <a routerLink="/mortgage-calc">Mortgage Calculator</a>
           </ion-col>
