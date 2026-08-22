@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
@@ -10,15 +10,12 @@ Chart.register(...registerables);
   styleUrls: ['./mortgage-line-chart.component.css'],
   standalone: false
 })
-export class MortgageLineChartComponent implements OnInit {
-  @Output() generateSchedule = new EventEmitter<boolean>();
-  public showReCalculate = false;
-  private isChanged = false;
-  private lineChart: Chart;
+export class MortgageLineChartComponent implements OnDestroy {
+  @ViewChild('lineCanvas') private canvas?: ElementRef<HTMLCanvasElement>;
+  private lineChart?: Chart;
+  private renderVersion = 0;
 
   constructor(private storage: StorageService) {}
-
-  ngOnInit() {}
 
   async setChart(
     schedule: {
@@ -31,6 +28,7 @@ export class MortgageLineChartComponent implements OnInit {
       date: string;
     }[] = []
   ) {
+    const renderVersion = ++this.renderVersion;
     if (schedule.length > 151) {
       schedule = schedule.filter((v, i) => {
         if (i === schedule.length - 1) {
@@ -44,11 +42,10 @@ export class MortgageLineChartComponent implements OnInit {
     const principal = schedule.map((item) => item.accPrincipal);
     const interest = schedule.map((item) => item.accInterest);
 
-    if (this.lineChart) {
-      this.lineChart.destroy();
-    }
+    this.lineChart?.destroy();
     await this.storage.init();
     const isDark = await this.storage.getDartTheme();
+    if (renderVersion !== this.renderVersion) return;
     const fontColor = isDark ? '#fff' : '#333';
     const data = {
       labels: dates,
@@ -75,8 +72,9 @@ export class MortgageLineChartComponent implements OnInit {
         }
       ]
     };
-    const canvas = document.getElementById('lineChart') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
+    const canvas = this.canvas?.nativeElement;
+    const ctx = canvas?.getContext('2d');
+    if (!ctx) return;
     this.lineChart = new Chart(ctx, {
       type: 'line',
       data,
@@ -119,21 +117,7 @@ export class MortgageLineChartComponent implements OnInit {
     });
   }
 
-  requestAmortizationSchedule() {
-    this.showReCalculate = false;
-    this.generateSchedule.emit(true);
-    const chart = document.getElementById('lineChart');
-    setTimeout(() => {
-      chart.scrollIntoView({ behavior: 'smooth' });
-    }, 600);
+  ngOnDestroy(): void {
+    this.lineChart?.destroy();
   }
-
-  // scheduleIsChanged() {
-  //   if (!this.isChanged) {
-  //     this.showReCalculate = false;
-  //     this.isChanged = true;
-  //     return;
-  //   }
-  //   this.showReCalculate = true;
-  // }
 }

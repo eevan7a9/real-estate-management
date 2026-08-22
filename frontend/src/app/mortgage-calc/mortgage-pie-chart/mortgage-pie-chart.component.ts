@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
+
+type MonthlyPaymentBreakdown = {
+  totalMonth: number;
+  interest: number;
+  tax: number;
+  insurance: number;
+};
 
 Chart.register(...registerables);
 
@@ -10,34 +17,41 @@ Chart.register(...registerables);
   styleUrls: ['./mortgage-pie-chart.component.css'],
   standalone: false
 })
-export class MortgagePieChartComponent {
-  private pieChart: Chart<'doughnut'>;
+export class MortgagePieChartComponent implements OnDestroy {
+  @ViewChild('pieCanvas') private canvas?: ElementRef<HTMLCanvasElement>;
+  private pieChart?: Chart<'doughnut'>;
+  private renderVersion = 0;
   constructor(private storage: StorageService) {}
 
-  async setChart(event) {
-    console.log('pie chart event', event);
+  async setChart(event: MonthlyPaymentBreakdown): Promise<void> {
+    const renderVersion = ++this.renderVersion;
     this.pieChart?.destroy();
 
     const { totalMonth, interest, tax, insurance } = event;
-    if (this.pieChart) {
-      this.pieChart.destroy();
-    }
     await this.storage.init();
     const isDark = await this.storage.getDartTheme();
     const fontColor = isDark ? '#fff' : '#333';
+    if (renderVersion !== this.renderVersion) return;
+
     const data = {
-      labels: ['Principal', 'Interest', 'Property Tax', 'Insurance'],
+      labels: ['Principal', 'Interest', 'Tax', 'Insurance'],
       datasets: [
         {
-          label: 'Dataset 1',
-          data: [totalMonth - interest, interest, tax || 0, insurance || 0],
+          label: 'Monthly Payment',
+          data: [
+            totalMonth - interest - tax - insurance,
+            interest,
+            tax,
+            insurance
+          ],
           backgroundColor: ['#428cff', '#e0bb2e', '#e04055', '#29c467'],
           borderWidth: 0 //this will hide border
         }
       ]
     };
-    const canvas = document.getElementById('myChart') as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
+    const canvas = this.canvas?.nativeElement;
+    const ctx = canvas?.getContext('2d');
+    if (!ctx) return;
     this.pieChart = new Chart(ctx, {
       type: 'doughnut',
       data,
@@ -64,5 +78,8 @@ export class MortgagePieChartComponent {
         }
       }
     });
+  }
+  ngOnDestroy(): void {
+    this.pieChart?.destroy();
   }
 }

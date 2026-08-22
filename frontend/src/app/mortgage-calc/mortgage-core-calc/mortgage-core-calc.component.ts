@@ -6,7 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
-import { debounceTime, takeUntil } from 'rxjs';
+import { debounceTime } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
 
 @Component({
@@ -39,8 +39,6 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     }[]
   >();
 
-  public scheduleChanged = output<boolean>();
-
   public mortgageForm: UntypedFormGroup;
   public lifetimePayment = signal('0');
   public monthlyPayment = signal('0');
@@ -53,10 +51,22 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       {
         price: ['300,000', [Validators.required, Validators.min(1)]],
         downPayment: ['100,000', [Validators.required, Validators.min(1)]],
-        interest: [5, [Validators.max(99), Validators.required]],
-        term: [30, [Validators.max(50), Validators.required]],
-        propertyTax: [this.simpleMode() ? '0' : '150'],
-        insurance: [this.simpleMode() ? '0' : '300']
+        interest: [
+          5,
+          [Validators.required, Validators.min(0), Validators.max(99)]
+        ],
+        term: [
+          30,
+          [Validators.required, Validators.min(1), Validators.max(50)]
+        ],
+        propertyTax: [
+          this.simpleMode() ? '0' : '150',
+          [Validators.required, Validators.min(0)]
+        ],
+        insurance: [
+          this.simpleMode() ? '0' : '300',
+          [Validators.required, Validators.min(0)]
+        ]
       },
       {
         validators: CustomValidators.isGreaterValidator(
@@ -71,8 +81,10 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       .pipe(debounceTime(500), takeUntilDestroyed())
       .subscribe(() => {
         if (this.mortgageForm.valid) {
-          this.calculateMonthly();
-          this.calculateAmortizationSchedule();
+          setTimeout(() => {
+            this.calculateMonthly();
+            this.calculateAmortizationSchedule();
+          }, 0);
         } else {
           this.toastCtrl
             .create({
@@ -85,15 +97,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     setTimeout(() => {
       this.calculateMonthly();
       this.calculateAmortizationSchedule();
-    }, 1000);
+    });
   }
 
   public formatValue(event: CustomEvent, property: string): void {
-    const value = event.detail.value ?? '';
+    const value = String(event.detail.value ?? '');
 
     const formatted = value
       .replace(/\D/g, '')
@@ -101,13 +113,15 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
 
     this.mortgageForm.patchValue(
       { [property]: formatted },
-      { emitEvent: false }
+      { emitEvent: true }
     );
-
-    console.log('mortageForm value after formatting:', this.mortgageForm.value);
   }
 
   public calculateAmortizationSchedule(): void {
+    if (!this.mortgageForm.valid) {
+      return;
+    }
+
     const { price, downPayment, interest, term, propertyTax, insurance } =
       this.mortgageForm.value;
 
@@ -117,7 +131,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const loanAmount = homePrice - down;
     const paymentsPerYear = this.payPerYear();
     const totalPayments = paymentsPerYear * term;
-    const ratePerPayment = interest / 100 / paymentsPerYear;
+    const ratePerPayment = Number(interest) / 100 / paymentsPerYear;
 
     const result = this.monthlyPayCalculate(
       loanAmount,
@@ -129,8 +143,13 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       this.simpleMode()
     );
 
+    if (!result) {
+      return;
+    }
+
     // Principal + Interest payment only
-    const regularPayment = result.monthPrincipal + result.monthInterest;
+    // Keep full precision internally; rounding here can leave a residual balance.
+    const regularPayment = result.payment;
 
     let balance = loanAmount;
     let accPrincipal = 0;
@@ -140,14 +159,14 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
 
     const amortization = [];
 
-    for (let i = 0; i < totalPayments && balance > 0; i++) {
+    for (let i = 0; i < totalPayments && balance > 0.005; i++) {
       const interestPaid = balance * ratePerPayment;
 
       let principalPaid = regularPayment - interestPaid;
       let payment = regularPayment;
 
       // Last payment adjustment
-      if (principalPaid > balance) {
+      if (principalPaid >= balance || i === totalPayments - 1) {
         principalPaid = balance;
         payment = principalPaid + interestPaid;
       }
@@ -172,9 +191,11 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
         date: date.toLocaleDateString()
       });
 
-      // Only correct for monthly payments.
-      // If we later support biweekly/weekly, adjust this.
-      date.setMonth(date.getMonth() + 1);
+      if (paymentsPerYear === 12) {
+        date.setMonth(date.getMonth() + 1);
+      } else {
+        date.setDate(date.getDate() + Math.round(365 / paymentsPerYear));
+      }
     }
 
     this.onCalculateAmortization.emit(amortization);
@@ -182,11 +203,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
 
   public calculateMonthly(): void {
     if (!this.mortgageForm.valid) {
-      console.log('Form is invalid', this.mortgageForm.errors);
       return;
     }
-
-    console.log('Form is valid', this.mortgageForm.value);
 
     const { price, downPayment, interest, term, propertyTax, insurance } =
       this.mortgageForm.value;
@@ -205,23 +223,29 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       this.simpleMode()
     );
 
-    console.log('Monthly calculation result:', result);
-
     if (!result) {
       return;
     }
 
-    this.monthlyPayment.set(result.monthAllPayment);
-    this.lifetimePayment.set(result.lifetimeTotal);
+    this.monthlyPayment.set(
+      result.totalPayment.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    );
+    this.lifetimePayment.set(
+      result.lifetimeTotal.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+    );
 
     this.onCalculateMonthly.emit({
-      totalMonth: result.monthPayment,
+      totalMonth: result.totalPayment,
       interest: result.monthInterest,
-      tax: Number(result.monthTax.toString().replace(/,/g, '')),
-      insurance: Number(result.monthInsurance.toString().replace(/,/g, ''))
+      tax: result.monthTax,
+      insurance: result.monthInsurance
     });
-
-    this.scheduleChanged.emit(true);
   }
 
   private monthlyPayCalculate(
@@ -233,13 +257,23 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     payPerYear = 12,
     simpleMode = true
   ) {
-    if (!loanAmount) return;
+    if (
+      !Number.isFinite(loanAmount) ||
+      loanAmount <= 0 ||
+      !Number.isFinite(interest) ||
+      interest < 0 ||
+      !Number.isFinite(term) ||
+      term <= 0 ||
+      !Number.isInteger(payPerYear) ||
+      payPerYear <= 0
+    )
+      return;
 
     const totalPayments = term * payPerYear;
     const rate = interest / 100 / payPerYear;
 
-    const tax = Number(propertyTax.toString().replace(/,/g, '') || 0);
-    const ins = Number(insurance.toString().replace(/,/g, '') || 0);
+    const tax = Number(String(propertyTax).replace(/,/g, '') || 0);
+    const ins = Number(String(insurance).replace(/,/g, '') || 0);
 
     // Handle 0% interest loans
     if (rate === 0) {
@@ -247,19 +281,18 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       const totalPayment = payment + (simpleMode ? 0 : tax + ins);
 
       return {
+        payment,
         monthPayment: Number(payment.toFixed(2)),
-        monthAllPayment: Number(totalPayment.toFixed(2)).toLocaleString(),
+        totalPayment,
 
         monthInterest: 0,
         monthPrincipal: Number(payment.toFixed(2)),
         monthBalance: Number((loanAmount - payment).toFixed(2)),
 
-        monthTax: propertyTax,
-        monthInsurance: insurance,
+        monthTax: tax,
+        monthInsurance: ins,
 
-        lifetimeTotal: Number(
-          (totalPayment * totalPayments).toFixed(2)
-        ).toLocaleString()
+        lifetimeTotal: totalPayment * totalPayments
       };
     }
 
@@ -274,19 +307,18 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const totalPayment = payment + (simpleMode ? 0 : tax + ins);
 
     return {
+      payment,
       monthPayment: Number(payment.toFixed(2)),
-      monthAllPayment: Number(totalPayment.toFixed(2)).toLocaleString(),
+      totalPayment,
 
       monthInterest: Number(firstInterest.toFixed(2)),
       monthPrincipal: Number(firstPrincipal.toFixed(2)),
       monthBalance: Number(firstBalance.toFixed(2)),
 
-      monthTax: propertyTax,
-      monthInsurance: insurance,
+      monthTax: tax,
+      monthInsurance: ins,
 
-      lifetimeTotal: Number(
-        (totalPayment * totalPayments).toFixed(2)
-      ).toLocaleString()
+      lifetimeTotal: totalPayment * totalPayments
     };
   }
 }

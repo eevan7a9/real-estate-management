@@ -22,7 +22,6 @@
                   debounce="1000"
                   labelPlacement="stacked"
                   label="Price:"
-                  value="mortgageForm.get('price').value"
                   formControlName="price"
                   (ionChange)="formatValue($event, 'price')"
                 >
@@ -40,7 +39,6 @@
                 debounce="1000"
                 labelPlacement="stacked"
                 label="Down Payment :"
-                value="mortgageForm.get('downPayment').value"
                 formControlName="downPayment"
                 (ionChange)="formatValue($event, 'downPayment')"
               >
@@ -109,7 +107,6 @@
                 debounce="1000"
                 type="text"
                 min="0"
-                value="mortgageForm.get('propertyTax').value"
                 formControlName="propertyTax"
                 labelPlacement="stacked"
                 label="Property tax :"
@@ -127,7 +124,6 @@
                 type="text"
                 min="0"
                 debounce="1000"
-                value="mortgageForm.get('insurance').value"
                 formControlName="insurance"
                 labelPlacement="stacked"
                 label="Property Insurance :"
