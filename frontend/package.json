@@ -12,7 +12,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "format": "prettier --write \"src/**/*.{ts,html,css,scss,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss,json,md}\""
   },
   "private": true,
   "dependencies": {
@@ -73,6 +75,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "prettier": "^3.9.6",
     "ts-node": "~8.3.0",
     "typescript": "^5.7.3"
   },
