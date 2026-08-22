@@ -5,20 +5,19 @@ import { Coord } from 'src/app/shared/interface/map';
 import { StorageService } from 'src/app/shared/services/storage/storage.service';
 
 @Component({
-    selector: 'app-settings-coord-default',
-    templateUrl: './settings-coord-default.component.html',
-    styleUrls: ['./settings-coord-default.component.css'],
-    standalone: false
+  selector: 'app-settings-coord-default',
+  templateUrl: './settings-coord-default.component.html',
+  styleUrls: ['./settings-coord-default.component.css'],
+  standalone: false
 })
 export class SettingsCoordDefaultComponent implements OnInit {
-
   public coord: Coord = { lat: 8.947416086535465, lng: 125.5451552207221 };
 
   constructor(
     public toastController: ToastController,
     private storageService: StorageService,
-    private modalCtrl: ModalController,
-  ) { }
+    private modalCtrl: ModalController
+  ) {}
 
   async ngOnInit() {
     await this.storageService.init();
@@ -34,7 +33,7 @@ export class SettingsCoordDefaultComponent implements OnInit {
       color: 'success',
       message: 'Your settings have been saved.',
       duration: 2000
-    });;
+    });
     toast.present();
   }
 
@@ -45,7 +44,7 @@ export class SettingsCoordDefaultComponent implements OnInit {
       color: 'success',
       message: 'Your settings have been Reset.',
       duration: 2000
-    });;
+    });
     toast.present();
   }
 

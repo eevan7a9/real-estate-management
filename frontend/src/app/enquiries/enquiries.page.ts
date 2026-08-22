@@ -3,7 +3,7 @@ import {
   Component,
   computed,
   signal,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { EnquiryTopic } from '../shared/enums/enquiry';
 import { UserService } from '../user/user.service';
@@ -15,7 +15,7 @@ import {
   IonSearchbarCustomEvent,
   IonSelectCustomEvent,
   SearchbarChangeEventDetail,
-  SelectChangeEventDetail,
+  SelectChangeEventDetail
 } from '@ionic/core';
 
 @Component({
@@ -37,42 +37,42 @@ export class EnquiriesPage implements AfterViewInit {
   public filters = [
     {
       value: EnquiryTopic.info,
-      label: 'Information',
+      label: 'Information'
     },
     {
       value: EnquiryTopic.sales,
-      label: 'Sales',
+      label: 'Sales'
     },
     {
       value: EnquiryTopic.schedule,
-      label: 'Schedule',
+      label: 'Schedule'
     },
     {
       value: EnquiryTopic.payment,
-      label: 'Payment',
+      label: 'Payment'
     },
     {
       value: 'sent',
-      label: 'Sent',
+      label: 'Sent'
     },
     {
       value: 'received',
-      label: 'Received',
-    },
+      label: 'Received'
+    }
   ];
   public sorts = [
     {
       value: 'latest',
-      label: 'Latest',
+      label: 'Latest'
     },
     {
       value: 'oldest',
-      label: 'Oldest',
+      label: 'Oldest'
     },
     {
       value: 'title',
-      label: 'Title',
-    },
+      label: 'Title'
+    }
   ];
 
   private queryParams = toSignal(this.activatedRoute.queryParams);
@@ -82,7 +82,7 @@ export class EnquiriesPage implements AfterViewInit {
     private userService: UserService,
     private router: Router,
     private enquiriesService: EnquiriesService
-  ) { }
+  ) {}
 
   public ngAfterViewInit(): void {
     const params = this.queryParams();
@@ -100,7 +100,7 @@ export class EnquiriesPage implements AfterViewInit {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { search: value || null },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
   }
 
@@ -110,7 +110,7 @@ export class EnquiriesPage implements AfterViewInit {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { filter: value.length ? value.join() : null },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
   }
 
@@ -118,7 +118,7 @@ export class EnquiriesPage implements AfterViewInit {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { sort: value },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
   }
 }

@@ -1,6 +1,9 @@
 <div class="map-container relative">
   <div id="mapId" class="relative z-0"></div>
-  <div *ngIf="isLoading()" class="z-10 flex items-center gap-3 absolute bottom-4 left-12 w-54 rounded-xl p-2 bg-light dark:bg-dark-shade">
+  <div
+    *ngIf="isLoading()"
+    class="z-10 flex items-center gap-3 absolute bottom-4 left-12 w-54 rounded-xl p-2 bg-light dark:bg-dark-shade"
+  >
     <ion-spinner color="primary"></ion-spinner>
     <span class="text-blue-700 font-light">Loading properties...</span>
   </div>

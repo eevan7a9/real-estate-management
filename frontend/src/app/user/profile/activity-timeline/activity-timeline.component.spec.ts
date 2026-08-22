@@ -9,7 +9,7 @@ describe('ActivityTimelineComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActivityTimelineComponent ],
+      declarations: [ActivityTimelineComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

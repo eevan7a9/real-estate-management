@@ -11,7 +11,7 @@ import { requestOptions } from '../shared/utility/requests';
 const enquiryUrl = environment.api.server + 'enquiries';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class EnquiriesService {
   public initialFetchDone = signal<boolean>(false);
@@ -22,7 +22,7 @@ export class EnquiriesService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.enquiries$ = this.enquiriesSub.asObservable();
     this.enquiry$ = this.enquirySub.asObservable();
@@ -39,59 +39,63 @@ export class EnquiriesService {
   public fetchEnquiries(): Observable<ApiResponse<Enquiry[]>> {
     return this.http.get<ApiResponse<Enquiry[]>>(
       enquiryUrl,
-      requestOptions({ token: this.userService.token }),
+      requestOptions({ token: this.userService.token })
     );
   }
 
   public fetchEnquiry(enqId: string): Observable<ApiResponse<Enquiry>> {
     return this.http.get<ApiResponse<Enquiry>>(
       enquiryUrl + '/' + enqId,
-      requestOptions({ token: this.userService.token }),
+      requestOptions({ token: this.userService.token })
     );
   }
 
   public createEnquiry(
     enquiry: EnquiryCreate,
-    property: Partial<Property>,
+    property: Partial<Property>
   ): Observable<ApiResponse<Enquiry>> {
     const token = this.userService.token;
     const formData = {
       ...enquiry,
       property: {
         property_id: property.property_id,
-        name: property.name,
-      },
+        name: property.name
+      }
     };
-    return this.http.post<ApiResponse<Enquiry>>(
-      enquiryUrl,
-      formData,
-      requestOptions({ token }),
-    ).pipe(tap((res) => res?.data && this.insertEnquiryToState(res?.data)));
+    return this.http
+      .post<ApiResponse<Enquiry>>(
+        enquiryUrl,
+        formData,
+        requestOptions({ token })
+      )
+      .pipe(tap((res) => res?.data && this.insertEnquiryToState(res?.data)));
   }
 
   public removeEnquiry(enqId: string): Observable<ApiResponse | undefined> {
     const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
-    return this.http.delete<ApiResponse>(url, requestOptions({ token })).pipe(
-      tap(() => this.removeEnquiryFromState(enqId))
-    );
+    return this.http
+      .delete<ApiResponse>(url, requestOptions({ token }))
+      .pipe(tap(() => this.removeEnquiryFromState(enqId)));
   }
 
   public readEnquiry(
-    enqId: string,
+    enqId: string
   ): Observable<ApiResponse<Enquiry> | undefined> {
     const token = this.userService.token;
     const url = enquiryUrl + '/' + enqId;
-    return this.http.patch<ApiResponse<Enquiry>>(
-      url,
-      { read: true },
-      requestOptions({ token }),
-    ).pipe(tap((res) => res?.data && this.updateEnquiriesState(res?.data)));
+    return this.http
+      .patch<ApiResponse<Enquiry>>(
+        url,
+        { read: true },
+        requestOptions({ token })
+      )
+      .pipe(tap((res) => res?.data && this.updateEnquiriesState(res?.data)));
   }
 
   public updateEnquiriesState(enquiry: Enquiry): void {
     this.enquiries = this.enquiries.map((enq) =>
-      enq.enquiry_id === enquiry.enquiry_id ? enquiry : enq,
+      enq.enquiry_id === enquiry.enquiry_id ? enquiry : enq
     );
   }
 
@@ -106,7 +110,7 @@ export class EnquiriesService {
 
   public removeEnquiryFromState(enqId: string): void {
     this.enquiries = this.enquiries.filter(
-      (enquiry) => enquiry.enquiry_id !== enqId,
+      (enquiry) => enquiry.enquiry_id !== enqId
     );
   }
 }

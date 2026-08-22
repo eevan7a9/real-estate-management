@@ -13,7 +13,8 @@ import { Property } from 'src/app/shared/interface/property';
   standalone: false
 })
 export class UserPropertiesComponent implements OnInit {
-  private readonly propertiesService: PropertiesService = inject(PropertiesService);
+  private readonly propertiesService: PropertiesService =
+    inject(PropertiesService);
   private readonly toast = inject(ToastController);
 
   public properties = toSignal<Property[]>(
@@ -31,18 +32,21 @@ export class UserPropertiesComponent implements OnInit {
   private async getOwnedProperties(): Promise<void> {
     this.propertiesService.isLoading.set(true);
     try {
-      const res = await firstValueFrom(this.propertiesService.fetchOwnedProperties());
+      const res = await firstValueFrom(
+        this.propertiesService.fetchOwnedProperties()
+      );
       if (res.status === 200) {
         this.propertiesService.propertiesOwned = res.data;
       }
     } catch (error) {
       console.error('Error fetching owned properties:', error);
-      this.toast.create({
-        message: 'Failed to load properties. Please try again later.',
-        duration: 3000,
-        color: 'danger'
-      }).then(toast => toast.present());
-
+      this.toast
+        .create({
+          message: 'Failed to load properties. Please try again later.',
+          duration: 3000,
+          color: 'danger'
+        })
+        .then((toast) => toast.present());
     } finally {
       this.propertiesService.isLoading.set(false);
     }

@@ -5,7 +5,7 @@ import {
   AlertController,
   ModalController,
   PopoverController,
-  ToastController,
+  ToastController
 } from '@ionic/angular';
 
 import { Property } from 'src/app/shared/interface/property';
@@ -24,7 +24,7 @@ import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-a
   selector: 'app-properties-detail',
   templateUrl: './properties-detail.component.html',
   styleUrls: ['./properties-detail.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class PropertiesDetailComponent implements OnInit {
   @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
@@ -48,7 +48,7 @@ export class PropertiesDetailComponent implements OnInit {
     private toastCtrl: ToastController,
     private route: ActivatedRoute,
     private restriction: RestrictionService,
-    private confirmationService: ConfirmationAlertService,
+    private confirmationService: ConfirmationAlertService
   ) {
     this.propertiesGallery = new PropertiesGalleryComponent();
   }
@@ -66,9 +66,9 @@ export class PropertiesDetailComponent implements OnInit {
       componentProps: {
         message: false,
         edit: this.isOwner(),
-        delete: this.isOwner(),
+        delete: this.isOwner()
       },
-      translucent: true,
+      translucent: true
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();
@@ -95,7 +95,7 @@ export class PropertiesDetailComponent implements OnInit {
           .create({
             message: 'Success, we will take a look at this property.',
             color: 'warning',
-            duration: 5000,
+            duration: 5000
           })
           .then((e) => e.present());
         break;
@@ -106,7 +106,9 @@ export class PropertiesDetailComponent implements OnInit {
   }
 
   public findInMap() {
-    const { coordinates: [lat, lng] } = this.property()?.position || { coordinates: [0, 0] };
+    const {
+      coordinates: [lat, lng]
+    } = this.property()?.position || { coordinates: [0, 0] };
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }
 
@@ -114,8 +116,8 @@ export class PropertiesDetailComponent implements OnInit {
     const modal = await this.modalController.create({
       component: PropertiesUploadsComponent,
       componentProps: {
-        property: this.property(),
-      },
+        property: this.property()
+      }
     });
     modal.present();
     modal.onDidDismiss().then((res) => {
@@ -124,7 +126,7 @@ export class PropertiesDetailComponent implements OnInit {
         this.property.update((value) => {
           if (value) {
             value.images = value?.images?.filter(
-              (image) => !deleted.includes(image),
+              (image) => !deleted.includes(image)
             );
           }
           return value;
@@ -136,7 +138,7 @@ export class PropertiesDetailComponent implements OnInit {
   private async setPropertyDetails(id: string): Promise<void> {
     try {
       const res = await firstValueFrom(
-        this.propertiesService.fetchProperty(id),
+        this.propertiesService.fetchProperty(id)
       );
       if (res.status === 200 && res.data) {
         this.property.set(res.data);
@@ -162,7 +164,7 @@ export class PropertiesDetailComponent implements OnInit {
       const toast = await this.toastCtrl.create({
         message: res.message,
         color: 'success',
-        duration: 4000,
+        duration: 4000
       });
       await toast.present();
       this.router.navigate(['/properties']);
@@ -174,7 +176,7 @@ export class PropertiesDetailComponent implements OnInit {
       const toast = await this.toastCtrl.create({
         message: message,
         color: 'danger',
-        duration: 4000,
+        duration: 4000
       });
       return await toast.present();
     }
@@ -184,8 +186,8 @@ export class PropertiesDetailComponent implements OnInit {
     const modal = await this.modalController.create({
       component: PropertiesEditComponent,
       componentProps: {
-        property: this.property(),
-      },
+        property: this.property()
+      }
     });
     await modal.present();
     const { data } = await modal.onDidDismiss();

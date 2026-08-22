@@ -9,7 +9,7 @@ describe('EnquiryBadgeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnquiryBadgeComponent ],
+      declarations: [EnquiryBadgeComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

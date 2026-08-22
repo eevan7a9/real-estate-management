@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, inject, input, OnChanges, output, signal, ViewContainerRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  input,
+  OnChanges,
+  output,
+  signal,
+  ViewContainerRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
 import { PropertiesService } from 'src/app/properties/properties.service';
@@ -47,16 +56,18 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   private moveEndTimeout: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
-    this.activatedRoutes.queryParamMap.pipe(takeUntilDestroyed())
-      .subscribe(e => {
+    this.activatedRoutes.queryParamMap
+      .pipe(takeUntilDestroyed())
+      .subscribe((e) => {
         const lat = e.get('lat');
         const lng = e.get('lng');
         if (this.map && lat && lng) {
           this.findMarker(Number(lat), Number(lng));
         }
       });
-    this.propertiesService.propertiesMap$.pipe(takeUntilDestroyed())
-      .subscribe(properties => {
+    this.propertiesService.propertiesMap$
+      .pipe(takeUntilDestroyed())
+      .subscribe((properties) => {
         this.properties = properties || [];
       });
   }
@@ -68,22 +79,38 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   ngOnChanges() {
     if (this.map) {
       // remove all
-      if (this.mapGroupMarkers.residential) this.map.removeLayer(this.mapGroupMarkers.residential);
-      if (this.mapGroupMarkers.commercial) this.map.removeLayer(this.mapGroupMarkers.commercial);
-      if (this.mapGroupMarkers.industrial) this.map.removeLayer(this.mapGroupMarkers.industrial);
-      if (this.mapGroupMarkers.land) this.map.removeLayer(this.mapGroupMarkers.land);
+      if (this.mapGroupMarkers.residential)
+        this.map.removeLayer(this.mapGroupMarkers.residential);
+      if (this.mapGroupMarkers.commercial)
+        this.map.removeLayer(this.mapGroupMarkers.commercial);
+      if (this.mapGroupMarkers.industrial)
+        this.map.removeLayer(this.mapGroupMarkers.industrial);
+      if (this.mapGroupMarkers.land)
+        this.map.removeLayer(this.mapGroupMarkers.land);
 
       // add included
-      if (this.visibleMarkerType().includes(PropertyType.residential) && this.mapGroupMarkers.residential) {
+      if (
+        this.visibleMarkerType().includes(PropertyType.residential) &&
+        this.mapGroupMarkers.residential
+      ) {
         this.map.addLayer(this.mapGroupMarkers.residential);
       }
-      if (this.visibleMarkerType().includes(PropertyType.commercial) && this.mapGroupMarkers.commercial) {
+      if (
+        this.visibleMarkerType().includes(PropertyType.commercial) &&
+        this.mapGroupMarkers.commercial
+      ) {
         this.map.addLayer(this.mapGroupMarkers.commercial);
       }
-      if (this.visibleMarkerType().includes(PropertyType.industrial) && this.mapGroupMarkers.industrial) {
+      if (
+        this.visibleMarkerType().includes(PropertyType.industrial) &&
+        this.mapGroupMarkers.industrial
+      ) {
         this.map.addLayer(this.mapGroupMarkers.industrial);
       }
-      if (this.visibleMarkerType().includes(PropertyType.land) && this.mapGroupMarkers.land) {
+      if (
+        this.visibleMarkerType().includes(PropertyType.land) &&
+        this.mapGroupMarkers.land
+      ) {
         this.map.addLayer(this.mapGroupMarkers.land);
       }
     }
@@ -94,7 +121,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   }
 
   public findMarker(lat: number, lng: number) {
-    const foundMarker = this.markers.find(marker => {
+    const foundMarker = this.markers.find((marker) => {
       const latLng = marker.getLatLng();
       return latLng.lat === lat && latLng.lng === lng;
     });
@@ -118,9 +145,11 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       minZoom: 17,
       zoomControl: false
     });
-    L.control.zoom({
-      position: 'bottomleft'
-    }).addTo(this.map);
+    L.control
+      .zoom({
+        position: 'bottomleft'
+      })
+      .addTo(this.map);
 
     this.map.whenReady(() => {
       setTimeout(() => {
@@ -141,7 +170,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     if (this.clickAddMarker()) {
       this.map.on('click', (e: L.LeafletMouseEvent) => {
         if (this.pendingMarker.length) {
-          this.pendingMarker.forEach(marker => {
+          this.pendingMarker.forEach((marker) => {
             this.map.removeLayer(marker);
           });
         }
@@ -151,7 +180,9 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     }
 
     if (!this.propertiesService.propertiesMap.length) {
-      this.propertiesService.propertiesMap = await firstValueFrom(this.propertiesService.fetchMapProperties()).then(res => res.data || []);
+      this.propertiesService.propertiesMap = await firstValueFrom(
+        this.propertiesService.fetchMapProperties()
+      ).then((res) => res.data || []);
     }
     if (this.showPropertyMarkers()) {
       this.setMapMarkers();
@@ -167,25 +198,37 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     if (!this.properties) return;
 
     const group = this.properties?.reduce((arr, acc): any => {
-      arr[acc.type] = [...arr[acc.type] || [], acc];
+      arr[acc.type] = [...(arr[acc.type] || []), acc];
       return arr;
     }, {});
 
     if (group.residential && group.residential.length) {
-      residential = group.residential.map((property: Property) => property.position
-        ? this.addPropertyMarker(property) : undefined).filter((property: unknown) => property !== undefined);
+      residential = group.residential
+        .map((property: Property) =>
+          property.position ? this.addPropertyMarker(property) : undefined
+        )
+        .filter((property: unknown) => property !== undefined);
     }
     if (group.commercial && group.commercial.length) {
-      commercial = group.commercial.map((property: Property) => property.position
-        ? this.addPropertyMarker(property) : undefined).filter((property: unknown) => property !== undefined);
+      commercial = group.commercial
+        .map((property: Property) =>
+          property.position ? this.addPropertyMarker(property) : undefined
+        )
+        .filter((property: unknown) => property !== undefined);
     }
     if (group.industrial && group.industrial.length) {
-      industrial = group.industrial.map((property: Property) => property.position
-        ? this.addPropertyMarker(property) : undefined).filter((property: unknown) => property !== undefined);
+      industrial = group.industrial
+        .map((property: Property) =>
+          property.position ? this.addPropertyMarker(property) : undefined
+        )
+        .filter((property: unknown) => property !== undefined);
     }
     if (group.land && group.land.length) {
-      land = group.land.map((property: Property) => property.position
-        ? this.addPropertyMarker(property) : undefined).filter((property: unknown) => property !== undefined);
+      land = group.land
+        .map((property: Property) =>
+          property.position ? this.addPropertyMarker(property) : undefined
+        )
+        .filter((property: unknown) => property !== undefined);
     }
 
     this.mapGroupMarkers = {
@@ -199,40 +242,52 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     ctrl.addTo(this.map);
     ctrl.remove();
 
-    if (this.mapGroupMarkers.residential) this.map.addLayer(this.mapGroupMarkers.residential);
-    if (this.mapGroupMarkers.commercial) this.map.addLayer(this.mapGroupMarkers.commercial);
-    if (this.mapGroupMarkers.industrial) this.map.addLayer(this.mapGroupMarkers.industrial);
+    if (this.mapGroupMarkers.residential)
+      this.map.addLayer(this.mapGroupMarkers.residential);
+    if (this.mapGroupMarkers.commercial)
+      this.map.addLayer(this.mapGroupMarkers.commercial);
+    if (this.mapGroupMarkers.industrial)
+      this.map.addLayer(this.mapGroupMarkers.industrial);
     if (this.mapGroupMarkers.land) this.map.addLayer(this.mapGroupMarkers.land);
-
   }
-
 
   private pinMarker(coord: Coord): void {
     const iconPin = this.setMarkerIcon();
-    const marker = this.mapService.addMarker(this.map, coord, { icon: iconPin, popup: null });
+    const marker = this.mapService.addMarker(this.map, coord, {
+      icon: iconPin,
+      popup: null
+    });
     marker.addTo(this.map);
     this.pendingMarker.push(marker as never);
   }
 
   private addPropertyMarker(property: Property) {
-    const popupComponent = this.containerRef.createComponent(MapPopupComponent, {
-      index: undefined,
-      projectableNodes: [],
-    });
+    const popupComponent = this.containerRef.createComponent(
+      MapPopupComponent,
+      {
+        index: undefined,
+        projectableNodes: []
+      }
+    );
 
     popupComponent.instance.property = property;
     popupComponent.changeDetectorRef.detectChanges();
 
-    const domElem = (popupComponent.hostView as any).rootNodes[0] as HTMLElement;
+    const domElem = (popupComponent.hostView as any)
+      .rootNodes[0] as HTMLElement;
 
     const markerIcon = this.setMarkerIcon(property.type);
-    const marker = this.mapService.addMarker(this.map, {
-      lat: property.position.coordinates[1],
-      lng: property.position.coordinates[0]
-    }, {
-      icon: markerIcon,
-      popup: domElem,
-    });
+    const marker = this.mapService.addMarker(
+      this.map,
+      {
+        lat: property.position.coordinates[1],
+        lng: property.position.coordinates[0]
+      },
+      {
+        icon: markerIcon,
+        popup: domElem
+      }
+    );
     marker.addEventListener('popupopen', async () => {
       if (!popupComponent.instance.propertyDetails()) {
         await popupComponent.instance.onPopupOpen();
@@ -240,7 +295,9 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     });
     marker.addTo(this.map);
     this.markers.push(marker);
-    this.containerRef.detach(this.containerRef.indexOf(popupComponent.hostView));
+    this.containerRef.detach(
+      this.containerRef.indexOf(popupComponent.hostView)
+    );
 
     return marker;
   }
@@ -271,12 +328,15 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       iconSize: [40, 45], // size of the icon
       shadowSize: [40, 55], // size of the shadow
       iconAnchor: [22, 50], // point of the icon which will correspond to marker's location
-      shadowAnchor: [5, 40],  // the same for the shadow
+      shadowAnchor: [5, 40], // the same for the shadow
       popupAnchor: [-3, -46] // point from which the popup should open relative to the iconAnchor
     });
   }
 
   private async onMouseMove() {
-    console.log('%cMap moveend event triggered', 'color: blue; font-weight: bold;');
+    console.log(
+      '%cMap moveend event triggered',
+      'color: blue; font-weight: bold;'
+    );
   }
 }

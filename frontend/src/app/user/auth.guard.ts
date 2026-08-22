@@ -5,9 +5,11 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard  {
-
-  constructor(private user: UserService, private router: Router) { }
+export class AuthGuard {
+  constructor(
+    private user: UserService,
+    private router: Router
+  ) {}
   async canActivate() {
     const user = this.user.user;
     // if user is signed in

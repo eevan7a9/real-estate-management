@@ -1,6 +1,10 @@
 import { Component, AfterViewInit, input, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators
+} from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { debounceTime, takeUntil } from 'rxjs';
 import { CustomValidators } from 'src/app/shared/validators/custom.validator';
@@ -23,15 +27,17 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     insurance: number;
   }>();
 
-  public onCalculateAmortization = output<{
-    payment: number;
-    principal: number;
-    interest: number;
-    balance: number;
-    accInterest: number;
-    accPrincipal: number;
-    date: string;
-  }[]>();
+  public onCalculateAmortization = output<
+    {
+      payment: number;
+      principal: number;
+      interest: number;
+      balance: number;
+      accInterest: number;
+      accPrincipal: number;
+      date: string;
+    }[]
+  >();
 
   public scheduleChanged = output<boolean>();
 
@@ -39,31 +45,42 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   public lifetimePayment = signal('0');
   public monthlyPayment = signal('0');
 
-  constructor(private formBuilder: UntypedFormBuilder, private toastCtrl: ToastController) {
-    this.mortgageForm = this.formBuilder.group({
-      price: ['300,000', [Validators.required, Validators.min(1)]],
-      downPayment: ['100,000', [Validators.required, Validators.min(1)]],
-      interest: [5, [Validators.max(99), Validators.required]],
-      term: [30, [Validators.max(50), Validators.required]],
-      propertyTax: [(this.simpleMode() ? '0' : '150')],
-      insurance: [(this.simpleMode() ? '0' : '300')],
-    }, { validators: CustomValidators.isGreaterValidator('price', 'downPayment', 'paymentIsGreater') });
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private toastCtrl: ToastController
+  ) {
+    this.mortgageForm = this.formBuilder.group(
+      {
+        price: ['300,000', [Validators.required, Validators.min(1)]],
+        downPayment: ['100,000', [Validators.required, Validators.min(1)]],
+        interest: [5, [Validators.max(99), Validators.required]],
+        term: [30, [Validators.max(50), Validators.required]],
+        propertyTax: [this.simpleMode() ? '0' : '150'],
+        insurance: [this.simpleMode() ? '0' : '300']
+      },
+      {
+        validators: CustomValidators.isGreaterValidator(
+          'price',
+          'downPayment',
+          'paymentIsGreater'
+        )
+      }
+    );
 
     this.mortgageForm.valueChanges
-      .pipe(
-        debounceTime(500),
-        takeUntilDestroyed()
-      )
+      .pipe(debounceTime(500), takeUntilDestroyed())
       .subscribe(() => {
         if (this.mortgageForm.valid) {
           this.calculateMonthly();
           this.calculateAmortizationSchedule();
         } else {
-          this.toastCtrl.create({
-            message: 'Please make sure all fields are filled correctly.',
-            duration: 5000,
-            color: 'danger'
-          }).then(toast => toast.present());
+          this.toastCtrl
+            .create({
+              message: 'Please make sure all fields are filled correctly.',
+              duration: 5000,
+              color: 'danger'
+            })
+            .then((toast) => toast.present());
         }
       });
   }
@@ -73,8 +90,6 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       this.calculateMonthly();
       this.calculateAmortizationSchedule();
     }, 1000);
-
-
   }
 
   public formatValue(event: CustomEvent, property: string): void {
@@ -93,14 +108,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   }
 
   public calculateAmortizationSchedule(): void {
-    const {
-      price,
-      downPayment,
-      interest,
-      term,
-      propertyTax,
-      insurance
-    } = this.mortgageForm.value;
+    const { price, downPayment, interest, term, propertyTax, insurance } =
+      this.mortgageForm.value;
 
     const homePrice = Number(price.toString().replace(/,/g, ''));
     const down = Number(downPayment.toString().replace(/,/g, ''));
@@ -108,7 +117,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const loanAmount = homePrice - down;
     const paymentsPerYear = this.payPerYear();
     const totalPayments = paymentsPerYear * term;
-    const ratePerPayment = (interest / 100) / paymentsPerYear;
+    const ratePerPayment = interest / 100 / paymentsPerYear;
 
     const result = this.monthlyPayCalculate(
       loanAmount,
@@ -132,7 +141,6 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     const amortization = [];
 
     for (let i = 0; i < totalPayments && balance > 0; i++) {
-
       const interestPaid = balance * ratePerPayment;
 
       let principalPaid = regularPayment - interestPaid;
@@ -172,8 +180,6 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     this.onCalculateAmortization.emit(amortization);
   }
 
-
-
   public calculateMonthly(): void {
     if (!this.mortgageForm.valid) {
       console.log('Form is invalid', this.mortgageForm.errors);
@@ -182,14 +188,8 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
 
     console.log('Form is valid', this.mortgageForm.value);
 
-    const {
-      price,
-      downPayment,
-      interest,
-      term,
-      propertyTax,
-      insurance
-    } = this.mortgageForm.value;
+    const { price, downPayment, interest, term, propertyTax, insurance } =
+      this.mortgageForm.value;
 
     const homePrice = Number(price.toString().replace(/,/g, ''));
     const downPaymentAmount = Number(downPayment.toString().replace(/,/g, ''));
@@ -236,7 +236,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
     if (!loanAmount) return;
 
     const totalPayments = term * payPerYear;
-    const rate = (interest / 100) / payPerYear;
+    const rate = interest / 100 / payPerYear;
 
     const tax = Number(propertyTax.toString().replace(/,/g, '') || 0);
     const ins = Number(insurance.toString().replace(/,/g, '') || 0);
@@ -257,13 +257,14 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
         monthTax: propertyTax,
         monthInsurance: insurance,
 
-        lifetimeTotal: Number((totalPayment * totalPayments).toFixed(2)).toLocaleString()
+        lifetimeTotal: Number(
+          (totalPayment * totalPayments).toFixed(2)
+        ).toLocaleString()
       };
     }
 
     const payment =
-      loanAmount *
-      (rate * Math.pow(1 + rate, totalPayments)) /
+      (loanAmount * (rate * Math.pow(1 + rate, totalPayments))) /
       (Math.pow(1 + rate, totalPayments) - 1);
 
     const firstInterest = loanAmount * rate;
@@ -283,7 +284,9 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       monthTax: propertyTax,
       monthInsurance: insurance,
 
-      lifetimeTotal: Number((totalPayment * totalPayments).toFixed(2)).toLocaleString()
+      lifetimeTotal: Number(
+        (totalPayment * totalPayments).toFixed(2)
+      ).toLocaleString()
     };
   }
 }

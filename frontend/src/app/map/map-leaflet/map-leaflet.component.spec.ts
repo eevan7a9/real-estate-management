@@ -11,7 +11,7 @@ describe('MapLeafletComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapLeafletComponent ],
+      declarations: [MapLeafletComponent],
       imports: [IonicModule.forRoot(), RouterTestingModule],
       providers: [Storage]
     }).compileComponents();

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Dark Mode is Manual Toggled */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -30,7 +30,6 @@
   --color-dark: #222428;
   --color-dark-shade: #1e2023;
   --color-dark-tint: #383a3e;
-
 
   --color-danger: #eb445a;
   --color-danger-shade: #cf3c4f;

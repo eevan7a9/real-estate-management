@@ -10,8 +10,8 @@ describe('PropertiesNewComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertiesNewComponent ],
-      imports: [IonicModule.forRoot(), ReactiveFormsModule],
+      declarations: [PropertiesNewComponent],
+      imports: [IonicModule.forRoot(), ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PropertiesNewComponent);

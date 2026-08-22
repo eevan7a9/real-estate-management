@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   UntypedFormGroup,
   UntypedFormBuilder,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
@@ -40,25 +40,25 @@ export class RegisterComponent {
             Validators.minLength(8),
             CustomValidators.patternValidator(/\d/, { hasNumber: true }),
             CustomValidators.patternValidator(/[A-Z]/, {
-              hasCapitalCase: true,
+              hasCapitalCase: true
             }),
             CustomValidators.patternValidator(/[a-z]/, {
-              hasSmallCase: true,
+              hasSmallCase: true
             }),
             CustomValidators.patternValidator(/[!@#$%^&*(),.?":{}|<>]/, {
-              hasSpecialCharacters: true,
-            }),
-          ],
+              hasSpecialCharacters: true
+            })
+          ]
         ],
         confirm: ['', Validators.required],
-        termService: [false, Validators.required],
+        termService: [false, Validators.required]
       },
       {
         validators: CustomValidators.isDifferent(
           'password',
           'confirm',
           'notConfirmed'
-        ),
+        )
       }
     );
   }
@@ -73,7 +73,9 @@ export class RegisterComponent {
 
     const { fullName, email, password } = this.registerForm.value;
     try {
-      const result = await firstValueFrom(this.user.register(fullName, email, password));
+      const result = await firstValueFrom(
+        this.user.register(fullName, email, password)
+      );
       if (!result.error && result.data) {
         await this.showToast('Success, registration is complete.');
         await this.router.navigateByUrl('/user/account/profile');
@@ -94,7 +96,7 @@ export class RegisterComponent {
   private async presentLoading() {
     return await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...',
+      message: 'Please wait...'
     });
   }
 
@@ -102,7 +104,7 @@ export class RegisterComponent {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2000,
-      color,
+      color
     });
     toast.present();
   }

@@ -1,11 +1,15 @@
 <ion-app>
   <ion-split-pane contentId="main-content">
-    <ion-menu class="max-w-400 border-r-[1px] border-r-gray-500" contentId="main-content" type="overlay">
+    <ion-menu
+      class="max-w-400 border-r-[1px] border-r-gray-500"
+      contentId="main-content"
+      type="overlay"
+    >
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>
             <div class="logo-container">
-              <img src="../assets/images/logo.png" alt="logo"  routerLink = "/" />
+              <img src="../assets/images/logo.png" alt="logo" routerLink="/" />
               <div class="logo-title">
                 <a href="https://github.com/eevan7a9/real-estate-management">
                   Real Estate Management
@@ -30,9 +34,15 @@
                 [ios]="p.icon + '-outline'"
                 [md]="p.icon + '-sharp'"
               ></ion-icon>
-              <ion-label class="mx-2  lg:mx-3">{{ p.title || "Menu Item" }}</ion-label>
+              <ion-label class="mx-2 lg:mx-3">{{
+                p.title || 'Menu Item'
+              }}</ion-label>
               <!-- badge counter for unread messages -->
-              <ion-badge class="p-1 font-light" slot="end" *ngIf="p.title === 'Enquiries' && unreadEnquiries()">
+              <ion-badge
+                class="p-1 font-light"
+                slot="end"
+                *ngIf="p.title === 'Enquiries' && unreadEnquiries()"
+              >
                 {{ unreadEnquiries() }}
               </ion-badge>
             </ion-item>
@@ -54,13 +64,21 @@
                   [ios]="page.icon + '-outline'"
                   [md]="page.icon + '-sharp'"
                 ></ion-icon>
-                <ion-label class="mx-2 lg:mx-3">{{ page.title || "Menu Item" }}</ion-label>
+                <ion-label class="mx-2 lg:mx-3">{{
+                  page.title || 'Menu Item'
+                }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
           }
-          @if(user()) {
+          @if (user()) {
             <ion-menu-toggle auto-hide="false">
-              <ion-item button (click)="signOut()" lines="none" bu detail="false">
+              <ion-item
+                button
+                (click)="signOut()"
+                lines="none"
+                bu
+                detail="false"
+              >
                 <ion-icon
                   slot="start"
                   [ios]="'log-out' + '-outline'"

@@ -10,7 +10,7 @@ describe('ContactFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContactFormComponent ],
+      declarations: [ContactFormComponent],
       imports: [IonicModule.forRoot(), ReactiveFormsModule]
     }).compileComponents();
 

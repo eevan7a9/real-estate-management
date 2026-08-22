@@ -9,7 +9,7 @@ describe('NotificationBadgeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationBadgeComponent ],
+      declarations: [NotificationBadgeComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -4,7 +4,6 @@ import { TransactionType } from 'src/app/shared/enums/property';
 import { Property } from 'src/app/shared/interface/property';
 import { UserService } from 'src/app/user/user.service';
 
-
 @Component({
   selector: 'app-properties-card',
   templateUrl: './properties-card.component.html',
@@ -14,12 +13,11 @@ import { UserService } from 'src/app/user/user.service';
 export class PropertiesCardComponent {
   public transactionType = TransactionType;
   readonly property = input<Property>();
-  
 
   constructor(
     private router: Router,
     public userService: UserService
-  ) { }
+  ) {}
 
   public selectProperty(property_id: string): void {
     this.router.navigate(['/properties', property_id]);

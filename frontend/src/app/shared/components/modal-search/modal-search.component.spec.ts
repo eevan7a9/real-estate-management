@@ -9,7 +9,7 @@ describe('ModalSearchComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModalSearchComponent ],
+      declarations: [ModalSearchComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

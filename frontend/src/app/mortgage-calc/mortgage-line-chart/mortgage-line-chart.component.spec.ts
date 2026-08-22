@@ -10,7 +10,7 @@ describe('MortgageLineChartComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MortgageLineChartComponent ],
+      declarations: [MortgageLineChartComponent],
       imports: [IonicModule.forRoot()],
       providers: [Storage]
     }).compileComponents();

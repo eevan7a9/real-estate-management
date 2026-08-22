@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormBuilder,
+  Validators
+} from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 
 @Component({
-    selector: 'app-contact-form',
-    templateUrl: './contact-form.component.html',
-    styleUrls: ['./contact-form.component.css'],
-    standalone: false
+  selector: 'app-contact-form',
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.css'],
+  standalone: false
 })
 export class ContactFormComponent implements OnInit {
   public error = false;
@@ -14,15 +18,15 @@ export class ContactFormComponent implements OnInit {
   public sent = false;
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private toastCtrl: ToastController,
+    private toastCtrl: ToastController
   ) {
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(10)]],
+      message: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
-  ngOnInit() { }
+  ngOnInit() {}
 
   submit() {
     console.log(this.contactForm.get('email').errors);

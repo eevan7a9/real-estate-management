@@ -14,19 +14,19 @@ import { ToastController } from '@ionic/angular';
 const url = environment.api.server;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class UserService {
   public user$: Observable<UserSignedIn | undefined>;
   private readonly userSub = new BehaviorSubject<UserSignedIn | undefined>(
-    undefined,
+    undefined
   );
 
   constructor(
     private http: HttpClient,
     private storage: StorageService,
     private router: Router,
-    private toastCtrl: ToastController,
+    private toastCtrl: ToastController
   ) {
     this.user$ = this.userSub.asObservable();
     // Access Stored User
@@ -55,26 +55,26 @@ export class UserService {
 
   public signIn(
     email: string,
-    password: string,
+    password: string
   ): Observable<ApiResponse<UserSignedIn | undefined>> {
     return this.http
       .post<ApiResponse<UserSignedIn>>(
         url + 'auth/signin',
         {
           email,
-          password,
+          password
         },
-        requestOptions({ contentType: 'application/json' }),
+        requestOptions({ contentType: 'application/json' })
       )
       .pipe(
-        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
       );
   }
 
   public register(
     fullName: string,
     email: string,
-    password: string,
+    password: string
   ): Observable<ApiResponse<UserSignedIn>> {
     return this.http
       .post<ApiResponse<UserSignedIn>>(
@@ -82,22 +82,22 @@ export class UserService {
         {
           fullName,
           email,
-          password,
+          password
         },
-        requestOptions({ contentType: 'application/json' }),
+        requestOptions({ contentType: 'application/json' })
       )
       .pipe(
-        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
       );
   }
 
   public googleAuth(
-    payload: GoogleAuthResponse,
+    payload: GoogleAuthResponse
   ): Observable<ApiResponse<UserSignedIn>> {
     return this.http
       .post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload)
       .pipe(
-        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res))),
+        concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
       );
   }
 
@@ -107,36 +107,38 @@ export class UserService {
 
   public changePassword(
     passwordNew: string,
-    passwordCurrent: string,
+    passwordCurrent: string
   ): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
       url + 'auth/change-password',
       { passwordCurrent, passwordNew },
       requestOptions({
         token: this.token,
-        contentType: 'application/json',
-      }),
+        contentType: 'application/json'
+      })
     );
   }
 
   public updateUser(user: Partial<User>): Observable<ApiResponse<User>> {
     return this.http
-      .patch<
-        ApiResponse<User>
-      >(url + 'users/me', user, requestOptions({ token: this.token }))
+      .patch<ApiResponse<User>>(
+        url + 'users/me',
+        user,
+        requestOptions({ token: this.token })
+      )
       .pipe(
         tap((res) => {
           if (res.status !== 200) return;
           const updatedUser = { ...res.data, accessToken: this.token };
           this.setUser(updatedUser);
-        }),
+        })
       );
   }
 
   public getCurrentUser(): Observable<ApiResponse<UserDetails>> {
     return this.http.get<ApiResponse<UserDetails>>(
       url + 'users/me',
-      requestOptions({ token: this.token }),
+      requestOptions({ token: this.token })
     );
   }
 
@@ -151,12 +153,12 @@ export class UserService {
 
   private async showToast(
     message: string,
-    color: 'success' | 'danger' = 'success',
+    color: 'success' | 'danger' = 'success'
   ): Promise<void> {
     const toast = await this.toastCtrl.create({
       message,
       duration: 3000,
-      color,
+      color
     });
     await toast.present();
   }

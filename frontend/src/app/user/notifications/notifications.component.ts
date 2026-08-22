@@ -5,7 +5,7 @@ import {
   ElementRef,
   QueryList,
   signal,
-  ViewChildren,
+  ViewChildren
 } from '@angular/core';
 import { UserNotificationType } from 'src/app/shared/enums/notification';
 import { Notification } from 'src/app/shared/interface/notification';
@@ -16,10 +16,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
 
 @Component({
-    selector: 'app-notifications',
-    templateUrl: './notifications.component.html',
-    styleUrls: ['./notifications.component.css'],
-    standalone: false
+  selector: 'app-notifications',
+  templateUrl: './notifications.component.html',
+  styleUrls: ['./notifications.component.css'],
+  standalone: false
 })
 export class NotificationsComponent {
   public notifications = toSignal<Notification[]>(
@@ -74,7 +74,7 @@ export class NotificationsComponent {
   }
 
   public async deleteSelectedNotfications(): Promise<void> {
-    if(this.restriction.restricted) {
+    if (this.restriction.restricted) {
       return this.restriction.showAlert();
     }
     if (!this.notificationsChecked().length) {
@@ -85,12 +85,14 @@ export class NotificationsComponent {
       this.notificationsChecked()
     );
     if (res?.status === 200) {
-      this.notificationsService.removeNotificationsFromState(this.notificationsChecked());
+      this.notificationsService.removeNotificationsFromState(
+        this.notificationsChecked()
+      );
     }
     const toast = this.toast.create({
       duration: 5000,
       message: res.message,
-      color: res?.status === 200 ? 'success' : 'danger',
+      color: res?.status === 200 ? 'success' : 'danger'
     });
     (await toast).present();
 
@@ -131,6 +133,8 @@ export class NotificationsComponent {
     }
     this.notificationsToRead = [];
     this.processingNotificationRead = false;
-    this.notificationsService.setNotificationsAsReadFromState(res.data.map(item => item.notification_id));
+    this.notificationsService.setNotificationsAsReadFromState(
+      res.data.map((item) => item.notification_id)
+    );
   }, 3000);
 }

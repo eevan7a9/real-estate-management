@@ -1,7 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
-import { PaymentFrequency, PropertyType, TransactionType } from 'src/app/shared/enums/property';
+import {
+  PaymentFrequency,
+  PropertyType,
+  TransactionType
+} from 'src/app/shared/enums/property';
 import { Property, PropertyEditForm } from 'src/app/shared/interface/property';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
 import { PropertiesService } from '../properties.service';
@@ -28,7 +36,8 @@ export class PropertiesEditComponent implements OnInit {
     {
       label: 'industrial',
       value: PropertyType.industrial
-    }, {
+    },
+    {
       label: 'land',
       value: PropertyType.land
     }
@@ -84,45 +93,43 @@ export class PropertiesEditComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10)]],
       type: [PropertyType.residential],
       transactionType: [TransactionType.forSale],
-      price: ['',],
+      price: [''],
       paymentFrequency: [PaymentFrequency.monthly],
       currency: ['', Validators.maxLength(3)],
       features: [''],
       lat: ['0', Validators.required],
-      lng: ['0', Validators.required],
+      lng: ['0', Validators.required]
     });
   }
 
   ngOnInit() {
     if (this.property) {
       const {
-        name, 
-        address, 
-        description, 
-        type, 
-        price, 
-        paymentFrequency, 
-        currency, 
-        features, 
+        name,
+        address,
+        description,
+        type,
+        price,
+        paymentFrequency,
+        currency,
+        features,
         transactionType,
         position: { coordinates }
       } = this.property;
 
-      this.propertyForm.patchValue(
-        {
-          name,
-          address,
-          description,
-          type,
-          price,
-          paymentFrequency,
-          currency,
-          features: features ? features.join(', ').trim() : '',
-          transactionType,
-          lat: coordinates[0],
-          lng: coordinates[1]
-        }
-      );
+      this.propertyForm.patchValue({
+        name,
+        address,
+        description,
+        type,
+        price,
+        paymentFrequency,
+        currency,
+        features: features ? features.join(', ').trim() : '',
+        transactionType,
+        lat: coordinates[0],
+        lng: coordinates[1]
+      });
     }
   }
 
@@ -141,7 +148,7 @@ export class PropertiesEditComponent implements OnInit {
       currency,
       features,
       lat,
-      lng,
+      lng
     } = this.propertyForm.value;
 
     const editedProperty: PropertyEditForm = {
@@ -154,8 +161,13 @@ export class PropertiesEditComponent implements OnInit {
       price,
       paymentFrequency,
       currency,
-      features: features.split(',').filter((item: string) => item.trim() !== ''),
-      position: { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
+      features: features
+        .split(',')
+        .filter((item: string) => item.trim() !== ''),
+      position: {
+        type: 'Point',
+        coordinates: [parseFloat(lng), parseFloat(lat)]
+      },
       user_id: this.property.user_id
     };
     const updatedProperty = { ...this.property, ...editedProperty };
@@ -185,7 +197,9 @@ export class PropertiesEditComponent implements OnInit {
     }
 
     try {
-      const res = await firstValueFrom(this.propertiesService.updateProperty(property));
+      const res = await firstValueFrom(
+        this.propertiesService.updateProperty(property)
+      );
       if (res.status === 200 || res.status === 201) {
         const toast = await this.toastCtrl.create({
           message: res.message,
@@ -199,7 +213,9 @@ export class PropertiesEditComponent implements OnInit {
     } catch (error) {
       console.error(error);
       const toast = await this.toastCtrl.create({
-        message: error?.message || 'Error: Something went wrong, please try again later.',
+        message:
+          error?.message ||
+          'Error: Something went wrong, please try again later.',
         duration: 3000,
         color: 'danger'
       });

@@ -10,5 +10,5 @@ export enum ActivityType {
   UserLogin = 'USER_LOGIN',
   UserLogout = 'USER_LOGOUT',
   UserRegister = 'USER_REGISTER',
-  UserUpdate = 'USER_UPDATE',
+  UserUpdate = 'USER_UPDATE'
 }

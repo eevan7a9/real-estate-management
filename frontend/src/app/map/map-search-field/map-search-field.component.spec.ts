@@ -9,7 +9,7 @@ describe('MapSearchFieldComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapSearchFieldComponent ],
+      declarations: [MapSearchFieldComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

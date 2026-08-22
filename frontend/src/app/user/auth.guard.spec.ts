@@ -4,16 +4,23 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Storage } from '@ionic/storage-angular';
 
 import { AuthGuard } from './auth.guard';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    providers: [Storage, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [RouterTestingModule],
+      providers: [
+        Storage,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    });
     guard = TestBed.inject(AuthGuard);
   });
 

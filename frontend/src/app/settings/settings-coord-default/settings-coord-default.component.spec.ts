@@ -10,7 +10,7 @@ describe('SettingsCoordDefaultComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsCoordDefaultComponent ],
+      declarations: [SettingsCoordDefaultComponent],
       imports: [IonicModule.forRoot()],
       providers: [Storage]
     }).compileComponents();

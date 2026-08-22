@@ -26,8 +26,6 @@ import { MortgageLineChartComponent } from './mortgage-line-chart/mortgage-line-
     MortgagePieChartComponent,
     MortgageLineChartComponent
   ],
-  exports: [
-    MortgageCoreCalcComponent
-  ]
+  exports: [MortgageCoreCalcComponent]
 })
-export class MortgageCalcPageModule { }
+export class MortgageCalcPageModule {}

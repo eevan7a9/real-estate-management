@@ -10,14 +10,17 @@ import { UserService } from '../user/user.service';
 const propertyUrl = environment.api.server + 'activities';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ActivitiesService {
   public loading = signal(false);
   public activities$: Observable<Activity[]>;
   private activitiesSub = new BehaviorSubject<Activity[]>([]);
 
-  constructor(private http: HttpClient, private user: UserService) {
+  constructor(
+    private http: HttpClient,
+    private user: UserService
+  ) {
     this.activities$ = this.activitiesSub.asObservable();
   }
 

@@ -9,11 +9,11 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-properties-uploads',
   templateUrl: './properties-uploads.component.html',
   styleUrls: ['./properties-uploads.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class PropertiesUploadsComponent implements OnInit {
   // Don't use signal inputs for values passed via componentProps.
-  public property!:Property;
+  public property!: Property;
   public previews: unknown[] = [];
   public selectedFiles: File[] = [];
 
@@ -21,10 +21,10 @@ export class PropertiesUploadsComponent implements OnInit {
     private modalCtrl: ModalController,
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController,
-    private restriction: RestrictionService,
-  ) { }
+    private restriction: RestrictionService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public dismissModal() {
     this.modalCtrl.dismiss();
@@ -58,7 +58,7 @@ export class PropertiesUploadsComponent implements OnInit {
       return this.presentToast(
         'Please, select images to upload.',
         300,
-        'danger',
+        'danger'
       );
     }
     try {
@@ -68,8 +68,8 @@ export class PropertiesUploadsComponent implements OnInit {
       const res = await firstValueFrom(
         this.propertiesService.addPropertyImage(
           this.selectedFiles,
-          property.property_id,
-        ),
+          property.property_id
+        )
       );
       if (!res || res.status !== 201) {
         const msg = 'Error: Something went wrong, please try again later.';
@@ -78,7 +78,9 @@ export class PropertiesUploadsComponent implements OnInit {
         return;
       }
       property.images = res.data;
-      const updateRes = await firstValueFrom(this.propertiesService.updateProperty(property));
+      const updateRes = await firstValueFrom(
+        this.propertiesService.updateProperty(property)
+      );
       if (updateRes.data) {
         this.propertiesService.updatePropertyInState(updateRes.data);
       }
@@ -89,7 +91,7 @@ export class PropertiesUploadsComponent implements OnInit {
       this.presentToast(
         'Error: Something went wrong, please try again later.',
         3000,
-        'danger',
+        'danger'
       );
       this.modalCtrl.dismiss();
     }
@@ -120,12 +122,12 @@ export class PropertiesUploadsComponent implements OnInit {
   private async presentToast(
     message: string,
     duration = 3000,
-    color = 'success',
+    color = 'success'
   ) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color,
+      color
     });
     toast.present();
   }

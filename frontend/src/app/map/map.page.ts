@@ -8,15 +8,17 @@ import { PropertiesService } from '../properties/properties.service';
   selector: 'app-map',
   templateUrl: './map.page.html',
   styleUrls: ['./map.page.css'],
-  standalone: false,
+  standalone: false
 })
 export class MapPage {
-  public properties = toSignal<Property[] | undefined>(this.propertiesService.properties$);
+  public properties = toSignal<Property[] | undefined>(
+    this.propertiesService.properties$
+  );
   public visibleType = signal<string[]>([
     PropertyType.residential.toString(),
     PropertyType.commercial.toString(),
     PropertyType.industrial.toString(),
-    PropertyType.land.toString(),
+    PropertyType.land.toString()
   ]);
 
   constructor(private propertiesService: PropertiesService) {}

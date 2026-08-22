@@ -28,7 +28,6 @@ export interface Enquiry {
   };
   createdAt?: string;
   updatedAt?: string;
-
 }
 
 export interface EnquiryCreate {

@@ -1,6 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">Register Page</ion-title>
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]"
+      >Register Page</ion-title
+    >
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -30,7 +32,11 @@
 
             <div
               class="alert-errors"
-              *ngIf="(registerForm.get('fullName')?.touched || registerForm.get('fullName')?.dirty) && registerForm.get('fullName')?.errors"
+              *ngIf="
+                (registerForm.get('fullName')?.touched ||
+                  registerForm.get('fullName')?.dirty) &&
+                registerForm.get('fullName')?.errors
+              "
             >
               <app-alert-card
                 content="Full Name is too short."
@@ -48,9 +54,15 @@
 
             <div
               class="alert-errors"
-              *ngIf=" (registerForm.get('email')?.touched || registerForm.get('email')?.dirty) &&  registerForm.get('email')?.errors"
+              *ngIf="
+                (registerForm.get('email')?.touched ||
+                  registerForm.get('email')?.dirty) &&
+                registerForm.get('email')?.errors
+              "
             >
-              <app-alert-card content="Email is not valid. ex: name@email.com"></app-alert-card>
+              <app-alert-card
+                content="Email is not valid. ex: name@email.com"
+              ></app-alert-card>
             </div>
 
             <ion-item>
@@ -64,7 +76,11 @@
 
             <div
               class="alert-errors"
-              *ngIf=" (registerForm.get('password')?.touched || registerForm.get('password')?.dirty) &&  registerForm.get('password')?.errors"
+              *ngIf="
+                (registerForm.get('password')?.touched ||
+                  registerForm.get('password')?.dirty) &&
+                registerForm.get('password')?.errors
+              "
             >
               <app-alert-card
                 content="Length needs to be 8+ long & contain a
@@ -81,10 +97,7 @@
               ></ion-input>
             </ion-item>
 
-            <div
-              class="alert-errors"
-              *ngIf="registerForm.errors?.notConfirmed"
-            >
+            <div class="alert-errors" *ngIf="registerForm.errors?.notConfirmed">
               <app-alert-card
                 content="Password not confirmed."
               ></app-alert-card>

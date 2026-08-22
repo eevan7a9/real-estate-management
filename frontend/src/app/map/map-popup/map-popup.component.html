@@ -32,7 +32,7 @@
         } @else {
           <div class="h-full relative overflow-hidden border border-slate-300">
             <img
-              src='assets/images/no-image.jpeg'
+              src="assets/images/no-image.jpeg"
               class="min-w-full min-h-full block object-cover object-center"
               [alt]="propertyDetails()?.name"
             />
@@ -43,7 +43,7 @@
           class="bg-slate-100/80 absolute z-10 bottom-0 left-0 p-2 rounded-tr-md"
         >
           <span class="font-bold text-[18px]">
-            {{ propertyDetails()?.price | currency: "PHP" }}
+            {{ propertyDetails()?.price | currency: 'PHP' }}
           </span>
         </div>
       </div>

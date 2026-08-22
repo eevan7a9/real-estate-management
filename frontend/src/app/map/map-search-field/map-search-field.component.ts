@@ -7,19 +7,18 @@ import cities from 'src/app/shared/data/php-cities';
 import { Coord } from 'src/app/shared/interface/map';
 
 @Component({
-    selector: 'app-map-search-field',
-    templateUrl: './map-search-field.component.html',
-    styleUrls: ['./map-search-field.component.css'],
-    standalone: false
+  selector: 'app-map-search-field',
+  templateUrl: './map-search-field.component.html',
+  styleUrls: ['./map-search-field.component.css'],
+  standalone: false
 })
 export class MapSearchFieldComponent implements OnInit {
-
   @Output() selectedLocation = new EventEmitter<Coord>();
   public field = '';
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   async showSearchModal() {
     const modal = await this.modalCtrl.create({
@@ -47,7 +46,7 @@ export class MapSearchFieldComponent implements OnInit {
     if (!results) {
       return;
     }
-    const items = results.map(item => {
+    const items = results.map((item) => {
       const { label, y, x } = item;
       return { city: label, lat: y, lng: x };
     });

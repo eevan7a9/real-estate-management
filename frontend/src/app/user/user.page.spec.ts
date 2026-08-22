@@ -10,7 +10,7 @@ describe('UserPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserPage ],
+      declarations: [UserPage],
       imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 

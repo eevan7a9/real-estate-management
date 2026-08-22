@@ -7,14 +7,16 @@ import { Property } from 'src/app/shared/interface/property';
   selector: 'app-map-side-properties',
   templateUrl: './map-side-properties.component.html',
   styleUrls: ['./map-side-properties.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class MapSidePropertiesComponent implements OnInit {
   private propertiesService = inject(PropertiesService);
   private properties = toSignal(this.propertiesService.properties$);
-  public propertiesList = computed<Property[]>(() => this.properties()?.slice(0, 10) ?? []);
+  public propertiesList = computed<Property[]>(
+    () => this.properties()?.slice(0, 10) ?? []
+  );
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (!this.propertiesService.properties.length) {

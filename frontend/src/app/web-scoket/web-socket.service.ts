@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Enquiry } from '../shared/interface/enquiry';
 import { EnquiriesService } from '../enquiries/enquiries.service';
-import { WebSocketNotification, Notification } from '../shared/interface/notification';
+import {
+  WebSocketNotification,
+  Notification
+} from '../shared/interface/notification';
 import { SocketNotificationType } from '../shared/enums/notification';
 import { ActivitiesService } from '../activities/activities.service';
 import { Activity } from '../shared/interface/activities';
@@ -17,7 +20,7 @@ const parseMessage = (message: string) => {
   }
 };
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class WebSocketService {
   private socket: WebSocket;
@@ -70,18 +73,20 @@ export class WebSocketService {
   }
 
   handleNotification(notfication: WebSocketNotification): void {
-    console.log("handleNotification");
+    console.log('handleNotification');
     switch (notfication.type) {
       case SocketNotificationType.Activity:
-        this.activities.insertActivities(notfication.payload as Activity)
+        this.activities.insertActivities(notfication.payload as Activity);
         break;
 
       case SocketNotificationType.Enquiry:
         this.enquiry.insertEnquiryToState(notfication.payload as Enquiry);
         break;
-      
+
       case SocketNotificationType.User:
-        this.notificationService.insertNotificationToState(notfication.payload as Notification)
+        this.notificationService.insertNotificationToState(
+          notfication.payload as Notification
+        );
         break;
 
       default:

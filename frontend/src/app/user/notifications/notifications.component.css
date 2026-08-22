@@ -8,7 +8,8 @@ ion-content {
   margin: 0 auto;
 }
 
-ion-item, ion-checkbox {
+ion-item,
+ion-checkbox {
   --inner-padding-end: 0;
   --inner-padding-start: 0;
   --padding-end: 0;

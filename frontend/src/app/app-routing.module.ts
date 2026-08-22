@@ -9,35 +9,46 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () =>
+      import('./folder/folder.module').then((m) => m.FolderPageModule)
   },
   {
     path: 'map',
-    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+    loadChildren: () => import('./map/map.module').then((m) => m.MapPageModule)
   },
   {
     path: 'settings',
-    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsPageModule)
   },
   {
     path: 'properties',
-    loadChildren: () => import('./properties/properties.module').then( m => m.PropertiesPageModule)
+    loadChildren: () =>
+      import('./properties/properties.module').then(
+        (m) => m.PropertiesPageModule
+      )
   },
   {
     path: 'enquiries',
-    loadChildren: () => import('./enquiries/enquiries.module').then( m => m.EnquiriesPageModule)
+    loadChildren: () =>
+      import('./enquiries/enquiries.module').then((m) => m.EnquiriesPageModule)
   },
   {
     path: 'mortgage-calc',
-    loadChildren: () => import('./mortgage-calc/mortgage-calc.module').then( m => m.MortgageCalcPageModule)
+    loadChildren: () =>
+      import('./mortgage-calc/mortgage-calc.module').then(
+        (m) => m.MortgageCalcPageModule
+      )
   },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module').then( m => m.UserPageModule)
+    loadChildren: () =>
+      import('./user/user.module').then((m) => m.UserPageModule)
   },
   {
     path: 'about',
-    loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
+    loadChildren: () =>
+      import('./about/about.module').then((m) => m.AboutPageModule)
   }
 ];
 

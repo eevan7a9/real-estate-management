@@ -16,7 +16,8 @@ ion-content {
 .form-information ion-item ion-label {
   --color: #8794a4;
 }
-.form-information ion-item ion-input, .form-information ion-item ion-textarea {
+.form-information ion-item ion-input,
+.form-information ion-item ion-textarea {
   --padding-start: 12px;
   padding: 6px;
   border: 1px solid rgba(0, 57, 100, 0.418);
@@ -24,6 +25,7 @@ ion-content {
   border-radius: 4px;
   margin-top: 8px;
 }
-.form-information ion-item ion-input::placeholder, .form-information ion-item ion-textarea::placeholder {
+.form-information ion-item ion-input::placeholder,
+.form-information ion-item ion-textarea::placeholder {
   font-size: 15px;
 }

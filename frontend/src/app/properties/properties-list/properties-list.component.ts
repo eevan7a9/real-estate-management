@@ -5,7 +5,7 @@ import {
   model,
   OnInit,
   output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Property } from 'src/app/shared/interface/property';
@@ -15,23 +15,22 @@ import { PropertiesDisplayOption } from 'src/app/shared/enums/property';
 import {
   filterProperties,
   searchProperties,
-  sortProperties,
+  sortProperties
 } from 'src/app/shared/utility/properties';
 
 @Component({
   selector: 'app-properties-list',
   templateUrl: './properties-list.component.html',
   styleUrls: ['./properties-list.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class PropertiesListComponent implements OnInit {
   @ViewChild('IonInfiniteScroll', { static: false })
   infinityScroll!: IonInfiniteScroll;
 
-
   public properties = input<Property[]>();
   public displayOption = input<PropertiesDisplayOption>(
-    PropertiesDisplayOption.CardView,
+    PropertiesDisplayOption.CardView
   );
   public singleCol = input<boolean>(false);
   public horizontalSlide = input<boolean>(false);
@@ -66,9 +65,9 @@ export class PropertiesListComponent implements OnInit {
 
   private queryParams = toSignal(this.activatedRoute.queryParams);
 
-  constructor(private activatedRoute: ActivatedRoute) { }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   public async setInfinityScrollComplete() {
     if (this.infinityScroll) {

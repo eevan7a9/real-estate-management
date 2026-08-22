@@ -21,15 +21,15 @@ import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-a
 export class PropertiesListItemComponent {
   public property = input<Property>();
   public user = toSignal<User | undefined>(this.userService.user$, {
-    initialValue: undefined,
+    initialValue: undefined
   });
   public isOwner = computed(
     () => this.user()?.user_id === this.property()?.user_id
   );
   readonly enableOwnedBadge = input<boolean>(true);
   public details = computed(() => {
-    return { ...this.property() }
-  })
+    return { ...this.property() };
+  });
 
   constructor(
     private router: Router,
@@ -38,7 +38,7 @@ export class PropertiesListItemComponent {
     private toastCtrl: ToastController,
     private propertiesService: PropertiesService,
     private confirmationService: ConfirmationAlertService
-  ) { }
+  ) {}
 
   public selectProperty(property?: Property): void {
     if (!property) return;
@@ -54,10 +54,10 @@ export class PropertiesListItemComponent {
       componentProps: {
         message: false,
         edit: false,
-        report: false,
+        report: false
       },
       translucent: true,
-      trigger: "popup-trigger-button"
+      trigger: 'popup-trigger-button'
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();
@@ -79,7 +79,7 @@ export class PropertiesListItemComponent {
       const toast = await this.toastCtrl.create({
         message: 'Success, we will take a look at this property.',
         color: 'success',
-        duration: 5000,
+        duration: 5000
       });
       toast.present();
     }
@@ -87,13 +87,15 @@ export class PropertiesListItemComponent {
 
   private async deleteProperty(id: string): Promise<void> {
     try {
-      const res = await firstValueFrom(this.propertiesService.removeProperty(id));
+      const res = await firstValueFrom(
+        this.propertiesService.removeProperty(id)
+      );
       if (res.status === 200) {
         this.propertiesService.removePropertyFromState(id);
         const toast = await this.toastCtrl.create({
           message: res.message,
           color: res.status === 200 ? 'success' : 'danger',
-          duration: 4000,
+          duration: 4000
         });
         toast.present();
         this.router.navigate(['/properties']);
@@ -103,9 +105,11 @@ export class PropertiesListItemComponent {
         const response = errorHandler(error);
         console.error('Delete property error:', response.message);
         const toast = await this.toastCtrl.create({
-          message: response.message || 'An error occurred while deleting the property.',
+          message:
+            response.message ||
+            'An error occurred while deleting the property.',
           color: 'danger',
-          duration: 4000,
+          duration: 4000
         });
         toast.present();
       } else {

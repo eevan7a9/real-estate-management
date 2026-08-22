@@ -9,7 +9,7 @@ describe('NeedSigninContinueComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NeedSigninContinueComponent ],
+      declarations: [NeedSigninContinueComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

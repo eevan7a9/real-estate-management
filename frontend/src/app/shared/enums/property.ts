@@ -2,12 +2,12 @@ export enum PropertyType {
   residential = 'residential',
   commercial = 'commercial',
   industrial = 'industrial',
-  land = 'land',
+  land = 'land'
 }
 
 export enum TransactionType {
   forSale = 'sale',
-  forRent = 'rent',
+  forRent = 'rent'
 }
 
 export enum PaymentFrequency {
@@ -16,7 +16,7 @@ export enum PaymentFrequency {
   monthly = 'monthly',
   biWeekly = 'bi-weekly',
   weekly = 'weekly',
-  daily = 'daily',
+  daily = 'daily'
 }
 
 export enum PropertiesDisplayOption {

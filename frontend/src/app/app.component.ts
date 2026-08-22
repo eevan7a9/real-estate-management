@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     { title: 'Properties', url: '/properties', icon: 'home' },
     { title: 'Enquiries', url: '/enquiries', icon: 'reader' },
     { title: 'Mortgage Calc', url: '/mortgage-calc', icon: 'calculator' },
-    { title: 'Settings', url: '/settings', icon: 'cog' },
+    { title: 'Settings', url: '/settings', icon: 'cog' }
   ];
 
   public unreadEnquiries = toSignal(
@@ -60,17 +60,17 @@ export class AppComponent implements OnInit {
 
   public user = signal<UserDetails | undefined>(undefined);
   public appLowerPages = computed<NavLinks[]>(() => {
-    const pages = [
-      { title: 'About', url: '/about', icon: 'help-circle' },
-    ]
+    const pages = [{ title: 'About', url: '/about', icon: 'help-circle' }];
     if (this.user()) {
-      return [...pages,
-      { title: 'Account', url: '/user/account', icon: 'person' }
+      return [
+        ...pages,
+        { title: 'Account', url: '/user/account', icon: 'person' }
       ];
     }
-    return [...pages,
-    { title: 'Register', url: '/user/register', icon: 'create' },
-    { title: 'Sign In', url: '/user/signin', icon: 'log-in' },
+    return [
+      ...pages,
+      { title: 'Register', url: '/user/register', icon: 'create' },
+      { title: 'Sign In', url: '/user/signin', icon: 'log-in' }
     ];
   });
 
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
     private activitiesService: ActivitiesService,
     private webSocket: WebSocketService,
     private notificationsService: NotificationsService
-  ) { }
+  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
@@ -138,7 +138,7 @@ export class AppComponent implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => { },
+          handler: () => {}
         },
         {
           text: 'Sign out',
@@ -146,9 +146,9 @@ export class AppComponent implements OnInit {
           handler: async () => {
             await this.userService.signOut();
             this.showSignedOutToast();
-          },
-        },
-      ],
+          }
+        }
+      ]
     });
     await alert.present();
   }
@@ -157,7 +157,7 @@ export class AppComponent implements OnInit {
     try {
       const res = await firstValueFrom(this.userService.getCurrentUser());
       if (res.status === 200 && res.data) {
-        const { activities, notifications, ...user } = res.data
+        const { activities, notifications, ...user } = res.data;
         this.user.set(user);
         this.activitiesService.activities = activities || [];
         this.notificationsService.notifications = notifications || [];
@@ -165,31 +165,36 @@ export class AppComponent implements OnInit {
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse) {
         const { message } = errorHandler(error);
-        this.toastController.create({
-          message,
-          color: 'danger',
-          duration: 5000,
-        }).then((toast) => toast.present());
+        this.toastController
+          .create({
+            message,
+            color: 'danger',
+            duration: 5000
+          })
+          .then((toast) => toast.present());
       }
       console.error('Get Current User error:', error);
     }
   }
 
   private fetchEnquiries(): void {
-    firstValueFrom(this.enquiriesService.fetchEnquiries()).then((res) => {
-      if (res?.status === 200 && res?.data) {
-        this.enquiriesService.enquiries = res.data;
-      }
-    }).catch(() => {
-      console.error('Error fetching enquiries.');
-    }).finally(() => this.enquiriesService.initialFetchDone.set(true));
+    firstValueFrom(this.enquiriesService.fetchEnquiries())
+      .then((res) => {
+        if (res?.status === 200 && res?.data) {
+          this.enquiriesService.enquiries = res.data;
+        }
+      })
+      .catch(() => {
+        console.error('Error fetching enquiries.');
+      })
+      .finally(() => this.enquiriesService.initialFetchDone.set(true));
   }
 
   private async showSignedOutToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: 'Success, you have signed out.',
       color: 'success',
-      duration: 3000,
+      duration: 3000
     });
     toast.present();
   }
@@ -197,8 +202,8 @@ export class AppComponent implements OnInit {
   private checkServer() {
     firstValueFrom(
       this.http.get<null | { message: string; success: boolean }>(
-        environment.api.server,
-      ),
+        environment.api.server
+      )
     ).then((data) => console.log(data));
   }
 

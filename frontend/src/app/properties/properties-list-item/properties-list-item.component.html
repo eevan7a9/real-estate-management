@@ -18,7 +18,7 @@
         class="h-5 p-1"
         [ngClass]="{
           'bg-success': property()?.transactionType === 'sale',
-          'bg-warning': property()?.transactionType === 'rent',
+          'bg-warning': property()?.transactionType === 'rent'
         }"
       >
         For {{ property()?.transactionType }}
@@ -54,7 +54,7 @@
       </p>
 
       <div class="ml-auto mr-0 md:text-[18px] xl:text-[20px] font-light">
-        {{ property()?.price | currency: "PHP" }}
+        {{ property()?.price | currency: 'PHP' }}
       </div>
     </div>
   </ion-card-content>

@@ -1,7 +1,7 @@
 import {
   PaymentFrequency,
   PropertyType,
-  TransactionType,
+  TransactionType
 } from '../enums/property';
 import { Coord } from './map';
 
@@ -33,16 +33,16 @@ export interface Property {
 export interface PropertyCreateForm extends Omit<
   Property,
   '_id' | 'property_id' | 'createdAt' | 'updatedAt'
-> { }
+> {}
 export interface PropertyEditForm extends Omit<
   Property,
   '_id' | 'createdAt' | 'updatedAt'
-> { }
+> {}
 
 export interface PropertyMap extends Pick<
   Property,
   'property_id' | 'type' | 'position'
-> { }
+> {}
 export interface PropertyPage {
   items: Property[];
   lastCreatedAt?: string;
@@ -54,14 +54,14 @@ export interface PropertyPage {
 
 export interface PropertyMapPopup extends Pick<
   Property,
-  "property_id" |
-  "name" |
-  "address" |
-  "description" |
-  "type" |
-  "transactionType" |
-  "price" |
-  "images" |
-  "currency" |
-  "user_id"
-> { }
+  | 'property_id'
+  | 'name'
+  | 'address'
+  | 'description'
+  | 'type'
+  | 'transactionType'
+  | 'price'
+  | 'images'
+  | 'currency'
+  | 'user_id'
+> {}

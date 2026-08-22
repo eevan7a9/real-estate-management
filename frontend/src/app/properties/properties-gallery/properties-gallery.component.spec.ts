@@ -9,7 +9,7 @@ describe('PropertiesGalleryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertiesGalleryComponent ],
+      declarations: [PropertiesGalleryComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

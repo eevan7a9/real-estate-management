@@ -11,7 +11,7 @@ describe('ChangePasswordComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ],
+      declarations: [ChangePasswordComponent],
       imports: [IonicModule.forRoot(), ReactiveFormsModule],
       providers: [CustomValidatorsDirective]
     }).compileComponents();

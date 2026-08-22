@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ConfirmationAlertService {
   constructor(private alertController: AlertController) {}
@@ -21,14 +21,14 @@ export class ConfirmationAlertService {
           {
             text: cancelText,
             role: 'cancel',
-            handler: () => resolve(false),
+            handler: () => resolve(false)
           },
           {
             text: confirmText,
             role: 'destructive',
-            handler: () => resolve(true),
-          },
-        ],
+            handler: () => resolve(true)
+          }
+        ]
       });
 
       await alert.present();

@@ -2,17 +2,16 @@ import { Component, input, OnInit } from '@angular/core';
 import { EnquiryTopic } from '../../enums/enquiry';
 
 @Component({
-    selector: 'app-enquiry-badge',
-    templateUrl: './enquiry-badge.component.html',
-    styleUrls: ['./enquiry-badge.component.css'],
-    standalone: false
+  selector: 'app-enquiry-badge',
+  templateUrl: './enquiry-badge.component.html',
+  styleUrls: ['./enquiry-badge.component.css'],
+  standalone: false
 })
 export class EnquiryBadgeComponent implements OnInit {
-
   public topic = input('residential');
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   topicColor() {
     switch (this.topic()) {

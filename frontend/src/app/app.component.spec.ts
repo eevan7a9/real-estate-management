@@ -1,4 +1,7 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -9,17 +12,13 @@ import { Storage } from '@ionic/storage-angular';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-
-
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-    declarations: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    imports: [RouterTestingModule.withRoutes([]),
-        ReactiveFormsModule],
-    providers: [Storage, provideHttpClient(withInterceptorsFromDi())]
-}).compileComponents();
+      declarations: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [RouterTestingModule.withRoutes([]), ReactiveFormsModule],
+      providers: [Storage, provideHttpClient(withInterceptorsFromDi())]
+    }).compileComponents();
   }));
 
   it('should create the app', waitForAsync(() => {
@@ -45,7 +44,8 @@ describe('AppComponent', () => {
     const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toEqual(10);
     expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual('/map');
-    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual('/properties');
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
+      '/properties'
+    );
   }));
-
 });

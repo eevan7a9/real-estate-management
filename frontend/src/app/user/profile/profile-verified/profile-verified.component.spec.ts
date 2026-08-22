@@ -9,7 +9,7 @@ describe('ProfileVerifiedComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileVerifiedComponent ],
+      declarations: [ProfileVerifiedComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -9,13 +9,16 @@ interface Markers {
 }
 
 @Component({
-    selector: 'app-map-markers-legend',
-    templateUrl: './map-markers-legend.component.html',
-    styleUrls: ['./map-markers-legend.component.css'],
-    standalone: false
+  selector: 'app-map-markers-legend',
+  templateUrl: './map-markers-legend.component.html',
+  styleUrls: ['./map-markers-legend.component.css'],
+  standalone: false
 })
 export class MapMarkersLegendComponent implements OnInit {
-  @Output() toggledMarker = new EventEmitter<{ type: string; isChecked: boolean }>();
+  @Output() toggledMarker = new EventEmitter<{
+    type: string;
+    isChecked: boolean;
+  }>();
 
   public markers: Markers[] = [
     {
@@ -28,26 +31,29 @@ export class MapMarkersLegendComponent implements OnInit {
       label: 'Commercial',
       value: PropertyType.commercial,
       isChecked: true,
-      icon: 'marker-commercial.svg',
-
-    }, {
+      icon: 'marker-commercial.svg'
+    },
+    {
       label: 'Industrial',
       value: PropertyType.industrial,
       isChecked: true,
       icon: 'marker-industrial.svg'
-    }
-    , {
+    },
+    {
       label: 'Land',
       value: PropertyType.land,
       isChecked: true,
       icon: 'marker-land.svg'
     }
   ];
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   markerSelected(marker: Markers) {
-    this.toggledMarker.emit({ type: marker.value, isChecked: marker.isChecked });
+    this.toggledMarker.emit({
+      type: marker.value,
+      isChecked: marker.isChecked
+    });
   }
 }

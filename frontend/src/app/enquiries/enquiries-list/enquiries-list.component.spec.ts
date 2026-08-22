@@ -10,7 +10,7 @@ describe('EnquiriesListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnquiriesListComponent ],
+      declarations: [EnquiriesListComponent],
       imports: [IonicModule.forRoot(), RouterTestingModule]
     }).compileComponents();
 

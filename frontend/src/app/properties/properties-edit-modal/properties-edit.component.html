@@ -39,7 +39,11 @@
 
         <ion-item *ngFor="let type of propertyTypes">
           <ion-label color="dark">{{ type.label }}</ion-label>
-          <ion-radio class="mr-2!" slot="start" [value]="type.value"></ion-radio>
+          <ion-radio
+            class="mr-2!"
+            slot="start"
+            [value]="type.value"
+          ></ion-radio>
         </ion-item>
       </ion-radio-group>
 
@@ -50,7 +54,11 @@
 
         <ion-item *ngFor="let transaction of transactionType">
           <ion-label color="dark">{{ transaction.label }}</ion-label>
-          <ion-radio class="mr-2!" slot="start" [value]="transaction.value"></ion-radio>
+          <ion-radio
+            class="mr-2!"
+            slot="start"
+            [value]="transaction.value"
+          ></ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-list>

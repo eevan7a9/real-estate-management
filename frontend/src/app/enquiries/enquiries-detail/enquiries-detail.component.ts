@@ -1,7 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import {
+  AlertController,
+  LoadingController,
+  ModalController,
+  ToastController
+} from '@ionic/angular';
 
 import { Enquiry } from 'src/app/shared/interface/enquiry';
 import { User } from 'src/app/shared/interface/user';
@@ -31,7 +36,7 @@ export class EnquiriesDetailComponent implements OnInit {
       return this.user()?.user_id === this.enquiry()?.users.from.user_id;
     }
     return false;
-  })
+  });
 
   constructor(
     public location: Location,
@@ -45,9 +50,7 @@ export class EnquiriesDetailComponent implements OnInit {
     private loadingCtrl: LoadingController,
     private restriction: RestrictionService,
     private confirmationAlert: ConfirmationAlertService
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit() {
     const loading = await this.loadingCtrl.create({
@@ -58,7 +61,7 @@ export class EnquiriesDetailComponent implements OnInit {
     await this.setEnquiryDetails();
     this.setEnquiryRead(this.enquiry());
     loading.dismiss();
-    this.ready.set(true)
+    this.ready.set(true);
   }
 
   async gotToProperty(propertyId: string) {
@@ -78,8 +81,9 @@ export class EnquiriesDetailComponent implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => { }
-        }, {
+          handler: () => {}
+        },
+        {
           text: 'REPORT',
           cssClass: 'alert-danger-text',
           role: 'delete',
@@ -96,16 +100,19 @@ export class EnquiriesDetailComponent implements OnInit {
     if (this.restriction.restricted) {
       return this.restriction.showAlert();
     }
-    this.confirmationAlert.confirm(
-      'Delete Enquiry',
-      'Are you sure you want to delete this enquiry?',
-      'Delete',
-      'Cancel'
-    )
+    this.confirmationAlert
+      .confirm(
+        'Delete Enquiry',
+        'Are you sure you want to delete this enquiry?',
+        'Delete',
+        'Cancel'
+      )
       .then(async (confirmed) => {
         if (confirmed) {
           try {
-            const res = await firstValueFrom(this.enquiriesService.removeEnquiry(enqId));
+            const res = await firstValueFrom(
+              this.enquiriesService.removeEnquiry(enqId)
+            );
             if (res.status === 200) {
               this.enquiriesService.removeEnquiryFromState(enqId);
               this.router.navigate(['/enquiries']);
@@ -114,16 +121,18 @@ export class EnquiriesDetailComponent implements OnInit {
           } catch (error: unknown) {
             if (error instanceof HttpErrorResponse) {
               let response = errorHandler(error);
-              this.toastCtrl.create({
-                message: response.message,
-                duration: 3000,
-                color: 'danger'
-              }).then(toast => toast.present());
+              this.toastCtrl
+                .create({
+                  message: response.message,
+                  duration: 3000,
+                  color: 'danger'
+                })
+                .then((toast) => toast.present());
             }
             console.error('Error Deleting Enquiry:', error);
           }
         }
-      })
+      });
   }
 
   async presentToast(message: string, duration = 3000) {
@@ -161,25 +170,34 @@ export class EnquiriesDetailComponent implements OnInit {
       return;
     }
     try {
-      const res = await firstValueFrom(this.enquiriesService.fetchEnquiry(enquiryId));
+      const res = await firstValueFrom(
+        this.enquiriesService.fetchEnquiry(enquiryId)
+      );
       if (res.status === 200) this.enquiry.set(res.data);
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse) {
         const response = errorHandler(error);
-        this.toastCtrl.create({
-          message: response.message,
-          duration: 3000,
-          color: 'danger'
-        }).then(toast => toast.present());
+        this.toastCtrl
+          .create({
+            message: response.message,
+            duration: 3000,
+            color: 'danger'
+          })
+          .then((toast) => toast.present());
       }
       console.error('Error fetching enquiry details:', error);
     }
   }
 
   private setEnquiryRead(enquiry: Enquiry): void {
-    if (enquiry && !enquiry?.read && enquiry?.users?.to.user_id === this.user()?.user_id) {
-      firstValueFrom(this.enquiriesService.readEnquiry(enquiry.enquiry_id))
-        .then((res) => this.enquiry.set(res?.data));
+    if (
+      enquiry &&
+      !enquiry?.read &&
+      enquiry?.users?.to.user_id === this.user()?.user_id
+    ) {
+      firstValueFrom(
+        this.enquiriesService.readEnquiry(enquiry.enquiry_id)
+      ).then((res) => this.enquiry.set(res?.data));
     }
   }
 }

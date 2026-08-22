@@ -30,14 +30,14 @@ import { PropertyTypeBadgeComponent } from './components/property-type-badge/pro
     FooterComponent,
     NeedSigninContinueComponent,
     NotificationBellComponent,
-    NotificationBadgeComponent,
+    NotificationBadgeComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    RouterLinkWithHref,
+    RouterLinkWithHref
   ],
   exports: [
     FormsModule,
@@ -53,7 +53,7 @@ import { PropertyTypeBadgeComponent } from './components/property-type-badge/pro
     FooterComponent,
     NeedSigninContinueComponent,
     NotificationBellComponent,
-    NotificationBadgeComponent,
-  ],
+    NotificationBadgeComponent
+  ]
 })
-export class SharedModule { }
+export class SharedModule {}

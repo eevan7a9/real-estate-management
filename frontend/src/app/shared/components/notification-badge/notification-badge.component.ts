@@ -5,7 +5,7 @@ import { UserNotificationType } from '../../enums/notification';
   selector: 'app-notification-badge',
   templateUrl: './notification-badge.component.html',
   styleUrls: ['./notification-badge.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class NotificationBadgeComponent {
   public notificationType = input<string>('success');

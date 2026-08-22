@@ -11,13 +11,16 @@ describe('EnquiriesDetailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnquiriesDetailComponent ],
-      imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([
-        {
-          path: 'enquiries',
-          component: EnquiriesPage
-        }
-      ])]
+      declarations: [EnquiriesDetailComponent],
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'enquiries',
+            component: EnquiriesPage
+          }
+        ])
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EnquiriesDetailComponent);

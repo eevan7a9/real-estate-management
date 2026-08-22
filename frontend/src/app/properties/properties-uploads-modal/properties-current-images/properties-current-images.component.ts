@@ -6,7 +6,7 @@ import {
   OnInit,
   output,
   Output,
-  ViewEncapsulation,
+  ViewEncapsulation
 } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { PropertiesService } from '../../properties.service';
@@ -16,11 +16,11 @@ import { RestrictionService } from 'src/app/shared/services/restriction/restrict
 register();
 
 @Component({
-    selector: 'app-properties-current-images',
-    templateUrl: './properties-current-images.component.html',
-    styleUrls: ['./properties-current-images.component.css'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: 'app-properties-current-images',
+  templateUrl: './properties-current-images.component.html',
+  styleUrls: ['./properties-current-images.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class PropertiesCurrentImagesComponent implements OnInit {
   readonly images = input.required<string[]>();
@@ -32,7 +32,7 @@ export class PropertiesCurrentImagesComponent implements OnInit {
     speed: 400,
     spaceBetween: 15,
     freeMode: true,
-    slidesPerView: 'auto',
+    slidesPerView: 'auto'
   };
   public selectedImages: string[] = [];
 
@@ -71,14 +71,14 @@ export class PropertiesCurrentImagesComponent implements OnInit {
     try {
       const res = await this.propertyService.deletePropertyImage(
         this.selectedImages,
-        this.id(),
+        this.id()
       );
 
       if (res.data?.length) {
         const toast = await this.toastCtrl.create({
           message: res.message || 'Success: Image deleted',
           duration: 3000,
-          color: 'success',
+          color: 'success'
         });
         toast.present();
         this.delete.emit(res.data);
@@ -88,7 +88,7 @@ export class PropertiesCurrentImagesComponent implements OnInit {
       const toast = await this.toastCtrl.create({
         message: 'Unable to delete images. Please try again.',
         duration: 3000,
-        color: 'danger',
+        color: 'danger'
       });
       toast.present();
     }

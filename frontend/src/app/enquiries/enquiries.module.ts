@@ -36,9 +36,6 @@ import { EnquiriesRelatedListComponent } from './enquiries-related-list/enquirie
     EnquiriesNewFormComponent,
     EnquiriesRelatedListComponent
   ],
-  exports: [
-    EnquiriesNewFormComponent,
-    EnquiriesRelatedListComponent
-  ]
+  exports: [EnquiriesNewFormComponent, EnquiriesRelatedListComponent]
 })
-export class EnquiriesPageModule { }
+export class EnquiriesPageModule {}

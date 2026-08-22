@@ -1,4 +1,7 @@
-import { SocketNotificationType, UserNotificationType } from '../enums/notification';
+import {
+  SocketNotificationType,
+  UserNotificationType
+} from '../enums/notification';
 import { Activity } from './activities';
 import { Enquiry } from './enquiry';
 import { Property } from './property';

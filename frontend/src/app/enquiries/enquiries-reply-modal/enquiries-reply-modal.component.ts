@@ -3,10 +3,10 @@ import { ModalController } from '@ionic/angular';
 import { Property } from 'src/app/shared/interface/property';
 
 @Component({
-    selector: 'app-enquiries-reply-modal',
-    templateUrl: './enquiries-reply-modal.component.html',
-    styleUrls: ['./enquiries-reply-modal.component.css'],
-    standalone: false
+  selector: 'app-enquiries-reply-modal',
+  templateUrl: './enquiries-reply-modal.component.html',
+  styleUrls: ['./enquiries-reply-modal.component.css'],
+  standalone: false
 })
 export class EnquiriesReplyModalComponent implements OnInit {
   @Input() title = 'Create Enquiry';
@@ -18,11 +18,9 @@ export class EnquiriesReplyModalComponent implements OnInit {
   };
   @Input() userTo!: string;
 
-  constructor(
-    private modalCtrl: ModalController,
-  ) { }
+  constructor(private modalCtrl: ModalController) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public dismissModal() {
     this.modalCtrl.dismiss();

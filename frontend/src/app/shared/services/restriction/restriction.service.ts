@@ -3,10 +3,13 @@ import { AlertController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class RestrictionService {
-  constructor(private toast: ToastController, private alert: AlertController) {}
+  constructor(
+    private toast: ToastController,
+    private alert: AlertController
+  ) {}
 
   public get restricted(): boolean {
     return environment.features.restrictedMode;
@@ -22,7 +25,7 @@ export class RestrictionService {
           message ||
           'This feature is currently unavailable!',
         icon: 'alert-circle',
-        duration: duration || 8000,
+        duration: duration || 8000
       })
       .then((e) => e.present());
   }
@@ -40,9 +43,9 @@ export class RestrictionService {
         buttons: [
           {
             text: 'I understand',
-            role: 'cancel',
-          },
-        ],
+            role: 'cancel'
+          }
+        ]
       })
       .then((e) => e.present());
   }

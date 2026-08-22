@@ -7,7 +7,10 @@ import { Storage } from '@ionic/storage-angular';
 import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
 
 import { RegisterComponent } from './register.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -15,10 +18,19 @@ describe('RegisterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [RegisterComponent],
-    imports: [IonicModule.forRoot(), ReactiveFormsModule, RouterTestingModule],
-    providers: [CustomValidatorsDirective, Storage, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      declarations: [RegisterComponent],
+      imports: [
+        IonicModule.forRoot(),
+        ReactiveFormsModule,
+        RouterTestingModule
+      ],
+      providers: [
+        CustomValidatorsDirective,
+        Storage,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;

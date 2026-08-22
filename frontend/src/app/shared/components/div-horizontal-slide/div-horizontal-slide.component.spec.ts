@@ -9,7 +9,7 @@ describe('DivHorizontalSlideComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DivHorizontalSlideComponent ],
+      declarations: [DivHorizontalSlideComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

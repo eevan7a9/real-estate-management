@@ -8,11 +8,10 @@ import { PropertyType } from '../../enums/property';
   standalone: false
 })
 export class PropertyTypeBadgeComponent implements OnInit {
-
   @Input() type = 'residential';
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   typeColor() {
     switch (this.type) {

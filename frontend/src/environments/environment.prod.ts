@@ -4,17 +4,17 @@ export const environment = {
     server: 'http://localhost:8000/',
     mapKey: '',
     googleAuthClientId: '',
-    webSocketUrl: '',
+    webSocketUrl: ''
   },
   map: {
     tiles: {
       default: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-      dark: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    },
+      dark: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+    }
   },
   features: {
     restrictedMode: false,
     restrictedHeading: 'Restricted',
-    restrictedMessage: 'This feature is currently disabled in this mode.',
-  },
+    restrictedMessage: 'This feature is currently disabled in this mode.'
+  }
 };

@@ -11,11 +11,16 @@ describe('MapPopupComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapPopupComponent ],
-      imports: [IonicModule.forRoot(), RouterTestingModule.withRoutes([{
-        component: PropertiesPage,
-        path: 'properties'
-      }])]
+      declarations: [MapPopupComponent],
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule.withRoutes([
+          {
+            component: PropertiesPage,
+            path: 'properties'
+          }
+        ])
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapPopupComponent);

@@ -5,7 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { ActionPopupComponent } from './action-popup.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 describe('ActionPopupComponent', () => {
   let component: ActionPopupComponent;
@@ -13,10 +16,14 @@ describe('ActionPopupComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [ActionPopupComponent],
-    imports: [IonicModule.forRoot(), RouterTestingModule],
-    providers: [Storage, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      declarations: [ActionPopupComponent],
+      imports: [IonicModule.forRoot(), RouterTestingModule],
+      providers: [
+        Storage,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ActionPopupComponent);
     component = fixture.componentInstance;

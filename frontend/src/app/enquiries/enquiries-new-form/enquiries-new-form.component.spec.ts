@@ -10,7 +10,7 @@ describe('EnquiriesNewFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnquiriesNewFormComponent ],
+      declarations: [EnquiriesNewFormComponent],
       imports: [IonicModule.forRoot(), ReactiveFormsModule]
     }).compileComponents();
 

@@ -12,4 +12,3 @@ export interface ApiResponse<T = undefined> {
   error?: { status: number; message: string };
   url?: string;
 }
-

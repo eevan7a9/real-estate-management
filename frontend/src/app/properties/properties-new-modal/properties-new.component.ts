@@ -3,13 +3,13 @@ import { ModalController, ToastController } from '@ionic/angular';
 import {
   Validators,
   UntypedFormBuilder,
-  UntypedFormGroup,
+  UntypedFormGroup
 } from '@angular/forms';
 
 import {
   PaymentFrequency,
   PropertyType,
-  TransactionType,
+  TransactionType
 } from 'src/app/shared/enums/property';
 import { PropertiesService } from '../properties.service';
 import { PropertiesCoordinatesComponent } from '../properties-coordinates-modal/properties-coordinates.component';
@@ -21,63 +21,63 @@ import { firstValueFrom } from 'rxjs';
   selector: 'app-properties-new',
   templateUrl: './properties-new.component.html',
   styleUrls: ['./properties-new.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class PropertiesNewComponent implements OnInit {
   public propertyForm: UntypedFormGroup;
   public propertyTypes = [
     {
       label: 'residential',
-      value: PropertyType.residential,
+      value: PropertyType.residential
     },
     {
       label: 'commercial',
-      value: PropertyType.commercial,
+      value: PropertyType.commercial
     },
     {
       label: 'industrial',
-      value: PropertyType.industrial,
+      value: PropertyType.industrial
     },
     {
       label: 'land',
-      value: PropertyType.land,
-    },
+      value: PropertyType.land
+    }
   ];
   public transactionType = [
     {
       label: 'For Sale',
-      value: TransactionType.forSale,
+      value: TransactionType.forSale
     },
     {
       label: 'For Rent',
-      value: TransactionType.forRent,
-    },
+      value: TransactionType.forRent
+    }
   ];
   public rentPaymentFrequency = [
     {
       label: 'Yearly',
-      value: PaymentFrequency.yearly,
+      value: PaymentFrequency.yearly
     },
     {
       label: 'Quarterly',
-      value: PaymentFrequency.quarterly,
+      value: PaymentFrequency.quarterly
     },
     {
       label: 'Monthly',
-      value: PaymentFrequency.monthly,
+      value: PaymentFrequency.monthly
     },
     {
       label: 'Bi-Weekly',
-      value: PaymentFrequency.biWeekly,
+      value: PaymentFrequency.biWeekly
     },
     {
       label: 'Weekly',
-      value: PaymentFrequency.weekly,
+      value: PaymentFrequency.weekly
     },
     {
       label: 'Daily',
-      value: PaymentFrequency.daily,
-    },
+      value: PaymentFrequency.daily
+    }
   ];
   public step = 1;
   public error = false;
@@ -88,7 +88,7 @@ export class PropertiesNewComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private propertiesService: PropertiesService,
     private toastCtrl: ToastController,
-    private restriction: RestrictionService,
+    private restriction: RestrictionService
   ) {
     this.propertyForm = this.formBuilder.group({
       // Step 1
@@ -102,15 +102,15 @@ export class PropertiesNewComponent implements OnInit {
       paymentFrequency: [PaymentFrequency.monthly],
       currency: [
         'PHP',
-        [Validators.maxLength(3), Validators.pattern('^[a-zA-Z ]*$')],
+        [Validators.maxLength(3), Validators.pattern('^[a-zA-Z ]*$')]
       ],
       features: [''],
       lat: ['0', Validators.required],
-      lng: ['0', Validators.required],
+      lng: ['0', Validators.required]
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public async submit(): Promise<void> {
     if (this.step === 1 && this.validateStepOne()) {
@@ -121,7 +121,7 @@ export class PropertiesNewComponent implements OnInit {
       const ft = this.propertyForm.get('features')?.value;
 
       this.propertyForm.patchValue({
-        features: ft.split(',').filter((item: string) => item.trim() !== ''),
+        features: ft.split(',').filter((item: string) => item.trim() !== '')
       });
       const { lat, lng } = this.propertyForm.value;
       const newProperty: PropertyCreateForm = {
@@ -129,10 +129,10 @@ export class PropertiesNewComponent implements OnInit {
         ...{
           position: {
             type: 'Point',
-            coordinates: [parseFloat(lng), parseFloat(lat)],
+            coordinates: [parseFloat(lng), parseFloat(lat)]
           },
-          date: new Date(),
-        },
+          date: new Date()
+        }
       };
 
       if (this.restriction.restricted) {
@@ -143,7 +143,7 @@ export class PropertiesNewComponent implements OnInit {
     } else {
       this.presentToast(
         'Error: Invalid, please fill the form properly',
-        'danger',
+        'danger'
       );
     }
   }
@@ -154,7 +154,7 @@ export class PropertiesNewComponent implements OnInit {
 
   public async openMap() {
     const modal = await this.modalCtrl.create({
-      component: PropertiesCoordinatesComponent,
+      component: PropertiesCoordinatesComponent
     });
     await modal.present();
     const { data } = await modal.onDidDismiss();
@@ -191,10 +191,9 @@ export class PropertiesNewComponent implements OnInit {
   private async addProperty(property: PropertyCreateForm): Promise<void> {
     try {
       const res = await firstValueFrom(
-        this.propertiesService.addProperty(property),
+        this.propertiesService.addProperty(property)
       );
       if ((res.status === 200 || res.status === 201) && res.data) {
-
         this.modalCtrl.dismiss(res.data);
         this.propertiesService.addPropertyToState(res.data);
       }
@@ -210,12 +209,12 @@ export class PropertiesNewComponent implements OnInit {
   private async presentToast(
     message: string,
     color = 'success',
-    duration = 3000,
+    duration = 3000
   ) {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color,
+      color
     });
     toast.present();
   }

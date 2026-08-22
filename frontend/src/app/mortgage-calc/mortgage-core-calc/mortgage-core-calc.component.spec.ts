@@ -11,7 +11,7 @@ describe('MortgageCoreCalcComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MortgageCoreCalcComponent ],
+      declarations: [MortgageCoreCalcComponent],
       imports: [IonicModule.forRoot(), ReactiveFormsModule],
       providers: [CustomValidatorsDirective]
     }).compileComponents();

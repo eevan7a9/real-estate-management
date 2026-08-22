@@ -3,18 +3,18 @@ import { ModalController } from '@ionic/angular';
 import { Coord } from 'src/app/shared/interface/map';
 
 @Component({
-    selector: 'app-properties-coordinates',
-    templateUrl: './properties-coordinates.component.html',
-    styleUrls: ['./properties-coordinates.component.css'],
-    standalone: false
+  selector: 'app-properties-coordinates',
+  templateUrl: './properties-coordinates.component.html',
+  styleUrls: ['./properties-coordinates.component.css'],
+  standalone: false
 })
 export class PropertiesCoordinatesComponent implements OnInit {
   @Input() title = 'Set Property Marker';
   public coord: Coord;
 
-  constructor(private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   public setCoord(event: Coord) {
     this.coord = event;

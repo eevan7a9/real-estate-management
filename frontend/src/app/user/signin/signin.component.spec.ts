@@ -6,7 +6,10 @@ import { IonicModule } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { SigninComponent } from './signin.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from '@angular/common/http';
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -14,10 +17,18 @@ describe('SigninComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-    declarations: [SigninComponent],
-    imports: [IonicModule.forRoot(), RouterTestingModule, ReactiveFormsModule],
-    providers: [Storage, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+      declarations: [SigninComponent],
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule,
+        ReactiveFormsModule
+      ],
+      providers: [
+        Storage,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SigninComponent);
     component = fixture.componentInstance;

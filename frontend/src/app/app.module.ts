@@ -12,7 +12,7 @@ import { StorageService } from './shared/services/storage/storage.service';
 import { SharedModule } from './shared/shared.module';
 import {
   provideHttpClient,
-  withInterceptorsFromDi,
+  withInterceptorsFromDi
 } from '@angular/common/http';
 
 @NgModule({
@@ -24,12 +24,12 @@ import {
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     SharedModule,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot()
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StorageService,
-    provideHttpClient(withInterceptorsFromDi()),
-  ],
+    provideHttpClient(withInterceptorsFromDi())
+  ]
 })
 export class AppModule {}

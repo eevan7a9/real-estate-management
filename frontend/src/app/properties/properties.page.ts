@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   ModalController,
   SelectChangeEventDetail,
-  ToastController,
+  ToastController
 } from '@ionic/angular';
 import {
   PropertiesDisplayOption,
   PropertyType,
-  TransactionType,
+  TransactionType
 } from '../shared/enums/property';
 
 import { Property } from '../shared/interface/property';
@@ -19,7 +19,7 @@ import { PropertiesUploadsComponent } from './properties-uploads-modal/propertie
 import {
   IonSearchbarCustomEvent,
   IonSelectCustomEvent,
-  SearchbarChangeEventDetail,
+  SearchbarChangeEventDetail
 } from '@ionic/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PropertiesService } from './properties.service';
@@ -30,7 +30,7 @@ import { debounce } from '../shared/utility/helpers';
   selector: 'app-properties',
   templateUrl: './properties.page.html',
   styleUrls: ['./properties.page.css'],
-  standalone: false,
+  standalone: false
 })
 export class PropertiesPage implements OnInit {
   @ViewChild('propertyLists') propertyLists!: PropertiesListComponent;
@@ -40,19 +40,22 @@ export class PropertiesPage implements OnInit {
   public disableInfinitScroll = signal(false);
 
   public displayOption = signal<PropertiesDisplayOption>(
-    PropertiesDisplayOption.CardView,
+    PropertiesDisplayOption.CardView
   );
 
-  public properties = toSignal<Property[] | undefined>(this.propertiesService.properties$, {
-    initialValue: undefined,
-  });
+  public properties = toSignal<Property[] | undefined>(
+    this.propertiesService.properties$,
+    {
+      initialValue: undefined
+    }
+  );
 
   public status = computed(() => {
     return {
       isLoading: this.propertiesService.isLoading(),
       hasMore: this.propertiesService.hasMore(),
-      error: this.propertiesService.error(),
-    }
+      error: this.propertiesService.error()
+    };
   });
 
   private limit = 8;
@@ -61,42 +64,42 @@ export class PropertiesPage implements OnInit {
   public filters = [
     {
       value: PropertyType.residential,
-      label: 'Residential type',
+      label: 'Residential type'
     },
     {
       value: PropertyType.commercial,
-      label: 'Commercial type',
+      label: 'Commercial type'
     },
     {
       value: PropertyType.industrial,
-      label: 'Industrial type',
+      label: 'Industrial type'
     },
     {
       value: PropertyType.land,
-      label: 'Land type',
+      label: 'Land type'
     },
     {
       value: TransactionType.forSale,
-      label: 'For Sale',
+      label: 'For Sale'
     },
     {
       value: TransactionType.forRent,
-      label: 'For Rent',
-    },
+      label: 'For Rent'
+    }
   ];
   public sorts = [
     {
       value: 'latest',
-      label: 'Latest',
+      label: 'Latest'
     },
     {
       value: 'name',
-      label: 'Name',
+      label: 'Name'
     },
     {
       value: 'price',
-      label: 'Price',
-    },
+      label: 'Price'
+    }
   ];
   // public user: User;
 
@@ -108,8 +111,8 @@ export class PropertiesPage implements OnInit {
     private router: Router,
     private toastCtrl: ToastController,
     private propertiesService: PropertiesService,
-    private activatedRoutes: ActivatedRoute,
-  ) { }
+    private activatedRoutes: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.setCurrentParams();
@@ -127,13 +130,13 @@ export class PropertiesPage implements OnInit {
         .create({
           message: 'Please sign in, to continue',
           duration: 3000,
-          color: 'danger',
+          color: 'danger'
         })
         .then((toast) => toast.present());
       return;
     }
     const modalPropertiesNew = await this.modalController.create({
-      component: PropertiesNewComponent,
+      component: PropertiesNewComponent
     });
     await modalPropertiesNew.present();
     const { data } = await modalPropertiesNew.onDidDismiss();
@@ -143,12 +146,12 @@ export class PropertiesPage implements OnInit {
   }
 
   public setFilters(
-    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>,
+    event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>
   ): void {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { filter: value.length ? value.join() : null },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
     this.resetPageState();
     this.loadMoreProperty();
@@ -159,7 +162,7 @@ export class PropertiesPage implements OnInit {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { sort: value },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
     this.resetPageState();
     this.loadMoreProperty();
@@ -167,12 +170,12 @@ export class PropertiesPage implements OnInit {
   }
 
   public setSearchedText(
-    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>,
+    event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>
   ): void {
     const value = event.detail.value;
     this.router.navigate([window.location.pathname], {
       queryParams: { search: value || null },
-      queryParamsHandling: 'merge',
+      queryParamsHandling: 'merge'
     });
     this.resetPageState();
     this.loadMoreProperty();
@@ -201,7 +204,7 @@ export class PropertiesPage implements OnInit {
   private async presentUploadModal(property: Property) {
     const modalUploads = await this.modalController.create({
       component: PropertiesUploadsComponent,
-      componentProps: { property },
+      componentProps: { property }
     });
     await modalUploads.present();
   }
@@ -212,7 +215,7 @@ export class PropertiesPage implements OnInit {
       createdAt: '',
       price: '',
       name: '',
-      _id: '',
+      _id: ''
     });
     this.propertiesService.hasMore.set(true);
   }

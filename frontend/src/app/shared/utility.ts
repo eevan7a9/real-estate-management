@@ -2,7 +2,7 @@ export const sortListByName = <T>(
   items: T[],
   {
     asc = true,
-    property,
+    property
   }: {
     asc?: boolean;
     property?: keyof T;
@@ -23,7 +23,7 @@ export const sortListByDate = <T>(
   items: T[],
   {
     latest = true,
-    property,
+    property
   }: {
     latest?: boolean;
     property?: keyof T;
@@ -44,7 +44,7 @@ export const sortListByNumber = <T>(
   items: T[],
   {
     asc = true,
-    property,
+    property
   }: {
     asc?: boolean;
     property?: keyof T;

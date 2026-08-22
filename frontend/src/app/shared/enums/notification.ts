@@ -6,8 +6,8 @@ export enum SocketNotificationType {
 }
 
 export enum UserNotificationType {
-  Account = "ACCOUNT", 
-  Enquiry = "ENQUIRY", 
-  Property = "PROPERTY", 
-  System = "SYSTEM"
+  Account = 'ACCOUNT',
+  Enquiry = 'ENQUIRY',
+  Property = 'PROPERTY',
+  System = 'SYSTEM'
 }

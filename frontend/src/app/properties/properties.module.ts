@@ -27,7 +27,7 @@ import { PropertiesListItemComponent } from './properties-list-item/properties-l
     PropertiesPageRoutingModule,
     SharedModule,
     EnquiriesPageModule,
-    MortgageCalcPageModule,
+    MortgageCalcPageModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -43,9 +43,6 @@ import { PropertiesListItemComponent } from './properties-list-item/properties-l
     PropertiesCurrentImagesComponent,
     PropertiesListItemComponent
   ],
-  exports: [
-    PropertiesListComponent,
-    PropertiesCardComponent
-  ]
+  exports: [PropertiesListComponent, PropertiesCardComponent]
 })
-export class PropertiesPageModule { }
+export class PropertiesPageModule {}

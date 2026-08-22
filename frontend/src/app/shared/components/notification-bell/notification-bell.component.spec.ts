@@ -9,7 +9,7 @@ describe('NotificationBellComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationBellComponent ],
+      declarations: [NotificationBellComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -9,7 +9,7 @@ import {
   PropertyEditForm,
   PropertyCreateForm,
   PropertyMap,
-  PropertyPage,
+  PropertyPage
 } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { requestOptions } from '../shared/utility/requests';
@@ -18,7 +18,7 @@ import { Params } from '@angular/router';
 const propertyUrl = environment.api.server + 'properties';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PropertiesService {
   public isLoading = signal(false);
@@ -33,7 +33,7 @@ export class PropertiesService {
     createdAt: '',
     price: '',
     name: '',
-    _id: '',
+    _id: ''
   });
 
   public readonly properties$: Observable<Property[] | undefined>;
@@ -41,18 +41,18 @@ export class PropertiesService {
   public readonly propertiesOwned$: Observable<Property[] | undefined>;
 
   private propertiesSub = new BehaviorSubject<Property[] | undefined>(
-    undefined,
+    undefined
   );
   private propertiesMapSub = new BehaviorSubject<PropertyMap[] | undefined>(
-    undefined,
+    undefined
   );
   private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(
-    undefined,
+    undefined
   );
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private userService: UserService
   ) {
     this.propertiesMap$ = this.propertiesMapSub.asObservable();
     this.properties$ = this.propertiesSub.asObservable();
@@ -84,7 +84,7 @@ export class PropertiesService {
   }
 
   public fetchProperties(
-    params: string,
+    params: string
   ): Observable<ApiResponse<PropertyPage>> {
     const newUrl = propertyUrl + '?' + params;
     return this.http.get<ApiResponse<PropertyPage>>(newUrl);
@@ -97,27 +97,27 @@ export class PropertiesService {
 
   public fetchProperty(
     id: string,
-    params?: URLSearchParams,
+    params?: URLSearchParams
   ): Observable<ApiResponse<Property>> {
     const newUrl = `${propertyUrl}/${id}?${params?.toString() || ''}`;
     return this.http.get<ApiResponse<Property>>(newUrl);
   }
 
   public addProperty(
-    property: PropertyCreateForm,
+    property: PropertyCreateForm
   ): Observable<ApiResponse<Property>> {
     const token = this.userService.token;
 
     return this.http.post<ApiResponse<Property>>(
       propertyUrl,
       property,
-      requestOptions({ token }),
+      requestOptions({ token })
     );
   }
 
   public addPropertyImage(
     files: File[],
-    id: string,
+    id: string
   ): Observable<ApiResponse<string[]>> {
     const formData = new FormData();
     files.forEach((file) => {
@@ -128,13 +128,13 @@ export class PropertiesService {
     return this.http.post<ApiResponse<string[]>>(
       propertyUrl + '/upload/images/' + id,
       formData,
-      requestOptions({ token, contentType: '' }),
+      requestOptions({ token, contentType: '' })
     );
   }
 
   public async deletePropertyImage(
     images: string[],
-    propId: string,
+    propId: string
   ): Promise<ApiResponse<string[]>> {
     const token = this.userService.token;
     const url = propertyUrl + '/upload/images/' + propId;
@@ -142,8 +142,8 @@ export class PropertiesService {
     return firstValueFrom(
       this.http.delete<ApiResponse<string[]>>(
         url,
-        requestOptions({ token }, { images }),
-      ),
+        requestOptions({ token }, { images })
+      )
     );
   }
 
@@ -152,26 +152,26 @@ export class PropertiesService {
     const url = `${propertyUrl}/${propId}`;
     return this.http.delete<ApiResponse<Property>>(
       url,
-      requestOptions({ token }),
+      requestOptions({ token })
     );
   }
 
   public updateProperty(
-    updated: PropertyEditForm,
+    updated: PropertyEditForm
   ): Observable<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     const token = this.userService.token;
     return this.http.patch<ApiResponse<Property>>(
       url,
       updated,
-      requestOptions({ token }),
+      requestOptions({ token })
     );
   }
 
   public fetchOwnedProperties(): Observable<ApiResponse<Property[]>> {
     return this.http.get<ApiResponse<Property[]>>(
       propertyUrl + '/me',
-      requestOptions({ token: this.userService.token }),
+      requestOptions({ token: this.userService.token })
     );
   }
 
@@ -185,23 +185,23 @@ export class PropertiesService {
 
   public removePropertyFromState(property_id: string) {
     this.properties = this.properties.filter(
-      (property) => property.property_id !== property_id,
+      (property) => property.property_id !== property_id
     );
     if (this.propertiesOwned) {
       this.propertiesOwned = this.propertiesOwned.filter(
-        (property) => property.property_id !== property_id,
+        (property) => property.property_id !== property_id
       );
     }
   }
 
   public updatePropertyInState(updated: Property): void {
     this.properties = this.properties.map((property) =>
-      property.property_id === updated.property_id ? updated : property,
+      property.property_id === updated.property_id ? updated : property
     );
 
     if (this.propertiesOwned) {
       this.propertiesOwned = this.propertiesOwned.map((property) =>
-        property.property_id === updated.property_id ? updated : property,
+        property.property_id === updated.property_id ? updated : property
       );
     }
   }
@@ -239,7 +239,7 @@ export class PropertiesService {
           createdAt: res.data.lastCreatedAt?.toString(),
           price: res.data.lastPrice?.toString(),
           name: res.data.lastName?.toString(),
-          _id: res.data.last_id?.toString(),
+          _id: res.data.last_id?.toString()
         });
       }
 

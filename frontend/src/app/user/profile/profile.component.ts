@@ -13,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class ProfileComponent {
   public imgUrl: any = './assets/images/avatar.png';
@@ -30,10 +30,10 @@ export class ProfileComponent {
     this.userForm = this.formBuilder.group({
       fullName: [
         this.user()?.fullName || '',
-        [Validators.required, Validators.minLength(4)],
+        [Validators.required, Validators.minLength(4)]
       ],
       about: [this.user()?.about || '', [Validators.maxLength(1000)]],
-      address: [this.user()?.address || '', [Validators.maxLength(1000)]],
+      address: [this.user()?.address || '', [Validators.maxLength(1000)]]
     });
   }
 
@@ -63,24 +63,30 @@ export class ProfileComponent {
       return this.restriction.showAlert();
     }
     try {
-      const res = await firstValueFrom(this.userService.updateUser(this.userForm.value));
+      const res = await firstValueFrom(
+        this.userService.updateUser(this.userForm.value)
+      );
       const { status, message } = res;
       if (status === 200) {
-        return this.toastCtrl.create({
-          message: message || 'Profile updated successfully',
-          color: 'success',
-          duration: 5000,
-        }).then((toast) => toast.present());
+        return this.toastCtrl
+          .create({
+            message: message || 'Profile updated successfully',
+            color: 'success',
+            duration: 5000
+          })
+          .then((toast) => toast.present());
       }
       console.error('Update User error:', message);
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse) {
         let { message } = errorHandler(error);
-        this.toastCtrl.create({
-          message,
-          color: 'danger',
-          duration: 5000,
-        }).then((toast) => toast.present());
+        this.toastCtrl
+          .create({
+            message,
+            color: 'danger',
+            duration: 5000
+          })
+          .then((toast) => toast.present());
       }
       console.error('Update User error:', error);
     }

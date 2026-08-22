@@ -24,7 +24,7 @@ import { ProfileVerifiedComponent } from './profile/profile-verified/profile-ver
     IonicModule,
     UserPageRoutingModule,
     SharedModule,
-    PropertiesPageModule,
+    PropertiesPageModule
   ],
   declarations: [
     UserPage,
@@ -35,7 +35,7 @@ import { ProfileVerifiedComponent } from './profile/profile-verified/profile-ver
     NotificationsComponent,
     ActivityTimelineComponent,
     UserPropertiesComponent,
-    ProfileVerifiedComponent,
+    ProfileVerifiedComponent
   ]
 })
-export class UserPageModule { }
+export class UserPageModule {}

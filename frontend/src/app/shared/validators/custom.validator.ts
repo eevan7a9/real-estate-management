@@ -1,7 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class CustomValidators {
-
   /**
    * Validator function to check if the values of two form controls are the same.
    * @param a name/key of the 1st control.
@@ -22,9 +21,7 @@ export class CustomValidators {
         return null;
       }
 
-      return aControl.value === bControl.value
-        ? { [errorName]: true }
-        : null;
+      return aControl.value === bControl.value ? { [errorName]: true } : null;
     };
   }
 
@@ -109,8 +106,8 @@ export class CustomValidators {
   }
 
   /**
-   * 
-   * @param validate if a password confirmation matches the new password. 
+   *
+   * @param validate if a password confirmation matches the new password.
    * @returns returns error object if the value is not a valid email address, otherwise null.
    */
   static confirmPasswordValidator: ValidatorFn = (

@@ -11,13 +11,16 @@ import { UserService } from '../user.service';
 const notificationUrl = environment.api.server + 'notifications';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class NotificationsService {
   public notifications$: Observable<Notification[]>;
   private notificationsSub = new BehaviorSubject([]);
 
-  constructor(private http: HttpClient, private user: UserService) {
+  constructor(
+    private http: HttpClient,
+    private user: UserService
+  ) {
     this.notifications$ = this.notificationsSub.asObservable();
   }
 
@@ -77,7 +80,7 @@ export class NotificationsService {
   }
 
   public setNotificationsAsReadFromState(ids: string[]) {
-    const updatedNotifications = this.notifications.map(notification =>
+    const updatedNotifications = this.notifications.map((notification) =>
       ids.includes(notification.notification_id)
         ? { ...notification, read: true }
         : notification

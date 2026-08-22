@@ -17,7 +17,8 @@ const images1 = [
   'https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg',
   'https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg',
   'https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg',
-  '' , ''
+  '',
+  ''
 ];
 export const users = {};
 
@@ -32,8 +33,8 @@ export const enquiries: Enquiry[] = [
     read: true,
     property: {
       name: 'Homemaker Grande A',
-      id: '01',
-    },
+      id: '01'
+    }
   },
   {
     content: longText,
@@ -45,8 +46,8 @@ export const enquiries: Enquiry[] = [
     read: false,
     property: {
       name: 'The Glass Grande Maison B',
-      id: '02',
-    },
+      id: '02'
+    }
   },
   {
     content: longText,
@@ -58,12 +59,12 @@ export const enquiries: Enquiry[] = [
     read: false,
     property: {
       name: 'La Grande Maison Certy C',
-      id: '03',
+      id: '03'
     },
     user: {
       from: '01',
-      to: '03',
-    },
+      to: '03'
+    }
   },
   {
     content: longText,
@@ -75,9 +76,9 @@ export const enquiries: Enquiry[] = [
     read: true,
     property: {
       name: 'Green Planes 45 E Lorem ipsum',
-      id: '05',
-    },
-  },
+      id: '05'
+    }
+  }
 ];
 
 export const properties: Property[] = [
@@ -89,7 +90,7 @@ export const properties: Property[] = [
     type: PropertyType.residential,
     position: {
       lat: 8.948677279926585,
-      lng: 125.5470567303216,
+      lng: 125.5470567303216
     },
     price: 210000,
     images: images1,
@@ -97,7 +98,7 @@ export const properties: Property[] = [
     enquiries: ['12'],
     currency: 'PHP',
     features: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
-    user_id: '01',
+    user_id: '01'
   },
   {
     property_id: '02',
@@ -107,7 +108,7 @@ export const properties: Property[] = [
     type: PropertyType.commercial,
     position: {
       lat: 8.948603092201049,
-      lng: 125.54424652989282,
+      lng: 125.54424652989282
     },
     updatedAt: new Date(),
     enquiries: [],
@@ -122,9 +123,9 @@ export const properties: Property[] = [
       'Item 5',
       'Item 6',
       'Item 7',
-      'Item 8',
+      'Item 8'
     ],
-    user_id: '0002',
+    user_id: '0002'
   },
   {
     property_id: '03',
@@ -134,7 +135,7 @@ export const properties: Property[] = [
     type: PropertyType.industrial,
     position: {
       lat: 8.947998991587234,
-      lng: 125.5430559487951,
+      lng: 125.5430559487951
     },
     price: 30000,
     updatedAt: new Date('2021/08/25'),
@@ -148,8 +149,8 @@ export const properties: Property[] = [
       'Item 5',
       'Item 6',
       'Item 7',
-      'Item 8',
+      'Item 8'
     ],
-    user_id: '01',
+    user_id: '01'
   }
 ];

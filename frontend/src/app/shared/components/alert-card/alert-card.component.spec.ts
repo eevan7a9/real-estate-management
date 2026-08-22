@@ -9,7 +9,7 @@ describe('AlertCardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AlertCardComponent ],
+      declarations: [AlertCardComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

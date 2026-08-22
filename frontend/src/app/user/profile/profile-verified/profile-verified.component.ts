@@ -10,5 +10,5 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class ProfileVerifiedComponent {
   private usersService = inject(UserService);
-  readonly user = toSignal(this.usersService.user$)
+  readonly user = toSignal(this.usersService.user$);
 }

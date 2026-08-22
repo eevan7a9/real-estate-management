@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-enquiries-related-list',
   templateUrl: './enquiries-related-list.component.html',
   styleUrls: ['./enquiries-related-list.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class EnquiriesRelatedListComponent {
   private enquiriesService = inject(EnquiriesService);
@@ -22,16 +22,18 @@ export class EnquiriesRelatedListComponent {
 
   public relatedEnquiries = computed<Enquiry[]>(() => {
     if (!this.propertyId()) return [];
-    return this.enquiries()?.filter(
-      (enq) =>
-        enq.property.property_id === this.propertyId() &&
-        (!this.enquiryId() || enq.enquiry_id !== this.enquiryId())
-    ) || [];
+    return (
+      this.enquiries()?.filter(
+        (enq) =>
+          enq.property.property_id === this.propertyId() &&
+          (!this.enquiryId() || enq.enquiry_id !== this.enquiryId())
+      ) || []
+    );
   });
 
   public view(enquiry: Enquiry) {
     this.router.navigate(['/enquiries', enquiry.enquiry_id], {
-      replaceUrl: true,
+      replaceUrl: true
     });
   }
 }

@@ -9,7 +9,7 @@ describe('FolderPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FolderPage ],
+      declarations: [FolderPage],
       imports: [IonicModule.forRoot(), RouterModule.forRoot([])]
     }).compileComponents();
 

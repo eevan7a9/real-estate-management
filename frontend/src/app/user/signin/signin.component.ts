@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { GoogleAuthResponse } from 'src/app/shared/interface/google';
@@ -33,7 +37,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
   ) {
     this.signinForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -75,19 +79,24 @@ export class SigninComponent implements OnInit, AfterViewInit {
   }
 
   private initializeGoogleSigninWeb(): void {
-    if (!environment.api.googleAuthClientId) { return; }
+    if (!environment.api.googleAuthClientId) {
+      return;
+    }
 
     google.accounts.id.initialize({
       client_id: environment.api.googleAuthClientId,
       callback: this.handleCredentialResponse.bind(this),
       auto_select: false,
-      cancel_on_tap_outside: true,
+      cancel_on_tap_outside: true
     });
-    google.accounts.id.renderButton(document.getElementById('web-google-button'), {
-      theme: 'outline',
-      size: 'large',
-      width: '330px',
-    });
+    google.accounts.id.renderButton(
+      document.getElementById('web-google-button'),
+      {
+        theme: 'outline',
+        size: 'large',
+        width: '330px'
+      }
+    );
     google.accounts.id.prompt(async (notification: unknown) => {
       console.log(notification);
     });
@@ -117,7 +126,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
   private async presentLoading() {
     return await this.loadingController.create({
       cssClass: 'my-custom-class',
-      message: 'Please wait...',
+      message: 'Please wait...'
     });
   }
 
@@ -125,7 +134,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2000,
-      color,
+      color
     });
     toast.present();
   }

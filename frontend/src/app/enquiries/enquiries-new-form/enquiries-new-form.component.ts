@@ -2,7 +2,7 @@ import { Component, input, Input, signal } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { EnquiryTopic } from 'src/app/shared/enums/enquiry';
@@ -12,7 +12,10 @@ import { EnquiriesService } from '../enquiries.service';
 import { UserService } from 'src/app/user/user.service';
 import { NeedSigninContinueComponent } from 'src/app/shared/components/need-signin-continue/need-signin-continue.component';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
-import { baseRequestResponse, errorHandler } from '@app/shared/utility/requests';
+import {
+  baseRequestResponse,
+  errorHandler
+} from '@app/shared/utility/requests';
 import { HttpErrorResponse } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -25,11 +28,14 @@ import { firstValueFrom } from 'rxjs';
 export class EnquiriesNewFormComponent {
   public property = input<Partial<Property | undefined>>(undefined);
   public userTo = input<string | undefined>(undefined);
-  public replyTo = input<{
-    enquiry_id: string;
-    title: string;
-    topic: string;
-  } | undefined>(undefined);
+  public replyTo = input<
+    | {
+        enquiry_id: string;
+        title: string;
+        topic: string;
+      }
+    | undefined
+  >(undefined);
 
   public error = signal(false);
   public submitting = signal(false);
@@ -66,7 +72,7 @@ export class EnquiriesNewFormComponent {
       title: ['', [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
       content: ['', [Validators.required, Validators.minLength(8)]],
-      topic: [EnquiryTopic.info, Validators.required],
+      topic: [EnquiryTopic.info, Validators.required]
     });
   }
 
@@ -88,7 +94,7 @@ export class EnquiriesNewFormComponent {
     if (!this.userService.user) {
       const modalNeedSignin = await this.modalCtrl.create({
         component: NeedSigninContinueComponent,
-        componentProps: { isModal: true },
+        componentProps: { isModal: true }
       });
       return modalNeedSignin.present();
     }
@@ -100,17 +106,16 @@ export class EnquiriesNewFormComponent {
     const enquiryForm = {
       userTo: this.userTo(),
       ...this.enquiryForm.value,
-      ...(this.replyTo() ? { replyTo: this.replyTo() } : ''),
+      ...(this.replyTo() ? { replyTo: this.replyTo() } : '')
     };
 
     console.log('Enquiry form data:', enquiryForm);
     console.log('Property data:', property);
 
     try {
-      const res = await firstValueFrom(this.enquiriesService.createEnquiry(
-        enquiryForm,
-        property
-      ));
+      const res = await firstValueFrom(
+        this.enquiriesService.createEnquiry(enquiryForm, property)
+      );
       if (res.data) {
         this.presentToast('Success, message is sent.');
       }
@@ -125,11 +130,13 @@ export class EnquiriesNewFormComponent {
       if (error instanceof HttpErrorResponse) {
         response = errorHandler(error);
         console.error('fetchEnquiries error:', response.message);
-        this.toastCtrl.create({
-          message: response.message,
-          duration: 3000,
-          color: 'danger'
-        }).then(toast => toast.present());
+        this.toastCtrl
+          .create({
+            message: response.message,
+            duration: 3000,
+            color: 'danger'
+          })
+          .then((toast) => toast.present());
       }
       console.error('Error Creating Enquiry:', response.message);
     }
@@ -143,7 +150,7 @@ export class EnquiriesNewFormComponent {
     const toast = await this.toastCtrl.create({
       message,
       duration,
-      color,
+      color
     });
     toast.present();
   }

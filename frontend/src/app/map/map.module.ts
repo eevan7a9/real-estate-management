@@ -30,6 +30,6 @@ import { MapSidePropertiesComponent } from './map-side-properties/map-side-prope
     MapMarkersLegendComponent,
     ModalSearchComponent,
     MapSidePropertiesComponent
-  ],
+  ]
 })
-export class MapPageModule { }
+export class MapPageModule {}

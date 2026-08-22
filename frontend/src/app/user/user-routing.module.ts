@@ -36,7 +36,7 @@ const routes: Routes = [
       {
         path: 'notifications',
         component: NotificationsComponent
-      },
+      }
     ],
     canActivate: [AuthGuestGuard]
   },
@@ -54,6 +54,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class UserPageRoutingModule { }
+export class UserPageRoutingModule {}

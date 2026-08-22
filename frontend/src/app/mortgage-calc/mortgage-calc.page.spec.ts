@@ -10,7 +10,7 @@ describe('MortgageCalcPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MortgageCalcPage ],
+      declarations: [MortgageCalcPage],
       imports: [IonicModule.forRoot(), ReactiveFormsModule]
     }).compileComponents();
 

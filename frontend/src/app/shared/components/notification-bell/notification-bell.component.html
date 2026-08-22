@@ -6,9 +6,9 @@
   id="notificationBell"
 >
   @if (currUser()?.accessToken) {
-  <ion-icon name="notifications" color="primary" size="large"></ion-icon>
+    <ion-icon name="notifications" color="primary" size="large"></ion-icon>
   } @else {
-  <ion-icon name="notifications-off" color="primary" size="large"></ion-icon>
+    <ion-icon name="notifications-off" color="primary" size="large"></ion-icon>
   }
   <ion-badge
     class="absolute bg-red-600 text-white font-semibold top-1 -left-2 size-5 text-[12px]! flex justify-center items-center rounded-full border border-slate-200 dark:border-slate-800"
@@ -37,30 +37,30 @@
 
       <ul lines="none" class="flex! flex-col! gap-1! bg-transparent!">
         @for (notification of notifications(); track $index) {
-        <li
-          class="group p-2 bg-white dark:bg-dark rounded-md border border-slate-200 dark:border-slate-800 text-[14px]!"
-        >
-          <div class="flex flex-col w-full!">
-            <app-notification-badge [notificationType]="notification.type" />
-            <p
-              class="w-full flex justify-between items-start text-[13px]!"
-              [ngClass]="{ 'font-bold': !notification.read }"
-            >
-              <span
-                class="text-ellipsis line-clamp-1 group-hover:line-clamp-none"
+          <li
+            class="group p-2 bg-white dark:bg-dark rounded-md border border-slate-200 dark:border-slate-800 text-[14px]!"
+          >
+            <div class="flex flex-col w-full!">
+              <app-notification-badge [notificationType]="notification.type" />
+              <p
+                class="w-full flex justify-between items-start text-[13px]!"
+                [ngClass]="{ 'font-bold': !notification.read }"
               >
-                {{ notification.message }}
-              </span>
+                <span
+                  class="text-ellipsis line-clamp-1 group-hover:line-clamp-none"
+                >
+                  {{ notification.message }}
+                </span>
 
-              <button
-                (click)="deleteNotification(notification.notification_id)"
-                class="hover:bg-danger-shade py-1! px-2! ml-1! rounded-md! bg-danger border-slate-200 dark:border-slate-800"
-              >
-                <ion-icon name="trash" size="30px" color="light"></ion-icon>
-              </button>
-            </p>
-          </div>
-        </li>
+                <button
+                  (click)="deleteNotification(notification.notification_id)"
+                  class="hover:bg-danger-shade py-1! px-2! ml-1! rounded-md! bg-danger border-slate-200 dark:border-slate-800"
+                >
+                  <ion-icon name="trash" size="30px" color="light"></ion-icon>
+                </button>
+              </p>
+            </div>
+          </li>
         }
       </ul>
 

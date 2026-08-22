@@ -9,7 +9,7 @@ describe('PropertyTypeBadgeComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PropertyTypeBadgeComponent ],
+      declarations: [PropertyTypeBadgeComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

@@ -1,5 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import {
+  takeUntilDestroyed,
+  toObservable,
+  toSignal
+} from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { map } from 'rxjs';
@@ -12,7 +16,7 @@ import { RestrictionService } from '../../services/restriction/restriction.servi
   selector: 'app-notification-bell',
   templateUrl: './notification-bell.component.html',
   styleUrls: ['./notification-bell.component.css'],
-  standalone: false,
+  standalone: false
 })
 export class NotificationBellComponent {
   public currUser = toSignal(this.userService.user$);
@@ -36,11 +40,13 @@ export class NotificationBellComponent {
     private router: Router,
     private restriction: RestrictionService
   ) {
-    toObservable(this.isOpen).pipe(takeUntilDestroyed()).subscribe((isOpen) => {
-      if (isOpen && this.unreadNotifications().length) {
-        this.setReadNotifications();
-      }
-    });
+    toObservable(this.isOpen)
+      .pipe(takeUntilDestroyed())
+      .subscribe((isOpen) => {
+        if (isOpen && this.unreadNotifications().length) {
+          this.setReadNotifications();
+        }
+      });
   }
 
   public toggleNotification() {
@@ -48,7 +54,7 @@ export class NotificationBellComponent {
   }
 
   public async deleteNotification(id: string) {
-    if(this.restriction.restricted) {
+    if (this.restriction.restricted) {
       return this.restriction.showAlert();
     }
     const res = await this.notificationsService.deleteNotification(id);
@@ -58,7 +64,7 @@ export class NotificationBellComponent {
     const toast = this.toast.create({
       duration: 5000,
       message: res.message,
-      color: res?.status === 200 ? 'success' : 'danger',
+      color: res?.status === 200 ? 'success' : 'danger'
     });
     (await toast).present();
   }

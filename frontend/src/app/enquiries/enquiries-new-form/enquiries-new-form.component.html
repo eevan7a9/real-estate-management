@@ -28,7 +28,10 @@
     ></ckeditor>
   </div>
 
-  <div class="alert-errors" *ngIf="error() && enquiryForm.get('content')?.errors">
+  <div
+    class="alert-errors"
+    *ngIf="error() && enquiryForm.get('content')?.errors"
+  >
     Message content is too short.
   </div>
 

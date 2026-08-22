@@ -12,7 +12,7 @@ Chart.register(...registerables);
 })
 export class MortgagePieChartComponent {
   private pieChart: Chart<'doughnut'>;
-  constructor(private storage: StorageService) { }
+  constructor(private storage: StorageService) {}
 
   async setChart(event) {
     console.log('pie chart event', event);
@@ -30,47 +30,39 @@ export class MortgagePieChartComponent {
       datasets: [
         {
           label: 'Dataset 1',
-          data: [
-            (totalMonth - interest),
-            interest,
-            tax || 0,
-            insurance || 0
-          ],
-          backgroundColor: ['#428cff', '#e0bb2e', '#e04055', '#29c467',],
-          borderWidth: 0, //this will hide border
+          data: [totalMonth - interest, interest, tax || 0, insurance || 0],
+          backgroundColor: ['#428cff', '#e0bb2e', '#e04055', '#29c467'],
+          borderWidth: 0 //this will hide border
         }
       ]
     };
     const canvas = document.getElementById('myChart') as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
-    this.pieChart = new Chart(ctx,
-      {
-        type: 'doughnut',
-        data,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'top',
-              labels: {
-                color: fontColor,
-                font: {
-                  size: 14
-                }
-              }
-            },
-            title: {
-              display: true,
-              text: 'Monthly Payment Graph',
+    this.pieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
               color: fontColor,
               font: {
-                size: 18
+                size: 14
               }
             }
           },
-        },
+          title: {
+            display: true,
+            text: 'Monthly Payment Graph',
+            color: fontColor,
+            font: {
+              size: 18
+            }
+          }
+        }
       }
-    );
-
+    });
   }
 }

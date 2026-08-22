@@ -9,7 +9,7 @@ describe('MapMarkersLegendComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MapMarkersLegendComponent ],
+      declarations: [MapMarkersLegendComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
