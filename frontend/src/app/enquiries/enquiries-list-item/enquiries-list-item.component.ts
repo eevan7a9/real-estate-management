@@ -47,8 +47,8 @@ export class EnquiriesListItemComponent {
       event: ev,
       componentProps: {
         edit: false,
-        report: !this.sent,
-        message: !this.sent
+        report: !this.sent(),
+        message: !this.sent()
       },
       translucent: true
     });

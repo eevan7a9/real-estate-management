@@ -84,8 +84,6 @@ export class EnquiriesNewFormComponent {
       this.error.set(true);
       return;
     }
-    this.submitting.set(true);
-
     if (this.restriction.restricted) {
       this.modalCtrl.dismiss();
       return this.restriction.showAlert();
@@ -98,6 +96,8 @@ export class EnquiriesNewFormComponent {
       });
       return modalNeedSignin.present();
     }
+
+    this.submitting.set(true);
 
     if (!this.enquiriesService.enquiries.length) {
       this.enquiriesService.fetchEnquiries();
@@ -139,6 +139,8 @@ export class EnquiriesNewFormComponent {
           .then((toast) => toast.present());
       }
       console.error('Error Creating Enquiry:', response.message);
+    } finally {
+      this.submitting.set(false);
     }
   }
 
