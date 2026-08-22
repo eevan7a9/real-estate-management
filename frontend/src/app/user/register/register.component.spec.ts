@@ -4,8 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { CustomValidatorsDirective } from 'src/app/shared/directives/custom-validators.directive';
-
 import { RegisterComponent } from './register.component';
 import {
   provideHttpClient,
@@ -25,7 +23,6 @@ describe('RegisterComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        CustomValidatorsDirective,
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
