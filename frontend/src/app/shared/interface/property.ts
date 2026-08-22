@@ -43,6 +43,15 @@ export interface PropertyMap extends Pick<
   Property,
   'property_id' | 'type' | 'position'
 > { }
+export interface PropertyPage {
+  items: Property[];
+  lastCreatedAt?: string;
+  lastPrice?: string;
+  lastName?: string;
+  last_id?: string;
+  hasMore?: boolean;
+}
+
 export interface PropertyMapPopup extends Pick<
   Property,
   "property_id" |

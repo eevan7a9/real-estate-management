@@ -194,9 +194,7 @@ export class PropertiesEditComponent implements OnInit {
         });
         await toast.present();
       }
-      this.propertiesService.properties = this.propertiesService.properties.map((property) =>
-        property.property_id === res.data.property_id ? res.data : property
-      );
+      this.propertiesService.updatePropertyInState(res.data);
       this.modalCtrl.dismiss({ property: res.data });
     } catch (error) {
       console.error(error);

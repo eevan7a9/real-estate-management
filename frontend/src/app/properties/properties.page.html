@@ -87,6 +87,20 @@
       *ngIf="status().isLoading"
     ></ion-progress-bar>
 
+    <ion-card color="danger" *ngIf="status().error">
+      <ion-card-content class="flex items-center justify-between gap-3">
+        <span>{{ status().error }}</span>
+        <ion-button
+          fill="clear"
+          color="light"
+          [disabled]="status().isLoading"
+          (click)="loadMoreProperty()"
+        >
+          Retry
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
     <ion-grid class="max-w-screen-xl pt-4 mx-auto">
       <ion-row class="ion-align-items-center hide-on-mobile mb-3 lg:mb-5">
         <ion-col class="heading ion-padding-horizontal flex items-center gap-1">

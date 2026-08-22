@@ -1,10 +1,16 @@
-import { HttpClient } from '@angular/common/http';
-import { computed, Injectable, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
 // import { properties as dummyData } from '../shared/dummy-data';
-import { Property, PropertyEditForm, PropertyCreateForm, PropertyMap } from '../shared/interface/property';
+import {
+  Property,
+  PropertyEditForm,
+  PropertyCreateForm,
+  PropertyMap,
+  PropertyPage,
+} from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { requestOptions } from '../shared/utility/requests';
 import { Params } from '@angular/router';
@@ -16,6 +22,7 @@ const propertyUrl = environment.api.server + 'properties';
 })
 export class PropertiesService {
   public isLoading = signal(false);
+  public error = signal<string | null>(null);
   public hasMore = signal(true);
   public last = signal<{
     createdAt?: string;
@@ -33,9 +40,15 @@ export class PropertiesService {
   public readonly propertiesMap$: Observable<PropertyMap[] | undefined>;
   public readonly propertiesOwned$: Observable<Property[] | undefined>;
 
-  private propertiesSub = new BehaviorSubject<Property[] | undefined>(undefined);
-  private propertiesMapSub = new BehaviorSubject<PropertyMap[] | undefined>(undefined);
-  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(undefined);
+  private propertiesSub = new BehaviorSubject<Property[] | undefined>(
+    undefined,
+  );
+  private propertiesMapSub = new BehaviorSubject<PropertyMap[] | undefined>(
+    undefined,
+  );
+  private propertiesOwnedSub = new BehaviorSubject<Property[] | undefined>(
+    undefined,
+  );
 
   constructor(
     private http: HttpClient,
@@ -70,42 +83,29 @@ export class PropertiesService {
     this.propertiesOwnedSub.next(property);
   }
 
-  public fetchProperties(params: string): Observable<
-    ApiResponse<{
-      items: Property[];
-      lastCreatedAt?: string;
-      lastPrice?: string;
-      lastName?: string;
-      last_id?: string;
-      hasMore?: boolean;
-    }>
-  > {
-    const newUrl = `${propertyUrl}?${params}`;
-    return this.http.get<
-      ApiResponse<{
-        items: Property[];
-        lastCreatedAt?: string;
-        lastPrice?: string;
-        lastName?: string;
-        last_id?: string;
-        hasMore?: boolean;
-      }>
-    >(newUrl);
+  public fetchProperties(
+    params: string,
+  ): Observable<ApiResponse<PropertyPage>> {
+    const newUrl = propertyUrl + '?' + params;
+    return this.http.get<ApiResponse<PropertyPage>>(newUrl);
   }
 
-  public fetchMapProperties(): Observable<
-    ApiResponse<PropertyMap[]>
-  > {
+  public fetchMapProperties(): Observable<ApiResponse<PropertyMap[]>> {
     const url = `${propertyUrl}/map`;
     return this.http.get<ApiResponse<PropertyMap[]>>(url);
   }
 
-  public fetchProperty(id: string, params?: URLSearchParams): Observable<ApiResponse<Property>> {
+  public fetchProperty(
+    id: string,
+    params?: URLSearchParams,
+  ): Observable<ApiResponse<Property>> {
     const newUrl = `${propertyUrl}/${id}?${params?.toString() || ''}`;
     return this.http.get<ApiResponse<Property>>(newUrl);
   }
 
-  public addProperty(property: PropertyCreateForm): Observable<ApiResponse<Property>> {
+  public addProperty(
+    property: PropertyCreateForm,
+  ): Observable<ApiResponse<Property>> {
     const token = this.userService.token;
 
     return this.http.post<ApiResponse<Property>>(
@@ -135,21 +135,16 @@ export class PropertiesService {
   public async deletePropertyImage(
     images: string[],
     propId: string,
-  ): Promise<ApiResponse<string[]> | undefined> {
+  ): Promise<ApiResponse<string[]>> {
     const token = this.userService.token;
-    try {
-      const url = `${propertyUrl}/upload/images/${propId}`;
-      const res = await firstValueFrom(
-        this.http.delete<ApiResponse<string[]>>(
-          url,
-          requestOptions({ token }, { images }),
-        ),
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return undefined;
-    }
+    const url = propertyUrl + '/upload/images/' + propId;
+
+    return firstValueFrom(
+      this.http.delete<ApiResponse<string[]>>(
+        url,
+        requestOptions({ token }, { images }),
+      ),
+    );
   }
 
   public removeProperty(propId: string): Observable<ApiResponse<Property>> {
@@ -161,7 +156,9 @@ export class PropertiesService {
     );
   }
 
-  public updateProperty(updated: PropertyEditForm): Observable<ApiResponse<Property>> {
+  public updateProperty(
+    updated: PropertyEditForm,
+  ): Observable<ApiResponse<Property>> {
     const url = `${propertyUrl}/${updated.property_id}`;
     const token = this.userService.token;
     return this.http.patch<ApiResponse<Property>>(
@@ -180,6 +177,7 @@ export class PropertiesService {
 
   public addPropertyToState(property: Property) {
     this.properties = [...this.properties, property];
+    this.propertiesMap = [...this.propertiesMap, property];
     if (this.propertiesOwned) {
       this.propertiesOwned = [...this.propertiesOwned, property];
     }
@@ -196,24 +194,37 @@ export class PropertiesService {
     }
   }
 
+  public updatePropertyInState(updated: Property): void {
+    this.properties = this.properties.map((property) =>
+      property.property_id === updated.property_id ? updated : property,
+    );
+
+    if (this.propertiesOwned) {
+      this.propertiesOwned = this.propertiesOwned.map((property) =>
+        property.property_id === updated.property_id ? updated : property,
+      );
+    }
+  }
+
   public resetState(opts?: { skipOwned: boolean }): void {
     this.properties = [];
+    this.error.set(null);
     if (!opts?.skipOwned) {
       this.propertiesOwned = [];
     }
   }
 
-  public async loadMore(queryParams: Params | undefined): Promise<void> {
+  public async loadMore(queryParams: Params | undefined): Promise<boolean> {
     if (!queryParams || this.isLoading() || !this.hasMore()) {
-      return;
+      return false;
     }
+
+    this.error.set(null);
 
     try {
       this.isLoading.set(true);
       const params = this.buildPaginationParams(queryParams);
-      const res = await firstValueFrom(
-        this.fetchProperties(params)
-      );
+      const res = await firstValueFrom(this.fetchProperties(params));
 
       const items = res.data?.items ?? [];
 
@@ -232,11 +243,20 @@ export class PropertiesService {
         });
       }
 
+      return true;
+    } catch (error: unknown) {
+      const message =
+        error instanceof HttpErrorResponse
+          ? error.error?.message || error.message
+          : 'Unable to load properties. Please try again.';
+
+      this.error.set(message || 'Unable to load properties. Please try again.');
+      console.error('Loading properties failed:', error);
+      return false;
     } finally {
       this.isLoading.set(false);
     }
   }
-
 
   private buildPaginationParams(queryParams: Params | undefined) {
     if (!queryParams) return '';
@@ -252,19 +272,14 @@ export class PropertiesService {
     if (search) params.append('search', search);
     if (filter?.length) params.append('filter', filter);
 
-    if (last.createdAt)
-      params.append('lastCreatedAt', last.createdAt);
+    if (last.createdAt) params.append('lastCreatedAt', last.createdAt);
 
-    if (last.price)
-      params.append('lastPrice', last.price);
+    if (last.price) params.append('lastPrice', last.price);
 
-    if (last.name)
-      params.append('lastName', last.name);
+    if (last.name) params.append('lastName', last.name);
 
-    if (last._id)
-      params.append('last_id', last._id);
+    if (last._id) params.append('last_id', last._id);
 
     return params.toString();
   }
-
 }

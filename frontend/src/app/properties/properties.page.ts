@@ -51,6 +51,7 @@ export class PropertiesPage implements OnInit {
     return {
       isLoading: this.propertiesService.isLoading(),
       hasMore: this.propertiesService.hasMore(),
+      error: this.propertiesService.error(),
     }
   });
 

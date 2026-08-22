@@ -64,21 +64,33 @@ export class PropertiesCurrentImagesComponent implements OnInit {
   }
 
   public async deleteSelected() {
-    if(this.restriction.restricted) {
+    if (this.restriction.restricted) {
       return this.restriction.showAlert();
     }
-    const res = await this.propertyService.deletePropertyImage(
-      this.selectedImages,
-      this.id()
-    );
-    if (res?.data?.length) {
+
+    try {
+      const res = await this.propertyService.deletePropertyImage(
+        this.selectedImages,
+        this.id(),
+      );
+
+      if (res.data?.length) {
+        const toast = await this.toastCtrl.create({
+          message: res.message || 'Success: Image deleted',
+          duration: 3000,
+          color: 'success',
+        });
+        toast.present();
+        this.delete.emit(res.data);
+      }
+    } catch (error) {
+      console.error('Deleting property images failed:', error);
       const toast = await this.toastCtrl.create({
-        message: res.message || 'Success: Image deleted',
+        message: 'Unable to delete images. Please try again.',
         duration: 3000,
-        color: 'success',
+        color: 'danger',
       });
       toast.present();
-      this.delete.emit(res.data);
     }
   }
 }

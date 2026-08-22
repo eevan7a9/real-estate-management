@@ -79,7 +79,9 @@ export class PropertiesUploadsComponent implements OnInit {
       }
       property.images = res.data;
       const updateRes = await firstValueFrom(this.propertiesService.updateProperty(property));
-      console.log('updateRes', updateRes);
+      if (updateRes.data) {
+        this.propertiesService.updatePropertyInState(updateRes.data);
+      }
       this.presentToast(res.message || 'Success: Image uploaded');
       this.modalCtrl.dismiss();
     } catch (error) {
