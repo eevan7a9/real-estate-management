@@ -107,7 +107,7 @@ export class PropertiesDetailComponent implements OnInit {
 
   public findInMap() {
     const {
-      coordinates: [lat, lng]
+      coordinates: [lng, lat]
     } = this.property()?.position || { coordinates: [0, 0] };
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }

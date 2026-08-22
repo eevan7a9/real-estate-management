@@ -46,6 +46,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
   private markers: L.Marker[] = [];
   private pendingMarker = [];
+  private pendingMapTarget: Coord | undefined;
 
   private mapService = inject(MapService);
   private propertiesService = inject(PropertiesService);
@@ -61,8 +62,15 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       .subscribe((e) => {
         const lat = e.get('lat');
         const lng = e.get('lng');
-        if (this.map && lat && lng) {
-          this.findMarker(Number(lat), Number(lng));
+        const target = { lat: Number(lat), lng: Number(lng) };
+        if (
+          lat !== null &&
+          lng !== null &&
+          Number.isFinite(target.lat) &&
+          Number.isFinite(target.lng)
+        ) {
+          this.pendingMapTarget = target;
+          this.focusMapTarget();
         }
       });
     this.propertiesService.propertiesMap$
@@ -121,16 +129,37 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   }
 
   public findMarker(lat: number, lng: number) {
+    if (!this.map) {
+      this.pendingMapTarget = { lat, lng };
+      return;
+    }
+
+    const tolerance = 0.000001;
     const foundMarker = this.markers.find((marker) => {
       const latLng = marker.getLatLng();
-      return latLng.lat === lat && latLng.lng === lng;
+      return (
+        Math.abs(latLng.lat - lat) <= tolerance &&
+        Math.abs(latLng.lng - lng) <= tolerance
+      );
     });
+
+    this.map.flyTo(foundMarker?.getLatLng() || [lat, lng], 19);
     if (foundMarker) {
-      this.map.flyTo(foundMarker.getLatLng(), 19);
       setTimeout(() => {
         foundMarker.openPopup();
       }, 1000);
     }
+
+    this.pendingMapTarget = undefined;
+  }
+
+  private focusMapTarget(): void {
+    if (!this.pendingMapTarget || !this.map || !this.markers.length) {
+      return;
+    }
+
+    const { lat, lng } = this.pendingMapTarget;
+    this.findMarker(lat, lng);
   }
 
   private async initMap(): Promise<void> {
@@ -186,6 +215,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     }
     if (this.showPropertyMarkers()) {
       this.setMapMarkers();
+      this.focusMapTarget();
     }
   }
 
