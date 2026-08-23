@@ -59,6 +59,8 @@ export class AppComponent implements OnInit {
   );
 
   public user = signal<UserDetails | undefined>(undefined);
+  private connectedUserToken = '';
+
   public appLowerPages = computed<NavLinks[]>(() => {
     const pages = [{ title: 'About', url: '/about', icon: 'help-circle' }];
     if (this.user()) {
@@ -101,13 +103,19 @@ export class AppComponent implements OnInit {
         console.log('Unkown User...');
         this.user.set(undefined);
         this.webSocket.disconnect();
+        this.connectedUserToken = '';
+
         this.enquiriesService.resetState();
         this.notificationsService.resetState();
         this.activitiesService.resetState();
         return;
       }
       console.log('Connect verified user...');
-      this.webSocket.connect(this.userService.token);
+      const userToken = this.userService.token;
+      if (userToken !== this.connectedUserToken) {
+        this.webSocket.connect(userToken);
+        this.connectedUserToken = userToken;
+      }
       console.log('Fetching Enquiries...');
       if (!this.enquiriesService.initialFetchDone()) {
         this.fetchEnquiries();
