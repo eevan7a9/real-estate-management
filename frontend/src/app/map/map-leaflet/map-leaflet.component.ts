@@ -1,11 +1,15 @@
 import {
   AfterViewInit,
   Component,
+  ComponentRef,
+  ElementRef,
   inject,
   input,
   OnChanges,
+  OnDestroy,
   output,
   signal,
+  ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -26,7 +30,9 @@ import { firstValueFrom } from 'rxjs';
   styleUrls: ['./map-leaflet.component.css'],
   standalone: false
 })
-export class MapLeafletComponent implements AfterViewInit, OnChanges {
+export class MapLeafletComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   public isLoading = signal<boolean>(false);
   public clickAddMarker = input<boolean>(false);
   public showPropertyMarkers = input<boolean>(true);
@@ -45,8 +51,16 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   };
   private center = { lat: 8.947416086535465, lng: 125.5451552207221 };
   private markers: L.Marker[] = [];
-  private pendingMarker = [];
+  private pendingMarker: L.Marker[] = [];
+  private popupComponents: ComponentRef<MapPopupComponent>[] = [];
   private pendingMapTarget: Coord | undefined;
+  private markersInitialized = false;
+  private destroyed = false;
+  private mapClickHandler: ((event: L.LeafletMouseEvent) => void) | undefined;
+  private mapMoveEndHandler: (() => void) | undefined;
+
+  @ViewChild('mapElement', { static: true })
+  private mapElement!: ElementRef<HTMLDivElement>;
 
   private mapService = inject(MapService);
   private propertiesService = inject(PropertiesService);
@@ -55,6 +69,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
   private activatedRoutes = inject(ActivatedRoute);
 
   private moveEndTimeout: ReturnType<typeof setTimeout> | undefined;
+  private popupOpenTimeout: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
     this.activatedRoutes.queryParamMap
@@ -77,6 +92,10 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       .pipe(takeUntilDestroyed())
       .subscribe((properties) => {
         this.properties = properties || [];
+        if (this.map && this.showPropertyMarkers() && this.markersInitialized) {
+          this.setMapMarkers();
+          this.focusMapTarget();
+        }
       });
   }
 
@@ -84,47 +103,68 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     this.initMap();
   }
 
-  ngOnChanges() {
-    if (this.map) {
-      // remove all
-      if (this.mapGroupMarkers.residential)
-        this.map.removeLayer(this.mapGroupMarkers.residential);
-      if (this.mapGroupMarkers.commercial)
-        this.map.removeLayer(this.mapGroupMarkers.commercial);
-      if (this.mapGroupMarkers.industrial)
-        this.map.removeLayer(this.mapGroupMarkers.industrial);
-      if (this.mapGroupMarkers.land)
-        this.map.removeLayer(this.mapGroupMarkers.land);
+  ngOnChanges(): void {
+    if (!this.map) return;
 
-      // add included
-      if (
-        this.visibleMarkerType().includes(PropertyType.residential) &&
-        this.mapGroupMarkers.residential
-      ) {
-        this.map.addLayer(this.mapGroupMarkers.residential);
-      }
-      if (
-        this.visibleMarkerType().includes(PropertyType.commercial) &&
-        this.mapGroupMarkers.commercial
-      ) {
-        this.map.addLayer(this.mapGroupMarkers.commercial);
-      }
-      if (
-        this.visibleMarkerType().includes(PropertyType.industrial) &&
-        this.mapGroupMarkers.industrial
-      ) {
-        this.map.addLayer(this.mapGroupMarkers.industrial);
-      }
-      if (
-        this.visibleMarkerType().includes(PropertyType.land) &&
-        this.mapGroupMarkers.land
-      ) {
-        this.map.addLayer(this.mapGroupMarkers.land);
-      }
+    if (!this.showPropertyMarkers()) {
+      this.clearPropertyMarkers();
+      this.markersInitialized = false;
+      this.configureMapInteractions();
+      return;
+    } else if (!this.markersInitialized) {
+      this.setMapMarkers();
+      this.markersInitialized = true;
+    }
+
+    this.syncVisibleLayers();
+    this.configureMapInteractions();
+  }
+
+  private syncVisibleLayers(): void {
+    if (!this.map) return;
+
+    Object.values(this.mapGroupMarkers).forEach((group) => {
+      if (group) this.map.removeLayer(group);
+    });
+
+    const visibleTypes = this.visibleMarkerType();
+    Object.entries(this.mapGroupMarkers).forEach(([type, group]) => {
+      if (group && visibleTypes.includes(type)) this.map.addLayer(group);
+    });
+  }
+
+  private configureMapInteractions(): void {
+    if (!this.map) return;
+
+    if (this.mapClickHandler) {
+      this.map.off('click', this.mapClickHandler);
+      this.mapClickHandler = undefined;
+    }
+    if (this.clickAddMarker()) {
+      this.mapClickHandler = (event: L.LeafletMouseEvent) => {
+        this.pendingMarker.forEach((marker) => marker.remove());
+        this.pendingMarker = [];
+        this.pinMarker(event.latlng);
+        this.clickedAt.emit(event.latlng);
+      };
+      this.map.on('click', this.mapClickHandler);
+    }
+
+    if (this.mapMoveEndHandler) {
+      this.map.off('moveend', this.mapMoveEndHandler);
+      this.mapMoveEndHandler = undefined;
+    }
+    if (this.detectMouseMove()) {
+      this.mapMoveEndHandler = () => {
+        if (this.moveEndTimeout) clearTimeout(this.moveEndTimeout);
+        this.moveEndTimeout = setTimeout(() => this.onMouseMove(), 1000);
+      };
+      this.map.on('moveend', this.mapMoveEndHandler);
     }
   }
 
   public setMapCenter(coord: Coord) {
+    if (!this.map) return;
     this.map.flyTo([coord.lat, coord.lng], 19);
   }
 
@@ -145,7 +185,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
 
     this.map.flyTo(foundMarker?.getLatLng() || [lat, lng], 19);
     if (foundMarker) {
-      setTimeout(() => {
+      this.popupOpenTimeout = setTimeout(() => {
         foundMarker.openPopup();
       }, 1000);
     }
@@ -164,10 +204,11 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
 
   private async initMap(): Promise<void> {
     const coord = await this.storage.getCoord();
+    if (this.destroyed) return;
     if (coord) {
       this.center = coord;
     }
-    this.map = L.map('mapId', {
+    this.map = L.map(this.mapElement.nativeElement, {
       center: [this.center.lat, this.center.lng],
       zoom: 18,
       maxZoom: 21,
@@ -186,40 +227,41 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       }, 1000);
     });
 
-    if (this.detectMouseMove()) {
-      this.map.on('moveend', () => {
-        if (this.moveEndTimeout) clearTimeout(this.moveEndTimeout);
-        this.moveEndTimeout = setTimeout(() => this.onMouseMove(), 1000);
-      });
-    }
-
     const isDark = await this.storage.getDartTheme();
+    if (this.destroyed) return;
     this.mapService.addTiles(this.map, isDark);
 
-    if (this.clickAddMarker()) {
-      this.map.on('click', (e: L.LeafletMouseEvent) => {
-        if (this.pendingMarker.length) {
-          this.pendingMarker.forEach((marker) => {
-            this.map.removeLayer(marker);
-          });
-        }
-        this.pinMarker(e.latlng);
-        this.clickedAt.emit(e.latlng);
-      });
-    }
+    this.configureMapInteractions();
 
-    if (!this.propertiesService.propertiesMap.length) {
-      this.propertiesService.propertiesMap = await firstValueFrom(
-        this.propertiesService.fetchMapProperties()
-      ).then((res) => res.data || []);
+    if (
+      this.showPropertyMarkers() &&
+      !this.propertiesService.propertiesMap.length
+    ) {
+      this.isLoading.set(true);
+      try {
+        const res = await firstValueFrom(
+          this.propertiesService.fetchMapProperties()
+        );
+        if (this.destroyed) return;
+        this.propertiesService.propertiesMap = res.data || [];
+      } catch (error) {
+        console.error('Failed to load map properties', error);
+      } finally {
+        this.isLoading.set(false);
+      }
     }
+    if (this.destroyed) return;
     if (this.showPropertyMarkers()) {
       this.setMapMarkers();
+      this.markersInitialized = true;
+      this.syncVisibleLayers();
       this.focusMapTarget();
     }
   }
 
   private setMapMarkers() {
+    this.clearPropertyMarkers();
+
     let residential = [];
     let commercial = [];
     let industrial = [];
@@ -268,10 +310,6 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       land: L.layerGroup(land)
     };
 
-    const ctrl = L.control.layers(this.mapGroupMarkers as any);
-    ctrl.addTo(this.map);
-    ctrl.remove();
-
     if (this.mapGroupMarkers.residential)
       this.map.addLayer(this.mapGroupMarkers.residential);
     if (this.mapGroupMarkers.commercial)
@@ -281,6 +319,16 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     if (this.mapGroupMarkers.land) this.map.addLayer(this.mapGroupMarkers.land);
   }
 
+  private clearPropertyMarkers(): void {
+    Object.values(this.mapGroupMarkers).forEach((group) => {
+      if (group && this.map) this.map.removeLayer(group);
+    });
+    this.markers.forEach((marker) => marker.remove());
+    this.markers = [];
+    this.popupComponents.forEach((component) => component.destroy());
+    this.popupComponents = [];
+  }
+
   private pinMarker(coord: Coord): void {
     const iconPin = this.setMarkerIcon();
     const marker = this.mapService.addMarker(this.map, coord, {
@@ -288,10 +336,19 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       popup: null
     });
     marker.addTo(this.map);
-    this.pendingMarker.push(marker as never);
+    this.pendingMarker.push(marker);
   }
 
-  private addPropertyMarker(property: Property) {
+  private addPropertyMarker(property: Property): L.Marker | undefined {
+    const coordinates = property.position?.coordinates;
+    if (
+      !coordinates ||
+      coordinates.length < 2 ||
+      !Number.isFinite(coordinates[0]) ||
+      !Number.isFinite(coordinates[1])
+    )
+      return undefined;
+
     const popupComponent = this.containerRef.createComponent(
       MapPopupComponent,
       {
@@ -310,8 +367,8 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     const marker = this.mapService.addMarker(
       this.map,
       {
-        lat: property.position.coordinates[1],
-        lng: property.position.coordinates[0]
+        lat: coordinates[1],
+        lng: coordinates[0]
       },
       {
         icon: markerIcon,
@@ -325,6 +382,7 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
     });
     marker.addTo(this.map);
     this.markers.push(marker);
+    this.popupComponents.push(popupComponent);
     this.containerRef.detach(
       this.containerRef.indexOf(popupComponent.hostView)
     );
@@ -352,8 +410,8 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
         break;
     }
     return L.icon({
-      iconUrl: '../../../assets/images/map/' + icon,
-      shadowUrl: '../../../assets/images/map/marker-shadow.svg',
+      iconUrl: 'assets/images/map/' + icon,
+      shadowUrl: 'assets/images/map/marker-shadow.svg',
 
       iconSize: [40, 45], // size of the icon
       shadowSize: [40, 55], // size of the shadow
@@ -368,5 +426,14 @@ export class MapLeafletComponent implements AfterViewInit, OnChanges {
       '%cMap moveend event triggered',
       'color: blue; font-weight: bold;'
     );
+  }
+  ngOnDestroy(): void {
+    this.destroyed = true;
+    if (this.moveEndTimeout) clearTimeout(this.moveEndTimeout);
+    if (this.popupOpenTimeout) clearTimeout(this.popupOpenTimeout);
+    this.pendingMarker.forEach((marker) => marker.remove());
+    this.pendingMarker = [];
+    this.clearPropertyMarkers();
+    if (this.map) this.map.remove();
   }
 }
