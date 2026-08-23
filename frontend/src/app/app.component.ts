@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, OnInit, signal } from '@angular/core';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
-import { firstValueFrom, map } from 'rxjs';
+import { distinctUntilChanged, firstValueFrom, map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { UserDetails } from './shared/interface/user';
@@ -98,31 +98,37 @@ export class AppComponent implements OnInit {
       document.documentElement.classList.add('ion-palette-dark');
       document.body.classList.add('dark');
     }
-    this.userService.user$.subscribe((user) => {
-      if (!user) {
-        console.log('Unkown User...');
-        this.user.set(undefined);
-        this.webSocket.disconnect();
-        this.connectedUserToken = '';
+    this.userService.user$
+      .pipe(
+        distinctUntilChanged(
+          (previous, current) => previous?.accessToken === current?.accessToken
+        )
+      )
+      .subscribe((user) => {
+        if (!user) {
+          console.log('Unkown User...');
+          this.user.set(undefined);
+          this.webSocket.disconnect();
+          this.connectedUserToken = '';
 
-        this.enquiriesService.resetState();
-        this.notificationsService.resetState();
-        this.activitiesService.resetState();
-        return;
-      }
-      console.log('Connect verified user...');
-      const userToken = this.userService.token;
-      if (userToken !== this.connectedUserToken) {
-        this.webSocket.connect(userToken);
-        this.connectedUserToken = userToken;
-      }
-      console.log('Fetching Enquiries...');
-      if (!this.enquiriesService.initialFetchDone()) {
-        this.fetchEnquiries();
-      }
-      console.log('Fetching user details...');
-      this.setUserProfile();
-    });
+          this.enquiriesService.resetState();
+          this.notificationsService.resetState();
+          this.activitiesService.resetState();
+          return;
+        }
+        console.log('Connect verified user...');
+        const userToken = this.userService.token;
+        if (userToken !== this.connectedUserToken) {
+          this.webSocket.connect(userToken);
+          this.connectedUserToken = userToken;
+        }
+        console.log('Fetching Enquiries...');
+        if (!this.enquiriesService.initialFetchDone()) {
+          this.fetchEnquiries();
+        }
+        console.log('Fetching user details...');
+        this.setUserProfile();
+      });
     this.checkServer();
   }
 
@@ -171,6 +177,13 @@ export class AppComponent implements OnInit {
         this.notificationsService.notifications = notifications || [];
       }
     } catch (error: unknown) {
+      if (
+        error instanceof HttpErrorResponse &&
+        [401, 403].includes(error.status)
+      ) {
+        await this.userService.signOut();
+        return;
+      }
       if (error instanceof HttpErrorResponse) {
         const { message } = errorHandler(error);
         this.toastController
@@ -192,8 +205,15 @@ export class AppComponent implements OnInit {
           this.enquiriesService.enquiries = res.data;
         }
       })
-      .catch(() => {
-        console.error('Error fetching enquiries.');
+      .catch((error: unknown) => {
+        const message =
+          error instanceof HttpErrorResponse
+            ? errorHandler(error).message
+            : 'Unable to load enquiries. Please try again.';
+        this.toastController
+          .create({ message, color: 'danger', duration: 5000 })
+          .then((toast) => toast.present());
+        console.error('Error fetching enquiries:', error);
       })
       .finally(() => this.enquiriesService.initialFetchDone.set(true));
   }
