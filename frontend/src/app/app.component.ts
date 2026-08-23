@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, OnInit, signal } from '@angular/core';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { distinctUntilChanged, firstValueFrom, map } from 'rxjs';
 
@@ -16,7 +16,7 @@ import { Enquiry } from './shared/interface/enquiry';
 // Register swiper js
 import { register } from 'swiper/element/bundle';
 import { NotificationsService } from './user/notifications/notifications.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { errorHandler } from './shared/utility/requests';
 
 register();
@@ -86,7 +86,8 @@ export class AppComponent implements OnInit {
     private enquiriesService: EnquiriesService,
     private activitiesService: ActivitiesService,
     private webSocket: WebSocketService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private destroyRef: DestroyRef
   ) {}
 
   async ngOnInit() {
@@ -100,6 +101,7 @@ export class AppComponent implements OnInit {
     }
     this.userService.user$
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         distinctUntilChanged(
           (previous, current) => previous?.accessToken === current?.accessToken
         )
@@ -227,12 +229,22 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
-  private checkServer() {
+  private checkServer(): void {
     firstValueFrom(
       this.http.get<null | { message: string; success: boolean }>(
         environment.api.server
       )
-    ).then((data) => console.log(data));
+    )
+      .then((data) => console.log(data))
+      .catch((error: unknown) => {
+        const message =
+          error instanceof HttpErrorResponse
+            ? errorHandler(error).message
+            : 'Unable to reach the server. Please try again later.';
+        this.toastController
+          .create({ message, color: 'danger', duration: 5000 })
+          .then((toast) => toast.present());
+      });
   }
 
   private isUnread(enquiry: Enquiry) {

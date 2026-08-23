@@ -59,10 +59,15 @@ export class CustomValidators {
     errorName = 'isGreater'
   ): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const parseValue = (value: unknown) => Number(String(value ?? '').replace(/,/g, ''));
+      const parseValue = (value: unknown) =>
+        Number(String(value ?? '').replace(/,/g, ''));
       const val1 = parseValue(control.value[a]);
       const val2 = parseValue(control.value[b]);
-      return Number.isFinite(val1) && Number.isFinite(val2) && val1 > 0 && val2 > 0 && val1 <= val2
+      return Number.isFinite(val1) &&
+        Number.isFinite(val2) &&
+        val1 > 0 &&
+        val2 > 0 &&
+        val1 <= val2
         ? { [errorName]: true }
         : null;
     };
