@@ -6,10 +6,12 @@ export function searchProperties(
   text: string,
   properties: Property[]
 ): Property[] {
+  const searchText = text.trim().toLowerCase();
+
   return properties.filter((item: Property) => {
     const name = item.name?.toLowerCase();
     const address = item.address?.toLowerCase();
-    return name?.includes(text) || address?.includes(text);
+    return name?.includes(searchText) || address?.includes(searchText);
   });
 }
 
@@ -18,20 +20,27 @@ export function filterProperties(
   properties: Property[] = []
 ): Property[] | undefined {
   if (!filter) return;
-  const sale = filter.includes(TransactionType.forSale);
-  const rent = filter.includes(TransactionType.forRent);
-  const propertyType =
-    filter.includes(PropertyType.commercial) ||
-    filter.includes(PropertyType.industrial) ||
-    filter.includes(PropertyType.land) ||
-    filter.includes(PropertyType.residential);
+
+  const selectedFilters = filter.split(',').map((value) => value.trim());
+  const transactionTypes = [
+    TransactionType.forSale,
+    TransactionType.forRent
+  ].filter((type) => selectedFilters.includes(type));
+  const propertyTypes = [
+    PropertyType.commercial,
+    PropertyType.industrial,
+    PropertyType.land,
+    PropertyType.residential
+  ].filter((type) => selectedFilters.includes(type));
 
   return properties.filter((prprty) => {
-    if (sale && prprty.transactionType !== TransactionType.forSale)
+    if (
+      transactionTypes.length &&
+      !transactionTypes.includes(prprty.transactionType)
+    )
       return false;
-    if (rent && prprty.transactionType !== TransactionType.forRent)
+    if (propertyTypes.length && !propertyTypes.includes(prprty.type))
       return false;
-    if (propertyType && !filter.includes(prprty.type)) return false;
     return true;
   });
 }

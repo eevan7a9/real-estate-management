@@ -1,4 +1,4 @@
-import { Component, computed, Input, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { PopoverController, ToastController } from '@ionic/angular';
@@ -27,6 +27,7 @@ export class PropertiesListItemComponent {
     () => this.user()?.user_id === this.property()?.user_id
   );
   readonly enableOwnedBadge = input<boolean>(true);
+  public enablePopupOptions = input<boolean>(false);
   public details = computed(() => {
     return { ...this.property() };
   });

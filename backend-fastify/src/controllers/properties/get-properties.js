@@ -10,7 +10,7 @@ export const getProperties = async function (req, res) {
     search = "",
     filter = "",
     sort = "latest",
-    limit = 4,
+    limit = 8,
     lastCreatedAt,
     lastPrice,
     lastName,
@@ -99,17 +99,20 @@ export const getMyProperties = async function (req, res) {
  */
 const composeFilterQuery = function (filter, search) {
   const filterQuery = {};
+  const validPropertyTypes = new Set(["residential", "commercial", "industrial", "land"]);
+  const validTransactionTypes = new Set(["sale", "rent"]);
   if (filter) {
     const transactionType = []; // ex. transactionTypes [ 'sale' ]
     const propertyTypes = []; // ex. propertyTypes [ 'industrial', 'land' ]
 
     filter
       .split(",")
-      .forEach((t) =>
-        t === "sale" || t === "rent"
-          ? transactionType.push(t)
-          : propertyTypes.push(t),
-      );
+      .map((value) => value.trim())
+      .filter(Boolean)
+      .forEach((t) => {
+        if (validTransactionTypes.has(t)) transactionType.push(t);
+        if (validPropertyTypes.has(t)) propertyTypes.push(t);
+      });
 
     if (propertyTypes.length) {
       filterQuery.type = { $in: propertyTypes };
@@ -118,10 +121,12 @@ const composeFilterQuery = function (filter, search) {
       filterQuery.transactionType = { $in: transactionType };
     }
   }
-  if (search) {
+  const searchText = search?.trim();
+  if (searchText) {
+    const escapedSearch = searchText.replace(/[.*+?^\x24{}()|[\]\\]/g, (match) => "\\" + match);
     filterQuery.$or = [
-      { name: { $regex: search, $options: "i" } }, // Case-insensitive search on name
-      { address: { $regex: search, $options: "i" } }, // Assuming there's a description field
+      { name: { $regex: escapedSearch, $options: "i" } }, // Case-insensitive search on name
+      { address: { $regex: escapedSearch, $options: "i" } }, // Assuming there's a description field
     ];
   }
   return filterQuery;

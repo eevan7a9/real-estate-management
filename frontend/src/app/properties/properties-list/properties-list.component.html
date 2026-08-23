@@ -6,7 +6,7 @@
     <ul
       class="grid grid-cols-1 gap-y-16 gap-x-2 xl:gap-x-4 2xl:gap-x-6 md:gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
-      <li *ngFor="let item of propertiesList()" class="col-span-1">
+      <li *ngFor="let item of propertiesList(); trackBy: trackByPropertyId" class="col-span-1">
         <app-properties-card [property]="item"></app-properties-card>
       </li>
     </ul>
@@ -16,7 +16,7 @@
 <!-- List View -->
 @if (displayOption() === 'list') {
   <section class="flex flex-col gap-2 lg:gap-3 px-3">
-    @for (item of propertiesList(); track $index) {
+    @for (item of propertiesList(); track item.property_id) {
       <app-properties-list-item
         [property]="item"
         [enableOwnedBadge]="enableOwnedBadge()"
@@ -26,9 +26,13 @@
   </section>
 }
 
+@if (properties() && propertiesList().length === 0) {
+  <p class="px-3 py-8 text-center text-slate-500">No properties found.</p>
+}
+
 <ion-row>
   <ion-infinite-scroll
-    #IonInfiniteScroll
+    #infiniteScroll
     threshold="80px"
     (ionInfinite)="onLoadMore.emit()"
     [disabled]="disableInfinitScroll() || hasNoMore()"

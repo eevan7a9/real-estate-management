@@ -9,6 +9,10 @@ export const getPropertiesOpts = (handler) => ({
     querystring: {
       type: "object",
       properties: {
+        search: {
+          type: "string",
+          description: "Search properties by name or address",
+        },
         filter: {
           type: "string",
           description:
@@ -21,7 +25,7 @@ export const getPropertiesOpts = (handler) => ({
         },
         limit: {
           type: "integer",
-          default: 10,
+          default: 8,
           description: "Limit the number of properties returned",
         },
         lastCreatedAt: {

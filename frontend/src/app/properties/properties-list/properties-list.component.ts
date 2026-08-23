@@ -3,7 +3,6 @@ import {
   computed,
   input,
   model,
-  OnInit,
   output,
   ViewChild
 } from '@angular/core';
@@ -24,16 +23,14 @@ import {
   styleUrls: ['./properties-list.component.css'],
   standalone: false
 })
-export class PropertiesListComponent implements OnInit {
-  @ViewChild('IonInfiniteScroll', { static: false })
+export class PropertiesListComponent {
+  @ViewChild('infiniteScroll', { static: false })
   infinityScroll!: IonInfiniteScroll;
 
   public properties = input<Property[]>();
   public displayOption = input<PropertiesDisplayOption>(
     PropertiesDisplayOption.CardView
   );
-  public singleCol = input<boolean>(false);
-  public horizontalSlide = input<boolean>(false);
   public limit = input<number>(0);
   public enableOwnedBadge = input<boolean>(false);
   public enablePopupOptions = input<boolean>(false);
@@ -48,28 +45,28 @@ export class PropertiesListComponent implements OnInit {
     if (!this.properties()) {
       return [];
     }
-    let temp = this.limit()
-      ? this.properties()?.slice(0, this.limit())
-      : this.properties();
+    let temp = this.properties() ?? [];
 
     const queryParams = this.queryParams();
     if (!queryParams || !temp) return [];
 
     const { sort, search, filter } = queryParams;
     if (search) temp = searchProperties(search, temp);
-    if (filter) temp = filterProperties(filter, temp);
+    if (filter) temp = filterProperties(filter, temp) ?? [];
 
     temp = sortProperties(sort || 'latest', temp);
-    return temp;
+    return this.limit() ? temp.slice(0, this.limit()) : temp;
   });
 
   private queryParams = toSignal(this.activatedRoute.queryParams);
 
   constructor(private activatedRoute: ActivatedRoute) {}
 
-  ngOnInit(): void {}
+  public trackByPropertyId(_index: number, property: Property): string {
+    return property.property_id;
+  }
 
-  public async setInfinityScrollComplete() {
+  public setInfinityScrollComplete(): void {
     if (this.infinityScroll) {
       this.infinityScroll.complete();
     }

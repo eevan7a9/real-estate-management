@@ -31,8 +31,9 @@
       <button
         (click)="openPopup($event)"
         class="bg-gray-300 size-7.5 duration-300 ease-in-out transition-colors hover:bg-gray-400 absolute rounded-full! p-2 top-2 right-3 flex justify-center items-center"
-        *ngIf="isOwner()"
+        *ngIf="isOwner() && enablePopupOptions()"
         id="popup-trigger-button"
+        aria-label="Property actions"
       >
         <ion-icon color="dark" name="ellipsis-vertical-outline"></ion-icon>
       </button>
