@@ -195,9 +195,15 @@ export class EnquiriesDetailComponent implements OnInit {
       !enquiry?.read &&
       enquiry?.users?.to.user_id === this.user()?.user_id
     ) {
-      firstValueFrom(
-        this.enquiriesService.readEnquiry(enquiry.enquiry_id)
-      ).then((res) => this.enquiry.set(res?.data));
+      firstValueFrom(this.enquiriesService.readEnquiry(enquiry.enquiry_id))
+        .then((res) => {
+          const updatedEnquiry = res?.data ?? { ...enquiry, read: true };
+          this.enquiry.set(updatedEnquiry);
+          this.enquiriesService.updateEnquiriesState(updatedEnquiry);
+        })
+        .catch((error: unknown) => {
+          console.error('Error marking enquiry as read:', error);
+        });
     }
   }
 }

@@ -99,10 +99,6 @@ export class EnquiriesNewFormComponent {
 
     this.submitting.set(true);
 
-    if (!this.enquiriesService.enquiries.length) {
-      this.enquiriesService.fetchEnquiries();
-    }
-
     const enquiryForm = {
       userTo: this.userTo(),
       ...this.enquiryForm.value,
