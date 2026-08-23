@@ -83,8 +83,15 @@ export class PropertiesUploadsComponent implements OnInit {
       );
       if (updateRes.data) {
         this.propertiesService.updatePropertyInState(updateRes.data);
+        this.presentToast(res.message || 'Success: Image uploaded');
+        this.modalCtrl.dismiss({ property: updateRes.data });
+        return;
       }
-      this.presentToast(res.message || 'Success: Image uploaded');
+      this.presentToast(
+        'Error: Unable to update property images.',
+        3000,
+        'danger'
+      );
       this.modalCtrl.dismiss();
     } catch (error) {
       console.log(error);

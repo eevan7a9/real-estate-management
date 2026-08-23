@@ -15,10 +15,12 @@ describe('PropertiesListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PropertiesListComponent],
       imports: [IonicModule.forRoot()],
-      providers: [{
-        provide: ActivatedRoute,
-        useValue: { queryParams: of({ sort: 'name', search: 'HOUSE' }) }
-      }],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: { queryParams: of({ sort: 'name', search: 'HOUSE' }) }
+        }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
@@ -41,8 +43,8 @@ describe('PropertiesListComponent', () => {
     fixture.componentRef.setInput('limit', 1);
     fixture.detectChanges();
 
-    expect(component.propertiesList().map((property) => property.name)).toEqual([
-      'House'
-    ]);
+    expect(component.propertiesList().map((property) => property.name)).toEqual(
+      ['House']
+    );
   });
 });

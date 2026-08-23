@@ -6,7 +6,10 @@
     <ul
       class="grid grid-cols-1 gap-y-16 gap-x-2 xl:gap-x-4 2xl:gap-x-6 md:gap-y-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
     >
-      <li *ngFor="let item of propertiesList(); trackBy: trackByPropertyId" class="col-span-1">
+      <li
+        *ngFor="let item of propertiesList(); trackBy: trackByPropertyId"
+        class="col-span-1"
+      >
         <app-properties-card [property]="item"></app-properties-card>
       </li>
     </ul>

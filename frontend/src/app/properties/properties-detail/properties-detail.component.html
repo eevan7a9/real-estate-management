@@ -55,9 +55,9 @@
           <app-properties-gallery
             [images]="property()?.images"
             [showEdit]="!!isOwner()"
+            [altText]="property()?.name || 'Property image'"
             (edit)="editImages()"
             *ngIf="property()?.images"
-            #propertiesGallery
           ></app-properties-gallery>
 
           <ion-card
@@ -110,7 +110,9 @@
 
           <ion-card
             class="shadow-none mt-4 border border-slate-200 dark:border-slate-800"
-            *ngIf="property()?.price"
+            *ngIf="
+              property()?.price !== undefined && property()?.price !== null
+            "
           >
             <ion-card-header class="px-4 py-2"> Price </ion-card-header>
             <ion-card-content class="price">
@@ -187,6 +189,7 @@
                 expand="block"
                 size="large"
                 (click)="findInMap()"
+                [disabled]="!hasCoordinates()"
               >
                 <ion-icon name="locate-outline"></ion-icon>
                 <span class="mx-1">Find in Map</span>
@@ -198,7 +201,21 @@
     </ion-grid>
   </div>
 
-  <div class="p-4" *ngIf="!property() && ready()">
+  <div class="p-4" *ngIf="!property() && ready() && loadError()">
+    <ion-card color="danger" class="shadow-none py-4">
+      <ion-card-header class="px-4 py-2">
+        <ion-card-title>Unable to load property</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="flex items-center justify-between gap-3">
+        <span>{{ loadError() }}</span>
+        <ion-button fill="clear" color="light" (click)="retryLoad()">
+          Retry
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="p-4" *ngIf="!property() && ready() && !loadError()">
     <ion-card class="border-2 shadow-none py-8">
       <ion-card-header class="px-4 py-2">
         <h1 class="text-[42px] text-center">Error 404</h1>

@@ -23,7 +23,7 @@
       ></div>
       <img
         [src]="imagePresented"
-        alt="image"
+        [alt]="altText()"
         class="w-auto h-full object-cover z-10"
       />
     </div>
@@ -33,7 +33,7 @@
       pagination-clickable="true"
       space-between="20"
       slides-per-view="auto"
-      *ngIf="images()?.length || 0 > 1"
+      *ngIf="(images()?.length || 0) > 1"
     >
       <swiper-slide *ngFor="let image of images()" class="swiper">
         <div

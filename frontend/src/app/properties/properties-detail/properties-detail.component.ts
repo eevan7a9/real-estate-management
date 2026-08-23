@@ -1,8 +1,8 @@
 import { Location } from '@angular/common';
-import { Component, computed, OnInit, signal, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, computed, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AlertController,
   ModalController,
   PopoverController,
   ToastController
@@ -14,10 +14,9 @@ import { ActionPopupComponent } from 'src/app/shared/components/action-popup/act
 import { PropertiesEditComponent } from '../properties-edit-modal/properties-edit.component';
 import { PropertiesUploadsComponent } from '../properties-uploads-modal/properties-uploads.component';
 import { UserService } from 'src/app/user/user.service';
-import { PropertiesGalleryComponent } from '../properties-gallery/properties-gallery.component';
 import { TransactionType } from 'src/app/shared/enums/property';
 import { RestrictionService } from 'src/app/shared/services/restriction/restriction.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-alert/confirmation-alert.service';
 
 @Component({
@@ -26,10 +25,10 @@ import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-a
   styleUrls: ['./properties-detail.component.css'],
   standalone: false
 })
-export class PropertiesDetailComponent implements OnInit {
-  @ViewChild('propertiesGallery') propertiesGallery: PropertiesGalleryComponent;
+export class PropertiesDetailComponent implements OnInit, OnDestroy {
   public property = signal<Property | undefined>(undefined);
   public ready = signal(false);
+  public loadError = signal<string | null>(null);
   public isOwner = computed(() => {
     if (this.property()) {
       return this.userService.isPropertyOwner(this.property() as Property);
@@ -37,6 +36,14 @@ export class PropertiesDetailComponent implements OnInit {
     return false;
   });
   public transactionType = TransactionType;
+  public hasCoordinates = computed(() => {
+    const coordinates = this.property()?.position?.coordinates;
+    return Boolean(
+      coordinates?.length === 2 &&
+      coordinates.every((value) => Number.isFinite(value))
+    );
+  });
+  private routeSubscription?: Subscription;
 
   constructor(
     public location: Location,
@@ -49,15 +56,24 @@ export class PropertiesDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private restriction: RestrictionService,
     private confirmationService: ConfirmationAlertService
-  ) {
-    this.propertiesGallery = new PropertiesGalleryComponent();
+  ) {}
+
+  ngOnInit(): void {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      const paramId = params.get('id');
+      if (!paramId) {
+        this.property.set(undefined);
+        this.loadError.set('A property ID is required.');
+        this.ready.set(true);
+        return;
+      }
+
+      void this.setPropertyDetails(paramId);
+    });
   }
 
-  async ngOnInit() {
-    const paramId = this.route.snapshot.paramMap.get('id');
-    if (paramId) {
-      await this.setPropertyDetails(paramId);
-    }
+  ngOnDestroy(): void {
+    this.routeSubscription?.unsubscribe();
   }
 
   public async actionPopup() {
@@ -86,6 +102,7 @@ export class PropertiesDetailComponent implements OnInit {
         if (res) {
           return this.deleteProperty(this.property()?.property_id || '');
         }
+        return;
 
       case 'edit':
         return this.editModal();
@@ -105,49 +122,71 @@ export class PropertiesDetailComponent implements OnInit {
     }
   }
 
-  public findInMap() {
-    const {
-      coordinates: [lng, lat]
-    } = this.property()?.position || { coordinates: [0, 0] };
+  public findInMap(): void {
+    if (!this.hasCoordinates()) return;
+
+    const [lng, lat] = this.property()!.position.coordinates;
     this.router.navigate(['/map'], { queryParams: { lat, lng } });
   }
 
-  public async editImages() {
+  public retryLoad(): void {
+    const propertyId = this.route.snapshot.paramMap.get('id');
+    if (propertyId) {
+      void this.setPropertyDetails(propertyId);
+    }
+  }
+
+  public async editImages(): Promise<void> {
     const modal = await this.modalController.create({
       component: PropertiesUploadsComponent,
       componentProps: {
         property: this.property()
       }
     });
-    modal.present();
-    modal.onDidDismiss().then((res) => {
-      const deleted = res.data?.deleted || [];
-      if (deleted) {
-        this.property.update((value) => {
-          if (value) {
-            value.images = value?.images?.filter(
-              (image) => !deleted.includes(image)
-            );
-          }
-          return value;
-        });
-      }
-    });
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+
+    if (data?.property) {
+      this.property.set(data.property);
+      return;
+    }
+
+    const deleted = data?.deleted ?? [];
+    if (deleted.length) {
+      this.property.update((value) =>
+        value
+          ? {
+              ...value,
+              images: value.images?.filter((image) => !deleted.includes(image))
+            }
+          : value
+      );
+    }
   }
 
   private async setPropertyDetails(id: string): Promise<void> {
+    this.ready.set(false);
+    this.loadError.set(null);
+    this.property.set(undefined);
+
     try {
       const res = await firstValueFrom(
         this.propertiesService.fetchProperty(id)
       );
       if (res.status === 200 && res.data) {
         this.property.set(res.data);
-        if (this.propertiesGallery) {
-          this.propertiesGallery.setImage();
-        }
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      if (error instanceof HttpErrorResponse && error.status === 404) {
+        return;
+      }
+
+      const message =
+        error instanceof HttpErrorResponse
+          ? error.error?.message || error.message
+          : 'Unable to load this property. Please try again.';
+      this.loadError.set(message || 'Unable to load this property.');
+      console.error('Loading property details failed:', error);
     } finally {
       this.ready.set(true);
     }
