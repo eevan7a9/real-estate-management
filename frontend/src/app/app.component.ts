@@ -66,6 +66,7 @@ export class AppComponent implements OnInit {
     if (this.user()) {
       return [
         ...pages,
+        { title: 'Management', url: '/management', icon: 'briefcase' },
         { title: 'Account', url: '/user/account', icon: 'person' }
       ];
     }
