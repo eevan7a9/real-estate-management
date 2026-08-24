@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { PropertiesCardComponent } from './properties-card.component';
 
@@ -10,8 +10,9 @@ describe('PropertiesCardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [PropertiesCardComponent],
-      imports: [IonicModule.forRoot(), RouterTestingModule]
+      imports: [RouterModule.forRoot([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PropertiesCardComponent);

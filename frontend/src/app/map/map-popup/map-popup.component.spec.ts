@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { PropertiesPage } from 'src/app/properties/properties.page';
 
 import { MapPopupComponent } from './map-popup.component';
@@ -11,10 +11,10 @@ describe('MapPopupComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [MapPopupComponent],
       imports: [
-        IonicModule.forRoot(),
-        RouterTestingModule.withRoutes([
+        RouterModule.forRoot([
           {
             component: PropertiesPage,
             path: 'properties'

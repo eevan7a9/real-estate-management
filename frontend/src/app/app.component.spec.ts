@@ -6,7 +6,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import { Storage } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      imports: [RouterTestingModule.withRoutes([]), ReactiveFormsModule],
+      imports: [RouterModule.forRoot([]), ReactiveFormsModule],
       providers: [Storage, provideHttpClient(withInterceptorsFromDi())]
     }).compileComponents();
   }));

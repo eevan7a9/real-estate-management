@@ -1,8 +1,8 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { SigninComponent } from './signin.component';
@@ -19,11 +19,10 @@ describe('SigninComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SigninComponent],
       imports: [
-        IonicModule.forRoot(),
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         ReactiveFormsModule
       ],
-      providers: [
+      providers: [provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

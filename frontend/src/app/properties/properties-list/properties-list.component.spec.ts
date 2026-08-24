@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { provideIonicAngular } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
@@ -14,8 +14,8 @@ describe('PropertiesListComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PropertiesListComponent],
-      imports: [IonicModule.forRoot()],
-      providers: [
+      imports: [],
+      providers: [provideIonicAngular(),
         {
           provide: ActivatedRoute,
           useValue: { queryParams: of({ sort: 'name', search: 'HOUSE' }) }

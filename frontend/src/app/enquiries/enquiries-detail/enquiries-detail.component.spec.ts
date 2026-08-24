@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { EnquiriesPage } from '../enquiries.page';
 
 import { EnquiriesDetailComponent } from './enquiries-detail.component';
@@ -11,10 +11,10 @@ describe('EnquiriesDetailComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [EnquiriesDetailComponent],
       imports: [
-        IonicModule.forRoot(),
-        RouterTestingModule.withRoutes([
+        RouterModule.forRoot([
           {
             path: 'enquiries',
             component: EnquiriesPage

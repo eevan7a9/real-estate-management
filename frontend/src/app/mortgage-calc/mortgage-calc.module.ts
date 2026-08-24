@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular/lazy';
 
 import { MortgageCalcPageRoutingModule } from './mortgage-calc-routing.module';
 
@@ -16,7 +15,6 @@ import { MortgageLineChartComponent } from './mortgage-line-chart/mortgage-line-
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     MortgageCalcPageRoutingModule,
     SharedModule
   ],

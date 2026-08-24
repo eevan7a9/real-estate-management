@@ -1,13 +1,13 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import {
   ModalController,
   PopoverController,
   ToastController
 } from '@ionic/angular';
-import { IonicModule } from '@ionic/angular/lazy';
+import { provideIonicAngular } from '@ionic/angular';
 import { of } from 'rxjs';
 import { PropertiesService } from '../properties.service';
 import { UserService } from 'src/app/user/user.service';
@@ -40,8 +40,8 @@ describe('PropertiesDetailComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [PropertiesDetailComponent],
-      imports: [IonicModule.forRoot(), RouterTestingModule],
-      providers: [
+      imports: [RouterModule.forRoot([])],
+      providers: [provideIonicAngular(),
         {
           provide: ActivatedRoute,
           useValue: {

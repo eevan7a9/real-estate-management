@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular/lazy';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
@@ -23,7 +22,6 @@ import { PropertiesListItemComponent } from './properties-list-item/properties-l
 @NgModule({
   imports: [
     CommonModule,
-    IonicModule,
     PropertiesPageRoutingModule,
     SharedModule,
     EnquiriesPageModule,

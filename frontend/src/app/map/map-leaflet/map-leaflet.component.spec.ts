@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular/lazy';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { MapLeafletComponent } from './map-leaflet.component';
@@ -12,8 +12,8 @@ describe('MapLeafletComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [MapLeafletComponent],
-      imports: [IonicModule.forRoot(), RouterTestingModule],
-      providers: [Storage]
+      imports: [RouterModule.forRoot([])],
+      providers: [provideIonicAngular(), Storage]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapLeafletComponent);
