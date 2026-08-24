@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
-
 import { EnquiriesPageRoutingModule } from './enquiries-routing.module';
 
 import { EnquiriesPage } from './enquiries.page';
@@ -21,7 +19,6 @@ import { EnquiriesRelatedListComponent } from './enquiries-related-list/enquirie
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
     EnquiriesPageRoutingModule,
     SharedModule,
     CKEditorModule,

@@ -6,7 +6,7 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { MortgageCoreCalcComponent } from './mortgage-core-calc.component';
 
@@ -16,8 +16,9 @@ describe('MortgageCoreCalcComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [MortgageCoreCalcComponent],
-      imports: [IonicModule.forRoot(), ReactiveFormsModule]
+      imports: [ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MortgageCoreCalcComponent);

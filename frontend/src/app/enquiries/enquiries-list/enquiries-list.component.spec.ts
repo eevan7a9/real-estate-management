@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnquiriesListComponent } from './enquiries-list.component';
 
@@ -10,8 +10,9 @@ describe('EnquiriesListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [EnquiriesListComponent],
-      imports: [IonicModule.forRoot(), RouterTestingModule]
+      imports: [RouterModule.forRoot([])]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EnquiriesListComponent);

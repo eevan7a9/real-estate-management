@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnquiriesListItemComponent } from './enquiries-list-item.component';
 
@@ -9,8 +9,9 @@ describe('EnquiriesListItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [EnquiriesListItemComponent],
-      imports: [IonicModule.forRoot()]
+      imports: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(EnquiriesListItemComponent);

@@ -42,11 +42,11 @@ Designed for managing residential, commercial, and land properties the app allow
 # **🗃️ Dependencies**
 
 ### **Frontend**
-- [Ionic 8+](https://ionicframework.com/)
-- [Angular 19+](https://angular.io/)
+- [Ionic 9+](https://ionicframework.com/)
+- [Angular 20+](https://angular.io/)
 - [tailwindcss 4+](https://tailwindcss.com/)
 - [leaflet 1.7+](https://leafletjs.com/)
-- [chartjs 3.5+](https://www.chartjs.org/)
+- [chartjs 4+](https://www.chartjs.org/)
 
 ### **Backend**
 - [Node](https://nodejs.org/en/)

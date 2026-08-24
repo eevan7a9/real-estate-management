@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 
 import { EnquiriesNewFormComponent } from './enquiries-new-form.component';
 
@@ -10,8 +10,9 @@ describe('EnquiriesNewFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      providers: [provideIonicAngular()],
       declarations: [EnquiriesNewFormComponent],
-      imports: [IonicModule.forRoot(), ReactiveFormsModule]
+      imports: [ReactiveFormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(EnquiriesNewFormComponent);

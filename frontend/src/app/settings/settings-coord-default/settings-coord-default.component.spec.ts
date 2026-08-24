@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { SettingsCoordDefaultComponent } from './settings-coord-default.component';
@@ -11,8 +11,8 @@ describe('SettingsCoordDefaultComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SettingsCoordDefaultComponent],
-      imports: [IonicModule.forRoot()],
-      providers: [Storage]
+      imports: [],
+      providers: [provideIonicAngular(), Storage]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsCoordDefaultComponent);

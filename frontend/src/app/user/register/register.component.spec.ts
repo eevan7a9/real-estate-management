@@ -1,8 +1,8 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { RegisterComponent } from './register.component';
 import {
@@ -17,12 +17,9 @@ describe('RegisterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [
-        IonicModule.forRoot(),
-        ReactiveFormsModule,
-        RouterTestingModule
-      ],
+      imports: [ReactiveFormsModule, RouterModule.forRoot([])],
       providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { provideIonicAngular } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { ProfileComponent } from './profile.component';
@@ -16,8 +16,9 @@ describe('ProfileComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
-      imports: [IonicModule.forRoot()],
+      imports: [],
       providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

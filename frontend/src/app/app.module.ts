@@ -3,13 +3,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import {
+  IonApp,
+  IonBadge,
+  IonContent,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonRouterOutlet,
+  IonSplitPane,
+  IonicRouteStrategy,
+  provideIonicAngular
+} from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StorageService } from './shared/services/storage/storage.service';
-import { SharedModule } from './shared/shared.module';
 import {
   provideHttpClient,
   withInterceptorsFromDi
@@ -20,15 +34,26 @@ import {
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonApp,
+    IonBadge,
+    IonContent,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonRouterOutlet,
+    IonSplitPane,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    SharedModule,
     MarkdownModule.forRoot()
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StorageService,
+    provideIonicAngular(),
     provideHttpClient(withInterceptorsFromDi())
   ]
 })
