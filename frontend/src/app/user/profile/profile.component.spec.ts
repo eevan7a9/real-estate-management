@@ -17,7 +17,8 @@ describe('ProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
       imports: [],
-      providers: [provideIonicAngular(),
+      providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

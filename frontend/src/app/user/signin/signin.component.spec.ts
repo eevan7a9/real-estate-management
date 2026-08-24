@@ -18,11 +18,9 @@ describe('SigninComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SigninComponent],
-      imports: [
-        RouterModule.forRoot([]),
-        ReactiveFormsModule
-      ],
-      providers: [provideIonicAngular(),
+      imports: [RouterModule.forRoot([]), ReactiveFormsModule],
+      providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

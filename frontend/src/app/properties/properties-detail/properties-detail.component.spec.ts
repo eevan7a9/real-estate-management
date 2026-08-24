@@ -41,7 +41,8 @@ describe('PropertiesDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PropertiesDetailComponent],
       imports: [RouterModule.forRoot([])],
-      providers: [provideIonicAngular(),
+      providers: [
+        provideIonicAngular(),
         {
           provide: ActivatedRoute,
           useValue: {

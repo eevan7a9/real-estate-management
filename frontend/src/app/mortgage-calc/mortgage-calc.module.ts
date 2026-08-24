@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 import { MortgageCalcPageRoutingModule } from './mortgage-calc-routing.module';
 
 import { MortgageCalcPage } from './mortgage-calc.page';

@@ -15,7 +15,8 @@ describe('PropertiesListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PropertiesListComponent],
       imports: [],
-      providers: [provideIonicAngular(),
+      providers: [
+        provideIonicAngular(),
         {
           provide: ActivatedRoute,
           useValue: { queryParams: of({ sort: 'name', search: 'HOUSE' }) }

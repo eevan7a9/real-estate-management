@@ -18,7 +18,8 @@ describe('EnquiriesPage', () => {
     TestBed.configureTestingModule({
       declarations: [EnquiriesPage],
       imports: [RouterModule.forRoot([])],
-      providers: [provideIonicAngular(),
+      providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

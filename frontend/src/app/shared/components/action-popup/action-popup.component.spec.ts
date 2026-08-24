@@ -18,7 +18,8 @@ describe('ActionPopupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ActionPopupComponent],
       imports: [RouterModule.forRoot([])],
-      providers: [provideIonicAngular(),
+      providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()

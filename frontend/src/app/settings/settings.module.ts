@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 import { SettingsPageRoutingModule } from './settings-routing.module';
 
 import { SettingsPage } from './settings.page';
@@ -11,12 +10,7 @@ import { SettingsCoordDefaultComponent } from './settings-coord-default/settings
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    SettingsPageRoutingModule,
-    SharedModule
-  ],
+  imports: [CommonModule, FormsModule, SettingsPageRoutingModule, SharedModule],
   declarations: [
     SettingsPage,
     SettingsThemeComponent,

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
 import { EnquiriesPageRoutingModule } from './enquiries-routing.module';
 
 import { EnquiriesPage } from './enquiries.page';

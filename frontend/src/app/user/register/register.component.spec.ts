@@ -17,11 +17,9 @@ describe('RegisterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
-      imports: [
-        ReactiveFormsModule,
-        RouterModule.forRoot([])
-      ],
-      providers: [provideIonicAngular(),
+      imports: [ReactiveFormsModule, RouterModule.forRoot([])],
+      providers: [
+        provideIonicAngular(),
         Storage,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
