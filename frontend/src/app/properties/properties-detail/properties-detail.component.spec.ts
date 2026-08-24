@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  IonicModule,
   ModalController,
   PopoverController,
   ToastController
 } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { of } from 'rxjs';
 import { PropertiesService } from '../properties.service';
 import { UserService } from 'src/app/user/user.service';

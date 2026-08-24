@@ -6,7 +6,7 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 
 import { MortgageCoreCalcComponent } from './mortgage-core-calc.component';
 

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { Storage } from '@ionic/storage-angular';
 
 import { SettingsCoordDefaultComponent } from './settings-coord-default.component';

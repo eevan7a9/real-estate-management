@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular/lazy';
 import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { AppComponent } from './app.component';
@@ -20,7 +21,7 @@ import {
   bootstrap: [AppComponent],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule,
     AppRoutingModule,
     IonicStorageModule.forRoot(),
     SharedModule,
@@ -29,6 +30,7 @@ import {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StorageService,
+    provideIonicAngular(),
     provideHttpClient(withInterceptorsFromDi())
   ]
 })
