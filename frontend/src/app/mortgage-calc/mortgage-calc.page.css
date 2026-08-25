@@ -1,24 +1,3 @@
-ion-content {
-  --height: 100%;
-  margin: 0;
-}
-.mortgage-calc-container {
-  min-height: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-}
-.note-container .icon-container {
-  height: 100%;
-  padding-top: 2px;
-}
-.note-container ion-icon {
-  font-size: 18px;
-  margin-right: 6px;
-}
-.extra-spacer {
-  height: 200px;
-  width: 100%;
-}
 @media (max-width: 600px) {
   ion-col {
     margin: 0;
