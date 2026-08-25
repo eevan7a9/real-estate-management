@@ -1,7 +1,17 @@
-<ion-header [translucent]="true" class="m-0">
+<ion-header
+  [translucent]="true"
+  class="ion-no-border border-b border-slate-200 dark:border-slate-800"
+>
   <ion-toolbar>
-    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">
-      Management Page
+    <ion-title
+      class="flex flex-col gap-0 py-4 px-3 xl:px-4 text-[16px] md:text-[18px]"
+    >
+      <div class="flex flex-col gap-1 leading-none">
+        <span>Management Page</span>
+        <small class="-mt-1 text-slate-500 dark:text-slate-400">
+          Your property portfolio at a glance
+        </small>
+      </div>
     </ion-title>
 
     <ion-buttons slot="end">
@@ -11,9 +21,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="page-container pt-0 m-0">
-  <div class="min-h-full">
-    <h1 class="p-0 m-0">content</h1>
-  </div>
+<ion-content class="pt-0 m-0">
+  <section
+    class="page-container px-3 2xl:px-0 flex justify-between items-center"
+  >
+    <div class="flex flex-col">
+      <h1 class="text-3xl font-bold! leading-none">Good morning, Eevan</h1>
+      <p class="leading-normal text-slate-500 dark:text-slate-400">
+        Here's what's happening with your properties today.
+      </p>
+    </div>
+
+    <ion-button
+      color="primary"
+      class="normal-case!"
+      (click)="presentCreateModal()"
+    >
+      <ion-icon name="add-outline" class="ion-margin-end"></ion-icon>
+      Add new property
+    </ion-button>
+  </section>
+
+  <section class="page-container px-3 2xl:px-0 mt-9!">
+    <app-management-kpi-summary></app-management-kpi-summary>
+  </section>
+
+  <section class="page-container px-3 2xl:px-0 min-h-125"></section>
+
   <app-footer></app-footer>
 </ion-content>

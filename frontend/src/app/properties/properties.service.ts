@@ -50,6 +50,9 @@ export class PropertiesService {
     undefined
   );
 
+  private ownedPropertiesLoadPromise?: Promise<boolean>;
+  private loadedOwnedPropertiesToken = '';
+
   constructor(
     private http: HttpClient,
     private userService: UserService
@@ -175,6 +178,55 @@ export class PropertiesService {
     );
   }
 
+  public async loadOwnedProperties(force = false): Promise<boolean> {
+    const token = this.userService.token;
+
+    if (!token) {
+      this.error.set('Sign in to load your properties.');
+      return false;
+    }
+
+    if (
+      !force &&
+      this.loadedOwnedPropertiesToken === token &&
+      this.propertiesOwned !== undefined
+    ) {
+      return true;
+    }
+
+    if (this.ownedPropertiesLoadPromise) {
+      return this.ownedPropertiesLoadPromise;
+    }
+
+    this.isLoading.set(true);
+    this.error.set(null);
+    this.ownedPropertiesLoadPromise = firstValueFrom(
+      this.fetchOwnedProperties()
+    )
+      .then((response) => {
+        if (response.status !== 200) {
+          this.error.set(response.message || 'Unable to load your properties.');
+          return false;
+        }
+        this.propertiesOwned = response.data ?? [];
+        this.loadedOwnedPropertiesToken = token;
+        return true;
+      })
+      .catch((error: unknown) => {
+        const message =
+          error instanceof HttpErrorResponse
+            ? error.error?.message || error.message
+            : 'Unable to load your properties. Please try again.';
+        this.error.set(message || 'Unable to load your properties.');
+        return false;
+      })
+      .finally(() => {
+        this.isLoading.set(false);
+        this.ownedPropertiesLoadPromise = undefined;
+      });
+    return this.ownedPropertiesLoadPromise;
+  }
+
   public addPropertyToState(property: Property) {
     this.properties = [...this.properties, property];
     this.propertiesMap = [...this.propertiesMap, property];
@@ -208,6 +260,7 @@ export class PropertiesService {
 
   public resetState(opts?: { skipOwned: boolean }): void {
     this.properties = [];
+    this.loadedOwnedPropertiesToken = '';
     this.error.set(null);
     if (!opts?.skipOwned) {
       this.propertiesOwned = [];

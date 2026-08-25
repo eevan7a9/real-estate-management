@@ -18,12 +18,14 @@ import { register } from 'swiper/element/bundle';
 import { addIcons } from 'ionicons';
 import {
   add,
+  addOutline,
   addCircleOutline,
   alertCircleOutline,
   archiveOutline,
   arrowBackOutline,
   arrowRedo,
   bookmarkOutline,
+  briefcaseSharp,
   calculatorOutline,
   calculatorSharp,
   calendarNumberOutline,
@@ -78,12 +80,14 @@ register();
 
 addIcons({
   add,
+  addOutline,
   addCircleOutline,
   alertCircleOutline,
   archiveOutline,
   arrowBackOutline,
   arrowRedo,
   bookmarkOutline,
+  briefcaseSharp,
   calculatorOutline,
   calculatorSharp,
   calendarNumberOutline,

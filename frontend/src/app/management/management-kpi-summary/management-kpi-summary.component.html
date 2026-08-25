@@ -1,0 +1,69 @@
+<ion-grid>
+  <ion-row class="-m-2">
+    <ion-col size="12" size-md="6" size-xl="3" class="p-2">
+      <ion-card
+        class="h-full"
+        class="pt-4 shadow-none! border border-slate-200 dark:border-slate-800 border-t-8 border-t-primary"
+      >
+        <ion-card-header class="px-4">
+          <ion-card-subtitle>TOTAL PROPERTIES</ion-card-subtitle>
+          <ion-card-title class="text-[28px] font-semibold">{{
+            totalProperties()
+          }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content> Across your portfolio </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6" size-xl="3" class="p-2">
+      <ion-card
+        class="h-full"
+        class="pt-4 shadow-none! border border-slate-200 dark:border-slate-800 border-t-8 border-t-warning"
+      >
+        <ion-card-header class="px-4">
+          <ion-card-subtitle>FOR SALE</ion-card-subtitle>
+          <ion-card-title class="text-[28px] font-semibold">{{
+            propertiesForSale()
+          }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content> Active listings </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6" size-xl="3" class="p-2">
+      <ion-card
+        class="h-full"
+        class="pt-4 shadow-none! border border-slate-200 dark:border-slate-800 border-t-8 border-t-success"
+      >
+        <ion-card-header class="px-4">
+          <ion-card-subtitle>FOR RENT</ion-card-subtitle>
+          <ion-card-title class="text-[28px] font-semibold">{{
+            propertiesForRent()
+          }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content> Income properties </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="12" size-md="6" size-xl="3" class="p-2">
+      <ion-card
+        class="h-full"
+        class="pt-4 shadow-none! border border-slate-200 dark:border-slate-800 border-t-8 border-t-black"
+      >
+        <ion-card-header class="px-4">
+          <ion-card-subtitle>PORTFOLIO VALUE</ion-card-subtitle>
+          <ion-card-title class="text-[28px] font-semibold">
+            {{ portfolioValueLabel() }}
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Estimated value of properties for sale
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
