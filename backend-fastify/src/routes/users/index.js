@@ -1,4 +1,9 @@
-import { getUsersOpts, getUserOpts, updateUserOpts } from "./options/index.js";
+import {
+  getUsersOpts,
+  getUserOpts,
+  updateUserOpts,
+  getMeOpts,
+} from "./options/index.js";
 import {
   getUsers,
   getUser,
@@ -14,8 +19,8 @@ import {
  */
 export const usersRoutes = function (fastify, opts, done) {
   fastify.get("/", getUsersOpts(fastify, getUsers));
+  fastify.get("/me", getMeOpts(fastify, getMe));
   fastify.get("/:id", getUserOpts(fastify, getUser));
-  fastify.get("/me", getUserOpts(fastify, getMe));
   fastify.patch("/me", updateUserOpts(fastify, updateMe));
   done();
 };

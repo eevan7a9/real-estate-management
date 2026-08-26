@@ -1,25 +1,21 @@
-// multiple users
+// Public user profile fields.
 export const userProperties = {
   user_id: { type: "string" },
-  email: { type: "string" },
   fullName: { type: "string" },
   about: { type: "string" },
   address: { type: "string" },
-
-  authProvider: { type: "string" },
-  googleId: { type: "string" },
-
-  verified: { type: "boolean" },
 };
 Object.freeze(userProperties);
 
-// single user
-export const userDetailProperties = {
+// Private, account-safe fields returned only for the authenticated user.
+export const privateUserProperties = {
   ...userProperties,
-  properties: { type: "array" },
-  notifications: { type: "array" },
-  activities: { type: "array" },
+  email: { type: "string" },
+  verified: { type: "boolean" },
   createdAt: { type: "string" },
   updatedAt: { type: "string" },
+  properties: { type: "array" },
 };
-Object.freeze(userDetailProperties);
+Object.freeze(privateUserProperties);
+
+export const userDetailProperties = privateUserProperties;

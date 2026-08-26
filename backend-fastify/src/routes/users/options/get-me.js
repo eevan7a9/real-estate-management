@@ -1,26 +1,19 @@
-/**
- *  Schema for single user request
- */
-import { userProperties } from "./schema.js";
+import { privateUserProperties } from "./schema.js";
 import {
   responseSuccess,
   responseError,
 } from "../../../utils/schema/response.js";
 
-export const getUserOpts = (fastify, handler) => ({
+export const getMeOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
     response: {
       200: responseSuccess({
-        data: {
-          type: "object",
-          properties: userProperties,
-        },
+        data: { type: "object", properties: privateUserProperties },
       }),
-      400: responseError(),
       404: responseError({ status: 404 }),
       500: responseError({ status: 500 }),
     },
   },
-  handler: handler,
+  handler,
 });

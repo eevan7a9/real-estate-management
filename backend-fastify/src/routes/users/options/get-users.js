@@ -18,6 +18,7 @@ export const getUsersOpts = (fastify, handler) => ({
         }
       }),
       400: responseError(),
+      500: responseError({ status: 500 }),
     },
   },
   handler: handler,
