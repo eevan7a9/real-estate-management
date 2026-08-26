@@ -43,14 +43,16 @@
       class="flex items-center md:items-start text-[14px] lg:mt-2 text-dark dark:text-white"
     >
       <div
-        class="text-[16px] lg:text-[18px] font-light text-ellipsis line-clamp-1 min-w-[300px]"
+        class="text-[16px] lg:text-[18px] text-ellipsis line-clamp-1 min-w-[300px]"
       >
         {{ property()?.name }}
       </div>
 
-      <span class="px-2">|</span>
+      <span class="px-2"></span>
 
-      <p class="hidden md:block pr-3 flex-1 min-w-0 line-clamp-2!">
+      <p
+        class="hidden text-[14px] md:block px-3 border-l border-slate-400 text-slate-600 dark:text-slate-400 font-light flex-1 min-w-0 line-clamp-2!"
+      >
         {{ property()?.description }}
       </p>
 

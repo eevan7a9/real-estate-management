@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
 import { ManagementPropertiesComponent } from './management-properties.component';
 
 describe('ManagementPropertiesComponent', () => {
@@ -9,8 +7,7 @@ describe('ManagementPropertiesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ManagementPropertiesComponent],
-      imports: [IonicModule.forRoot()]
+      declarations: [ManagementPropertiesComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ManagementPropertiesComponent);

@@ -1,0 +1,136 @@
+<ion-card
+  class="h-full overflow-hidden border shadow-none border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-dark-shade"
+  aria-labelledby="recent-properties-title"
+>
+  <ion-card-header>
+    <h2
+      id="recent-properties-title"
+      class="m-0! text-[16px] font-semibold leading-4.75 text-[#0f1e39] dark:text-white"
+    >
+      Recent properties
+    </h2>
+    <p
+      class="m-0! mt-1 text-[12px] leading-3.75 text-[#616e85] dark:text-slate-400"
+    >
+      Your latest managed listings
+    </p>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div
+      class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end"
+    >
+      <ion-searchbar
+        class="recent-properties-search w-full p-0! sm:max-w-75 border border-slate-200 dark:border-slate-800"
+        style="--box-shadow: none"
+        placeholder="Search properties"
+        [value]="searchTerm()"
+        (ionInput)="searchTerm.set($any($event.target).value || '')"
+        aria-label="Search recent properties"
+      ></ion-searchbar>
+
+      <ion-button
+        fill="clear"
+        class="normal-case! shrink-0 py-1! rounded-xl! bg-blue-50! px-3! text-[13px] font-semibold text-blue-700 dark:bg-blue-950! dark:text-blue-300"
+        (click)="viewAll()"
+      >
+        View all
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="mt-5 overflow-x-auto">
+      <table class="w-full min-w-190 border-collapse text-left">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-800">
+            <th
+              class="pb-3! text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-300"
+            >
+              Property
+            </th>
+            <th
+              class="pb-3! text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-300"
+            >
+              Type
+            </th>
+            <th
+              class="pb-3! text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-300"
+            >
+              Status
+            </th>
+            <th
+              class="pb-3! text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-300"
+            >
+              Value
+            </th>
+            <th
+              class="pb-3! text-[11px] font-semibold uppercase text-slate-500 dark:text-slate-300"
+            >
+              Updated
+            </th>
+            <th class="w-8 pb-3"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (property of recentProperties(); track property.property_id) {
+            <tr
+              class="border-b border-slate-200 last:border-0 dark:border-slate-800"
+            >
+              <td
+                class="pr-6 py-4! text-[14px] font-semibold text-slate-900 dark:text-white"
+              >
+                {{ property.name }}
+              </td>
+              <td
+                class="pr-6 py-4! text-[14px] text-slate-500 dark:text-slate-400"
+              >
+                {{ formatType(property.type) }}
+              </td>
+              <td class="pr-6">
+                <span
+                  class="inline-flex rounded-full px-3 py-1 text-[12px] font-medium"
+                  [class]="
+                    property.transactionType === 'rent'
+                      ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-300'
+                      : 'bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-300'
+                  "
+                >
+                  {{ formatStatus(property.transactionType) }}
+                </span>
+              </td>
+              <td
+                class="pr-6 py-4! text-[14px] font-semibold text-slate-900 dark:text-white"
+              >
+                {{ formatValue(property) }}
+              </td>
+              <td
+                class="pr-6 py-4! text-[14px] text-slate-500 dark:text-slate-400"
+              >
+                {{ formatUpdatedAt(property) }}
+              </td>
+              <td class="text-right text-slate-500 dark:text-slate-400">
+                <ion-icon
+                  name="ellipsis-vertical-outline"
+                  aria-hidden="true"
+                ></ion-icon>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td
+                colspan="6"
+                class="py-10! text-center text-[14px] text-slate-500 dark:text-slate-400"
+              >
+                {{
+                  hasProperties()
+                    ? 'No properties match your search.'
+                    : 'No properties to display yet.'
+                }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </ion-card-content>
+</ion-card>

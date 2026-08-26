@@ -6,6 +6,10 @@ import { ManagementPage } from './management.page';
 import { ManagementPropertiesComponent } from './management-properties/management-properties.component';
 import { PropertiesPageModule } from '@app/properties/properties.module';
 import { ManagementKpiSummaryComponent } from './management-kpi-summary/management-kpi-summary.component';
+import { ManagementPortfolioOverviewComponent } from './management-portfolio-overview/management-portfolio-overview.component';
+import { ManagementQuickActionComponent } from './management-quick-action/management-quick-action.component';
+import { ManagementRecentListComponent } from './management-recent-list/management-recent-list.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +20,10 @@ import { ManagementKpiSummaryComponent } from './management-kpi-summary/manageme
   declarations: [
     ManagementPage,
     ManagementPropertiesComponent,
-    ManagementKpiSummaryComponent
+    ManagementKpiSummaryComponent,
+    ManagementPortfolioOverviewComponent,
+    ManagementQuickActionComponent,
+    ManagementRecentListComponent
   ]
 })
 export class ManagementPageModule {}

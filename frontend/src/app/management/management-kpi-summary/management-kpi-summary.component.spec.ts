@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
 import { ManagementKpiSummaryComponent } from './management-kpi-summary.component';
 
 describe('ManagementKpiSummaryComponent', () => {
@@ -9,8 +7,7 @@ describe('ManagementKpiSummaryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ManagementKpiSummaryComponent],
-      imports: [IonicModule.forRoot()]
+      declarations: [ManagementKpiSummaryComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ManagementKpiSummaryComponent);

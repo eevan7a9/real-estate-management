@@ -1,0 +1,77 @@
+<ion-card
+  class="h-full overflow-hidden border shadow-none border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-dark-shade"
+>
+  <ion-card-header>
+    <h2
+      class="m-0! text-[16px] font-semibold leading-normal text-[#0f1e39] dark:text-white"
+    >
+      Portfolio overview
+    </h2>
+    <p
+      class="m-0! mt-1 text-[12px] leading-normal text-[#616e85] dark:text-slate-400"
+    >
+      Distribution by transaction type
+    </p>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div
+      class="mt-7 grid grid-cols-1 items-center gap-6 sm:grid-cols-[160px_minmax(0,1fr)] sm:gap-11"
+    >
+      <div class="relative mx-auto size-40">
+        <canvas #portfolioCanvas class="block size-full"></canvas>
+
+        <div
+          class="pointer-events-none absolute inset-7.5 flex flex-col items-center justify-center rounded-full bg-white dark:bg-dark-shade"
+        >
+          <strong
+            class="text-[26px] font-semibold leading-none text-[#0f1e39] dark:text-white"
+          >
+            {{ portfolio().total }}
+          </strong>
+          <span
+            class="mt-1 text-[11px] leading-normal text-[#616e85] dark:text-slate-400"
+          >
+            properties
+          </span>
+        </div>
+      </div>
+
+      <dl class="m-0 flex flex-col gap-6">
+        <div>
+          <dt
+            class="text-[11px] font-semibold leading-normal text-[#616e85] dark:text-slate-400"
+          >
+            FOR SALE
+          </dt>
+          <dd
+            class="m-0 mt-1 text-[16px] font-semibold leading-normal text-[#0f1e39] dark:text-white"
+          >
+            {{ portfolio().forSale }} properties
+          </dd>
+          <span
+            aria-hidden="true"
+            class="mt-2 block size-2.5 rounded-[5px] bg-[#f28c2e]"
+          ></span>
+        </div>
+
+        <div>
+          <dt
+            class="text-[11px] font-semibold leading-normal text-[#616e85] dark:text-slate-400"
+          >
+            FOR RENT
+          </dt>
+          <dd
+            class="m-0 mt-1 text-[16px] font-semibold leading-normal text-[#0f1e39] dark:text-white"
+          >
+            {{ portfolio().forRent }} properties
+          </dd>
+          <span
+            aria-hidden="true"
+            class="mt-2 block size-2.5 rounded-[5px] bg-[#29c065]"
+          ></span>
+        </div>
+      </dl>
+    </div>
+  </ion-card-content>
+</ion-card>

@@ -1,17 +1,6 @@
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  OnInit,
-  signal
-} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import {
-  PropertiesDisplayOption,
-  TransactionType
-} from '../shared/enums/property';
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
 import { PropertiesService } from '@app/properties/properties.service';
@@ -26,12 +15,14 @@ import { PropertiesUploadsComponent } from '@app/properties/properties-uploads-m
   standalone: false
 })
 export class ManagementPage implements OnInit {
-  private userService = inject(UserService);
-  private propertiesService = inject(PropertiesService);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
-  private modalController = inject(ModalController);
-  private toastCtrl = inject(ToastController);
+  private readonly userService = inject(UserService);
+  public readonly user = toSignal(this.userService.user$, {
+    initialValue: undefined
+  });
+  private readonly propertiesService = inject(PropertiesService);
+  public readonly router = inject(Router);
+  private readonly modalController = inject(ModalController);
+  private readonly toastCtrl = inject(ToastController);
 
   async ngOnInit(): Promise<void> {
     await this.propertiesService.loadOwnedProperties();

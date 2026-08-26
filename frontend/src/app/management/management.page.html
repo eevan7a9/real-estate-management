@@ -26,7 +26,9 @@
     class="page-container px-3 2xl:px-0 flex justify-between items-center"
   >
     <div class="flex flex-col">
-      <h1 class="text-3xl font-bold! leading-none">Good morning, Eevan</h1>
+      <h1 class="text-3xl font-bold! leading-none">
+        Good morning, {{ user()?.fullName || user()?.email || 'there' }}
+      </h1>
       <p class="leading-normal text-slate-500 dark:text-slate-400">
         Here's what's happening with your properties today.
       </p>
@@ -46,7 +48,23 @@
     <app-management-kpi-summary></app-management-kpi-summary>
   </section>
 
-  <section class="page-container px-3 2xl:px-0 min-h-125"></section>
+  <section
+    class="page-container px-3 2xl:px-0 w-full grid grid-cols-1 items-stretch lg:grid-cols-2 gap-3 mt-9!"
+  >
+    <app-management-portfolio-overview
+      class="block w-full h-full"
+    ></app-management-portfolio-overview>
+    <app-management-quick-action
+      class="block w-full h-full"
+      (clickCreateProperty)="presentCreateModal()"
+      (clickViewProperties)="router.navigateByUrl('/properties')"
+      (clickViewEnquiries)="router.navigateByUrl('/enquiries')"
+    ></app-management-quick-action>
+  </section>
+
+  <section class="page-container px-3 2xl:px-0 w-full mt-9! min-h-75">
+    <app-management-recent-list></app-management-recent-list>
+  </section>
 
   <app-footer></app-footer>
 </ion-content>

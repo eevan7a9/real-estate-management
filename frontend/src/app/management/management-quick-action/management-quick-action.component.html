@@ -1,0 +1,126 @@
+<ion-card
+  class="h-full overflow-hidden border shadow-none border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-dark-shade"
+  aria-labelledby="quick-actions-title"
+>
+  <ion-card-header>
+    <h2
+      id="quick-actions-title"
+      class="m-0! text-[16px] font-semibold leading-4.75 text-[#0f1e39] dark:text-white"
+    >
+      Manage your portfolio
+    </h2>
+    <p
+      class="m-0! mt-1 text-[12px] leading-3.75 text-[#616e85] dark:text-slate-400"
+    >
+      Keep your listings up to date
+    </p>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="mt-7.5 flex flex-col gap-3">
+      <button
+        type="button"
+        class="flex w-full justify-between items-center cursor-pointer hover:bg-slate-100 dark:hover:bg-dark-tint bg-slate-50 dark:bg-dark py-2! px-4! rounded-xl!"
+        (click)="clickCreateProperty.emit()"
+      >
+        <div class="flex items-center gap-3">
+          <ion-icon
+            name="add-outline"
+            aria-hidden="true"
+            class="h-4.5 w-4.5 text-[#0f1e39] dark:text-slate-200"
+          ></ion-icon>
+          <span class="flex min-w-0 flex-1 flex-col items-start">
+            <span
+              class="text-[14px] font-semibold leading-4.25 text-[#0f1e39] dark:text-white"
+            >
+              Add a property
+            </span>
+            <span
+              class="mt-px text-[12px] leading-3.75 text-[#8b98ad] dark:text-slate-400"
+            >
+              Create a new listing
+            </span>
+          </span>
+        </div>
+
+        <span class="flex h-3.5 w-3.5 shrink-0 items-center">
+          <ion-icon
+            name="chevron-forward-outline"
+            aria-hidden="true"
+            class="h-3.5 w-3.5 text-[#8b98ad]"
+          ></ion-icon>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex w-full justify-between items-center cursor-pointer hover:bg-slate-100 dark:hover:bg-dark-tint bg-slate-50 dark:bg-dark py-2! px-4! rounded-xl!"
+        (click)="clickViewProperties.emit()"
+      >
+        <div class="flex items-center gap-3">
+          <ion-icon
+            name="home-outline"
+            aria-hidden="true"
+            class="h-4.5 w-4.5 text-[#0f1e39] dark:text-slate-200"
+          ></ion-icon>
+
+          <span class="flex min-w-0 flex-1 flex-col items-start">
+            <span
+              class="text-[14px] font-semibold leading-4.25 text-[#0f1e39] dark:text-white"
+            >
+              View all properties
+            </span>
+            <span
+              class="mt-px text-[12px] leading-3.75 text-[#8b98ad] dark:text-slate-400"
+            >
+              Browse and edit listings
+            </span>
+          </span>
+        </div>
+
+        <span class="flex h-3.5 w-3.5 shrink-0 items-center">
+          <ion-icon
+            name="chevron-forward-outline"
+            aria-hidden="true"
+            class="h-3.5 w-3.5 text-[#8b98ad]"
+          ></ion-icon>
+        </span>
+      </button>
+
+      <button
+        type="button"
+        class="flex w-full justify-between items-center cursor-pointer hover:bg-slate-100 dark:hover:bg-dark-tint bg-slate-50 dark:bg-dark py-2! px-4! rounded-xl!"
+        (click)="clickViewEnquiries.emit()"
+      >
+        <div class="flex items-center gap-3">
+          <ion-icon
+            name="arrow-up-outline"
+            aria-hidden="true"
+            class="h-4.5 w-4.5 rotate-45 text-[#0f1e39] dark:text-slate-200"
+          ></ion-icon>
+
+          <span class="flex min-w-0 flex-1 flex-col items-start">
+            <span
+              class="text-[14px] font-semibold leading-4.25 text-[#0f1e39] dark:text-white"
+            >
+              Open enquiries
+            </span>
+            <span
+              class="mt-px text-[12px] leading-3.75 text-[#8b98ad] dark:text-slate-400"
+            >
+              Respond to interested buyers
+            </span>
+          </span>
+        </div>
+
+        <span class="flex h-3.5 w-3.5 shrink-0 items-center">
+          <ion-icon
+            name="chevron-forward-outline"
+            aria-hidden="true"
+            class="h-3.5 w-3.5 text-[#8b98ad]"
+          ></ion-icon>
+        </span>
+      </button>
+    </div>
+  </ion-card-content>
+</ion-card>

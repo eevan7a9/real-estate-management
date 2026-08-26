@@ -50,7 +50,6 @@
 }
 
 .page-container {
-  min-height: 100%;
   max-width: var(--app-screen-container);
   margin: 0 auto;
 }
