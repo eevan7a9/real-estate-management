@@ -1,15 +1,3 @@
-import { fastify } from "../index.js";
-
-/**
- * 
- * @param {string} token 
- * @returns users id from the token
- */
-export const userIdToken = function (token) {
-  const { id } = fastify.jwt.decode(token);
-  return id;
-};
-
 /**
  * Checks if a new password is valid.
  * @param {string} [password] - The password to check.

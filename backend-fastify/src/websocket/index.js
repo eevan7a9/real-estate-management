@@ -1,19 +1,4 @@
-import fastifyWebsocket from "@fastify/websocket";
 import { fastify } from "../index.js";
-import { userIdToken } from "../utils/users.js";
-
-/**
- * Parse message of weboscket.
- * @param {string} message - the raw message from websocket.
- */
-const parseMessage = function (message) {
-  try {
-    const parsedMessage = JSON.parse(message);
-    return parsedMessage;
-  } catch (error) {
-    return message.toString();
-  }
-};
 
 /**
  * Sends a WebSocket notification to specific clients.
@@ -24,9 +9,10 @@ const parseMessage = function (message) {
 export const sendTargetedNotification = function (type, payload, targetUserId) {
   fastify.websocketServer.clients.forEach((client) => {
     if (
-      Array.isArray(targetUserId)
+      (Array.isArray(targetUserId)
         ? targetUserId.includes(client.userId)
-        : targetUserId === client.userId
+        : targetUserId === client.userId) &&
+      client.readyState === client.OPEN
     ) {
       client.send(JSON.stringify({ type, payload }));
     }
@@ -40,7 +26,9 @@ export const sendTargetedNotification = function (type, payload, targetUserId) {
  */
 export const sendGeneralNotification = function (type, payload) {
   fastify.websocketServer.clients.forEach((client) => {
-    client.send(JSON.stringify({ type, payload }));
+    if (client.readyState === client.OPEN) {
+      client.send(JSON.stringify({ type, payload }));
+    }
   });
 };
 
@@ -48,28 +36,44 @@ export const sendGeneralNotification = function (type, payload) {
  * Sets up WebSocket functionality for the Fastify instance.
  */
 export const setFastifyWebsocket = function () {
-  /**
-   * @param {fastifyWebsocket} socket - The WebSocket connection
-   * @param {FastifyRequest} req - The Fastify request object
-   */
   fastify.register(async function (fastify) {
     fastify.get("/websocket", { websocket: true }, (socket, req) => {
-      const userToken = req.query?.userToken || req.request?.query?.userToken;
-      if (!socket) {
-        console.error("\nWebSocket connection is undefined.\n");
+      const rawToken = req.query?.userToken || req.request?.query?.userToken;
+      const token =
+        typeof rawToken === "string"
+          ? rawToken.replace(/^Bearer\s+/i, "")
+          : "";
+
+      let payload;
+      try {
+        payload = fastify.jwt.verify(token);
+      } catch (error) {
+        req.log.warn({ err: error }, "Rejected unauthenticated WebSocket connection");
+        socket.close(1008, "Authentication required");
         return;
       }
-      if (userToken) {
-        const userId = userIdToken(userToken);
-        // Store the user ID in the socket context
-        socket.userId = userId;
-        fastify.websocketServer.clients.add(socket);
+
+      if (!payload?.id || typeof payload.exp !== "number") {
+        req.log.warn("Rejected WebSocket token without required claims");
+        socket.close(1008, "Authentication required");
+        return;
       }
+
+      const expiresInMs = payload.exp * 1000 - Date.now();
+      if (expiresInMs <= 0) {
+        socket.close(1008, "Authentication required");
+        return;
+      }
+
+      // clientTracking is enabled on the WebSocket server, so authenticated
+      // sockets are already included in websocketServer.clients.
+      socket.userId = payload.id;
+      const expirationTimer = setTimeout(() => {
+        socket.close(1008, "Token expired");
+      }, expiresInMs);
+
       socket.on("close", () => {
-        console.log("\n************  Web Socket - close *************\n");
-      });
-      socket.on("message", (message) => {
-        console.log("Web Socket - message", parseMessage(message));
+        clearTimeout(expirationTimer);
       });
     });
   });
