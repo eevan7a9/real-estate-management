@@ -29,7 +29,7 @@ export const deleteProperty = async function (req, res) {
       return res.status(404).send({});
     }
     if (property.images?.length) {
-      unlinkImages(property.images);
+      await unlinkImages(property.images);
     }
 
     // We Log User activity
@@ -38,7 +38,7 @@ export const deleteProperty = async function (req, res) {
       action: ActivityType.property.delete,
       description: activityPropertyDescription(
         ActivityType.property.delete,
-        property
+        property,
       ),
       property_id: id,
     });
@@ -48,7 +48,7 @@ export const deleteProperty = async function (req, res) {
       sendTargetedNotification(
         SocketNotificationType.activity,
         activity,
-        user_id
+        user_id,
       );
     }
     return res.status(200).send({ data: { ...property.toObject() } });

@@ -7,5 +7,8 @@ export const setFastifyStatic = function (fastify) {
   fastify.register(FastifyStatic, {
     root: path.join(__dirname, "uploads"),
     prefix: "/uploads",
+    setHeaders: (res) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+    },
   });
 };
