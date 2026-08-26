@@ -30,6 +30,7 @@
     "dotenv": "^16.3.1",
     "fastify": "^5.8.1",
     "fastify-plugin": "^5.1.0",
+    "google-auth-library": "^10.9.1",
     "mongoose": "^7.3.1",
     "uuid": "^8.3.2"
   },

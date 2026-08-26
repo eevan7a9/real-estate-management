@@ -8,10 +8,20 @@ cd backend-fastify/
 - set your desired variable value
 ```
 PORT=8000
+
 LOGGER=true
+
 SALT=12
-SECRET_KEY='secret'
+
+# Generate with: openssl rand -base64 48
+SECRET_KEY='replace-with-a-unique-secret-of-at-least-32-characters'
+
+JWT_EXPIRES_IN='15m'
+
 DB_CONNECT=mongodb://localhost:27017/rem-db
+
+# Required only when enabling POST /auth/google
+GOOGLE_AUTH_CLIENT_ID='your-google-web-client-id.apps.googleusercontent.com'
 ```
 ## **2. then install dependencies & run dev**
 

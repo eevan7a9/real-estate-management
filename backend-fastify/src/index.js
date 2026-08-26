@@ -16,6 +16,13 @@ import passwordPlugin from "./plugins/password.js";
 
 dotenv.config();
 
+const jwtSecret = process.env.SECRET_KEY;
+if (!jwtSecret || jwtSecret === "secret" || jwtSecret.length < 32) {
+  throw new Error(
+    "SECRET_KEY must be a unique, non-default value of at least 32 characters.",
+  );
+}
+
 /**
  * The Fastify instance.
  * @type {import('fastify').FastifyInstance}
@@ -36,8 +43,14 @@ await fastify.register(FastifyMultipart, {
   }
 });
 
-// We add Secret Key
-await fastify.register(FastifyJwt, { secret: process.env.SECRET_KEY || "secret" });
+// We add Secret Key. Access tokens deliberately expire; clients continue to
+// receive the same response shape and can re-authenticate when needed.
+await fastify.register(FastifyJwt, {
+  secret: jwtSecret,
+  sign: {
+    expiresIn: process.env.JWT_EXPIRES_IN || "15m",
+  },
+});
 // We register Websocket
 await fastify.register(FastifyWebsocket, {
   options: {
