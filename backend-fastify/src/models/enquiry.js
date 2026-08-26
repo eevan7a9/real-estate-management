@@ -24,18 +24,18 @@ const replyToSchema = new mongoose.Schema({
 
 const enquirySchema = new mongoose.Schema(
   {
-    enquiry_id: { type: String, required: true },
-    content: { type: String, minlength: 10, maxlength: 1000 },
-    email: { type: String, required: true },
-    title: { type: String, required: true },
+    enquiry_id: { type: String, required: true, unique: true },
+    content: { type: String, required: true, minlength: 10, maxlength: 1000 },
+    email: { type: String, required: true, match: /.+\@.+\..+/ },
+    title: { type: String, required: true, trim: true },
     topic: { type: String, required: true },
     read: { type: Boolean, default: false },
-    property: propertySchema,
+    property: { type: propertySchema, required: true },
     replyTo: replyToSchema,
-    users: usersSchema,
+    users: { type: usersSchema, required: true },
   },
   {
     timestamps: true,
-  }
+  },
 );
 export const Enquiry = mongoose.model("Enquiry", enquirySchema);

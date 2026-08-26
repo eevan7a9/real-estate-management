@@ -1,5 +1,8 @@
 import { enquiryProperties } from "./schema.js";
-import { responseSuccess, responseError } from '../../../utils/schema/response.js';
+import {
+  responseSuccess,
+  responseError,
+} from "../../../utils/schema/response.js";
 
 export const getEnquiriesOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
@@ -9,9 +12,10 @@ export const getEnquiriesOpts = (fastify, handler) => ({
         data: {
           type: "array",
           items: enquiryProperties,
-        }
+        },
       }),
-      400: responseError()
+      400: responseError(),
+      500: responseError({ status: 500 }),
     },
   },
   handler,

@@ -1,5 +1,8 @@
 import { enquiryProperties } from "./schema.js";
-import { responseSuccess, responseError } from '../../../utils/schema/response.js';
+import {
+  responseSuccess,
+  responseError,
+} from "../../../utils/schema/response.js";
 
 export const deleteEnquiryOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
@@ -7,13 +10,14 @@ export const deleteEnquiryOpts = (fastify, handler) => ({
     response: {
       200: responseSuccess({
         message: "Enquiry deleted!",
-        data: enquiryProperties
+        data: enquiryProperties,
       }),
       400: responseError(),
       404: responseError({
         status: 404,
-        message: "Can't find Enquiry."
-      })
+        message: "Can not find enquiry.",
+      }),
+      500: responseError({ status: 500 }),
     },
   },
   handler: handler,

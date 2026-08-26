@@ -2,7 +2,7 @@ const property = {
   type: "object",
   properties: {
     name: { type: "string" },
-    property_id: { type: "string" }
+    property_id: { type: "string" },
   },
 };
 Object.freeze(property);
@@ -12,12 +12,12 @@ const users = {
   properties: {
     from: {
       user_id: { type: "string" },
-      keep: { type: "boolean" }
+      keep: { type: "boolean" },
     },
     to: {
-      user_id: { type: "boolean" },
-      keep: { type: "boolean" }
-    }
+      user_id: { type: "string" },
+      keep: { type: "boolean" },
+    },
   },
 };
 Object.freeze(users);
