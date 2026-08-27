@@ -3,7 +3,6 @@ import {
   PropertyType,
   TransactionType
 } from '../enums/property';
-import { Coord } from './map';
 
 export interface Property {
   _id: string;
@@ -22,6 +21,7 @@ export interface Property {
   enquiries?: string[];
   features?: string[];
   images?: string[];
+  isActive?: boolean;
   currency?: string;
   contactNumber?: string;
   contactEmail?: string;

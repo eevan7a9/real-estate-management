@@ -1,0 +1,78 @@
+@if (property(); as property) {
+  <ion-card
+    class="m-0! flex h-full flex-col overflow-hidden rounded-xl! border border-slate-200 shadow-none dark:border-slate-800"
+  >
+    <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
+      @if (property.images?.length) {
+        <img
+          class="h-full w-full object-cover"
+          [src]="property.images[0]"
+          [alt]="property.name"
+        />
+      } @else {
+        <img
+          class="h-full w-full object-cover"
+          src="assets/images/no-image.jpeg"
+          [alt]="property.name + ' has no image'"
+        />
+      }
+
+      <span
+        class="absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-xs font-medium"
+        [class]="
+          property.transactionType === 'rent'
+            ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300'
+            : 'bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300'
+        "
+      >
+        For {{ property.transactionType }}
+      </span>
+    </div>
+
+    <ion-card-header class="px-4 pt-4">
+      <ion-card-subtitle
+        class="mt-1 line-clamp-1 text-[14px] font-medium normal-case"
+      >
+        {{ property.name }}
+      </ion-card-subtitle>
+
+      <ion-card-title class="line-clamp-1 text-lg font-bold">
+        {{ property.price | currency: property.currency || 'PHP' }}
+        @if (property.transactionType === 'rent') {
+          <span class="text-sm text-slate-500 dark:text-slate-400">
+            / {{ property.paymentFrequency || 'monthly' }}
+          </span>
+        }
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="mt-auto px-4 pb-4 pt-2 relative">
+      <p class="mt-1 line-clamp-1 text-[14px] font-light normal-case">
+        {{ property.address }}
+      </p>
+
+      <div class="mb-2 flex items-center justify-between gap-2">
+        <app-property-type-badge
+          [type]="property.type"
+        ></app-property-type-badge>
+      </div>
+
+      <div class="flex flex-col! absolute bottom-6 right-3">
+        <ion-toggle
+          [checked]="property?.isActive"
+          [disabled]="isUpdating()"
+          (ionChange)="onActiveChange($event)"
+        >
+          <span
+            [ngClass]="{
+              'text-green-500': property?.isActive,
+              'text-red-500': !property?.isActive
+            }"
+          >
+            {{ property?.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </ion-toggle>
+      </div>
+    </ion-card-content>
+  </ion-card>
+}

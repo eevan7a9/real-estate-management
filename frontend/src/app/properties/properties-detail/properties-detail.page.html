@@ -120,8 +120,7 @@
             <ion-card-header class="px-4 py-2"> Price </ion-card-header>
             <ion-card-content class="price">
               <span class="text-[20px] lg:text-[24px] font-medium">
-                {{
-                  property()?.price | currency: property()?.currency : 'symbol'
+                {{ property()?.price | currency: property()?.currency : 'symbol'
                 }}
               </span>
 
@@ -135,26 +134,26 @@
           </ion-card>
 
           @if (isOwner()) {
-            <div class="max-h-150 mt-3 xl:mt-5">
-              <app-enquiries-related-list
-                [propertyId]="property()?.property_id"
-              />
-            </div>
+          <div class="max-h-150 mt-3 xl:mt-5">
+            <app-enquiries-related-list
+              [propertyId]="property()?.property_id"
+            />
+          </div>
           } @else {
-            <ion-card
-              class="enquiry-section border border-slate-200 dark:border-slate-800"
-            >
-              <ion-card-header class="px-4 py-2">
-                <ion-card-title> Enquire for more Information </ion-card-title>
-              </ion-card-header>
+          <ion-card
+            class="enquiry-section border border-slate-200 dark:border-slate-800"
+          >
+            <ion-card-header class="px-4 py-2">
+              <ion-card-title> Enquire for more Information </ion-card-title>
+            </ion-card-header>
 
-              <ion-card-content>
-                <app-enquiries-new-form
-                  [property]="property()"
-                  [userTo]="property()?.user_id"
-                ></app-enquiries-new-form>
-              </ion-card-content>
-            </ion-card>
+            <ion-card-content>
+              <app-enquiries-new-form
+                [property]="property()"
+                [userTo]="property()?.user_id"
+              ></app-enquiries-new-form>
+            </ion-card-content>
+          </ion-card>
           }
         </ion-col>
 

@@ -41,14 +41,14 @@ export class ManagementRecentListComponent {
   );
 
   public viewAll(): void {
-    void this.router.navigateByUrl('/properties');
+    void this.router.navigateByUrl('/management/properties');
   }
 
   public formatType(type: PropertyType): string {
     return type.charAt(0).toUpperCase() + type.slice(1);
   }
 
-  public formatStatus(transactionType: TransactionType): string {
+  public formatTransactionType(transactionType: TransactionType): string {
     return transactionType === TransactionType.forRent
       ? 'For rent'
       : 'For sale';
@@ -98,7 +98,7 @@ export class ManagementRecentListComponent {
       property.name,
       property.address,
       this.formatType(property.type),
-      this.formatStatus(property.transactionType)
+      this.formatTransactionType(property.transactionType)
     ].some((value) => value.toLowerCase().includes(query));
   }
 

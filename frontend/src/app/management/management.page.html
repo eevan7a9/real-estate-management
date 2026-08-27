@@ -8,7 +8,7 @@
     >
       <div class="flex flex-col gap-1 leading-none">
         <span>Management Page</span>
-        <small class="-mt-1 text-slate-500 dark:text-slate-400">
+        <small class="mt-1 text-slate-500 dark:text-slate-400">
           Your property portfolio at a glance
         </small>
       </div>
@@ -22,49 +22,46 @@
 </ion-header>
 
 <ion-content class="pt-0 m-0">
-  <section
-    class="page-container px-3 2xl:px-0 flex justify-between items-center"
-  >
-    <div class="flex flex-col">
-      <h1 class="text-3xl font-bold! leading-none">
-        Good morning, {{ user()?.fullName || user()?.email || 'there' }}
-      </h1>
-      <p class="leading-normal text-slate-500 dark:text-slate-400">
-        Here's what's happening with your properties today.
-      </p>
-    </div>
-
-    <ion-button
-      color="primary"
-      class="normal-case!"
-      (click)="presentCreateModal()"
+  <main class="flex min-h-full w-full flex-col">
+    <section
+      class="page-container flex w-full items-center justify-between px-3 pt-8 2xl:px-0"
     >
-      <ion-icon name="add-outline" class="ion-margin-end"></ion-icon>
-      Add new property
-    </ion-button>
-  </section>
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-bold! leading-none! m-0!">
+          Good morning, {{ user()?.fullName || user()?.email || 'there' }}
+        </h1>
+        <p class="leading-normal text-slate-500 dark:text-slate-400">
+          Here's what's happening with your properties today.
+        </p>
+      </div>
 
-  <section class="page-container px-3 2xl:px-0 mt-9!">
-    <app-management-kpi-summary></app-management-kpi-summary>
-  </section>
+      <app-properties-add-button
+        class="hide-on-mobile"
+      ></app-properties-add-button>
+    </section>
 
-  <section
-    class="page-container px-3 2xl:px-0 w-full grid grid-cols-1 items-stretch lg:grid-cols-2 gap-3 mt-9!"
-  >
-    <app-management-portfolio-overview
-      class="block w-full h-full"
-    ></app-management-portfolio-overview>
-    <app-management-quick-action
-      class="block w-full h-full"
-      (clickCreateProperty)="presentCreateModal()"
-      (clickViewProperties)="router.navigateByUrl('/properties')"
-      (clickViewEnquiries)="router.navigateByUrl('/enquiries')"
-    ></app-management-quick-action>
-  </section>
+    <section class="page-container mt-9! w-full px-3 2xl:px-0">
+      <app-management-kpi-summary></app-management-kpi-summary>
+    </section>
 
-  <section class="page-container px-3 2xl:px-0 w-full mt-9! min-h-75">
-    <app-management-recent-list></app-management-recent-list>
-  </section>
+    <section
+      class="page-container px-3 2xl:px-0 w-full grid grid-cols-1 items-stretch lg:grid-cols-2 gap-3 mt-9!"
+    >
+      <app-management-portfolio-overview
+        class="block w-full h-full"
+      ></app-management-portfolio-overview>
+      <app-management-quick-action
+        class="block w-full h-full"
+        (clickCreateProperty)="presentCreateModal()"
+        (clickViewProperties)="router.navigateByUrl('/management/properties')"
+        (clickViewEnquiries)="router.navigateByUrl('/enquiries')"
+      ></app-management-quick-action>
+    </section>
 
-  <app-footer></app-footer>
+    <section class="page-container px-3 2xl:px-0 w-full mt-9! min-h-100!">
+      <app-management-recent-list></app-management-recent-list>
+    </section>
+
+    <app-footer class="mt-auto block w-full"></app-footer>
+  </main>
 </ion-content>

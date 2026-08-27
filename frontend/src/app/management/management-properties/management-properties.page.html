@@ -1,0 +1,106 @@
+<ion-header
+  [translucent]="true"
+  class="ion-no-border border-b border-slate-200 dark:border-slate-800"
+>
+  <ion-toolbar>
+    <ion-title>Management Properties</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="location.back()">
+        <ion-icon name="arrow-back-outline" style="font-size: 28px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <app-notification-bell class="lg:mr-3"></app-notification-bell>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="pt-0 m-0">
+  <main class="flex min-h-full w-full flex-col">
+    <section
+      class="page-container flex w-full items-center justify-between px-3 pt-8 2xl:px-0"
+    >
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-bold! leading-none! m-0!">
+          Good morning, {{ user()?.fullName || user()?.email || 'there' }}
+        </h1>
+        <p class="leading-normal text-slate-500 dark:text-slate-400">
+          Here's what's happening with your properties today.
+        </p>
+      </div>
+
+      <app-properties-add-button
+        class="hide-on-mobile"
+      ></app-properties-add-button>
+    </section>
+
+    <section class="page-container mt-9! w-full px-3 2xl:px-0">
+      <app-management-kpi-summary></app-management-kpi-summary>
+    </section>
+
+    <section class="page-container mt-9! w-full px-3 2xl:px-0">
+      <header
+        class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div class="flex flex-col gap-1.5">
+          <h2
+            id="recent-properties-title"
+            class="m-0! text-[16px] font-semibold leading-4.75 text-[#0f1e39] dark:text-white"
+          >
+            My Properties
+          </h2>
+          <p
+            class="m-0! mt-1 text-[12px] leading-3.75 text-[#616e85] dark:text-slate-400"
+          >
+            Manage your listings
+          </p>
+        </div>
+
+        <div class="w-full sm:w-auto">
+          <ion-searchbar
+            class="recent-properties-search w-full p-0! sm:max-w-75 border border-slate-200 dark:border-slate-800"
+            style="--box-shadow: none"
+            placeholder="Search properties"
+            [value]="searchTerm()"
+            (ionInput)="searchTerm.set($any($event.target).value || '')"
+            aria-label="Search my properties"
+          ></ion-searchbar>
+        </div>
+      </header>
+
+      @if (isLoading()) {
+      <div class="flex justify-center py-12">
+        <ion-spinner
+          name="crescent"
+          aria-label="Loading properties"
+        ></ion-spinner>
+      </div>
+      } @else if (loadError()) {
+      <p class="py-12 text-center text-slate-500 dark:text-slate-400">
+        {{ loadError() }}
+      </p>
+      } @else {
+      <div
+        class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        @for (property of filteredProperties(); track property.property_id) {
+        <app-management-properties-card
+          [property]="property"
+        ></app-management-properties-card>
+        } @empty {
+        <p
+          class="col-span-full py-12 text-center text-slate-500 dark:text-slate-400"
+        >
+          {{ ownedProperties()?.length ? 'No properties match your search.' :
+          'No properties to display yet.' }}
+        </p>
+        }
+      </div>
+      }
+    </section>
+  </main>
+</ion-content>
+
+<app-footer></app-footer>

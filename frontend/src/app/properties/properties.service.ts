@@ -171,6 +171,20 @@ export class PropertiesService {
     );
   }
 
+  public updatePropertyStatus(
+    propertyId: string,
+    isActive: boolean
+  ): Observable<ApiResponse<Property>> {
+    const url = propertyUrl + `/` + propertyId;
+    const token = this.userService.token;
+
+    return this.http.patch<ApiResponse<Property>>(
+      url,
+      { isActive },
+      requestOptions({ token })
+    );
+  }
+
   public fetchOwnedProperties(): Observable<ApiResponse<Property[]>> {
     return this.http.get<ApiResponse<Property[]>>(
       propertyUrl + '/me',
