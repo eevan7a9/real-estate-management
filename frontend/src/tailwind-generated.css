@@ -625,6 +625,9 @@
   .hidden {
     display: none;
   }
+  .hidden\! {
+    display: none !important;
+  }
   .inline-flex {
     display: inline-flex;
   }
@@ -833,8 +836,14 @@
   .min-w-25 {
     min-width: calc(var(--spacing) * 25);
   }
+  .min-w-35 {
+    min-width: calc(var(--spacing) * 35);
+  }
   .min-w-190 {
     min-width: calc(var(--spacing) * 190);
+  }
+  .min-w-\[140px\] {
+    min-width: 140px;
   }
   .min-w-\[300px\] {
     min-width: 300px;
@@ -1836,6 +1845,12 @@
     }
     .md\:w-auto {
       width: auto;
+    }
+    .md\:min-w-75 {
+      min-width: calc(var(--spacing) * 75);
+    }
+    .md\:min-w-\[300px\] {
+      min-width: 300px;
     }
     .md\:flex-row {
       flex-direction: row;
