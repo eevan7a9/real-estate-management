@@ -92,6 +92,7 @@ export const createEnquiry = async function (req, res) {
     } else {
       const foundProperty = await Property.findOne({
         property_id: property.property_id,
+        isActive: true,
       });
       if (!foundProperty || foundProperty.user_id !== userTo) {
         return res

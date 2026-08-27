@@ -26,7 +26,7 @@ export const getProperties = async function (req, res) {
   });
 
   const filterQuery = composeFilterQuery(filter, search);
-  const query = { ...filterQuery, ...rangeQuery };
+  const query = { isActive: true, ...filterQuery, ...rangeQuery };
 
   const properties = await Property.find(query)
     .limit(parseInt(limit))
@@ -57,7 +57,7 @@ export const getProperties = async function (req, res) {
  */
 export const getPropertiesMap = async function (req, res) {
   try {
-    const properties = await Property.find({}).select({
+    const properties = await Property.find({ isActive: true }).select({
       property_id: 1,
       name: 1,
       type: 1,

@@ -23,7 +23,7 @@ export const getProperty = async function (req, res) {
         }
       : {};
 
-    const property = await Property.findOne({ property_id: id })
+    const property = await Property.findOne({ property_id: id, isActive: true })
       .select(projection)
       .lean();
 

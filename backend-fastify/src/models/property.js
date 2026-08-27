@@ -36,6 +36,7 @@ const propertySchema = new mongoose.Schema(
     contactNumber: { type: String },
     contactEmail: { type: String },
     user_id: { type: String },
+    isActive: { type: Boolean, default: true, index: true },
   },
   {
     timestamps: true,

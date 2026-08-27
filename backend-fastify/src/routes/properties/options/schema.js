@@ -38,6 +38,7 @@ export const propertyProperties = {
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
     user_id: { type: "string" },
+    isActive: { type: "boolean" },
   },
 };
 Object.freeze(propertyProperties);
@@ -57,6 +58,7 @@ export const propertyPopupProperties = {
     images: { type: "array" },
     currency: { type: "string" },
     user_id: { type: "string" },
+    isActive: { type: "boolean" },
   },
 };
 Object.freeze(propertyPopupProperties);

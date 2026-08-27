@@ -24,6 +24,7 @@ export const updateProperty = async function (req, res) {
     contactNumber,
     transactionType,
     contactEmail,
+    isActive,
   } = req.body;
 
   const $set = {
@@ -42,6 +43,7 @@ export const updateProperty = async function (req, res) {
     ...(contactEmail !== undefined && {
       contactEmail: contactEmail.toLowerCase(),
     }),
+    ...(isActive !== undefined && { isActive }),
   };
   try {
     const user_id = req.user.id;
