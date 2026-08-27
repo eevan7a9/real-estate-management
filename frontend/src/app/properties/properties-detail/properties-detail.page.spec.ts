@@ -15,9 +15,9 @@ import { RestrictionService } from 'src/app/shared/services/restriction/restrict
 import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-alert/confirmation-alert.service';
 import { Property } from 'src/app/shared/interface/property';
 
-import { PropertiesDetailComponent } from './properties-detail.component';
+import { PropertiesDetailPage } from './properties-detail.page';
 
-describe('PropertiesDetailComponent', () => {
+describe('PropertiesDetailPage', () => {
   const property = {
     _id: '1',
     property_id: 'property-1',
@@ -34,12 +34,12 @@ describe('PropertiesDetailComponent', () => {
       .createSpy()
       .and.returnValue(of({ status: 200, data: property }))
   };
-  let component: PropertiesDetailComponent;
-  let fixture: ComponentFixture<PropertiesDetailComponent>;
+  let component: PropertiesDetailPage;
+  let fixture: ComponentFixture<PropertiesDetailPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [PropertiesDetailComponent],
+      declarations: [PropertiesDetailPage],
       imports: [RouterModule.forRoot([])],
       providers: [
         provideIonicAngular(),
@@ -61,7 +61,7 @@ describe('PropertiesDetailComponent', () => {
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PropertiesDetailComponent);
+    fixture = TestBed.createComponent(PropertiesDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

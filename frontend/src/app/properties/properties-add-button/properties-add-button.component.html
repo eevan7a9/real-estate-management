@@ -1,0 +1,22 @@
+@if (isFab()) {
+  <ion-fab
+    class="properties-fab ion-margin-end"
+    style="
+      position: fixed;
+      right: calc(10px + var(--ion-safe-area-right, 0px));
+      bottom: calc(10px + var(--ion-safe-area-bottom, 0px));
+      z-index: 999;
+    "
+    vertical="bottom"
+    horizontal="end"
+  >
+    <ion-fab-button (click)="presentModal()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+} @else {
+  <ion-button color="primary" class="ion-float-right" (click)="presentModal()">
+    New Property
+    <ion-icon name="add-circle-outline"></ion-icon>
+  </ion-button>
+}

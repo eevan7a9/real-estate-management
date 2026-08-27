@@ -9,7 +9,7 @@ import { PropertiesPage } from './properties.page';
 import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
 import { PropertiesListComponent } from './properties-list/properties-list.component';
 import { PropertiesCardComponent } from './properties-card/properties-card.component';
-import { PropertiesDetailComponent } from './properties-detail/properties-detail.component';
+import { PropertiesDetailPage } from './properties-detail/properties-detail.page';
 import { PropertiesEditComponent } from './properties-edit-modal/properties-edit.component';
 import { PropertiesCoordinatesComponent } from './properties-coordinates-modal/properties-coordinates.component';
 import { EnquiriesPageModule } from '../enquiries/enquiries.module';
@@ -18,6 +18,7 @@ import { PropertiesUploadsComponent } from './properties-uploads-modal/propertie
 import { PropertiesGalleryComponent } from './properties-gallery/properties-gallery.component';
 import { PropertiesCurrentImagesComponent } from './properties-uploads-modal/properties-current-images/properties-current-images.component';
 import { PropertiesListItemComponent } from './properties-list-item/properties-list-item.component';
+import { PropertiesAddButtonComponent } from './properties-add-button/properties-add-button.component';
 
 @NgModule({
   imports: [
@@ -33,14 +34,19 @@ import { PropertiesListItemComponent } from './properties-list-item/properties-l
     PropertiesNewComponent,
     PropertiesListComponent,
     PropertiesCardComponent,
-    PropertiesDetailComponent,
+    PropertiesDetailPage,
     PropertiesEditComponent,
     PropertiesCoordinatesComponent,
     PropertiesUploadsComponent,
     PropertiesGalleryComponent,
     PropertiesCurrentImagesComponent,
-    PropertiesListItemComponent
+    PropertiesListItemComponent,
+    PropertiesAddButtonComponent
   ],
-  exports: [PropertiesListComponent, PropertiesCardComponent]
+  exports: [
+    PropertiesListComponent,
+    PropertiesCardComponent,
+    PropertiesAddButtonComponent
+  ]
 })
 export class PropertiesPageModule {}

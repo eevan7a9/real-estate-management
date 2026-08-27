@@ -21,11 +21,11 @@ import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-a
 
 @Component({
   selector: 'app-properties-detail',
-  templateUrl: './properties-detail.component.html',
-  styleUrls: ['./properties-detail.component.css'],
+  templateUrl: './properties-detail.page.html',
+  styleUrls: ['./properties-detail.page.css'],
   standalone: false
 })
-export class PropertiesDetailComponent implements OnInit, OnDestroy {
+export class PropertiesDetailPage implements OnInit, OnDestroy {
   public property = signal<Property | undefined>(undefined);
   public ready = signal(false);
   public loadError = signal<string | null>(null);

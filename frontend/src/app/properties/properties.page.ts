@@ -13,9 +13,6 @@ import {
 
 import { Property } from '../shared/interface/property';
 import { UserService } from '../user/user.service';
-import { PropertiesNewComponent } from './properties-new-modal/properties-new.component';
-import { PropertiesUploadsComponent } from './properties-uploads-modal/properties-uploads.component';
-
 import {
   IonSearchbarCustomEvent,
   IonSelectCustomEvent,
@@ -122,29 +119,6 @@ export class PropertiesPage implements OnInit {
     }
   }
 
-  async presentModal() {
-    const user = this.userService.user;
-    if (!user) {
-      this.router.navigateByUrl('/user/signin');
-      this.toastCtrl
-        .create({
-          message: 'Please sign in, to continue',
-          duration: 3000,
-          color: 'danger'
-        })
-        .then((toast) => toast.present());
-      return;
-    }
-    const modalPropertiesNew = await this.modalController.create({
-      component: PropertiesNewComponent
-    });
-    await modalPropertiesNew.present();
-    const { data } = await modalPropertiesNew.onDidDismiss();
-    if (data) {
-      this.presentUploadModal(data);
-    }
-  }
-
   public setFilters(
     event: IonSelectCustomEvent<SelectChangeEventDetail<string[]>>
   ): void {
@@ -199,14 +173,6 @@ export class PropertiesPage implements OnInit {
     if (sort) {
       this.sortBy.set(sort || 'latest');
     }
-  }
-
-  private async presentUploadModal(property: Property) {
-    const modalUploads = await this.modalController.create({
-      component: PropertiesUploadsComponent,
-      componentProps: { property }
-    });
-    await modalUploads.present();
   }
 
   private resetPageState() {

@@ -73,18 +73,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-fab
-  slot="fixed"
-  vertical="bottom"
-  horizontal="end"
-  class="ion-margin-end show-on-mobile"
->
-  <ion-fab-button (click)="presentModal()" color="success">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+<ion-content [fullscreen]="true" class="ion-padding-horizontal relative">
+  <app-properties-add-button
+    class="show-on-mobile"
+    [isFab]="true"
+  ></app-properties-add-button>
 
-<ion-content [fullscreen]="true" class="ion-padding-horizontal">
   <div class="pt-4 2xl:pt-8">
     <ion-progress-bar
       style="margin: 4px 0 0 0"
@@ -107,11 +101,11 @@
     </ion-card>
 
     <ion-grid class="max-w-screen-xl pt-4 mx-auto">
-      <ion-row class="ion-align-items-center hide-on-mobile mb-3 lg:mb-5">
+      <ion-row class="ion-align-items-center mb-3 lg:mb-5">
         <ion-col class="heading ion-padding-horizontal flex items-center gap-1">
-          <span class="mr-3 text-[20px] lg:text-[24px] lg:font-medium"
-            >List of Properties</span
-          >
+          <span class="mr-3 text-[20px] lg:text-[24px] lg:font-medium">
+            List of Properties
+          </span>
 
           <!-- Cards Display Options -->
           <ion-button
@@ -135,14 +129,9 @@
         </ion-col>
 
         <ion-col class="ion-padding-horizontal">
-          <ion-button
-            color="success"
-            class="ion-float-right"
-            (click)="presentModal()"
-          >
-            New Property
-            <ion-icon name="add-circle-outline"></ion-icon
-          ></ion-button>
+          <app-properties-add-button
+            class="hide-on-mobile"
+          ></app-properties-add-button>
         </ion-col>
       </ion-row>
       <!-- Card List of Properties -->
