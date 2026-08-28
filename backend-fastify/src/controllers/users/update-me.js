@@ -15,12 +15,16 @@ export const updateMe = async function (req, res) {
   };
   try {
     const options = { new: true, runValidators: true };
-    const updatedUser = await User.findOneAndUpdate({ user_id }, { $set }, options);
-    
+    const updatedUser = await User.findOneAndUpdate(
+      { user_id },
+      { $set },
+      options,
+    );
+
     if (!updatedUser) {
       return res.status(404).send({ message: "Error: User not found." });
     }
-    
+
     res.status(200).send({
       message: "Success: update user information.",
       data: updatedUser,
@@ -28,6 +32,8 @@ export const updateMe = async function (req, res) {
   } catch (error) {
     res
       .status(500)
-      .send({ message: "Error: An internal error occurred, please try again later.", });
+      .send({
+        message: "Error: An internal error occurred, please try again later.",
+      });
   }
 };

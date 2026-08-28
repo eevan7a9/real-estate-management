@@ -99,7 +99,12 @@ export const getMyProperties = async function (req, res) {
  */
 const composeFilterQuery = function (filter, search) {
   const filterQuery = {};
-  const validPropertyTypes = new Set(["residential", "commercial", "industrial", "land"]);
+  const validPropertyTypes = new Set([
+    "residential",
+    "commercial",
+    "industrial",
+    "land",
+  ]);
   const validTransactionTypes = new Set(["sale", "rent"]);
   if (filter) {
     const transactionType = []; // ex. transactionTypes [ 'sale' ]
@@ -123,7 +128,10 @@ const composeFilterQuery = function (filter, search) {
   }
   const searchText = search?.trim();
   if (searchText) {
-    const escapedSearch = searchText.replace(/[.*+?^\x24{}()|[\]\\]/g, (match) => "\\" + match);
+    const escapedSearch = searchText.replace(
+      /[.*+?^\x24{}()|[\]\\]/g,
+      (match) => "\\" + match,
+    );
     filterQuery.$or = [
       { name: { $regex: escapedSearch, $options: "i" } }, // Case-insensitive search on name
       { address: { $regex: escapedSearch, $options: "i" } }, // Assuming there's a description field

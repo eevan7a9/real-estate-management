@@ -56,7 +56,7 @@ export const updateProperty = async function (req, res) {
     const property = await Property.findOneAndUpdate(
       { property_id, user_id },
       { $set },
-      options
+      options,
     );
     if (!property) {
       return res
@@ -69,7 +69,7 @@ export const updateProperty = async function (req, res) {
       action: ActivityType.property.update,
       description: activityPropertyDescription(
         ActivityType.property.update,
-        property
+        property,
       ),
       property_id: property.property_id,
     });
@@ -78,7 +78,7 @@ export const updateProperty = async function (req, res) {
       sendTargetedNotification(
         SocketNotificationType.activity,
         activity,
-        user_id
+        user_id,
       );
     }
 

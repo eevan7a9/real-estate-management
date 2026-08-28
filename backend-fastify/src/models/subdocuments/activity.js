@@ -23,7 +23,7 @@ const activitySchema = new mongoose.Schema(
   {
     _id: false,
     timestamps: true, // This adds createdAt and updatedAt fields
-  }
+  },
 );
 
 export { activitySchema };

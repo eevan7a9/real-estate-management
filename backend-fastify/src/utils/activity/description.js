@@ -29,7 +29,7 @@ const propertyPrice = function (
   currency,
   price,
   transactionType,
-  paymentFrequency
+  paymentFrequency,
 ) {
   return `for ${transactionType} at ${currency} ${price}${
     transactionType === "sale" ? "." : " [" + paymentFrequency + "]"
@@ -55,7 +55,7 @@ export const propertyDescriptionCreate = function (property) {
     currency,
     price,
     transactionType,
-    paymentFrequency
+    paymentFrequency,
   )}`;
 };
 
@@ -67,7 +67,7 @@ export const propertyDescriptionCreate = function (property) {
 export const propertyDescriptionDelete = function (property) {
   const { transactionType, name } = property;
   return `Deleted a Property listed for ${transactionType} named [${propertyName(
-    name
+    name,
   )}].`;
 };
 
@@ -79,7 +79,7 @@ export const propertyDescriptionDelete = function (property) {
 export const propertyDescriptionUpdate = function (property) {
   const { name, transactionType, price, paymentFrequency, currency } = property;
   return `Updated a Property listed for ${transactionType} named [${propertyName(
-    name
+    name,
   )}] ${propertyPrice(currency, price, transactionType, paymentFrequency)}.`;
 };
 

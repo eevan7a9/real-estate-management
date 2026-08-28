@@ -27,7 +27,7 @@ export const removeExpiredNotifications = function (user) {
   const originalSize = user.notifications.length;
   const now = new Date();
   user.notifications = user.notifications.filter(
-    (notification) => notification.expiresAt > now
+    (notification) => notification.expiresAt > now,
   );
   // console.log("\n Original Size:" + originalSize + "\n Current Size : " + user.notifications.length);
   return originalSize != user.notifications.length;

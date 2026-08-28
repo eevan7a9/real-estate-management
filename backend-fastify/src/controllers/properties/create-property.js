@@ -28,7 +28,7 @@ export const createProperty = async function (req, res) {
       ...req.body,
     });
     const user = await User.findOne({ user_id });
-    if(!user) {
+    if (!user) {
       return res.status(404).send({ message: "Error: User not found." });
     }
     // We Log User activity
@@ -36,7 +36,7 @@ export const createProperty = async function (req, res) {
       action: ActivityType.property.new,
       description: activityPropertyDescription(
         ActivityType.property.new,
-        newProperty
+        newProperty,
       ),
       property_id: newProperty.property_id,
     });
@@ -44,7 +44,11 @@ export const createProperty = async function (req, res) {
     await user.save();
 
     if (activity) {
-      sendTargetedNotification(SocketNotificationType.activity, activity, user_id);
+      sendTargetedNotification(
+        SocketNotificationType.activity,
+        activity,
+        user_id,
+      );
     }
     await newProperty.save();
     return res.status(201).send({ data: newProperty });

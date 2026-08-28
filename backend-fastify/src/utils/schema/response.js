@@ -1,11 +1,9 @@
 const success = {
   status: 200,
   message: "Success!",
-  data: {}
-}
-export const responseSuccess = (
-  def = success
-) => ({
+  data: {},
+};
+export const responseSuccess = (def = success) => ({
   type: "object",
   properties: {
     status: {
@@ -28,10 +26,8 @@ const error = {
   status: 400,
   error: "error",
   message: "Something went wrong, please try again later.",
-}
-export const responseError = (
-  def = error
-) => ({
+};
+export const responseError = (def = error) => ({
   type: "object",
   properties: {
     status: {
@@ -50,6 +46,5 @@ export const responseError = (
       type: "string",
       default: def.message || error.message,
     },
-
   },
 });

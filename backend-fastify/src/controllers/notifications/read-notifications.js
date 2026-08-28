@@ -24,15 +24,19 @@ export const readNotification = async function (req, res) {
     const updatedNotifications = [];
     ids.forEach((id) => {
       const notification = user.notifications.find(
-        (item) => item.notification_id === id && !item.read
+        (item) => item.notification_id === id && !item.read,
       );
       if (notification) {
         notification.read = true;
         updatedNotifications.push(notification);
       }
     });
-    if(!updatedNotifications.length) {
-      res.status(400).send({ message: "Error: Some or all notifications have already been read." });
+    if (!updatedNotifications.length) {
+      res
+        .status(400)
+        .send({
+          message: "Error: Some or all notifications have already been read.",
+        });
     }
     await user.save();
     res.status(200).send({
@@ -41,7 +45,7 @@ export const readNotification = async function (req, res) {
       data: updatedNotifications,
     });
   } catch (error) {
-    console.log("\n Read notification error:", error)
+    console.log("\n Read notification error:", error);
     res
       .status(400)
       .send({ message: "Error: Something went wrong please try again later." });

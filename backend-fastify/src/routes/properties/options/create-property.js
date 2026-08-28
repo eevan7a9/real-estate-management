@@ -1,5 +1,8 @@
 import { propertyProperties } from "./schema.js";
-import { responseSuccess, responseError } from "../../../utils/schema/response.js";
+import {
+  responseSuccess,
+  responseError,
+} from "../../../utils/schema/response.js";
 
 export const createPropertyOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
@@ -8,11 +11,11 @@ export const createPropertyOpts = (fastify, handler) => ({
       201: responseSuccess({
         status: 201,
         message: "Property created!",
-        data: propertyProperties
+        data: propertyProperties,
       }),
       400: responseError({
         status: 400,
-        message: "Error: Something went wrong, please try again later."
+        message: "Error: Something went wrong, please try again later.",
       }),
       401: responseError({
         status: 401,

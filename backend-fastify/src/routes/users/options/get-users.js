@@ -2,7 +2,10 @@
  *  Schema for multiple users request
  */
 import { userProperties } from "./schema.js";
-import { responseSuccess, responseError } from "../../../utils/schema/response.js";
+import {
+  responseSuccess,
+  responseError,
+} from "../../../utils/schema/response.js";
 
 export const getUsersOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
@@ -14,8 +17,8 @@ export const getUsersOpts = (fastify, handler) => ({
           items: {
             type: "object",
             properties: userProperties,
-          }
-        }
+          },
+        },
       }),
       400: responseError(),
       500: responseError({ status: 500 }),

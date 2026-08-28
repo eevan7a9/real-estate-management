@@ -6,16 +6,16 @@ export const SocketNotificationType = {
   activity: "ACTIVITY",
   enquiry: "ENQUIRY",
   logout: "USER_LOGOUT",
-  user: "USER"
+  user: "USER",
 };
 
 Object.freeze(SocketNotificationType);
 
 export const NotificationType = {
-  account: "ACCOUNT", 
-  enquiry: "ENQUIRY", 
-  property: "PROPERTY", 
-  system: "SYSTEM"
+  account: "ACCOUNT",
+  enquiry: "ENQUIRY",
+  property: "PROPERTY",
+  system: "SYSTEM",
 };
 
 Object.freeze(NotificationType);

@@ -33,7 +33,12 @@ export const googleAuth = async function (req, res) {
     return res.status(401).send({ message: "Invalid Google credential." });
   }
 
-  const { sub, email, name: fullName, email_verified: emailVerified } = payload || {};
+  const {
+    sub,
+    email,
+    name: fullName,
+    email_verified: emailVerified,
+  } = payload || {};
   if (!sub || !email || !fullName || !emailVerified) {
     return res.status(401).send({ message: "Invalid Google credential." });
   }
@@ -46,7 +51,8 @@ export const googleAuth = async function (req, res) {
       const existingEmailUser = await User.exists({ email: normalizedEmail });
       if (existingEmailUser) {
         return res.status(409).send({
-          message: "An account already exists with this email. Please sign in using its existing method.",
+          message:
+            "An account already exists with this email. Please sign in using its existing method.",
         });
       }
 

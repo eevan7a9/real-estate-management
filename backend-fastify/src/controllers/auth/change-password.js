@@ -1,5 +1,8 @@
 import { ActivityType } from "../../enums/activity.js";
-import { NotificationType, SocketNotificationType } from "../../enums/notifications.js";
+import {
+  NotificationType,
+  SocketNotificationType,
+} from "../../enums/notifications.js";
 import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
@@ -9,11 +12,19 @@ import { sendTargetedNotification } from "../../websocket/index.js";
 
 export const changePassword = async function (req, res) {
   const { passwordCurrent, passwordNew } = req.body;
-  if (!passwordCurrent) return res.status(400).send({ message: "Error: form is invalid, current password is missing" });
-  else if (!passwordNew) return res.status(400).send({ message: "Error: form is invalid, new password is missing" });
-  else if (passwordCurrent === passwordNew) return res.status(400).send({
-    message: "Error: new password cannot be the same as your current password. Please choose a different password"
-  });
+  if (!passwordCurrent)
+    return res
+      .status(400)
+      .send({ message: "Error: form is invalid, current password is missing" });
+  else if (!passwordNew)
+    return res
+      .status(400)
+      .send({ message: "Error: form is invalid, new password is missing" });
+  else if (passwordCurrent === passwordNew)
+    return res.status(400).send({
+      message:
+        "Error: new password cannot be the same as your current password. Please choose a different password",
+    });
 
   const user_id = req.user.id;
 
@@ -26,13 +37,20 @@ export const changePassword = async function (req, res) {
       });
     }
 
-    const validPasswordCurrent = await fastify.verifyPassword(passwordCurrent, foundUser.password);
+    const validPasswordCurrent = await fastify.verifyPassword(
+      passwordCurrent,
+      foundUser.password,
+    );
     if (!validPasswordCurrent) {
-      return res.status(400).send({ message: "Error: Current password is not valid." });
+      return res
+        .status(400)
+        .send({ message: "Error: Current password is not valid." });
     }
 
     if (!isPasswordValid(passwordNew)) {
-      return res.status(400).send({ message: "Error: New password is not valid." });
+      return res
+        .status(400)
+        .send({ message: "Error: New password is not valid." });
     }
 
     const hashedPassword = await fastify.hashPassword(passwordNew);
@@ -42,7 +60,11 @@ export const changePassword = async function (req, res) {
       type: NotificationType.account,
       message: "Your account password has been successfully updated.",
     });
-    sendTargetedNotification(SocketNotificationType.user, notification, user_id);
+    sendTargetedNotification(
+      SocketNotificationType.user,
+      notification,
+      user_id,
+    );
 
     // Add activity
     addActivity(foundUser, {

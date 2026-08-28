@@ -40,15 +40,16 @@ export const setFastifyWebsocket = function () {
     fastify.get("/websocket", { websocket: true }, (socket, req) => {
       const rawToken = req.query?.userToken || req.request?.query?.userToken;
       const token =
-        typeof rawToken === "string"
-          ? rawToken.replace(/^Bearer\s+/i, "")
-          : "";
+        typeof rawToken === "string" ? rawToken.replace(/^Bearer\s+/i, "") : "";
 
       let payload;
       try {
         payload = fastify.jwt.verify(token);
       } catch (error) {
-        req.log.warn({ err: error }, "Rejected unauthenticated WebSocket connection");
+        req.log.warn(
+          { err: error },
+          "Rejected unauthenticated WebSocket connection",
+        );
         socket.close(1008, "Authentication required");
         return;
       }

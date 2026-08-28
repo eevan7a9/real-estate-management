@@ -1,6 +1,6 @@
 /**
- * 
- * @param {import("fastify").FastifyRequest} request 
+ *
+ * @param {import("fastify").FastifyRequest} request
  * @returns users token
  */
 export const authBearerToken = function (request) {

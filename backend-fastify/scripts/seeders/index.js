@@ -7,9 +7,18 @@ import { Property } from "../../src/models/property.js";
 import { Enquiry } from "../../src/models/enquiry.js";
 
 // Import JSON data
-const users = JSON.parse(await fs.readFile(new URL("./data/users.json", import.meta.url), "utf-8"));
-const properties = JSON.parse(await fs.readFile(new URL("./data/properties.json", import.meta.url), "utf-8"))
-const enquiries = JSON.parse(await fs.readFile(new URL("./data/enquiries.json", import.meta.url), "utf-8"));
+const users = JSON.parse(
+  await fs.readFile(new URL("./data/users.json", import.meta.url), "utf-8"),
+);
+const properties = JSON.parse(
+  await fs.readFile(
+    new URL("./data/properties.json", import.meta.url),
+    "utf-8",
+  ),
+);
+const enquiries = JSON.parse(
+  await fs.readFile(new URL("./data/enquiries.json", import.meta.url), "utf-8"),
+);
 
 dotenv.config();
 

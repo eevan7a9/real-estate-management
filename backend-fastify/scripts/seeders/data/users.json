@@ -5,9 +5,7 @@
     "email": "test@email.com",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
     "authProvider": "local",
-    "properties": [
-      "106ab526-72af-4446-9550-998a48d98c0c"
-    ],
+    "properties": ["106ab526-72af-4446-9550-998a48d98c0c"],
     "activities": [
       {
         "action": "ENQUIRY_NEW",

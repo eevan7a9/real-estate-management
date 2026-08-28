@@ -33,7 +33,7 @@ export const deleteNotification = async function (req, res) {
       message: "Success: Notification has been deleted!",
     });
   } catch (error) {
-    console.log("\n Delete Error:", error)
+    console.log("\n Delete Error:", error);
     res
       .status(400)
       .send({ message: "Error: Something went wrong please try again later." });

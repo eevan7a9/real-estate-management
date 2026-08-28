@@ -8,10 +8,7 @@
     "type": "commercial",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54034501314165,
-        8.946547026360946
-      ]
+      "coordinates": [125.54034501314165, 8.946547026360946]
     },
     "price": 500000,
     "features": [
@@ -40,18 +37,10 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54808759760274,
-        8.949260150548875
-      ]
+      "coordinates": [125.54808759760274, 8.949260150548875]
     },
     "price": 200500,
-    "features": [
-      "Balcony",
-      " Move-In Ready",
-      "Garage",
-      "Laundry"
-    ],
+    "features": ["Balcony", " Move-In Ready", "Garage", "Laundry"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-3_GIokyDxR2.jpg",
@@ -71,18 +60,10 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54535808264038,
-        8.94753663904503
-      ]
+      "coordinates": [125.54535808264038, 8.94753663904503]
     },
     "price": 100000,
-    "features": [
-      "Newly Renovated",
-      " Move-In Ready",
-      "2-Bedroom",
-      "bathroom"
-    ],
+    "features": ["Newly Renovated", " Move-In Ready", "2-Bedroom", "bathroom"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
@@ -102,18 +83,10 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54713081029891,
-        8.948362011724328
-      ]
+      "coordinates": [125.54713081029891, 8.948362011724328]
     },
     "price": 42000000,
-    "features": [
-      "bedroom",
-      " restaurant",
-      " coffee",
-      " service"
-    ],
+    "features": ["bedroom", " restaurant", " coffee", " service"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg"
@@ -131,10 +104,7 @@
     "type": "commercial",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54287249264564,
-        8.942932943430131
-      ]
+      "coordinates": [125.54287249264564, 8.942932943430131]
     },
     "price": 5000000,
     "features": [
@@ -162,19 +132,10 @@
     "type": "industrial",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54676748310783,
-        8.949726468110553
-      ]
+      "coordinates": [125.54676748310783, 8.949726468110553]
     },
     "price": 10000000,
-    "features": [
-      "item1",
-      " item2",
-      " item3",
-      " item4",
-      " item5"
-    ],
+    "features": ["item1", " item2", " item3", " item4", " item5"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/store-1_iWCxD16NUTB.jpg",
@@ -193,10 +154,7 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54440568160534,
-        8.94441409896366
-      ]
+      "coordinates": [125.54440568160534, 8.94441409896366]
     },
     "price": 1000400,
     "features": [
@@ -223,10 +181,7 @@
     "type": "land",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54300171301645,
-        8.947622720569576
-      ]
+      "coordinates": [125.54300171301645, 8.947622720569576]
     },
     "price": 20000000,
     "features": [
@@ -252,18 +207,10 @@
     "type": "land",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54356075006507,
-        8.949604577038496
-      ]
+      "coordinates": [125.54356075006507, 8.949604577038496]
     },
     "price": 1000000,
-    "features": [
-      "Residential Plot",
-      "Timberland",
-      "Secluded",
-      "Fertile Soil"
-    ],
+    "features": ["Residential Plot", "Timberland", "Secluded", "Fertile Soil"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/land-1_AhsuDBOQF2.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/land-2_rfrOT2tgzmx.jpg",
@@ -283,17 +230,10 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54574932918608,
-        8.946981543223995
-      ]
+      "coordinates": [125.54574932918608, 8.946981543223995]
     },
     "price": 3000000,
-    "features": [
-      "shop",
-      "self service",
-      "open space"
-    ],
+    "features": ["shop", "self service", "open space"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg",
@@ -312,17 +252,10 @@
     "type": "industrial",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54443478733799,
-        8.948581857249334
-      ]
+      "coordinates": [125.54443478733799, 8.948581857249334]
     },
     "price": 10000000,
-    "features": [
-      "item1",
-      " item2",
-      " item3"
-    ],
+    "features": ["item1", " item2", " item3"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/arch-1_1E9WxLDcVyIQ.png",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/store-1_iWCxD16NUTB.jpg",
@@ -341,17 +274,10 @@
     "type": "residential",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54396063089374,
-        8.947376342975213
-      ]
+      "coordinates": [125.54396063089374, 8.947376342975213]
     },
     "price": 850000,
-    "features": [
-      "item1",
-      " item",
-      "2 item3"
-    ],
+    "features": ["item1", " item", "2 item3"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg"
@@ -369,10 +295,7 @@
     "type": "commercial",
     "position": {
       "type": "Point",
-      "coordinates": [
-        125.54550402508922,
-        8.946427789736584
-      ]
+      "coordinates": [125.54550402508922, 8.946427789736584]
     },
     "price": 500000,
     "features": [
