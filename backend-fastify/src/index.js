@@ -40,7 +40,7 @@ await fastify.register(FastifyMultipart, {
   limits: {
     fileSize: 2 * 1024 * 1024, // 2MB per file
     files: 10,
-  }
+  },
 });
 
 // We add Secret Key. Access tokens deliberately expire; clients continue to
@@ -65,6 +65,18 @@ await fastify.decorate("authenticate", async function (request, reply) {
     request.user = user;
   } catch (err) {
     reply.send(err);
+  }
+});
+
+await fastify.decorate("optionalAuthenticate", async function (request) {
+  const authorization = request.headers.authorization;
+  if (typeof authorization !== "string" || !/^Bearer\s+/i.test(authorization))
+    return;
+
+  try {
+    request.user = await request.jwtVerify();
+  } catch (error) {
+    request.log.debug({ err: error }, "Ignoring invalid optional JWT");
   }
 });
 // Generate API documentation

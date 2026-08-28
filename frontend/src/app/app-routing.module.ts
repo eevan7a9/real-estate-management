@@ -52,10 +52,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('./user/user.module').then((m) => m.UserPageModule)
   },
+  // {
+  //   path: 'about',
+  //   loadChildren: () =>
+  //     import('./about/about.module').then((m) => m.AboutPageModule)
+  // },
   {
-    path: 'about',
+    path: 'help-support',
     loadChildren: () =>
-      import('./about/about.module').then((m) => m.AboutPageModule)
+      import('./help-support/help-support.module').then(
+        (m) => m.HelpSupportPageModule
+      )
   }
 ];
 

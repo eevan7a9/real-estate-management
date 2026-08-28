@@ -64,4 +64,7 @@ dummy user:
 /auth/
 /properties/
 /enquiries/
+/contact-submissions/
 ```
+
+Contact submission topics: `general`, `property`, `account`, `technical`, `other`.

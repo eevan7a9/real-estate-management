@@ -1,0 +1,133 @@
+<ion-header
+  [translucent]="true"
+  class="ion-no-border border-b border-slate-200 dark:border-slate-800"
+>
+  <ion-toolbar>
+    <ion-title class="px-3 xl:px-4 text-[16px] md:text-[18px]">
+      Help &amp; Support
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="max-w-screen-xl mx-auto px-3 xl:px-4 py-5 space-y-5">
+    <section
+      class="rounded-xl bg-primary text-white px-5 py-8 md:px-8 md:py-10"
+    >
+      <h1 class="text-2xl md:text-3xl font-bold">Help &amp; Support</h1>
+      <p class="mt-2 text-white/90">
+        Find answers or get in touch with our team.
+      </p>
+      <ion-searchbar
+        class="mt-4 p-0"
+        placeholder="What can we help you with?"
+        aria-label="Search help and support"
+      ></ion-searchbar>
+    </section>
+
+    <section
+      class="rounded-xl border bg-white dark:bg-dark-shade border-slate-200 dark:border-slate-800 p-5"
+    >
+      <h2 class="text-xl font-bold">FAQ</h2>
+      <div class="mt-4 grid gap-5 md:grid-cols-2">
+        <div>
+          <h3 class="font-semibold text-primary">Buying &amp; Renting</h3>
+          <details class="border-b border-slate-200 dark:border-slate-800 py-3">
+            <summary class="cursor-pointer">
+              How do I search for a property?
+            </summary>
+            <p class="pt-2 text-sm text-slate-600 dark:text-slate-400">
+              Use the Properties page to search by location, type, and other
+              filters.
+            </p>
+          </details>
+          <details class="border-b border-slate-200 dark:border-slate-800 py-3">
+            <summary class="cursor-pointer">How do I contact an agent?</summary>
+            <p class="pt-2 text-sm text-slate-600 dark:text-slate-400">
+              Open a property listing and use its enquiry option to contact the
+              agent.
+            </p>
+          </details>
+          <details class="py-3">
+            <summary class="cursor-pointer">
+              How do I schedule a viewing?
+            </summary>
+            <p class="pt-2 text-sm text-slate-600 dark:text-slate-400">
+              Send an enquiry with your preferred viewing date and time.
+            </p>
+          </details>
+        </div>
+        <div>
+          <h3 class="font-semibold text-primary">Account &amp; Profile</h3>
+          <details class="border-b border-slate-200 dark:border-slate-800 py-3">
+            <summary class="cursor-pointer">
+              How do I reset my password?
+            </summary>
+            <p class="pt-2 text-sm text-slate-600 dark:text-slate-400">
+              Go to the sign-in page and choose the password reset option.
+            </p>
+          </details>
+          <details class="py-3">
+            <summary class="cursor-pointer">
+              How do I update my profile?
+            </summary>
+            <p class="pt-2 text-sm text-slate-600 dark:text-slate-400">
+              Open your profile, edit your details, and save your changes.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="rounded-xl border bg-white dark:bg-dark-shade border-slate-200 dark:border-slate-800 p-5"
+    >
+      <h2 class="text-xl font-bold">Still need help?</h2>
+      <p class="mt-1 text-slate-600 dark:text-slate-400">Send us a message.</p>
+      <app-contact-form class="block mt-4"></app-contact-form>
+    </section>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <ion-card
+        class="m-0 shadow-none border border-slate-200 dark:border-slate-800"
+      >
+        <ion-card-content>
+          <h2 class="font-bold text-dark dark:text-light">📧 Email Us</h2>
+          <a class="text-primary" href="mailto:sample-email@support.com"
+            >sample-email@support.com</a
+          >
+        </ion-card-content>
+      </ion-card>
+      <ion-card
+        class="m-0 shadow-none border border-slate-200 dark:border-slate-800"
+      >
+        <ion-card-content>
+          <h2 class="font-bold text-dark dark:text-light">📞 Call Us</h2>
+          <a class="text-primary" href="tel:+630000000000">+63 XXX XXX XXXX</a>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <section
+      class="rounded-xl border border-amber-200 bg-amber-50 p-5 dark:border-amber-900 dark:bg-amber-950/30"
+    >
+      <h2 class="text-xl font-bold">⚠️ Report a Problem</h2>
+      <p class="mt-1 text-slate-600 dark:text-slate-300">
+        Found a suspicious or incorrect listing?
+      </p>
+      <ion-button class="mt-3" fill="outline">Report a Problem</ion-button>
+    </section>
+
+    <section
+      class="rounded-xl border border-slate-200 dark:border-slate-800 p-5 text-center"
+    >
+      <h2 class="text-xl font-bold">🔒 Safety &amp; Trust</h2>
+      <p class="mt-1 text-slate-600 dark:text-slate-400">
+        Tips for staying safe when dealing with property listings and agents.
+      </p>
+      <ion-button class="mt-3" fill="outline">Learn More</ion-button>
+    </section>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

@@ -182,7 +182,9 @@ export class AppComponent implements OnInit {
   private connectedUserToken = '';
 
   public appLowerPages = computed<NavLinks[]>(() => {
-    const pages = [{ title: 'About', url: '/about', icon: 'help-circle' }];
+    const pages = [
+      { title: 'Help & Support', url: '/help-support', icon: 'help-circle' }
+    ];
     if (this.user()) {
       return [
         ...pages,
