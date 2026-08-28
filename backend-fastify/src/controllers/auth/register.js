@@ -3,6 +3,10 @@ import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
 import { isPasswordValid } from "../../utils/users.js";
 import { UserAuthProvider } from "../../enums/users.js";
+import {
+  createRefreshSession,
+  setRefreshTokenCookie,
+} from "../../services/auth-session.js";
 
 /**
  * Registers a new user.
@@ -29,6 +33,8 @@ export const register = async function (req, res) {
       });
       const { user_id } = await newUser.save();
       const accessToken = fastify.jwt.sign({ id: newUser.user_id });
+      const refreshToken = await createRefreshSession(user_id, req);
+      setRefreshTokenCookie(res, refreshToken);
       return res.status(201).send({
         data: { user_id, email: email.toLowerCase(), fullName, accessToken },
       });

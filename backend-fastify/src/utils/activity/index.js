@@ -53,7 +53,7 @@ export const activityEnquiryDescription = function (action, enquiry) {
     default:
       break;
   }
-  return msg;
+  return "";
 };
 
 /**
@@ -84,7 +84,7 @@ export const activityPropertyDescription = function (
     default:
       break;
   }
-  return msg;
+  return "";
 };
 
 /**

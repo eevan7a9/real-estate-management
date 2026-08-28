@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import Fastify from "fastify";
 // import FastifyBcrypt from "fastify-bcrypt";
 import FastifyJwt from "@fastify/jwt";
+import FastifyCookie from "@fastify/cookie";
 import FastifyMultipart from "@fastify/multipart";
 import mongoose from "mongoose";
 import FastifyWebsocket from "@fastify/websocket";
@@ -51,6 +52,7 @@ await fastify.register(FastifyJwt, {
     expiresIn: process.env.JWT_EXPIRES_IN || "15m",
   },
 });
+await fastify.register(FastifyCookie);
 // We register Websocket
 await fastify.register(FastifyWebsocket, {
   options: {

@@ -29,11 +29,9 @@ export const updateMe = async function (req, res) {
       message: "Success: update user information.",
       data: updatedUser,
     });
-  } catch (error) {
-    res
-      .status(500)
-      .send({
-        message: "Error: An internal error occurred, please try again later.",
-      });
+  } catch {
+    res.status(500).send({
+      message: "Error: An internal error occurred, please try again later.",
+    });
   }
 };

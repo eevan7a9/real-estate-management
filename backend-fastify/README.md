@@ -22,6 +22,8 @@ SALT=12
 SECRET_KEY='replace-with-a-unique-secret-of-at-least-32-characters'
 
 JWT_EXPIRES_IN='15m'
+REFRESH_TOKEN_EXPIRES_IN='14d'
+FRONTEND_ORIGINS='https://app.example.com'
 
 DB_CONNECT=mongodb://localhost:27017/rem-db
 
@@ -67,6 +69,10 @@ dummy user:
 
   You can use this to signin.
 ```
+
+## Authentication sessions
+
+Access tokens expire after 15 minutes. Login, registration, and Google sign-in also set an `HttpOnly` refresh-token cookie. Send requests with credentials enabled, call `POST /auth/refresh` to obtain a replacement access token, and call `POST /auth/logout` to revoke the current device session. Configure `FRONTEND_ORIGINS` with the HTTPS frontend origin in production.
 
 ## Routes
 

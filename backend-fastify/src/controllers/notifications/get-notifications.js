@@ -24,7 +24,7 @@ export const getNotifications = async function (req, res) {
       message: "Returns list of Notifications",
       data: user?.notifications || [],
     });
-  } catch (error) {
+  } catch {
     res.status(400).send({
       message: "Error: Something went wrong, Please try again later.",
     });

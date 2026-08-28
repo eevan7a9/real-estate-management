@@ -1,5 +1,3 @@
-import { User } from "../models/user.js";
-
 /**
  * @typedef {Object} Activity
  * @property {string} action - The action taken (e.g., "ENQUIRY_NEW", "ENQUIRY_DELETE", etc).

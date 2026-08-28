@@ -32,11 +32,9 @@ export const readNotification = async function (req, res) {
       }
     });
     if (!updatedNotifications.length) {
-      res
-        .status(400)
-        .send({
-          message: "Error: Some or all notifications have already been read.",
-        });
+      res.status(400).send({
+        message: "Error: Some or all notifications have already been read.",
+      });
     }
     await user.save();
     res.status(200).send({

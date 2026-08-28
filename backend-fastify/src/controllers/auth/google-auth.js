@@ -6,6 +6,10 @@ import { UserAuthProvider } from "../../enums/users.js";
 import { addActivity } from "../../services/activity.js";
 import { ActivityType } from "../../enums/activity.js";
 import { activitySigninDescription } from "../../utils/activity/index.js";
+import {
+  createRefreshSession,
+  setRefreshTokenCookie,
+} from "../../services/auth-session.js";
 
 const googleClient = new OAuth2Client();
 
@@ -66,6 +70,8 @@ export const googleAuth = async function (req, res) {
     }
 
     const accessToken = fastify.jwt.sign({ id: user.user_id });
+    const refreshToken = await createRefreshSession(user.user_id, req);
+    setRefreshTokenCookie(res, refreshToken);
 
     addActivity(user, {
       action: ActivityType.user.login,

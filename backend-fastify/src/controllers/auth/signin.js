@@ -3,6 +3,10 @@ import { fastify } from "../../index.js";
 import { User } from "../../models/user.js";
 import { addActivity } from "../../services/activity.js";
 import { activitySigninDescription } from "../../utils/activity/index.js";
+import {
+  createRefreshSession,
+  setRefreshTokenCookie,
+} from "../../services/auth-session.js";
 
 export const signIn = async function (req, res) {
   const { email, password } = req.body;
@@ -23,6 +27,8 @@ export const signIn = async function (req, res) {
     }
     const { user_id } = foundUser;
     const accessToken = fastify.jwt.sign({ id: user_id });
+    const refreshToken = await createRefreshSession(user_id, req);
+    setRefreshTokenCookie(res, refreshToken);
 
     // We log as User activity
     addActivity(foundUser, {

@@ -11,7 +11,7 @@ import { contactSubmissionsRoutes } from "./contact-submissions/index.js";
  * @param {import("fastify").FastifyInstance} fastify
  */
 export const setFastifyRoutes = function (fastify) {
-  fastify.get("/", async (req, reply) => {
+  fastify.get("/", async () => {
     console.log("GET Request at base '/'");
     return {
       success: true,

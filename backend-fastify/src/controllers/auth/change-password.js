@@ -9,6 +9,10 @@ import { addActivity } from "../../services/activity.js";
 import { addNotification } from "../../services/notification.js";
 import { isPasswordValid } from "../../utils/users.js";
 import { sendTargetedNotification } from "../../websocket/index.js";
+import {
+  clearRefreshTokenCookie,
+  revokeAllRefreshSessions,
+} from "../../services/auth-session.js";
 
 export const changePassword = async function (req, res) {
   const { passwordCurrent, passwordNew } = req.body;
@@ -72,6 +76,8 @@ export const changePassword = async function (req, res) {
       description: "You changed your account password.",
     });
     await foundUser.save();
+    await revokeAllRefreshSessions(user_id);
+    clearRefreshTokenCookie(res);
 
     return res.status(200).send({
       message: "Success: Your password has been successfully updated.",
