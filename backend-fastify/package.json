@@ -8,7 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "db:seeder": "node scripts/seeders/index.js"
+    "db:seeder": "node scripts/seeders/index.js",
+    "format": "prettier --write \"**/*.{js,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,json,md}\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [
     "fastify",
@@ -35,7 +39,12 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/busboy": "^0.3.1",
-    "nodemon": "^2.0.12"
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.11.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^3.9.6"
   }
 }
