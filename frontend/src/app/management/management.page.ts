@@ -25,6 +25,7 @@ export class ManagementPage implements OnInit {
   private readonly toastCtrl = inject(ToastController);
 
   async ngOnInit(): Promise<void> {
+    await this.userService.sessionReady;
     await this.propertiesService.loadOwnedProperties();
   }
 

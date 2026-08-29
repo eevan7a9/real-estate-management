@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import {
   BehaviorSubject,
+  firstValueFrom,
   Observable,
   concatMap,
   finalize,
@@ -29,6 +30,8 @@ const url = environment.api.server;
 })
 export class UserService {
   public user$: Observable<UserSignedIn | undefined>;
+  /** Resolves after a persisted session has been refreshed or cleared. */
+  public readonly sessionReady: Promise<void>;
   private readonly userSub = new BehaviorSubject<UserSignedIn | undefined>(
     undefined
   );
@@ -41,7 +44,7 @@ export class UserService {
     private toastCtrl: ToastController
   ) {
     this.user$ = this.userSub.asObservable();
-    void this.restoreSession();
+    this.sessionReady = this.restoreSession();
   }
 
   public get user(): User | undefined {
@@ -212,10 +215,14 @@ export class UserService {
     const storedUser = await this.storage.getUser();
     if (!storedUser) return;
 
+    // Keep the session available to refreshAccessToken(), but do not let callers
+    // race ahead with the persisted (and potentially expired) access token.
     this.userSub.next(storedUser);
-    this.refreshAccessToken().subscribe({
-      error: () => void this.clearSessionAndRedirect()
-    });
+    try {
+      await firstValueFrom(this.refreshAccessToken());
+    } catch {
+      await this.clearSessionAndRedirect();
+    }
   }
 
   private logRefresh(message: string): void {
