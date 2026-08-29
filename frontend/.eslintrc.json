@@ -1,9 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": ["projects/**/*", "src/environments/*.generated.d.ts"],
   "overrides": [
     {
       "files": ["*.ts"],
+      "excludedFiles": ["*.d.ts"],
       "parserOptions": {
         "project": ["tsconfig.json"],
         "createDefaultProgram": true
@@ -43,6 +44,17 @@
             "style": "camelCase"
           }
         ]
+      }
+    },
+    {
+      "files": ["scripts/**/*.cjs"],
+      "env": {
+        "node": true,
+        "es2022": true
+      },
+      "parserOptions": {
+        "ecmaVersion": 2022,
+        "sourceType": "script"
       }
     },
     {

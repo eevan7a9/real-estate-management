@@ -1,12 +1,10 @@
 [![GitHub Repo stars](https://img.shields.io/github/stars/eevan7a9/real-estate-management?style=social)](https://github.com/eevan7a9/real-estate-management/stargazers)
 [![License](https://img.shields.io/badge/License-Apache_License_2.0-blue.svg)](LICENSE)
 
-
 # real-estate-management
 
 A web and mobile property management solution built with Ionic, Angular and Nodejs Fastify.
 Designed for managing residential, commercial, and land properties the app allows users to explore available estates via an interactive map and directly send inquiries to property owners.
-
 
 🚧 **frontend/** work in progress 🚧.
 
@@ -15,13 +13,16 @@ Designed for managing residential, commercial, and land properties the app allow
 ### **[LIVE WEB PREVIEW](https://real-estate-management.netlify.app/)**
 
 # 🎨 Themes
+
 ## 📱 Android (Pixel 7)
+
 <p float="left">
   <img src="./screenshots/mobile-light.webp" width="200" style="margin-right: 20px;"/>
   <img src="./screenshots/mobile-dark.webp" width="200"/>
 </p>
 
 ## 💻 Desktop Browser
+
 ### ☀️ Light Theme
 
 <p float="left">
@@ -38,10 +39,10 @@ Designed for managing residential, commercial, and land properties the app allow
   <img src="./screenshots/detail-dark.webp" width="350" />
 </p>
 
-
 # **🗃️ Dependencies**
 
 ### **Frontend**
+
 - [Ionic 9+](https://ionicframework.com/)
 - [Angular 20+](https://angular.io/)
 - [tailwindcss 4+](https://tailwindcss.com/)
@@ -49,6 +50,7 @@ Designed for managing residential, commercial, and land properties the app allow
 - [chartjs 4+](https://www.chartjs.org/)
 
 ### **Backend**
+
 - [Node](https://nodejs.org/en/)
 - [fastify 4+](https://www.fastify.io/)
 - [mongoDB](https://www.mongodb.com/)
@@ -60,34 +62,75 @@ Designed for managing residential, commercial, and land properties the app allow
 ### **1.1 navigate to `frontend/` directory.**
 
 ```
-#  navigate to frontend 
+#  navigate to frontend
 $ cd frontend
 ```
 
-### **1.2 Fill the desired environment variables:**  
-- navigate to `frontend/src/environments`
-- set values to variables (ex. api.url) 
-```
-  api: {
-    server: 'http://localhost:8000/', <-- server URL
-    mapKey: '', <-- Leaflet map key,
-    googleAuthClientId: '', <-- google Auth CLient ID for Social signin
-    webSocketUrl: 'ws://localhost:8000/websocket' <-- websocket URL
-  }
+### **1.2 Configure environment variables**
+
+Copy the frontend template to a local `.env` file:
+
+```bash
+cp .env.example .env
 ```
 
-### **2. then install dependencies & run ionic serve**
+For a production build, create a separate production configuration:
 
-In terminal - command
+```bash
+cp .env.example .env.production
 ```
-# install dependencies
-$ npm install
 
-# serve frontend
-$ ionic serve
+Required values:
+
+```env
+API_SERVER=http://localhost:8000/
+WEBSOCKET_URL=ws://localhost:8000/websocket
 ```
+
+Optional browser-visible values include:
+
+```env
+GOOGLE_AUTH_CLIENT_ID=
+
+MAP_KEY=
+MAP_TILES_DEFAULT=https://tile.openstreetmap.org/{z}/{x}/{y}.png
+MAP_TILES_DARK=https://tile.openstreetmap.org/{z}/{x}/{y}.png
+
+RESTRICTED_MODE=false
+RESTRICTED_HEADING=Restricted
+RESTRICTED_MESSAGE=This feature is currently disabled in this mode.
+```
+
+`.env` and `.env.production` are ignored by Git. Do not put server secrets in them: their values are compiled into the browser application.
+
+### **2. Install dependencies**
+
+```bash
+npm install
+```
+
+### **3. Run the frontend**
+
+```bash
+ionic serve
+```
+
+`ionic serve` reads `.env` and generates `src/environments/environment.generated.ts` before starting Angular. After changing `.env`, stop and start `ionic serve` again.
+
+### **4. Build the frontend**
+
+```bash
+# Development build using .env
+npm run build:development
+
+# Production build using .env.production
+npm run build
+```
+
+All frontend environment values are browser-visible at runtime. Keep credentials and other secrets on the backend.
 
 Tailwindcss Build Styles
+
 ```
 # Build to Generate styles
 $ npm run tailwind:build
@@ -95,24 +138,29 @@ $ npm run tailwind:build
 # Build to Generate styles & Watch
 $ npm run tailwind:watch
 ```
+
 ## **📱 Android setup**
 
 sync any chages from web to android:
+
 ```
 npx cap sync android
 ```
 
 If Android is not available **(Optional)**
+
 ```
 npx cap add android
 ```
 
 run to open Android Studio
+
 ```
 npx cap open android
 ```
 
 To run the project on Emulator or Device **(Alternative)**
+
 ```
 npx cap run android
 ```
@@ -120,13 +168,18 @@ npx cap run android
 <br>
 
 ## **Backend-Fastify setup**
+
 ### **1.1 navigate to `backend-fastify/` directory.**
+
 ```
 cd backend-fastify/
 ```
+
 ### **1.2 create `.env` file & add variables:**
+
 - copy `.env.example` & re-name it to `.env`
 - set your desired variable value
+
 ```
 PORT=8000
 LOGGER=true
@@ -134,11 +187,13 @@ SALT=12
 SECRET_KEY='secret'
 DB_CONNECT=mongodb://localhost:27017/rem-db
 ```
+
 ### **2. then install dependencies & run dev**
 
 In terminal - command
+
 ```
-#  navigate to backend-fastify 
+#  navigate to backend-fastify
 $ cd backend-fastify
 
 # install dependencies
@@ -150,17 +205,20 @@ $ npm start `or` $ npm run dev
 ```
 
 ### **2.1 Database seeder(optional)**
+
 - Make sure `.env` is configured & dependencies are installed
 - Will populate database with dummy data.
 
-⚠️ This will delete existing records in the database document. 
+⚠️ This will delete existing records in the database document.
 
 ⚠️ Make a backup if needed
+
 ```
 $ npm run db:seeder
 ```
 
 dummy user:
+
 ```
   fullName: "test tester",
   email: "test@email.com",
@@ -168,7 +226,9 @@ dummy user:
 
   You can use this to signin.
 ```
+
 ## Routes
+
 ```
 /docs/
 /users/
