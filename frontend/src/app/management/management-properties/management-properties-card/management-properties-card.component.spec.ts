@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { PropertiesService } from '../../../properties/properties.service';
+import { SharedModule } from '../../../shared/shared.module';
 
 import { ManagementPropertiesCardComponent } from './management-properties-card.component';
 
@@ -11,7 +12,7 @@ describe('ManagementPropertiesCardComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ManagementPropertiesCardComponent],
-      imports: [IonicModule.forRoot()],
+      imports: [SharedModule],
       providers: [
         {
           provide: PropertiesService,

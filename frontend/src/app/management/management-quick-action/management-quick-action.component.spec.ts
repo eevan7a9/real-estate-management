@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '../../shared/shared.module';
 
 import { ManagementQuickActionComponent } from './management-quick-action.component';
 
@@ -10,7 +10,7 @@ describe('ManagementQuickActionComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ManagementQuickActionComponent],
-      imports: [IonicModule.forRoot()]
+      imports: [SharedModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ManagementQuickActionComponent);
