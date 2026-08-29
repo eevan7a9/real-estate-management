@@ -24,8 +24,10 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { StorageService } from './shared/services/storage/storage.service';
+import { authRefreshInterceptor } from './user/auth-refresh.interceptor';
 import {
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi
 } from '@angular/common/http';
 
@@ -54,7 +56,10 @@ import {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     StorageService,
     provideIonicAngular(),
-    provideHttpClient(withInterceptorsFromDi())
+    provideHttpClient(
+      withInterceptors([authRefreshInterceptor]),
+      withInterceptorsFromDi()
+    )
   ]
 })
 export class AppModule {}

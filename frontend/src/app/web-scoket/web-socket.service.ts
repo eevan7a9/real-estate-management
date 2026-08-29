@@ -33,6 +33,7 @@ export class WebSocketService {
   ) {}
 
   connect(token?: string): void {
+    this.disconnect();
     this.socket = new WebSocket(
       `${environment.api.webSocketUrl}?userToken=${token}`
     );

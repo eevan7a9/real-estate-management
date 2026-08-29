@@ -23,6 +23,11 @@ SECRET_KEY='replace-with-a-unique-secret-of-at-least-32-characters'
 
 JWT_EXPIRES_IN='15m'
 REFRESH_TOKEN_EXPIRES_IN='14d'
+
+# Refresh-cookie defaults are SameSite=Lax and Secure in production.
+# For Capacitor/cross-site HTTPS API deployments use:
+# REFRESH_COOKIE_SAME_SITE='none'
+# REFRESH_COOKIE_SECURE='true'
 FRONTEND_ORIGINS='https://app.example.com'
 
 DB_CONNECT=mongodb://localhost:27017/rem-db
@@ -72,7 +77,7 @@ dummy user:
 
 ## Authentication sessions
 
-Access tokens expire after 15 minutes. Login, registration, and Google sign-in also set an `HttpOnly` refresh-token cookie. Send requests with credentials enabled, call `POST /auth/refresh` to obtain a replacement access token, and call `POST /auth/logout` to revoke the current device session. Configure `FRONTEND_ORIGINS` with the HTTPS frontend origin in production.
+Access tokens expire after 15 minutes. Login, registration, and Google sign-in also set an `HttpOnly` refresh-token cookie. Send requests with credentials enabled, call `POST /auth/refresh` to obtain a replacement access token, and call `POST /auth/logout` to revoke the current device session. Configure `FRONTEND_ORIGINS` with every HTTPS web origin and, for Capacitor Android, `http://localhost`. Cross-site or Capacitor-to-HTTPS API deployments must set `REFRESH_COOKIE_SAME_SITE='none'` and `REFRESH_COOKIE_SECURE='true'`.
 
 ## Routes
 

@@ -29,8 +29,8 @@
           change.
         </ion-col>
       </ion-row>
-      <ion-row class="px-3">
-        <ion-col size="12" sizeXl="7">
+      <ion-row>
+        <ion-col size="12" sizeXl="7" class="xl:px-2 p-1 xl:py-0">
           <app-mortgage-core-calc
             #calc
             [boxShadow]="false"
@@ -38,13 +38,13 @@
             (onCalculateAmortization)="lineChart.setChart($event)"
           ></app-mortgage-core-calc>
         </ion-col>
-        <ion-col size="12" sizeXl="5" class="xl:px-3 py-3 xl:py-0">
+        <ion-col size="12" sizeXl="5" class="xl:px-2 p-1 xl:py-0">
           <app-mortgage-pie-chart #pieChart></app-mortgage-pie-chart>
         </ion-col>
 
-        <ion-col size="12" class="p-3 my-8">
+        <ion-col size="12" class="p-3 my-2">
           <div
-            class="bg-light-shade dark:bg-dark-shade rounded-md p-4 flex text-danger items-center gap-2"
+            class="bg-warning/15 rounded-md p-4 flex text-danger items-center gap-2"
           >
             <ion-icon name="alert-circle-outline"></ion-icon>
             Your monthly mortgage payment will depend on your Property price,

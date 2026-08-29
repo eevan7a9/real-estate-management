@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, concatMap, from, map, tap } from 'rxjs';
+import { HttpClient, HttpContext } from '@angular/common/http';
+import {
+  BehaviorSubject,
+  Observable,
+  concatMap,
+  finalize,
+  from,
+  map,
+  shareReplay,
+  tap,
+  throwError
+} from 'rxjs';
 import { User, UserDetails, UserSignedIn } from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
@@ -10,6 +20,7 @@ import { ApiResponse } from '../shared/interface/api-response';
 import { requestOptions } from '../shared/utility/requests';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { SKIP_AUTH_REFRESH } from './auth-request-context';
 
 const url = environment.api.server;
 
@@ -21,6 +32,7 @@ export class UserService {
   private readonly userSub = new BehaviorSubject<UserSignedIn | undefined>(
     undefined
   );
+  private refreshInFlight$?: Observable<string>;
 
   constructor(
     private http: HttpClient,
@@ -29,14 +41,7 @@ export class UserService {
     private toastCtrl: ToastController
   ) {
     this.user$ = this.userSub.asObservable();
-    // Access Stored User
-    this.storage.init().then(() => {
-      this.storage.getUser().then((user) => {
-        if (user) {
-          this.setUser(user);
-        }
-      });
-    });
+    void this.restoreSession();
   }
 
   public get user(): User | undefined {
@@ -48,9 +53,15 @@ export class UserService {
   }
 
   public async signOut(): Promise<void> {
-    this.userSub.next(undefined);
-    this.storage.removeUser();
-    this.router.navigate(['/user/signin'], { replaceUrl: true });
+    try {
+      await new Promise<void>((resolve) => {
+        this.http
+          .post<ApiResponse>(url + 'auth/logout', {}, this.authRequestOptions())
+          .subscribe({ complete: resolve, error: resolve });
+      });
+    } finally {
+      await this.clearSessionAndRedirect();
+    }
   }
 
   public signIn(
@@ -149,6 +160,73 @@ export class UserService {
     }
     this.userSub.next(undefined);
     await this.storage.removeUser();
+  }
+
+  public refreshAccessToken(): Observable<string> {
+    if (this.refreshInFlight$) {
+      this.logRefresh('Reusing an in-flight access-token refresh.');
+      return this.refreshInFlight$;
+    }
+
+    this.logRefresh('Requesting a replacement access token.');
+
+    this.refreshInFlight$ = this.http
+      .post<ApiResponse<{ accessToken: string }>>(
+        url + 'auth/refresh',
+        {},
+        this.authRequestOptions()
+      )
+      .pipe(
+        concatMap((res) => {
+          const accessToken = res.data?.accessToken;
+          const currentUser = this.userSub.getValue();
+          if (!accessToken || !currentUser) {
+            return throwError(
+              () =>
+                new Error(
+                  'A refresh token was returned without a local user session.'
+                )
+            );
+          }
+          return from(this.setUser({ ...currentUser, accessToken })).pipe(
+            map(() => {
+              this.logRefresh('Access token refreshed successfully.');
+              return accessToken;
+            })
+          );
+        }),
+        finalize(() => (this.refreshInFlight$ = undefined)),
+        shareReplay({ bufferSize: 1, refCount: false })
+      );
+    return this.refreshInFlight$;
+  }
+
+  public async clearSessionAndRedirect(): Promise<void> {
+    this.userSub.next(undefined);
+    await this.storage.removeUser();
+    await this.router.navigate(['/user/signin'], { replaceUrl: true });
+  }
+
+  private async restoreSession(): Promise<void> {
+    await this.storage.init();
+    const storedUser = await this.storage.getUser();
+    if (!storedUser) return;
+
+    this.userSub.next(storedUser);
+    this.refreshAccessToken().subscribe({
+      error: () => void this.clearSessionAndRedirect()
+    });
+  }
+
+  private logRefresh(message: string): void {
+    if (!environment.production) console.info('[Auth refresh]', message);
+  }
+
+  private authRequestOptions() {
+    return {
+      withCredentials: true,
+      context: new HttpContext().set(SKIP_AUTH_REFRESH, true)
+    };
   }
 
   private async showToast(

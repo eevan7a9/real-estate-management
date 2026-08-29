@@ -5,6 +5,7 @@ import { RefreshSession } from "../models/refresh-session.js";
 export const REFRESH_TOKEN_COOKIE = "refresh_token";
 
 const DEFAULT_REFRESH_TOKEN_EXPIRES_IN = "14d";
+const COOKIE_SAME_SITE_VALUES = new Set(["lax", "strict", "none"]);
 
 const durationToMs = function (value, fallback) {
   const match = /^(\d+)\s*([smhdw])$/i.exec(value || "");
@@ -26,13 +27,39 @@ export const getRefreshTokenExpiresIn = () =>
 export const getRefreshTokenMaxAgeMs = () =>
   durationToMs(getRefreshTokenExpiresIn(), 14 * 24 * 60 * 60 * 1000);
 
-const refreshCookieOptions = () => ({
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax",
-  path: "/auth",
-  maxAge: Math.floor(getRefreshTokenMaxAgeMs() / 1000),
-});
+const getRefreshCookieSameSite = () => {
+  const value = (process.env.REFRESH_COOKIE_SAME_SITE || "lax").toLowerCase();
+  if (!COOKIE_SAME_SITE_VALUES.has(value)) {
+    throw new Error("REFRESH_COOKIE_SAME_SITE must be lax, strict, or none.");
+  }
+  return value;
+};
+
+const getRefreshCookieSecure = () => {
+  const configured = process.env.REFRESH_COOKIE_SECURE;
+  if (configured === undefined) return process.env.NODE_ENV === "production";
+  if (configured !== "true" && configured !== "false") {
+    throw new Error("REFRESH_COOKIE_SECURE must be true or false.");
+  }
+  return configured === "true";
+};
+
+const refreshCookieOptions = () => {
+  const sameSite = getRefreshCookieSameSite();
+  const secure = getRefreshCookieSecure();
+  if (sameSite === "none" && !secure) {
+    throw new Error(
+      "SameSite=None refresh cookies require REFRESH_COOKIE_SECURE=true.",
+    );
+  }
+  return {
+    httpOnly: true,
+    secure,
+    sameSite,
+    path: "/auth",
+    maxAge: Math.floor(getRefreshTokenMaxAgeMs() / 1000),
+  };
+};
 
 export const setRefreshTokenCookie = function (reply, refreshToken) {
   reply.setCookie(REFRESH_TOKEN_COOKIE, refreshToken, refreshCookieOptions());
