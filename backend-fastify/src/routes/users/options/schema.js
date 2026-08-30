@@ -4,6 +4,7 @@ export const userProperties = {
   fullName: { type: "string" },
   about: { type: "string" },
   address: { type: "string" },
+  profileImage: { type: "string" },
 };
 Object.freeze(userProperties);
 

@@ -7,6 +7,7 @@ export interface User {
   about?: string;
   address?: string;
   verified?: boolean;
+  profileImage?: string;
 }
 
 export interface UserSignedIn extends User {

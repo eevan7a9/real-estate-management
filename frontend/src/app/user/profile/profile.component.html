@@ -9,9 +9,12 @@
             <ion-card-header class="mb-2">
               <ion-card-title class="ion-padding"></ion-card-title>
               <div
-                class="p-2 border relative overflow-hidden rounded-full mx-auto size-[250px] lg:size-[320px]"
+                class="border relative overflow-hidden rounded-full mx-auto size-[250px] lg:size-[320px]"
               >
-                <img [src]="imgUrl" class="object-cover h-full w-full" />
+                <img
+                  [src]="imgUrl || user()?.profileImage || defaultProfileImage"
+                  class="object-cover h-full w-full"
+                />
               </div>
             </ion-card-header>
 
@@ -27,9 +30,10 @@
                 color="primary"
                 expand="block"
                 (click)="toggleUpload()"
+                [disabled]="isUploadingImage()"
                 class="xl:h-[50px]"
               >
-                Upload Image
+                {{ isUploadingImage() ? 'Uploading Image...' : 'Upload Image' }}
               </ion-button>
 
               <app-profile-verified></app-profile-verified>

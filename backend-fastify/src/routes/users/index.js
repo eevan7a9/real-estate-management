@@ -2,6 +2,7 @@ import {
   getUsersOpts,
   getUserOpts,
   updateUserOpts,
+  uploadProfileImageOpts,
   getMeOpts,
 } from "./options/index.js";
 import {
@@ -9,6 +10,7 @@ import {
   getUser,
   getMe,
   updateMe,
+  uploadProfileImage,
 } from "../../controllers/users/index.js";
 
 /**
@@ -22,5 +24,9 @@ export const usersRoutes = function (fastify, opts, done) {
   fastify.get("/me", getMeOpts(fastify, getMe));
   fastify.get("/:id", getUserOpts(fastify, getUser));
   fastify.patch("/me", updateUserOpts(fastify, updateMe));
+  fastify.put(
+    "/me/profile-image",
+    uploadProfileImageOpts(fastify, uploadProfileImage),
+  );
   done();
 };

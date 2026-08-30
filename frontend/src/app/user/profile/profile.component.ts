@@ -16,7 +16,9 @@ import { HttpErrorResponse } from '@angular/common/http';
   standalone: false
 })
 export class ProfileComponent {
-  public imgUrl: any = './assets/images/avatar.png';
+  public readonly defaultProfileImage = './assets/images/avatar.png';
+  public imgUrl: string | ArrayBuffer | null = null;
+  public isUploadingImage = signal(false);
   public user = toSignal<UserDetails>(this.userService.user$);
   public userForm: UntypedFormGroup;
   public isActivityActive = signal(true);
@@ -37,22 +39,67 @@ export class ProfileComponent {
     });
   }
 
-  public toggleUpload() {
-    const input = document.getElementById('image-upload');
-    input.click();
+  public toggleUpload(): void {
+    const input = document.getElementById(
+      'image-upload'
+    ) as HTMLInputElement | null;
+    input?.click();
   }
 
-  public onSelectFile(event) {
-    // called each time file input changes
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      reader.onload = (ev) => {
-        // called once readAsDataURL is completed
-        this.imgUrl = ev.target.result;
-        console.log(this.imgUrl);
-      };
+  public async onSelectFile(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    if (this.restriction.restricted) {
+      input.value = '';
+      return this.restriction.showAlert();
     }
+
+    const previousImage =
+      this.imgUrl || this.user()?.profileImage || this.defaultProfileImage;
+    try {
+      this.imgUrl = await this.readImage(file);
+      this.isUploadingImage.set(true);
+      const res = await firstValueFrom(
+        this.userService.uploadProfileImage(file)
+      );
+      if (res.status !== 200 || !res.data?.profileImage) {
+        throw new Error(res.message || 'Unable to upload profile image.');
+      }
+      this.imgUrl = res.data.profileImage;
+      const toast = await this.toastCtrl.create({
+        message: res.message || 'Profile image updated successfully',
+        color: 'success',
+        duration: 5000
+      });
+      await toast.present();
+    } catch (error: unknown) {
+      this.imgUrl = previousImage;
+      const message =
+        error instanceof HttpErrorResponse
+          ? errorHandler(error).message
+          : error instanceof Error
+            ? error.message
+            : 'Unable to upload profile image.';
+      const toast = await this.toastCtrl.create({
+        message,
+        color: 'danger',
+        duration: 5000
+      });
+      await toast.present();
+    } finally {
+      this.isUploadingImage.set(false);
+      input.value = '';
+    }
+  }
+
+  private readImage(file: File): Promise<string | ArrayBuffer> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string | ArrayBuffer);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
   }
 
   public async submit(): Promise<void> {

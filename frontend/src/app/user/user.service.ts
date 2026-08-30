@@ -149,6 +149,23 @@ export class UserService {
       );
   }
 
+  public uploadProfileImage(file: File): Observable<ApiResponse<User>> {
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.http
+      .put<ApiResponse<User>>(
+        url + 'users/me/profile-image',
+        formData,
+        requestOptions({ token: this.token, contentType: '' })
+      )
+      .pipe(
+        tap((res) => {
+          if (res.status !== 200) return;
+          this.setUser({ ...res.data, accessToken: this.token });
+        })
+      );
+  }
+
   public getCurrentUser(): Observable<ApiResponse<UserDetails>> {
     return this.http.get<ApiResponse<UserDetails>>(
       url + 'users/me',

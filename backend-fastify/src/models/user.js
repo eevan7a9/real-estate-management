@@ -59,6 +59,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       maxlength: [300, "Address cannot exceed 300 characters"],
     },
+    profileImage: {
+      type: String,
+    },
     verified: {
       type: Boolean,
     },
