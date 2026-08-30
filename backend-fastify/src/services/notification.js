@@ -27,7 +27,7 @@ export const removeExpiredNotifications = function (user) {
   const originalSize = user.notifications.length;
   const now = new Date();
   user.notifications = user.notifications.filter(
-    (notification) => notification.expiresAt > now,
+    (notification) => !notification.expiresAt || notification.expiresAt > now,
   );
   // console.log("\n Original Size:" + originalSize + "\n Current Size : " + user.notifications.length);
   return originalSize != user.notifications.length;
@@ -52,10 +52,12 @@ export const addNotification = function (user, notification) {
   notification.notification_id = uuidv4();
   notification.createdAt = new Date();
 
-  // 7 day | Default
-  notification.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  // 3 min | for testing
-  // notification.expiresAt = new Date(Date.now() + 3 * 60 * 1000);
+  const expirationDays = Number(process.env.USER_NOTIFICATION_EXPIRATION_DAYS);
+  if (Number.isFinite(expirationDays) && expirationDays > 0) {
+    notification.expiresAt = new Date(
+      Date.now() + expirationDays * 24 * 60 * 60 * 1000,
+    );
+  }
   user.notifications.unshift(notification);
   return notification;
 };
