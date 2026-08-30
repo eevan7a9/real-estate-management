@@ -1,4 +1,3 @@
-import { Activity } from './activities';
 import { Notification } from './notification';
 
 export interface User {
@@ -18,6 +17,5 @@ export interface UserDetails extends User {
   createdAt?: Date;
   updatedAt?: Date;
   properties?: string[];
-  activities?: Activity[];
   notifications?: Notification[];
 }

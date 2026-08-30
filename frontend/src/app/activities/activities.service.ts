@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Activity } from '../shared/interface/activities';
 import { environment } from 'src/environments/environment';
 import { ApiResponse } from '../shared/interface/api-response';
@@ -13,9 +13,9 @@ const propertyUrl = environment.api.server + 'activities';
   providedIn: 'root'
 })
 export class ActivitiesService {
-  public loading = signal(false);
-  public activities$: Observable<Activity[]>;
-  private activitiesSub = new BehaviorSubject<Activity[]>([]);
+  public initialFetchDone = signal<boolean>(false);
+  public readonly activities$: Observable<Activity[]>;
+  private readonly activitiesSub = new BehaviorSubject<Activity[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -32,22 +32,11 @@ export class ActivitiesService {
     this.activitiesSub.next(activities);
   }
 
-  public async fetchActivities(): Promise<ApiResponse<Activity[]>> {
-    try {
-      this.loading.set(true);
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Activity[]>>(
-          propertyUrl,
-          requestOptions({ token: this.user.token })
-        )
-      );
-      this.activities = res.data;
-      return res;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      this.loading.set(false);
-    }
+  public fetchActivities(): Observable<ApiResponse<Activity[]>> {
+    return this.http.get<ApiResponse<Activity[]>>(
+      propertyUrl,
+      requestOptions({ token: this.user.token })
+    );
   }
 
   public insertActivities(activity: Activity): void {
@@ -56,6 +45,6 @@ export class ActivitiesService {
 
   public resetState(): void {
     this.activities = [];
-    this.loading.set(false);
+    this.initialFetchDone.set(false);
   }
 }

@@ -180,6 +180,7 @@ export class AppComponent implements OnInit {
 
   public user = signal<UserDetails | undefined>(undefined);
   private connectedUserToken = '';
+  private authenticatedInitialization?: Promise<void>;
 
   public appLowerPages = computed<NavLinks[]>(() => {
     const pages = [
@@ -242,18 +243,7 @@ export class AppComponent implements OnInit {
           this.activitiesService.resetState();
           return;
         }
-        console.log('Connect verified user...');
-        const userToken = this.userService.token;
-        if (userToken !== this.connectedUserToken) {
-          this.webSocket.connect(userToken);
-          this.connectedUserToken = userToken;
-        }
-        console.log('Fetching Enquiries...');
-        if (!this.enquiriesService.initialFetchDone()) {
-          this.fetchEnquiries();
-        }
-        console.log('Fetching user details...');
-        this.setUserProfile();
+        void this.initializeAuthenticatedUser();
       });
     this.checkServer();
   }
@@ -297,10 +287,7 @@ export class AppComponent implements OnInit {
     try {
       const res = await firstValueFrom(this.userService.getCurrentUser());
       if (res.status === 200 && res.data) {
-        const { activities, notifications, ...user } = res.data;
-        this.user.set(user);
-        this.activitiesService.activities = activities || [];
-        this.notificationsService.notifications = notifications || [];
+        this.user.set(res.data);
       }
     } catch (error: unknown) {
       if (
@@ -324,24 +311,106 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private fetchEnquiries(): void {
-    firstValueFrom(this.enquiriesService.fetchEnquiries())
-      .then((res) => {
-        if (res?.status === 200 && res?.data) {
-          this.enquiriesService.enquiries = res.data;
-        }
-      })
-      .catch((error: unknown) => {
-        const message =
-          error instanceof HttpErrorResponse
-            ? errorHandler(error).message
-            : 'Unable to load enquiries. Please try again.';
-        this.toastController
-          .create({ message, color: 'danger', duration: 5000 })
-          .then((toast) => toast.present());
-        console.error('Error fetching enquiries:', error);
-      })
-      .finally(() => this.enquiriesService.initialFetchDone.set(true));
+  private initializeAuthenticatedUser(): Promise<void> {
+    if (!this.authenticatedInitialization) {
+      this.authenticatedInitialization = this.loadAuthenticatedUser().finally(
+        () => (this.authenticatedInitialization = undefined)
+      );
+    }
+    return this.authenticatedInitialization;
+  }
+
+  private async loadAuthenticatedUser(): Promise<void> {
+    console.log('Fetching user details...');
+    await this.setUserProfile();
+    if (!this.userService.user) {
+      return;
+    }
+
+    await Promise.all([
+      this.fetchActivities(),
+      this.fetchEnquiries(),
+      this.fetchNotifications()
+    ]);
+
+    const userToken = this.userService.token;
+    if (userToken && userToken !== this.connectedUserToken) {
+      this.webSocket.connect(userToken);
+      this.connectedUserToken = userToken;
+    }
+  }
+
+  private async fetchEnquiries(): Promise<void> {
+    if (this.enquiriesService.initialFetchDone()) {
+      return;
+    }
+    this.enquiriesService.initialFetchDone.set(true);
+
+    try {
+      const res = await firstValueFrom(this.enquiriesService.fetchEnquiries());
+      if (res?.status === 200 && res?.data) {
+        this.enquiriesService.enquiries = res.data;
+      }
+    } catch (error: unknown) {
+      const message =
+        error instanceof HttpErrorResponse
+          ? errorHandler(error).message
+          : 'Unable to load enquiries. Please try again.';
+      this.toastController
+        .create({ message, color: 'danger', duration: 5000 })
+        .then((toast) => toast.present());
+      console.error('Error fetching enquiries:', error);
+    }
+  }
+
+  private async fetchActivities(): Promise<void> {
+    if (this.activitiesService.initialFetchDone()) {
+      return;
+    }
+    this.activitiesService.initialFetchDone.set(true);
+
+    try {
+      const res = await firstValueFrom(
+        this.activitiesService.fetchActivities()
+      );
+      if (res?.status === 200) {
+        this.activitiesService.activities = res.data || [];
+      }
+    } catch (error: unknown) {
+      const message =
+        error instanceof HttpErrorResponse
+          ? errorHandler(error).message
+          : 'Unable to load activities. Please try again.';
+      this.toastController
+        .create({ message, color: 'danger', duration: 5000 })
+        .then((toast) => toast.present());
+      console.error('Error fetching activities:', error);
+    }
+  }
+
+  private async fetchNotifications(): Promise<void> {
+    if (this.notificationsService.initialFetchDone()) {
+      return;
+    }
+    this.notificationsService.initialFetchDone.set(true);
+
+    try {
+      const res = await firstValueFrom(
+        this.notificationsService.fetchNotifications()
+      );
+      if (res?.status === 200) {
+        this.notificationsService.notifications = res.data || [];
+      }
+    } catch (error: unknown) {
+      const message =
+        error instanceof HttpErrorResponse
+          ? errorHandler(error).message
+          : 'Unable to load notifications. Please try again.';
+      this.toastController
+        .create({ message, color: 'danger', duration: 5000 })
+        .then((toast) => toast.present());
+      console.error('Error fetching notifications:', error);
+    }
   }
 
   private async showSignedOutToast(): Promise<void> {

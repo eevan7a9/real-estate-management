@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { UserNotificationType } from 'src/app/shared/enums/notification';
 import { ApiResponse } from 'src/app/shared/interface/api-response';
@@ -14,8 +14,9 @@ const notificationUrl = environment.api.server + 'notifications';
   providedIn: 'root'
 })
 export class NotificationsService {
-  public notifications$: Observable<Notification[]>;
-  private notificationsSub = new BehaviorSubject([]);
+  public initialFetchDone = signal<boolean>(false);
+  public readonly notifications$: Observable<Notification[]>;
+  private readonly notificationsSub = new BehaviorSubject<Notification[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -33,22 +34,15 @@ export class NotificationsService {
   }
 
   public resetState(): void {
-    this.notificationsSub.next([]);
+    this.notifications = [];
+    this.initialFetchDone.set(false);
   }
 
-  public async fetchNotifications(): Promise<ApiResponse<Notification[]>> {
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<Notification[]>>(
-          notificationUrl,
-          requestOptions({ token: this.user.token })
-        )
-      );
-      return res;
-    } catch (error) {
-      console.error(error);
-      return error?.error || error;
-    }
+  public fetchNotifications(): Observable<ApiResponse<Notification[]>> {
+    return this.http.get<ApiResponse<Notification[]>>(
+      notificationUrl,
+      requestOptions({ token: this.user.token })
+    );
   }
 
   public async readNotification(
