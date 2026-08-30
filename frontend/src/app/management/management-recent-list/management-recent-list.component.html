@@ -74,7 +74,8 @@
         <tbody>
           @for (property of recentProperties(); track property.property_id) {
             <tr
-              class="border-b border-slate-200 last:border-0 dark:border-slate-800"
+              class="cursor-pointer border-b hover:bg-slate-50 dark:hover:bg-dark border-slate-200 last:border-0 dark:border-slate-800"
+              (click)="selectProperty(property.property_id)"
             >
               <td
                 class="pr-6 py-4! text-[14px] font-semibold text-slate-900 dark:text-white"
@@ -118,6 +119,7 @@
                 {{ formatUpdatedAt(property) }}
               </td>
               <td class="text-right text-slate-500 dark:text-slate-400">
+                <!-- Action menu -->
                 <ion-icon
                   name="ellipsis-vertical-outline"
                   aria-hidden="true"

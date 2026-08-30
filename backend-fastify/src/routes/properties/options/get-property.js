@@ -4,7 +4,8 @@ import {
   responseError,
 } from "../../../utils/schema/response.js";
 
-export const getPropertyOpts = (handler) => ({
+export const getPropertyOpts = (fastify, handler) => ({
+  preValidation: [fastify.optionalAuthenticate],
   schema: {
     querystring: {
       type: "object",

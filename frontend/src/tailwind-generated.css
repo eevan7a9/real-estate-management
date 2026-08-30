@@ -50,6 +50,7 @@
     --color-gray-500: oklch(55.1% 0.027 264.364);
     --color-gray-700: oklch(37.3% 0.034 259.733);
     --color-gray-900: oklch(21% 0.034 264.665);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
     --breakpoint-xl: 96rem;
@@ -86,7 +87,6 @@
     --color-primary: var(--ion-color-primary);
     --color-primary-tint: var(--ion-color-primary-tint);
     --color-light: var(--ion-color-light);
-    --color-light-shade: var(--ion-color-light-shade);
     --color-dark: var(--ion-color-dark);
     --color-dark-shade: var(--ion-color-dark-shade);
     --color-dark-tint: var(--ion-color-dark-tint);
@@ -472,9 +472,6 @@
   }
   .my-4 {
     margin-block: calc(var(--spacing) * 4);
-  }
-  .my-8 {
-    margin-block: calc(var(--spacing) * 8);
   }
   .ms-4 {
     margin-inline-start: calc(var(--spacing) * 4);
@@ -977,9 +974,6 @@
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
-  .gap-x-4 {
-    column-gap: calc(var(--spacing) * 4);
-  }
   .gap-x-\[2px\] {
     column-gap: 2px;
   }
@@ -1132,6 +1126,12 @@
   .bg-amber-50 {
     background-color: var(--color-amber-50);
   }
+  .bg-black {
+    background-color: var(--color-black);
+  }
+  .bg-black\! {
+    background-color: var(--color-black) !important;
+  }
   .bg-blue-50 {
     background-color: var(--color-blue-50);
   }
@@ -1140,6 +1140,18 @@
   }
   .bg-danger {
     background-color: var(--color-danger);
+  }
+  .bg-dark {
+    background-color: var(--color-dark);
+  }
+  .bg-dark\! {
+    background-color: var(--color-dark) !important;
+  }
+  .bg-dark-shade {
+    background-color: var(--color-dark-shade);
+  }
+  .bg-dark-shade\! {
+    background-color: var(--color-dark-shade) !important;
   }
   .bg-emerald-100 {
     background-color: var(--color-emerald-100);
@@ -1156,9 +1168,6 @@
   .bg-light {
     background-color: var(--color-light);
   }
-  .bg-light-shade {
-    background-color: var(--color-light-shade);
-  }
   .bg-orange-100 {
     background-color: var(--color-orange-100);
   }
@@ -1170,6 +1179,9 @@
   }
   .bg-red-600 {
     background-color: var(--color-red-600);
+  }
+  .bg-red-600\! {
+    background-color: var(--color-red-600) !important;
   }
   .bg-slate-50 {
     background-color: var(--color-slate-50);
@@ -1209,26 +1221,6 @@
       background-color: color-mix(
         in oklab,
         var(--color-warning) 15%,
-        transparent
-      );
-    }
-  }
-  .bg-warning\/20 {
-    background-color: var(--color-warning);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(
-        in oklab,
-        var(--color-warning) 20%,
-        transparent
-      );
-    }
-  }
-  .bg-warning\/70 {
-    background-color: var(--color-warning);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(
-        in oklab,
-        var(--color-warning) 70%,
         transparent
       );
     }
@@ -1361,6 +1353,9 @@
   }
   .pt-3 {
     padding-top: calc(var(--spacing) * 3);
+  }
+  .pt-3\! {
+    padding-top: calc(var(--spacing) * 3) !important;
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -1805,8 +1800,14 @@
     .hover\:bg-slate-50:hover {
       background-color: var(--color-slate-50);
     }
+    .hover\:bg-slate-50\!:hover {
+      background-color: var(--color-slate-50) !important;
+    }
     .hover\:bg-slate-100:hover {
       background-color: var(--color-slate-100);
+    }
+    .hover\:bg-slate-100\!:hover {
+      background-color: var(--color-slate-100) !important;
     }
     .hover\:underline:hover {
       text-decoration-line: underline;
@@ -2289,11 +2290,17 @@
     outline-color: var(--color-slate-800);
   }
   @media (hover: hover) {
+    .dark\:hover\:bg-dark:where(.dark, .dark *):hover {
+      background-color: var(--color-dark);
+    }
     .dark\:hover\:bg-dark-shade:where(.dark, .dark *):hover {
       background-color: var(--color-dark-shade);
     }
     .dark\:hover\:bg-dark-tint:where(.dark, .dark *):hover {
       background-color: var(--color-dark-tint);
+    }
+    .dark\:hover\:bg-slate-950:where(.dark, .dark *):hover {
+      background-color: var(--color-slate-950);
     }
   }
 }

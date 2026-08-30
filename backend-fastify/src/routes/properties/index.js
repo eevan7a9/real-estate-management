@@ -25,7 +25,7 @@ export const propertiesRoutes = function (fastify, opts, done) {
   fastify.get("/", getPropertiesOpts(getProperties));
   fastify.get("/map", getPropertiesMapOpts(getPropertiesMap));
   fastify.get("/me", getMyPropertiesOpts(fastify, getMyProperties));
-  fastify.get("/:id", getPropertyOpts(getProperty));
+  fastify.get("/:id", getPropertyOpts(fastify, getProperty));
   fastify.post("/", createPropertyOpts(fastify, createProperty));
   fastify.patch("/:id", updatePropertyOpts(fastify, updateProperty));
   fastify.delete("/:id", deletePropertyOpts(fastify, deleteProperty));

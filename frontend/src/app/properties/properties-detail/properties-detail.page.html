@@ -24,11 +24,23 @@
     *ngIf="!ready()"
   ></ion-progress-bar>
 
-  <div
-    class="max-w-screen-xl min-h-screen my-0 mx-auto xl:pt-10 pb-25"
-    *ngIf="property()"
-  >
+  @if (property()) {
+  <div class="max-w-screen-xl min-h-screen my-0 mx-auto xl:pt-10 pb-25">
     <ion-grid>
+      @if(!property()?.isActive) {
+      <ion-row>
+        <ion-col size="12" class="px-3! pt-3!">
+          <div
+            class="bg-warning/15 rounded-md p-4 flex text-danger items-center gap-2"
+          >
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            This property is currently inactive and may not be available for
+            other users to view or enquire.
+          </div>
+        </ion-col>
+      </ion-row>
+      }
+
       <ion-row>
         <ion-col size="12" sizeXl="8" class="px-3">
           <ion-card
@@ -237,6 +249,7 @@
       >Fetching Property Details, this won't take long...</ion-text
     >
   </div>
+  }
 
   <app-footer *ngIf="property()" />
 </ion-content>

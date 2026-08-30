@@ -103,7 +103,11 @@ export class PropertiesService {
     params?: URLSearchParams
   ): Observable<ApiResponse<Property>> {
     const newUrl = `${propertyUrl}/${id}?${params?.toString() || ''}`;
-    return this.http.get<ApiResponse<Property>>(newUrl);
+    const token = this.userService.token;
+    return this.http.get<ApiResponse<Property>>(
+      newUrl,
+      token ? requestOptions({ token }) : undefined
+    );
   }
 
   public addProperty(

@@ -1,4 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { firstValueFrom } from 'rxjs';
 import { PropertiesService } from '../../../properties/properties.service';
@@ -15,7 +16,12 @@ export class ManagementPropertiesCardComponent {
   readonly isUpdating = signal(false);
 
   private readonly propertiesService = inject(PropertiesService);
+  private readonly router = inject(Router);
   private readonly toastController = inject(ToastController);
+
+  public selectProperty(propertyId: string): void {
+    void this.router.navigate(['/properties', propertyId]);
+  }
 
   public async onActiveChange(event: CustomEvent<{ checked: boolean }>) {
     const property = this.property();

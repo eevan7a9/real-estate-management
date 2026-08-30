@@ -44,6 +44,10 @@ export class ManagementRecentListComponent {
     void this.router.navigateByUrl('/management/properties');
   }
 
+  public selectProperty(propertyId: string): void {
+    void this.router.navigate(['/properties', propertyId]);
+  }
+
   public formatType(type: PropertyType): string {
     return type.charAt(0).toUpperCase() + type.slice(1);
   }

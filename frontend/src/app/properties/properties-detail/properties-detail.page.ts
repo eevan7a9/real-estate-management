@@ -170,6 +170,8 @@ export class PropertiesDetailPage implements OnInit, OnDestroy {
     this.property.set(undefined);
 
     try {
+      await this.userService.sessionReady;
+
       const res = await firstValueFrom(
         this.propertiesService.fetchProperty(id)
       );

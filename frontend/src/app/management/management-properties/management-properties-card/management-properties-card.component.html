@@ -1,6 +1,7 @@
 @if (property(); as property) {
   <ion-card
     class="m-0! flex h-full flex-col overflow-hidden rounded-xl! border border-slate-200 shadow-none dark:border-slate-800"
+    (click)="selectProperty(property.property_id)"
   >
     <div class="relative h-48 overflow-hidden bg-slate-100 dark:bg-slate-800">
       @if (property.images?.length) {
@@ -61,6 +62,7 @@
         <ion-toggle
           [checked]="property?.isActive"
           [disabled]="isUpdating()"
+          (click)="$event.stopPropagation()"
           (ionChange)="onActiveChange($event)"
         >
           <span

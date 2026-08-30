@@ -58,12 +58,11 @@
                 label="Sort by:"
                 (ionChange)="setSort($event)"
               >
-                <ion-select-option
-                  *ngFor="let sort of sorts"
-                  [value]="sort.value"
-                >
+                @for (sort of sorts; track $index) {
+                <ion-select-option [value]="sort.value">
                   {{ sort.label}}
                 </ion-select-option>
+                }
               </ion-select>
             </ion-item>
           </ion-list>
@@ -80,13 +79,15 @@
   ></app-properties-add-button>
 
   <div class="pt-4 2xl:pt-8">
+    @if(status().isLoading) {
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
-      *ngIf="status().isLoading"
     ></ion-progress-bar>
-
-    <ion-card color="danger" *ngIf="status().error">
+    }
+    <!-- Error Message -->
+    @if (status().error) {
+    <ion-card color="danger">
       <ion-card-content class="flex items-center justify-between gap-3">
         <span>{{ status().error }}</span>
         <ion-button
@@ -99,6 +100,7 @@
         </ion-button>
       </ion-card-content>
     </ion-card>
+    }
 
     <ion-grid class="max-w-screen-xl pt-4 mx-auto">
       <ion-row class="ion-align-items-center mb-3 lg:mb-5">

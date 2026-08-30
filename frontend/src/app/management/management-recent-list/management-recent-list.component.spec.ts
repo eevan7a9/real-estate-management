@@ -29,10 +29,12 @@ describe('ManagementRecentListComponent', () => {
   let component: ManagementRecentListComponent;
   let fixture: ComponentFixture<ManagementRecentListComponent>;
   let ownedProperties$: BehaviorSubject<Property[] | undefined>;
+  let navigate: jasmine.Spy;
   let navigateByUrl: jasmine.Spy;
 
   beforeEach(waitForAsync(() => {
     ownedProperties$ = new BehaviorSubject<Property[] | undefined>([]);
+    navigate = jasmine.createSpy('navigate');
     navigateByUrl = jasmine.createSpy('navigateByUrl');
 
     TestBed.configureTestingModule({
@@ -43,7 +45,7 @@ describe('ManagementRecentListComponent', () => {
           provide: PropertiesService,
           useValue: { propertiesOwned$: ownedProperties$.asObservable() }
         },
-        { provide: Router, useValue: { navigateByUrl } }
+        { provide: Router, useValue: { navigate, navigateByUrl } }
       ]
     }).compileComponents();
 
@@ -95,5 +97,11 @@ describe('ManagementRecentListComponent', () => {
     component.viewAll();
 
     expect(navigateByUrl).toHaveBeenCalledWith('/properties');
+  });
+
+  it('navigates to the selected property details', () => {
+    component.selectProperty('property-123');
+
+    expect(navigate).toHaveBeenCalledWith(['/properties', 'property-123']);
   });
 });

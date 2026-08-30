@@ -28,6 +28,9 @@ export class PropertiesListItemComponent {
   );
   readonly enableOwnedBadge = input<boolean>(true);
   public enablePopupOptions = input<boolean>(false);
+  public popupTriggerId = computed(
+    () => `property-actions-${this.property()?.property_id ?? 'unknown'}`
+  );
   public details = computed(() => {
     return { ...this.property() };
   });
@@ -58,7 +61,7 @@ export class PropertiesListItemComponent {
         report: false
       },
       translucent: true,
-      trigger: 'popup-trigger-button'
+      trigger: this.popupTriggerId()
     });
     await popover.present();
     const { data } = await popover.onDidDismiss();

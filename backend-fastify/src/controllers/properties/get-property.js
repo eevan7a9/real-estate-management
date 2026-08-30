@@ -23,7 +23,14 @@ export const getProperty = async function (req, res) {
         }
       : {};
 
-    const property = await Property.findOne({ property_id: id, isActive: true })
+    const visibilityQuery = req.user?.id
+      ? { $or: [{ isActive: true }, { user_id: req.user.id }] }
+      : { isActive: true };
+
+    const property = await Property.findOne({
+      property_id: id,
+      ...visibilityQuery,
+    })
       .select(projection)
       .lean();
 
