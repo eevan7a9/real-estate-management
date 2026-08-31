@@ -33,4 +33,14 @@ describe('ProfileComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('includes the professional and contact profile controls', () => {
+    expect(component.userForm.get('role')?.value).toBe('owner');
+    expect(component.userForm.get('businessName')).toBeTruthy();
+    expect(component.userForm.get('publicLocation.city')).toBeTruthy();
+    expect(component.userForm.get('phone')).toBeTruthy();
+    expect(component.userForm.get('showPhone')?.value).toBeFalse();
+    expect(component.userForm.get('showEmail')?.value).toBeFalse();
+    expect(component.userForm.get('links.linkedin')).toBeTruthy();
+  });
 });

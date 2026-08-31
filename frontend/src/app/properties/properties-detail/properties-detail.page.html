@@ -18,12 +18,14 @@
 </ion-header>
 
 <ion-content class="px-4! pt-0!">
+  @if (!ready()) {
   <ion-progress-bar
     style="margin: 4px 0 0 0"
     type="indeterminate"
-    *ngIf="!ready()"
   ></ion-progress-bar>
+  }
 
+  <!-- Property Details -->
   @if (property()) {
   <div class="max-w-screen-xl min-h-screen my-0 mx-auto xl:pt-10 pb-25">
     <ion-grid>
@@ -67,13 +69,14 @@
             </ion-card-content>
           </ion-card>
 
+          @if (property()?.images) {
           <app-properties-gallery
             [images]="property()?.images"
             [showEdit]="!!isOwner()"
             [altText]="property()?.name || 'Property image'"
             (edit)="editImages()"
-            *ngIf="property()?.images"
           ></app-properties-gallery>
+          }
 
           <ion-card
             class="shadow-none my-4 mx-0 border border-slate-200 dark:border-slate-800"
@@ -95,9 +98,9 @@
             </ion-card-content>
           </ion-card>
 
+          @if (property()?.features && property()?.features?.length) {
           <ion-card
             class="property-features shadow-none my-4 mx-0 border border-slate-200 dark:border-slate-800"
-            *ngIf="property()?.features && property()?.features?.length"
           >
             <ion-card-header class="px-4 py-2"> Features </ion-card-header>
             <ion-card-content>
@@ -113,6 +116,7 @@
               </ion-badge>
             </ion-card-content>
           </ion-card>
+          }
 
           <ion-card
             class="shadow-none border border-slate-200 dark:border-slate-800"
@@ -169,7 +173,53 @@
           }
         </ion-col>
 
-        <ion-col size="12" sizeXl="4" class="py-3 px-3 xl:pl-0">
+        <ion-col size="12" sizeXl="4" class="py-3 px-3 xl:pl-0 space-y-4!">
+          <ion-card
+            class="shadow-none mt-5 border border-slate-200 dark:border-slate-800"
+          >
+            <ion-card-header
+              class="bg-primary px-4 py-2 md:py-3 flex flex-row justify-between items-center"
+            >
+              <ion-card-title color="light"> User Information </ion-card-title>
+              <ion-icon
+                name="person-outline"
+                size="large"
+                color="light"
+              ></ion-icon>
+            </ion-card-header>
+
+            <ion-card-content class="py-4!">
+              <div class="flex flex-row items-center gap-3 px-3">
+                <ion-avatar class="relative w-[80px] h-[80px]">
+                  <img
+                    [src]="property()?.owner?.profileImage || defaultProfileImage"
+                    alt="User profile image"
+                    class=""
+                  />
+                </ion-avatar>
+                <div class="flex flex-col">
+                  <span class="text-[24px] font-semibold">
+                    {{ property()?.owner?.fullName }}
+                  </span>
+                  <span class="text-[16px] font-light">
+                    {{ property()?.owner?.role || "Property Owner" }}
+                  </span>
+                </div>
+              </div>
+
+              <p class="px-3 pt-4 text-[18px]!">
+                You can contact them for more information about this property.
+              </p>
+
+              <a
+                [routerLink]="['/account-info', property()?.user_id]"
+                class="text-[18px] no-underline text-primary w-full text-center block"
+              >
+                View User Profile
+              </a>
+            </ion-card-content>
+          </ion-card>
+
           <div class="mortgage-container">
             <app-mortgage-core-calc
               [simpleMode]="true"
@@ -178,7 +228,7 @@
           </div>
 
           <ion-card
-            class="shadow-none mt-5 border border-slate-200 dark:border-slate-800"
+            class="shadow-none border border-slate-200 dark:border-slate-800"
           >
             <ion-card-header
               class="bg-primary px-4 py-2 md:py-3 flex flex-row justify-between items-center"
@@ -245,9 +295,9 @@
 
   <div class="py-16 flex flex-col items-center justify-center" *ngIf="!ready()">
     <ion-spinner name="menu-outline"></ion-spinner>
-    <ion-text class="mt-5"
-      >Fetching Property Details, this won't take long...</ion-text
-    >
+    <ion-text class="mt-5">
+      Fetching Property Details, this won't take long...
+    </ion-text>
   </div>
   }
 

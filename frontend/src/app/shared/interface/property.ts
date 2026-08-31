@@ -4,6 +4,13 @@ import {
   TransactionType
 } from '../enums/property';
 
+export interface PropertyOwner {
+  user_id: string;
+  fullName: string;
+  role?: 'owner' | 'agent' | 'broker';
+  profileImage?: string;
+}
+
 export interface Property {
   _id: string;
   property_id: string;
@@ -28,15 +35,16 @@ export interface Property {
   createdAt?: Date;
   updatedAt?: Date;
   user_id: string;
+  owner?: PropertyOwner;
 }
 
 export interface PropertyCreateForm extends Omit<
   Property,
-  '_id' | 'property_id' | 'createdAt' | 'updatedAt'
+  '_id' | 'property_id' | 'createdAt' | 'updatedAt' | 'owner'
 > {}
 export interface PropertyEditForm extends Omit<
   Property,
-  '_id' | 'createdAt' | 'updatedAt'
+  '_id' | 'createdAt' | 'updatedAt' | 'owner'
 > {}
 
 export interface PropertyMap extends Pick<

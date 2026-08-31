@@ -1,7 +1,7 @@
 import { User } from "../../models/user.js";
 
 const privateProjection =
-  "user_id email fullName about address profileImage verified createdAt updatedAt properties";
+  "user_id email fullName about address profileImage verified role businessName licenseNumber publicLocation phone showPhone showEmail links createdAt updatedAt properties";
 
 export const getMe = async function (req, res) {
   const user_id = req.user.id;

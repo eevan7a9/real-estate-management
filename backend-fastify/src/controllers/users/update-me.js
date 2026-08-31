@@ -13,11 +13,31 @@ import {
  */
 export const updateMe = async function (req, res) {
   const user_id = req.user.id;
-  const { fullName, about, address } = req.body;
+  const {
+    fullName,
+    about,
+    address,
+    role,
+    businessName,
+    licenseNumber,
+    publicLocation,
+    links,
+    phone,
+    showPhone,
+    showEmail,
+  } = req.body;
   const $set = {
     ...(fullName !== undefined && { fullName }),
     ...(about !== undefined && { about }),
     ...(address !== undefined && { address }),
+    ...(role !== undefined && { role }),
+    ...(businessName !== undefined && { businessName }),
+    ...(licenseNumber !== undefined && { licenseNumber }),
+    ...(publicLocation !== undefined && { publicLocation }),
+    ...(links !== undefined && { links }),
+    ...(phone !== undefined && { phone }),
+    ...(showPhone !== undefined && { showPhone }),
+    ...(showEmail !== undefined && { showEmail }),
   };
   try {
     const options = { new: true, runValidators: true };

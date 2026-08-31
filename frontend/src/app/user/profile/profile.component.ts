@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { UserDetails } from 'src/app/shared/interface/user';
 import { UserService } from '../user.service';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
@@ -22,6 +22,9 @@ export class ProfileComponent {
   public user = toSignal<UserDetails>(this.userService.user$);
   public userForm: UntypedFormGroup;
   public isActivityActive = signal(true);
+  public isSocialLinksVisible = signal(false);
+
+  private readonly httpUrlValidator = Validators.pattern(/^https?:\/\/.+/i);
 
   constructor(
     private userService: UserService,
@@ -30,12 +33,60 @@ export class ProfileComponent {
     private restriction: RestrictionService
   ) {
     this.userForm = this.formBuilder.group({
-      fullName: [
-        this.user()?.fullName || '',
-        [Validators.required, Validators.minLength(4)]
-      ],
-      about: [this.user()?.about || '', [Validators.maxLength(1000)]],
-      address: [this.user()?.address || '', [Validators.maxLength(1000)]]
+      fullName: ['', [Validators.required, Validators.minLength(4)]],
+      about: ['', [Validators.maxLength(1000)]],
+      address: ['', [Validators.maxLength(300)]],
+      role: ['owner', [Validators.required]],
+      businessName: ['', [Validators.maxLength(150)]],
+      licenseNumber: ['', [Validators.maxLength(100)]],
+      publicLocation: this.formBuilder.group({
+        city: ['', [Validators.maxLength(100)]],
+        region: ['', [Validators.maxLength(100)]],
+        country: ['', [Validators.maxLength(100)]]
+      }),
+      phone: ['', [Validators.maxLength(30)]],
+      showPhone: [false],
+      showEmail: [false],
+      links: this.formBuilder.group({
+        website: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        facebook: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        instagram: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        linkedin: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        x: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        youtube: ['', [Validators.maxLength(500), this.httpUrlValidator]],
+        tiktok: ['', [Validators.maxLength(500), this.httpUrlValidator]]
+      })
+    });
+
+    effect(() => {
+      const user = this.user();
+      if (!user || this.userForm.dirty) return;
+
+      this.userForm.patchValue({
+        fullName: user.fullName,
+        about: user.about || '',
+        address: user.address || '',
+        role: user.role || 'owner',
+        businessName: user.businessName || '',
+        licenseNumber: user.licenseNumber || '',
+        publicLocation: {
+          city: user.publicLocation?.city || '',
+          region: user.publicLocation?.region || '',
+          country: user.publicLocation?.country || ''
+        },
+        phone: user.phone || '',
+        showPhone: user.showPhone || false,
+        showEmail: user.showEmail || false,
+        links: {
+          website: user.links?.website || '',
+          facebook: user.links?.facebook || '',
+          instagram: user.links?.instagram || '',
+          linkedin: user.links?.linkedin || '',
+          x: user.links?.x || '',
+          youtube: user.links?.youtube || '',
+          tiktok: user.links?.tiktok || ''
+        }
+      });
     });
   }
 
@@ -104,6 +155,7 @@ export class ProfileComponent {
 
   public async submit(): Promise<void> {
     if (!this.userForm.valid) {
+      this.userForm.markAllAsTouched();
       return;
     }
     if (this.restriction.restricted) {
@@ -115,6 +167,7 @@ export class ProfileComponent {
       );
       const { status, message } = res;
       if (status === 200) {
+        this.userForm.markAsPristine();
         return this.toastCtrl
           .create({
             message: message || 'Profile updated successfully',
@@ -126,7 +179,7 @@ export class ProfileComponent {
       console.error('Update User error:', message);
     } catch (error: unknown) {
       if (error instanceof HttpErrorResponse) {
-        let { message } = errorHandler(error);
+        const { message } = errorHandler(error);
         this.toastCtrl
           .create({
             message,
@@ -141,5 +194,9 @@ export class ProfileComponent {
 
   public toggleActivityPropertyTab(): void {
     this.isActivityActive.set(!this.isActivityActive());
+  }
+
+  public toggleSocialLinks(): void {
+    this.isSocialLinksVisible.update((isVisible) => !isVisible);
   }
 }

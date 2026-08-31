@@ -63,6 +63,13 @@ const routes: Routes = [
       import('./help-support/help-support.module').then(
         (m) => m.HelpSupportPageModule
       )
+  },
+  {
+    path: 'account-info',
+    loadChildren: () =>
+      import('./account-info/account-info.module').then(
+        (m) => m.AccountInfoPageModule
+      )
   }
 ];
 

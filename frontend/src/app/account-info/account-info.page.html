@@ -1,0 +1,357 @@
+<ion-header
+  [translucent]="true"
+  class="ion-no-border border-b border-slate-200 dark:border-slate-800"
+>
+  <ion-toolbar>
+    <ion-title
+      class="flex flex-col gap-0 py-4 px-3 xl:px-4 text-[16px] md:text-[18px]"
+    >
+      <div class="flex flex-col gap-1 leading-none">
+        <span>Public Profile</span>
+        <small class="mt-1 text-slate-500 dark:text-slate-400">
+          Property user information and listings
+        </small>
+      </div>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <app-notification-bell class="lg:mr-3" />
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="pt-0 m-0">
+  <main class="min-h-full">
+    @if (!ready()) {
+    <div class="page-container flex min-h-96 items-center justify-center px-4">
+      <div
+        class="flex flex-col items-center gap-4 text-slate-500 dark:text-slate-400"
+      >
+        <ion-spinner name="crescent"></ion-spinner>
+        <span>Loading public profile...</span>
+      </div>
+    </div>
+    } @else if (profile(); as profile) {
+    <div class="page-container w-full px-4 py-6 sm:py-8 2xl:px-0">
+      <section
+        class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade"
+      >
+        <div class="h-24 bg-primary sm:h-32"></div>
+        <div class="px-5 pb-6 sm:px-8">
+          <div
+            class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"
+          >
+            <img
+              [src]="profile.profileImage || defaultProfileImage"
+              [alt]="profile.fullName + ' profile photo'"
+              class="-mt-12 size-24 rounded-full border-4 border-white dark:border-slate-900 bg-slate-100 dark:bg-slate-800 object-cover sm:-mt-16 sm:size-32"
+            />
+
+            @if (profile.phone || profile.email) {
+            <div class="flex flex-wrap gap-3 sm:pb-1">
+              @if (profile.phone) {
+              <a
+                [href]="'tel:' + profile.phone"
+                class="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-primary px-4 text-sm font-semibold text-primary transition-colors hover:bg-blue-50 dark:hover:bg-primary/15"
+              >
+                <ion-icon name="call-outline"></ion-icon>
+                Call
+              </a>
+              } @if (profile.email) {
+              <a
+                [href]="'mailto:' + profile.email"
+                class="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-white transition-colors hover:bg-[#194c9a]"
+              >
+                <ion-icon name="mail-outline"></ion-icon>
+                Email
+              </a>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mt-4 flex flex-col gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <h1
+                class="m-0 text-2xl font-bold text-slate-900 dark:text-slate-100 sm:text-3xl"
+              >
+                {{ profile.fullName }}
+              </h1>
+              @if (profile.verified) {
+              <ion-badge color="success" class="px-2 py-1 text-xs">
+                <ion-icon
+                  name="shield-checkmark-outline"
+                  class="mr-1 align-text-bottom"
+                ></ion-icon>
+                Verified
+              </ion-badge>
+              }
+            </div>
+            <div
+              class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600 dark:text-slate-300"
+            >
+              <span class="capitalize">{{ roleLabel(profile.role) }}</span>
+              @if (profile.businessName) {
+              <span
+                class="border-l border-slate-200 dark:border-slate-800 pl-4"
+              >
+                {{ profile.businessName }}
+              </span>
+              } @if (location()) {
+              <span class="flex items-center gap-1">
+                <ion-icon name="location-outline"></ion-icon>
+                {{ location() }}
+              </span>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+        <div class="space-y-6">
+          <section
+            class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade p-5 sm:p-6"
+          >
+            <h2
+              class="m-0 text-lg font-semibold text-slate-900 dark:text-slate-100"
+            >
+              About
+            </h2>
+            @if (profile.about) {
+            <p
+              class="mb-0 mt-3 whitespace-pre-line leading-7 text-slate-600 dark:text-slate-300"
+            >
+              {{ profile.about }}
+            </p>
+            } @else {
+            <p class="mb-0 mt-3 text-slate-500 dark:text-slate-400">
+              This account has not shared an introduction yet.
+            </p>
+            }
+
+            <!-- Social Links -->
+            <div
+              class="mt-5 flex flex-wrap items-center gap-2 border-t border-slate-200 pt-4 dark:border-slate-800"
+            >
+              <span
+                class="mr-1 text-sm font-medium text-slate-600 dark:text-slate-300"
+              >
+                Connect
+              </span>
+              @for (link of socialLinks(); track link.label) { @if (link.url) {
+              <a
+                [href]="link.url"
+                [attr.aria-label]="link.label"
+                [title]="link.label"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex size-12! items-center justify-center rounded-full text-slate-600 transition-colors hover:bg-slate-100 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-blue-300"
+              >
+                <ion-icon [name]="link.icon" class="text-2xl"></ion-icon>
+              </a>
+              } @else {
+              <span
+                [attr.aria-label]="link.label"
+                [title]="link.label"
+                aria-disabled="true"
+                class="inline-flex size-12! cursor-not-allowed items-center justify-center rounded-full text-slate-500 opacity-50 dark:text-slate-400"
+              >
+                <ion-icon [name]="link.icon" class="text-2xl"></ion-icon>
+              </span>
+              } }
+            </div>
+          </section>
+
+          <section
+            class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade p-5 sm:p-6"
+          >
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2
+                  class="m-0 text-lg font-semibold text-slate-900 dark:text-slate-100"
+                >
+                  Properties by "{{ profile.fullName }}"
+                </h2>
+                <p class="mb-0 mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  {{ profile.activePropertyCount }} active {{
+                  profile.activePropertyCount === 1 ? 'listing' : 'listings' }}
+                </p>
+              </div>
+            </div>
+
+            @if (profile.properties.length) {
+            <div class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              @for (property of profile.properties; track property.property_id)
+              {
+              <a
+                [routerLink]="['/properties', property.property_id]"
+                class="group overflow-hidden rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade no-underline transition-colors hover:border-primary"
+              >
+                <div
+                  class="relative h-40 overflow-hidden bg-slate-100 dark:bg-slate-800"
+                >
+                  <img
+                    [src]="property.images?.[0] || 'assets/images/no-image.jpeg'"
+                    [alt]="property.name"
+                    class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <span
+                    class="absolute left-0 top-0 rounded-br-lg bg-primary px-2 py-1 text-xs font-semibold text-white capitalize"
+                  >
+                    For {{ property.transactionType }}
+                  </span>
+                </div>
+                <div class="p-4">
+                  <div class="mb-2 flex items-center gap-2">
+                    <app-property-type-badge
+                      [type]="property.type"
+                    ></app-property-type-badge>
+                  </div>
+                  <h3
+                    class="m-0 line-clamp-1 text-base font-semibold text-slate-900 dark:text-slate-100"
+                  >
+                    {{ property.name }}
+                  </h3>
+                  <p
+                    class="mb-3 mt-1 line-clamp-1 text-sm text-slate-500 dark:text-slate-400"
+                  >
+                    {{ property.address }}
+                  </p>
+                  <p
+                    class="m-0 text-base font-bold text-slate-900 dark:text-slate-100"
+                  >
+                    {{ property.price | currency: property.currency || 'PHP' :
+                    'symbol' }} @if ( property.transactionType === 'rent' &&
+                    property.paymentFrequency ) {
+                    <span
+                      class="text-sm font-normal capitalize text-slate-500 dark:text-slate-400"
+                    >
+                      / {{ property.paymentFrequency }}
+                    </span>
+                    }
+                  </p>
+                </div>
+              </a>
+              }
+            </div>
+            } @else {
+            <div
+              class="mt-5 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-8 text-center text-slate-500 dark:text-slate-400"
+            >
+              This account has no active property listings right now.
+            </div>
+            }
+          </section>
+        </div>
+
+        <aside class="space-y-6">
+          <section
+            class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade p-5"
+          >
+            <h2
+              class="m-0 text-lg font-semibold text-slate-900 dark:text-slate-100"
+            >
+              Account information
+            </h2>
+            <dl class="mb-0 mt-4 space-y-4 text-sm">
+              @if (profile.businessName) {
+              <div>
+                <dt class="text-slate-500 dark:text-slate-400">Business</dt>
+                <dd
+                  class="mt-1 font-medium text-[18px] text-slate-800 dark:text-slate-200"
+                >
+                  {{ profile.businessName }}
+                </dd>
+              </div>
+              } @if (profile.licenseNumber) {
+              <div>
+                <dt class="text-slate-500 dark:text-slate-400">Licence</dt>
+                <dd
+                  class="mt-1 font-medium text-[18px] text-slate-800 dark:text-slate-200"
+                >
+                  {{ profile.licenseNumber }}
+                </dd>
+              </div>
+              } @if (location()) {
+              <div>
+                <dt class="text-slate-500 dark:text-slate-400">Location</dt>
+                <dd
+                  class="mt-1 font-medium text-[18px] text-slate-800 dark:text-slate-200"
+                >
+                  {{ location() }}
+                </dd>
+              </div>
+              } @if ( !profile.businessName && !profile.licenseNumber &&
+              !location() ) {
+              <div class="text-slate-500 dark:text-slate-400">
+                No additional public account details are available.
+              </div>
+              }
+            </dl>
+          </section>
+
+          <section
+            class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade p-5"
+          >
+            <h2
+              class="m-0 text-lg font-semibold text-slate-900 dark:text-slate-100"
+            >
+              Contact
+            </h2>
+            @if (profile.phone || profile.email) {
+            <div class="mt-4 space-y-3">
+              @if (profile.phone) {
+              <a
+                [href]="'tel:' + profile.phone"
+                class="flex items-center gap-3 break-all text-[16px] text-primary hover:underline"
+              >
+                <ion-icon name="call-outline"></ion-icon>{{ profile.phone }}
+              </a>
+              } @if (profile.email) {
+              <a
+                [href]="'mailto:' + profile.email"
+                class="flex items-center gap-3 break-all text-[16px] text-primary hover:underline"
+              >
+                <ion-icon name="mail-outline"></ion-icon>{{ profile.email }}
+              </a>
+              }
+            </div>
+            } @else {
+            <p
+              class="mb-0 mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400"
+            >
+              This account has not made direct contact details public.
+            </p>
+            }
+          </section>
+        </aside>
+      </div>
+    </div>
+    } @else {
+    <div class="page-container flex min-h-96 items-center justify-center px-4">
+      <section
+        class="max-w-md rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-shade p-6 text-center"
+      >
+        <ion-icon
+          name="person-circle-outline"
+          class="text-5xl text-slate-400 dark:text-slate-500"
+        ></ion-icon>
+        <h1
+          class="mb-2 mt-3 text-xl font-semibold text-slate-900 dark:text-slate-100"
+        >
+          Profile unavailable
+        </h1>
+        <p class="m-0 text-slate-500 dark:text-slate-400">
+          {{ loadError() || 'This public profile could not be found.' }}
+        </p>
+        @if (loadError()) {
+        <ion-button (click)="retryLoad()" class="mt-4">Try again</ion-button>
+        }
+      </section>
+    </div>
+    }
+  </main>
+  <app-footer />
+</ion-content>

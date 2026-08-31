@@ -179,12 +179,15 @@
             </ion-item>
           </ion-col>
 
-          <ion-col
-            class="flex justify-center border-t border-slate-200 dark:border-slate-800 pt-3"
-            *ngIf="simpleMode()"
-          >
-            <a routerLink="/mortgage-calc">Mortgage Calculator</a>
-          </ion-col>
+          @if (simpleMode()) {
+            <ion-col
+              class="flex justify-center border-t border-slate-200 dark:border-slate-800 pt-3"
+            >
+              <a routerLink="/mortgage-calc" class="text-[18px]"
+                >Mortgage Calculator</a
+              >
+            </ion-col>
+          }
         </ion-row>
       </ion-grid>
     </form>

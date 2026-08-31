@@ -1,7 +1,7 @@
 /**
  *  Schema for multiple users request
  */
-import { privateUserProperties, userProperties } from "./schema.js";
+import { privateUserProperties } from "./schema.js";
 import {
   responseSuccess,
   responseError,
@@ -16,11 +16,48 @@ import {
 export const updateUserOpts = (fastify, handler) => ({
   preValidation: [fastify.authenticate],
   schema: {
+    body: {
+      type: "object",
+      properties: {
+        fullName: { type: "string", minLength: 4 },
+        about: { type: "string", maxLength: 1000 },
+        address: { type: "string", maxLength: 300 },
+        role: { type: "string", enum: ["owner", "agent", "broker"] },
+        businessName: { type: "string", maxLength: 150 },
+        licenseNumber: { type: "string", maxLength: 100 },
+        publicLocation: {
+          type: "object",
+          properties: {
+            city: { type: "string", maxLength: 100 },
+            region: { type: "string", maxLength: 100 },
+            country: { type: "string", maxLength: 100 },
+          },
+          additionalProperties: false,
+        },
+        links: {
+          type: "object",
+          properties: {
+            website: { type: "string", maxLength: 500 },
+            facebook: { type: "string", maxLength: 500 },
+            instagram: { type: "string", maxLength: 500 },
+            linkedin: { type: "string", maxLength: 500 },
+            x: { type: "string", maxLength: 500 },
+            youtube: { type: "string", maxLength: 500 },
+            tiktok: { type: "string", maxLength: 500 },
+          },
+          additionalProperties: false,
+        },
+        phone: { type: "string", maxLength: 30 },
+        showPhone: { type: "boolean" },
+        showEmail: { type: "boolean" },
+      },
+      additionalProperties: false,
+    },
     response: {
       200: responseSuccess({
         data: {
           type: "object",
-          properties: userProperties,
+          properties: privateUserProperties,
         },
       }),
       400: responseError(),

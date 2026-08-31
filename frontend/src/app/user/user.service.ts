@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpContext } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import {
   BehaviorSubject,
   firstValueFrom,
@@ -13,7 +13,12 @@ import {
   tap,
   throwError
 } from 'rxjs';
-import { User, UserDetails, UserSignedIn } from '../shared/interface/user';
+import {
+  PublicUserProfile,
+  User,
+  UserDetails,
+  UserSignedIn
+} from '../shared/interface/user';
 import { StorageService } from '../shared/services/storage/storage.service';
 import { GoogleAuthResponse } from '../shared/interface/google';
 import { Property } from '../shared/interface/property';
@@ -170,6 +175,19 @@ export class UserService {
     return this.http.get<ApiResponse<UserDetails>>(
       url + 'users/me',
       requestOptions({ token: this.token })
+    );
+  }
+
+  public getPublicProfile(
+    userId: string,
+    excludePropertyId?: string
+  ): Observable<ApiResponse<PublicUserProfile>> {
+    const params = excludePropertyId
+      ? new HttpParams().set('excludePropertyId', excludePropertyId)
+      : undefined;
+    return this.http.get<ApiResponse<PublicUserProfile>>(
+      url + 'users/' + encodeURIComponent(userId),
+      { params }
     );
   }
 

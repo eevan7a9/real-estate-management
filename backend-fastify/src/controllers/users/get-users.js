@@ -1,6 +1,6 @@
 import { User } from "../../models/user.js";
 
-const publicProjection = "user_id fullName about address profileImage";
+const publicProjection = "user_id fullName about profileImage";
 
 export const getUsers = async function (req, res) {
   try {

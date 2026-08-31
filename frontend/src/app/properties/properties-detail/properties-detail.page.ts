@@ -26,6 +26,8 @@ import { ConfirmationAlertService } from 'src/app/shared/services/confirmation-a
   standalone: false
 })
 export class PropertiesDetailPage implements OnInit, OnDestroy {
+  public readonly defaultProfileImage = './assets/images/avatar.png';
+
   public property = signal<Property | undefined>(undefined);
   public ready = signal(false);
   public loadError = signal<string | null>(null);

@@ -1,3 +1,14 @@
+const ownerProperties = {
+  type: "object",
+  properties: {
+    user_id: { type: "string" },
+    fullName: { type: "string" },
+    role: { type: "string" },
+    profileImage: { type: "string" },
+  },
+};
+Object.freeze(ownerProperties);
+
 export const propertyProperties = {
   type: "object",
   properties: {
@@ -38,6 +49,7 @@ export const propertyProperties = {
     createdAt: { type: "string" },
     updatedAt: { type: "string" },
     user_id: { type: "string" },
+    owner: ownerProperties,
     isActive: { type: "boolean" },
   },
 };
@@ -58,6 +70,7 @@ export const propertyPopupProperties = {
     images: { type: "array" },
     currency: { type: "string" },
     user_id: { type: "string" },
+    owner: ownerProperties,
     isActive: { type: "boolean" },
   },
 };

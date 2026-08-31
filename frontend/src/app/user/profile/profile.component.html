@@ -1,127 +1,326 @@
 <ion-content *ngIf="user">
   <div class="w-full max-w-screen-xl mx-auto ion-padding-vertical">
     <ion-grid>
-      <ion-row>
-        <ion-col size="12" sizeMd="4" class="px-3 md:pr-1 md:pl-3">
-          <ion-card
-            class="shadow-none h-full border border-slate-200 dark:border-slate-800"
-          >
-            <ion-card-header class="mb-2">
-              <ion-card-title class="ion-padding"></ion-card-title>
-              <div
-                class="border relative overflow-hidden rounded-full mx-auto size-[250px] lg:size-[320px]"
-              >
-                <img
-                  [src]="imgUrl || user()?.profileImage || defaultProfileImage"
-                  class="object-cover h-full w-full"
-                />
-              </div>
-            </ion-card-header>
-
-            <ion-card-content>
-              <input
-                type="file"
-                (change)="onSelectFile($event)"
-                accept="image/*"
-                [hidden]="true"
-                id="image-upload"
-              />
-              <ion-button
-                color="primary"
-                expand="block"
-                (click)="toggleUpload()"
-                [disabled]="isUploadingImage()"
-                class="xl:h-[50px]"
-              >
-                {{ isUploadingImage() ? 'Uploading Image...' : 'Upload Image' }}
-              </ion-button>
-
-              <app-profile-verified></app-profile-verified>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-
-        <ion-col size="12" sizeMd="8" class="px-3 md:pr-3 md:pl-1 pt-4 md:pt-0">
-          <ion-card
-            class="shadow-none border border-slate-200 dark:border-slate-800 h-full"
-          >
-            <ion-card-header
-              class="px-3 xl:px-4 py-3 xl:py-4 bg-primary flex flex-row items-center justify-between"
+      <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <ion-row>
+          <ion-col size="12" sizeMd="4" class="px-3 md:pr-1 md:pl-3">
+            <ion-card
+              class="shadow-none h-full border border-slate-200 dark:border-slate-800"
             >
-              <ion-card-title
-                class="text-[16px] md:text-[18px] xl:text-[20px] text-white!"
-              >
-                My Information
-              </ion-card-title>
-              <ion-icon
-                name="person-circle-outline"
-                color="light"
-                size="large"
-              ></ion-icon>
-            </ion-card-header>
-
-            <ion-card-content class="pt-4!">
-              <form
-                (submit)="submit()"
-                [formGroup]="userForm"
-                class="form-information flex flex-col gap-5"
-              >
-                <ion-input
-                  labelPlacement="floating"
-                  label="Email *"
-                  fill="outline"
-                  class="text-[18px]!"
-                  type="email"
-                  [readonly]="true"
-                  [value]="user()?.email"
-                ></ion-input>
-
-                <ion-input
-                  labelPlacement="floating"
-                  label="Full Name *"
-                  fill="outline"
-                  class="text-[18px]!"
-                  type="text"
-                  formControlName="fullName"
-                  [value]="user()?.fullName"
-                  errorText="Full Name is too short."
-                ></ion-input>
-
-                <ion-textarea
-                  placeholder="..."
-                  labelPlacement="floating"
-                  label="About Me:"
-                  fill="outline"
-                  class="text-[18px]!"
-                  formControlName="about"
-                  [value]="user()?.about"
-                  errorText="Maximum character limit of 1000 has been reached."
-                ></ion-textarea>
-
-                <ion-input
-                  labelPlacement="floating"
-                  label="Address"
-                  fill="outline"
-                  class="text-[18px]!"
-                  type="text"
-                  formControlName="address"
-                  [value]="user()?.address"
-                  errorText="Maximum character limit of 1000 has been reached."
-                ></ion-input>
-
-                <div class="ion-text-end py-3">
-                  <ion-button type="submit" class="w-[200px] h-[50px]"
-                    >SAVE CHANGES</ion-button
-                  >
+              <ion-card-header class="mb-2">
+                <ion-card-title class="ion-padding"></ion-card-title>
+                <div
+                  class="border relative overflow-hidden rounded-full mx-auto size-[250px] lg:size-[320px]"
+                >
+                  <img
+                    [src]="
+                      imgUrl || user()?.profileImage || defaultProfileImage
+                    "
+                    class="object-cover h-full w-full"
+                    alt="Profile image"
+                  />
                 </div>
-              </form>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
+              </ion-card-header>
+              <ion-card-content>
+                <input
+                  type="file"
+                  (change)="onSelectFile($event)"
+                  accept="image/*"
+                  [hidden]="true"
+                  id="image-upload"
+                />
+                <ion-button
+                  color="primary"
+                  expand="block"
+                  (click)="toggleUpload()"
+                  [disabled]="isUploadingImage()"
+                  class="xl:h-[50px]"
+                >
+                  {{
+                    isUploadingImage() ? 'Uploading Image...' : 'Upload Image'
+                  }}
+                </ion-button>
+                <app-profile-verified></app-profile-verified>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col
+            size="12"
+            sizeMd="8"
+            class="px-3 md:pr-3 md:pl-1 pt-4 md:pt-0"
+          >
+            <ion-card
+              class="shadow-none border border-slate-200 dark:border-slate-800 h-full"
+            >
+              <ion-card-header
+                class="px-3 xl:px-4 py-3 xl:py-4 bg-primary flex flex-row items-center justify-between"
+              >
+                <ion-card-title
+                  class="text-[16px] md:text-[18px] xl:text-[20px] text-white!"
+                  >My Information</ion-card-title
+                >
+                <ion-icon
+                  name="person-circle-outline"
+                  color="light"
+                  size="large"
+                ></ion-icon>
+              </ion-card-header>
+              <ion-card-content class="pt-4!">
+                <div class="form-information flex flex-col gap-5">
+                  <ion-input
+                    labelPlacement="floating"
+                    label="Email"
+                    fill="outline"
+                    class="text-[18px]!"
+                    type="email"
+                    [readonly]="true"
+                    [value]="user()?.email"
+                  ></ion-input>
+                  <ion-input
+                    labelPlacement="floating"
+                    label="Full Name *"
+                    fill="outline"
+                    class="text-[18px]!"
+                    type="text"
+                    formControlName="fullName"
+                    errorText="Full name must contain at least 4 characters."
+                  ></ion-input>
+                  <ion-textarea
+                    placeholder="..."
+                    labelPlacement="floating"
+                    label="About Me"
+                    fill="outline"
+                    class="text-[18px]!"
+                    formControlName="about"
+                    errorText="About Me cannot exceed 1000 characters."
+                  ></ion-textarea>
+                  <ion-input
+                    labelPlacement="floating"
+                    label="Address"
+                    fill="outline"
+                    class="text-[18px]!"
+                    type="text"
+                    formControlName="address"
+                    errorText="Address cannot exceed 300 characters."
+                  ></ion-input>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="mt-4">
+          <ion-col size="12" sizeLg="6" class="px-3">
+            <ion-card
+              class="shadow-none border border-slate-200 dark:border-slate-800 h-full"
+            >
+              <ion-card-header
+                class="px-3 xl:px-4 py-3 xl:py-4 bg-primary flex flex-row items-center justify-between"
+              >
+                <ion-card-title
+                  class="text-[16px] md:text-[18px] xl:text-[20px] text-white!"
+                  >Professional Profile</ion-card-title
+                >
+                <ion-icon
+                  name="briefcase-outline"
+                  color="light"
+                  size="large"
+                ></ion-icon>
+              </ion-card-header>
+              <ion-card-content class="pt-5!">
+                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <ion-select
+                    label="Role"
+                    labelPlacement="floating"
+                    fill="outline"
+                    interface="popover"
+                    formControlName="role"
+                  >
+                    <ion-select-option value="owner">Owner</ion-select-option>
+                    <ion-select-option value="agent">Agent</ion-select-option>
+                    <ion-select-option value="broker">Broker</ion-select-option>
+                  </ion-select>
+                  <ion-input
+                    label="Business Name"
+                    labelPlacement="floating"
+                    fill="outline"
+                    formControlName="businessName"
+                    errorText="Business name cannot exceed 150 characters."
+                  ></ion-input>
+                  <ion-input
+                    label="License Number"
+                    labelPlacement="floating"
+                    fill="outline"
+                    formControlName="licenseNumber"
+                    errorText="License number cannot exceed 100 characters."
+                  ></ion-input>
+                </div>
+                <div
+                  formGroupName="publicLocation"
+                  class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3"
+                >
+                  <ion-input
+                    label="City"
+                    labelPlacement="floating"
+                    fill="outline"
+                    formControlName="city"
+                  ></ion-input>
+                  <ion-input
+                    label="Region"
+                    labelPlacement="floating"
+                    fill="outline"
+                    formControlName="region"
+                  ></ion-input>
+                  <ion-input
+                    label="Country"
+                    labelPlacement="floating"
+                    fill="outline"
+                    formControlName="country"
+                  ></ion-input>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="12" sizeLg="6" class="px-3 pt-4 lg:pt-0">
+            <ion-card
+              class="shadow-none border border-slate-200 dark:border-slate-800 h-full"
+            >
+              <ion-card-header
+                class="px-3 xl:px-4 py-3 xl:py-4 bg-primary flex flex-row items-center justify-between"
+              >
+                <ion-card-title
+                  class="text-[16px] md:text-[18px] xl:text-[20px] text-white!"
+                  >Contact &amp; Social</ion-card-title
+                >
+                <ion-icon
+                  name="call-outline"
+                  color="light"
+                  size="large"
+                ></ion-icon>
+              </ion-card-header>
+              <ion-card-content class="pt-5!">
+                <div class="flex flex-col gap-4">
+                  <ion-input
+                    label="Phone Number"
+                    labelPlacement="floating"
+                    fill="outline"
+                    type="tel"
+                    formControlName="phone"
+                    errorText="Phone number cannot exceed 30 characters."
+                  ></ion-input>
+                  <ion-item
+                    lines="none"
+                    class="rounded border border-slate-200 dark:border-slate-800"
+                  >
+                    <ion-label>Show phone publicly</ion-label>
+                    <ion-toggle
+                      slot="end"
+                      formControlName="showPhone"
+                    ></ion-toggle>
+                  </ion-item>
+                  <ion-item
+                    lines="none"
+                    class="rounded border border-slate-200 dark:border-slate-800"
+                  >
+                    <ion-label>Show email publicly</ion-label>
+                    <ion-toggle
+                      slot="end"
+                      formControlName="showEmail"
+                    ></ion-toggle>
+                  </ion-item>
+                  <ion-button
+                    type="button"
+                    fill="clear"
+                    class="self-start -ml-3"
+                    (click)="toggleSocialLinks()"
+                  >
+                    {{
+                      isSocialLinksVisible()
+                        ? 'Hide Social Links'
+                        : 'Add Social Links'
+                    }}
+                  </ion-button>
+                </div>
+
+                @if (isSocialLinksVisible()) {
+                  <div
+                    formGroupName="links"
+                    class="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2"
+                  >
+                    <ion-input
+                      label="Website"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="website"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="Facebook"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="facebook"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="Instagram"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="instagram"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="LinkedIn"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="linkedin"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="X"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="x"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="YouTube"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="youtube"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                    <ion-input
+                      label="TikTok"
+                      labelPlacement="floating"
+                      fill="outline"
+                      type="url"
+                      formControlName="tiktok"
+                      errorText="Enter a valid HTTP(S) URL."
+                    ></ion-input>
+                  </div>
+                }
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <div class="px-3 py-6 text-end">
+          <ion-button type="submit" class="w-full sm:w-[200px] h-[50px]"
+            >SAVE CHANGES</ion-button
+          >
+        </div>
+      </form>
 
       <ion-row>
-        <ion-col size="12" class="mt-8 px-3">
+        <ion-col size="12" class="mt-2 px-3">
           <ion-card
             class="shadow-none border border-slate-200 dark:border-slate-800"
           >
@@ -134,20 +333,17 @@
                   (click)="toggleActivityPropertyTab()"
                   color="primary"
                   [fill]="isActivityActive() ? 'solid' : 'clear'"
+                  >My Activities</ion-button
                 >
-                  My Activities
-                </ion-button>
                 <ion-button
                   class="tab-button m-0 border-b-0 h-[40px] lg:h-[50px] w-[180px] lg:w-[200px]"
                   (click)="toggleActivityPropertyTab()"
                   color="primary"
                   [fill]="isActivityActive() ? 'clear' : 'solid'"
+                  >My Properties</ion-button
                 >
-                  My Properties
-                </ion-button>
               </div>
             </ion-card-header>
-
             <ion-card-content class="min-h-[400px] pt-6!">
               @if (isActivityActive()) {
                 <app-activity-timeline />
