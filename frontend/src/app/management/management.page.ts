@@ -1,12 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { Property } from '../shared/interface/property';
+import { UserSignedIn } from '../shared/interface/user';
 import { UserService } from '../user/user.service';
 import { PropertiesService } from '@app/properties/properties.service';
 import { PropertiesNewComponent } from '@app/properties/properties-new-modal/properties-new.component';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PropertiesUploadsComponent } from '@app/properties/properties-uploads-modal/properties-uploads.component';
+import { distinctUntilChanged, filter } from 'rxjs';
 
 @Component({
   selector: 'app-management',
@@ -16,6 +19,7 @@ import { PropertiesUploadsComponent } from '@app/properties/properties-uploads-m
 })
 export class ManagementPage implements OnInit {
   private readonly userService = inject(UserService);
+  private readonly destroyRef = inject(DestroyRef);
   public readonly user = toSignal(this.userService.user$, {
     initialValue: undefined
   });
@@ -26,13 +30,29 @@ export class ManagementPage implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.userService.sessionReady;
-    await this.propertiesService.loadOwnedProperties();
+    this.userService.user$
+      .pipe(
+        filter((user): user is UserSignedIn => Boolean(user)),
+        distinctUntilChanged(
+          (previous, current) => previous.accessToken === current.accessToken
+        ),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(() => {
+        void this.propertiesService.loadOwnedProperties();
+      });
+  }
+
+  public goSignin(): void {
+    void this.router.navigate(['/user/signin'], {
+      queryParams: { returnUrl: '/management' }
+    });
   }
 
   async presentCreateModal() {
     const user = this.userService.user;
     if (!user) {
-      this.router.navigateByUrl('/user/signin');
+      this.goSignin();
       this.toastCtrl
         .create({
           message: 'Please sign in, to continue',

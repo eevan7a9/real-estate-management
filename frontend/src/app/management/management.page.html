@@ -21,8 +21,39 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="pt-0 m-0">
-  <main class="flex min-h-full w-full flex-col">
+<ion-content class="pt-0 m-0 relative">
+  @if(!user()) {
+  <div
+    class="absolute inset-0 z-10 flex min-h-full items-center justify-center bg-white/1 p-4 backdrop-blur-sm dark:bg-dark/50"
+  >
+    <ion-card
+      class="m-0 w-full max-w-md shadow-none border border-slate-200 dark:border-slate-800"
+    >
+      <ion-card-header class="px-4 pt-5!">
+        <ion-card-title>YOU NEED TO SIGN IN TO CONTINUE</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="flex! flex-col!">
+        <p class="text-slate-500 dark:text-slate-400">
+          Please sign in to access the management features and view your
+          property portfolio.
+        </p>
+        <ion-button
+          (click)="goSignin()"
+          class="w-full max-w-[300px] mx-auto mt-4 md:text-[20px]"
+        >
+          SIGN IN
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  }
+
+  <main
+    class="relative z-0 flex min-h-full w-full flex-col"
+    [class.blur-sm]="!user()"
+    [class.pointer-events-none]="!user()"
+    [attr.aria-hidden]="!user() ? 'true' : null"
+  >
     <section
       class="page-container flex w-full items-center justify-between px-3 pt-8 2xl:px-0"
     >

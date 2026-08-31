@@ -206,12 +206,12 @@ export class AppComponent implements OnInit {
 
   public appLowerPages = computed<NavLinks[]>(() => {
     const pages = [
-      { title: 'Help & Support', url: '/help-support', icon: 'help-circle' }
+      { title: 'Help & Support', url: '/help-support', icon: 'help-circle' },
+      { title: 'Management', url: '/management', icon: 'briefcase' }
     ];
     if (this.user()) {
       return [
         ...pages,
-        { title: 'Management', url: '/management', icon: 'briefcase' },
         { title: 'Account', url: '/user/account', icon: 'person' }
       ];
     }

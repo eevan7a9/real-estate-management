@@ -4,7 +4,7 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { GoogleAuthResponse } from 'src/app/shared/interface/google';
 import { environment } from 'src/environments/environment';
@@ -26,6 +26,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
   public authFailed = false;
   public signinForm: UntypedFormGroup;
   public showSocial = false;
+  private returnUrl = '/map';
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -33,6 +34,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     private toastCtrl: ToastController,
     public loadingController: LoadingController,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public platform: Platform
   ) {
     this.signinForm = this.fb.group({
@@ -43,6 +45,11 @@ export class SigninComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.showSocial = !!environment.api.googleAuthClientId;
+    const returnUrl =
+      this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
+    if (returnUrl?.startsWith('/')) {
+      this.returnUrl = returnUrl;
+    }
   }
 
   ngAfterViewInit(): void {
@@ -65,7 +72,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
       loading.dismiss();
       if (result.status === 200) {
         this.showToast('Success, You are logged in');
-        this.router.navigate(['/map'], { replaceUrl: true });
+        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
       } else {
         this.showToast(result.message, 'danger');
       }
@@ -111,7 +118,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
       console.log('Google Auth result:', res);
       if (res.data) {
         await this.showToast('Success, You are logged in');
-        this.router.navigateByUrl('/map');
+        this.router.navigateByUrl(this.returnUrl);
         loading.dismiss();
       }
     } catch (error: unknown) {

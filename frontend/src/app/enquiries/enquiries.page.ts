@@ -121,4 +121,10 @@ export class EnquiriesPage implements AfterViewInit {
       queryParamsHandling: 'merge'
     });
   }
+
+  public goSignin(): void {
+    void this.router.navigate(['/user/signin'], {
+      queryParams: { returnUrl: '/enquiries' }
+    });
+  }
 }

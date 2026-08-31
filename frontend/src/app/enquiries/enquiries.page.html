@@ -74,20 +74,44 @@
 </ion-header>
 
 <ion-content>
-  @if (!user()) {
-  <app-need-signin-continue></app-need-signin-continue>
+  @if(!user()) {
+  <div
+    class="absolute inset-0 z-10 flex min-h-full h-full items-center justify-center bg-white/1 p-4 backdrop-blur-sm dark:bg-dark/50"
+  >
+    <ion-card
+      class="m-0 w-full max-w-md shadow-none border border-slate-200 dark:border-slate-800"
+    >
+      <ion-card-header class="px-4 pt-5!">
+        <ion-card-title>YOU NEED TO SIGN IN TO CONTINUE</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="flex! flex-col!">
+        <p class="text-slate-500 dark:text-slate-400">
+          Please sign in to access enquiries and review messages from potential
+          clients.
+        </p>
+
+        <ion-button
+          (click)="goSignin()"
+          class="w-full max-w-75 mx-auto mt-4 md:text-[20px]"
+        >
+          SIGN IN
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
   }
   <div
-    class="min-h-screen max-w-screen-2xl mx-auto h-full pt-8 xl:pt-12"
-    *ngIf="user()"
+    class="min-h-[calc(100vh-300px)] max-w-screen-2xl mx-auto h-full pt-8 xl:pt-12"
   >
+    @if (!enquiriesReady() && user()) {
     <ion-progress-bar
       style="margin: 4px 0 0 0"
       type="indeterminate"
-      *ngIf="!enquiriesReady()"
     ></ion-progress-bar>
+    }
 
     <app-enquiries-list #enquiriesList></app-enquiries-list>
   </div>
+
   <app-footer></app-footer>
 </ion-content>
