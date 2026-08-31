@@ -2,9 +2,9 @@
   {
     "property_id": "comerc-434343",
     "isActive": true,
-    "name": "Retail buildings Sunagakure E.43",
-    "address": "1542 death Street, San Konoha, CA 94134",
-    "description": "A modern office building located in the thriving business district of San Francisco, this property offers 6,200 square feet of flexible workspace. Highlights include state-of-the-art conference rooms. Perfect for tech startups or established firms looking to impress clients and attract top talent.",
+    "name": "Konoha East Retail Center",
+    "address": "43 East Market Street, Konoha, Hidden City of Fantasy",
+    "description": "A modern retail and office building in Konoha East with 6,200 square feet of flexible workspace. The property includes adaptable shopfronts, conference rooms, and convenient access to the commercial district.",
     "type": "commercial",
     "position": {
       "type": "Point",
@@ -24,29 +24,35 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-7609267_1280_j-iNs6SHx.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-1_NJJ4gcca1.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-3_01aSuZUYu.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "ap2as488-cba6-4b5a-8ef9",
     "isActive": true,
-    "name": "Sunagakure Appartment N.Eastern",
-    "address": "WGVQ+FXD3, Sunagakure, Hidden City of Fantacy",
-    "description": "Sunagakure Appartment has properties to meet a variety of needs from apartments (studio, one-bedroom, and two-bedroom) to several 2- and 3-bedroom houses. To be reside in Village Housing, residents must be enrolled full-time in a degree-track program and meet eligibility to live \n\nenrolled full-time in a degree-track program and meet eligibility to live \noff campus. Faculty and staff must be full-time, benefit-eligible employees of  Dummy village Housing.",
+    "name": "Northeastern Sunagakure Apartments",
+    "address": "14 Northeastern Lane, Sunagakure, Hidden City of Fantasy",
+    "description": "A well-kept residential apartment in northeastern Sunagakure with practical layouts for long-term tenants. The building offers balcony space, garage access, and an on-site laundry area.",
     "type": "residential",
     "position": {
       "type": "Point",
       "coordinates": [125.54808759760274, 8.949260150548875]
     },
     "price": 200500,
-    "features": ["Balcony", " Move-In Ready", "Garage", "Laundry"],
+    "features": ["Balcony", "Move-In Ready", "Garage", "Laundry Area"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-3_GIokyDxR2.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "rent",
     "paymentFrequency": "monthly"
@@ -54,22 +60,25 @@
   {
     "property_id": "ap133488-sad-5a85d4247196",
     "isActive": true,
-    "name": "Konoha S.Eastern Appartment",
-    "address": "WGVQ+FXD3, Konoha, Hidden City of Fantacy",
-    "description": "Village Housing has properties to meet a variety of needs from apartments (studio, one-bedroom, and two-bedroom) to several 2- and 3-bedroom houses. To be reside in Village Housing, residents must be enrolled full-time in a degree-track program and meet eligibility to live \n\nenrolled full-time in a degree-track program and meet eligibility to live \noff campus. Faculty and staff must be full-time, benefit-eligible employees of  Dummy village Housing.",
+    "name": "Southeastern Konoha Apartments",
+    "address": "8 Southeast Avenue, Konoha, Hidden City of Fantasy",
+    "description": "A renovated two-bedroom apartment in southeastern Konoha. It offers a comfortable layout, a modern bathroom, garage access, and a move-in-ready interior.",
     "type": "residential",
     "position": {
       "type": "Point",
       "coordinates": [125.54535808264038, 8.94753663904503]
     },
     "price": 100000,
-    "features": ["Newly Renovated", " Move-In Ready", "2-Bedroom", "bathroom"],
+    "features": ["Newly Renovated", "Move-In Ready", "Two Bedrooms", "One Bathroom"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-3_GIokyDxR2.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "rent",
     "paymentFrequency": "monthly"
@@ -77,30 +86,33 @@
   {
     "property_id": "b6af25b9-bbc8-4f4a-a297-9f02ca43089d",
     "isActive": true,
-    "name": "Dummy Hotel Grande A",
-    "address": "22 J Azote, Konoha, 8600 Hidden City of Fantacy",
-    "description": "In the center of Konoha , this great hotel is a minute's walk from Guingona Park, close to the National Museum Eastern-Northern Mindanao and 7 km from Butuan Airport.\n\nsome long description.",
-    "type": "residential",
+    "name": "Grand Konoha Hotel",
+    "address": "22 Azote Street, Central Konoha, Hidden City of Fantasy",
+    "description": "Grand Konoha Hotel is a centrally located hospitality property with guest rooms, a restaurant, and a coffee shop. It is well suited for an investor seeking an established accommodation and dining venue.",
+    "type": "commercial",
     "position": {
       "type": "Point",
       "coordinates": [125.54713081029891, 8.948362011724328]
     },
     "price": 42000000,
-    "features": ["bedroom", " restaurant", " coffee", " service"],
+    "features": ["Guest Rooms", "Restaurant", "Coffee Shop", "Room Service"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "4b58df58-3e8d-453e-9802-7537a514453e",
     "isActive": true,
-    "name": "Photo Studio - Dummy",
-    "address": "WGWV+VC8, A.D. Curato St, Konoha, Hidden City of Fantacy",
-    "description": "Great Image is a prime mover in the photo and digital imaging industry. Dummy data Photo Studio, Great Image is known for its excellent, professional, reliably fast and creative photography services. It has built a solid reputation in the photo industry business over the last 38 years.\n\n",
+    "name": "Konoha Creative Studio",
+    "address": "WGWV+VC8, A.D. Curato St, Konoha, Hidden City of Fantasy",
+    "description": "Konoha Creative Studio is a flexible commercial space for photography, digital-media, and client-facing creative work. Its open layout and central location suit studios, agencies, and small production teams.",
     "type": "commercial",
     "position": {
       "type": "Point",
@@ -109,8 +121,8 @@
     "price": 5000000,
     "features": [
       "Office Space",
-      " Retail",
-      " Coworking Space",
+      "Retail Space",
+      "Coworking Space",
       "Mixed-Use Property",
       "Near Public Transit",
       "Modern Design"
@@ -119,38 +131,44 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-2_F3zpEhu9RT.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-2_F3zpEhu9RT.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "62130ae8-de7c-47f0-afa6-4f19828b5d23",
     "isActive": true,
-    "name": "Industrial building - Dummy",
-    "address": "WGXR+PXP, Lopez Jaena St, Konoha, Hidden City of Fantacy",
-    "description": "A building directly used in manufacturing or technically productive enterprises. Industrial buildings are not generally or typically accessible to other than workers. Industrial buildings include buildings used directly in the production of power, the manufacture of products, the mining of raw materials, and the storage of textiles, petroleum products, wood and paper products, chemicals, plastics, and metals. ",
+    "name": "Konoha Industrial Building",
+    "address": "WGXR+PXP, Lopez Jaena St, Konoha, Hidden City of Fantasy",
+    "description": "A secure industrial storage facility with high ceilings, loading access, and space for warehousing or light distribution operations. ",
     "type": "industrial",
     "position": {
       "type": "Point",
       "coordinates": [125.54676748310783, 8.949726468110553]
     },
     "price": 10000000,
-    "features": ["item1", " item2", " item3", " item4", " item5"],
+    "features": ["Loading Bay", "High Ceiling", "Three-Phase Power", "Secure Yard", "Truck Access"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/store-1_iWCxD16NUTB.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/arch-1_1E9WxLDcVyIQ.png"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0103",
+    "contactEmail": "jane_doe@email.com",
     "user_id": "u03",
     "transactionType": "sale"
   },
   {
     "property_id": "8faf2abc-5e01-420b-a232-1ce300d70c84",
     "isActive": true,
-    "name": "Apartment Room #4 - Dummy",
-    "address": "XG2P+8M4, T. Calo Ext, St, Konoha, Hidden City of Fantacy",
-    "description": "The apartment consists of a large bright bedroom with Kitchenette includes small fridge, induction stove, microwave and all necessary cutlery to prepare and enjoy your food., a modern fully-equipped kitchen and a sunlit living room with Apple TV and free Netflix account. It is the perfect place to stay for couples looking for a romantic location in the historic centre, within walking distance of some of the most beautiful sceneries you can find in the city and all famous landmarks. The sofa in the living room can also serve as an additional bed for a 3rd guest. Located in a side street between the ___ river bank and the leafy ___ hill park, the apartment is very quiet at night. Please note, my apartment is on the 3rd floor with no elevator. I am more than happy to help you with your luggage! ",
+    "name": "Apartment Room 4, Riverside Residences",
+    "address": "XG2P+8M4, T. Calo Ext, St, Konoha, Hidden City of Fantasy",
+    "description": "This bright one-bedroom apartment at Riverside Residences includes a kitchenette, sunlit living area, and streaming-ready TV. It is a quiet option for a single resident or couple near Konoha's central amenities.",
     "type": "residential",
     "position": {
       "type": "Point",
@@ -168,16 +186,19 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "b7973ec5-2931-4040-a846-a0271153718d",
     "isActive": true,
-    "name": "High Land area for Sale - Dummy",
-    "address": "Konoha riverside XG2V+4P9 Agusan River, Konoha, Hidden City of Fantacy",
-    "description": "Land-use zoning for agricultural land preservation limits nonagricultural development. Land banks are usually government initiatives to make agricultural land available to farmers at reasonable prices. Land trusts, set-asides, and easements refer to the donation of development rights to a governmental or nongovernmental organization, normally in perpetuity. Right-to-farm legislations protect farmers from nuisance lawsuits and allow the farmers to practice agriculture in a normal way. Integrated approaches focus on land stewardship, ",
+    "name": "Riverside Highlands Estate",
+    "address": "Riverside Heights, Konoha, Hidden City of Fantasy",
+    "description": "A spacious land parcel in Riverside Heights with road access, a private pond, and nearby riverside views. Its mixed-use potential makes it suitable for a private estate or a carefully planned development.",
     "type": "land",
     "position": {
       "type": "Point",
@@ -194,16 +215,19 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-1_2arH5jUfb.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/land-1_AhsuDBOQF2.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-1_2arH5jUfb.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "8eca0691-5a3e-46a2-b4db-87d4f536af1b",
     "isActive": true,
-    "name": "Sweet Farmland For Sale - Dummy",
-    "address": "Buhangin Pob. (Brgy 19), Konoha, Hidden City of Fantacy, Konoha, Hidden City of Fantacy",
-    "description": "Smart growth is an approach to urban growth management, focused on minimizing low-density development in areas adjacent to urban centers. Agricultural land preservation strategies require complementary agricultural support initiatives to be more effective, and effectiveness needs to be monitored. A combination of strategies will enhance the effectiveness of agricultural land preservation initiatives and better contribute to the potential for sustainable agriculture.",
+    "name": "Greenfield Farmland",
+    "address": "Greenfield District, Konoha, Hidden City of Fantasy",
+    "description": "Greenfield Farmland is a secluded, fertile land offering with timberland and residential-plot potential. It is available for a monthly lease to tenants seeking agricultural or nature-focused use.",
     "type": "land",
     "position": {
       "type": "Point",
@@ -216,7 +240,10 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/land-2_rfrOT2tgzmx.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-1_2arH5jUfb.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/land-1_AhsuDBOQF2.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "rent",
     "paymentFrequency": "monthly"
@@ -224,74 +251,83 @@
   {
     "property_id": "106ab526-72af-4446-9550-998a48d98c0c",
     "isActive": true,
-    "name": "WASH AND DRY LAUNDRY - Edited",
-    "address": "WGWV+JM6, Konoha, Hidden City of Fantacy WGWV+Xv6, Konoha, Hidden City of Fantacy",
-    "description": "Enjoy the peace of mind that a sanitized washer gives you, whether you do it yourself or have us do your laundry for you. With available dry cleaning service, we're you're one stop shop for all your clothing and linen cleaning needs!",
-    "type": "residential",
+    "name": "Wash & Dry Laundry Center",
+    "address": "16 Market Lane, Central Konoha, Hidden City of Fantasy",
+    "description": "A fully equipped self-service laundry center with dry-cleaning support, retail frontage, and an open customer area. The property is positioned for a neighborhood garment-care operator.",
+    "type": "commercial",
     "position": {
       "type": "Point",
       "coordinates": [125.54574932918608, 8.946981543223995]
     },
     "price": 3000000,
-    "features": ["shop", "self service", "open space"],
+    "features": ["Retail Frontage", "Self-Service Area", "Open Floor Plan"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_1__ydLwMBXTp.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0101",
+    "contactEmail": "test@email.com",
     "user_id": "u01",
     "transactionType": "sale"
   },
   {
     "property_id": "fef95dc0-0131-46b4-aa63-09f19898a0c8",
     "isActive": true,
-    "name": "Storage Facility - Dummy",
-    "address": "Baan Riverside Pob. (Brgy 20), Konoha, Hidden City of Fantacy",
-    "description": "A building directly used in manufacturing or technically productive enterprises. Industrial buildings are not generally or typically accessible to other than workers. Industrial buildings include buildings used directly in the production of power, the manufacture of products, the mining of raw materials, and the storage of textiles, petroleum products, wood and paper products, chemicals, plastics, and metals.",
+    "name": "Riverside Storage Facility",
+    "address": "7 Riverside Drive, Konoha, Hidden City of Fantasy",
+    "description": "A secure industrial storage facility with high ceilings, loading access, and space for warehousing or light distribution operations.",
     "type": "industrial",
     "position": {
       "type": "Point",
       "coordinates": [125.54443478733799, 8.948581857249334]
     },
     "price": 10000000,
-    "features": ["item1", " item2", " item3"],
+    "features": ["Loading Access", "Secure Storage", "High Ceiling"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/arch-1_1E9WxLDcVyIQ.png",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/store-1_iWCxD16NUTB.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/arch-1_1E9WxLDcVyIQ.png",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0103",
+    "contactEmail": "jane_doe@email.com",
     "user_id": "u03",
     "transactionType": "sale"
   },
   {
     "property_id": "08633488-cba6-4b5a-8ef9-5a85d4247196",
     "isActive": true,
-    "name": "village Cloud9 Housing - Dummy",
-    "address": "WGVQ+FXD3, Konoha, Hidden City of Fantacy",
-    "description": "Village Housing has properties to meet a variety of needs from apartments (studio, one-bedroom, and two-bedroom) to several 2- and 3-bedroom houses. To be reside in Village Housing, residents must be enrolled full-time in a degree-track program and meet eligibility to live \n\nenrolled full-time in a degree-track program and meet eligibility to live \noff campus. Faculty and staff must be full-time, benefit-eligible employees of  Dummy village Housing.",
+    "name": "Cloud Nine Village Homes",
+    "address": "8 Southeast Avenue, Konoha, Hidden City of Fantasy",
+    "description": "A renovated two-bedroom apartment in southeastern Konoha. It offers a comfortable layout, a modern bathroom, garage access, and a move-in-ready interior.",
     "type": "residential",
     "position": {
       "type": "Point",
       "coordinates": [125.54396063089374, 8.947376342975213]
     },
     "price": 850000,
-    "features": ["item1", " item", "2 item3"],
+    "features": ["Gated Community", "Family-Friendly", "Two Bedrooms"],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/bedroom-1_1__vaf0icwViPQ.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/wall-1_1__cOWZPcFLtf.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   },
   {
     "property_id": "comerc-7537a514453e",
     "isActive": true,
-    "name": "Retail buildings FaarEas E.43",
-    "address": "Commerce Boulevard Hidden in the 75208 road 124, st.E32",
-    "description": "This prime retail space boasts a high-visibility location in the bustling heart of Dallas. Spanning 4,500 square feet, the property is ideal for restaurants, boutiques, or professional services. It features large display windows, ample parking, and proximity to major highways, ensuring easy access for customers and employees alike.",
+    "name": "Far East Retail Center",
+    "address": "124 Commerce Boulevard, Konoha, Hidden City of Fantasy",
+    "description": "This high-visibility retail space sits on Commerce Boulevard in central Konoha. Its display windows, parking, and flexible layout suit boutiques, restaurants, and professional-service businesses.",
     "type": "commercial",
     "position": {
       "type": "Point",
@@ -311,7 +347,10 @@
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-3_01aSuZUYu.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-1_NJJ4gcca1.jpg"
     ],
+    "profileImage": "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-7609267_1280_j-iNs6SHx.jpg",
     "currency": "PHP",
+    "contactNumber": "+63 917 555 0102",
+    "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
   }
