@@ -4,8 +4,13 @@ import {
   UntypedFormGroup,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import {
+  LoadingController,
+  NavController,
+  Platform,
+  ToastController
+} from '@ionic/angular';
 import { GoogleAuthResponse } from 'src/app/shared/interface/google';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user.service';
@@ -33,7 +38,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
     private user: UserService,
     private toastCtrl: ToastController,
     public loadingController: LoadingController,
-    private router: Router,
+    private navController: NavController,
     private activatedRoute: ActivatedRoute,
     public platform: Platform
   ) {
@@ -47,9 +52,10 @@ export class SigninComponent implements OnInit, AfterViewInit {
     this.showSocial = !!environment.api.googleAuthClientId;
     const returnUrl =
       this.activatedRoute.snapshot.queryParamMap.get('returnUrl');
-    if (returnUrl?.startsWith('/')) {
-      this.returnUrl = returnUrl;
-    }
+    this.returnUrl =
+      returnUrl && returnUrl !== '/' && returnUrl.startsWith('/')
+        ? returnUrl
+        : '/map';
   }
 
   ngAfterViewInit(): void {
@@ -72,7 +78,9 @@ export class SigninComponent implements OnInit, AfterViewInit {
       loading.dismiss();
       if (result.status === 200) {
         this.showToast('Success, You are logged in');
-        this.router.navigateByUrl(this.returnUrl, { replaceUrl: true });
+        await this.navController.navigateRoot(this.returnUrl || '/map', {
+          animated: false
+        });
       } else {
         this.showToast(result.message, 'danger');
       }
@@ -85,8 +93,18 @@ export class SigninComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private initializeGoogleSigninWeb(): void {
+  private initializeGoogleSigninWeb(attempt = 0): void {
     if (!environment.api.googleAuthClientId) {
+      return;
+    }
+
+    if (typeof google === 'undefined') {
+      if (attempt < 50) {
+        window.setTimeout(
+          () => this.initializeGoogleSigninWeb(attempt + 1),
+          100
+        );
+      }
       return;
     }
 
@@ -101,7 +119,7 @@ export class SigninComponent implements OnInit, AfterViewInit {
       {
         theme: 'outline',
         size: 'large',
-        width: '330px'
+        width: 330
       }
     );
     google.accounts.id.prompt(async (notification: unknown) => {
@@ -118,7 +136,9 @@ export class SigninComponent implements OnInit, AfterViewInit {
       console.log('Google Auth result:', res);
       if (res.data) {
         await this.showToast('Success, You are logged in');
-        this.router.navigateByUrl(this.returnUrl);
+        await this.navController.navigateRoot(this.returnUrl || '/map', {
+          animated: false
+        });
         loading.dismiss();
       }
     } catch (error: unknown) {

@@ -83,7 +83,10 @@ export class UserService {
           email,
           password
         },
-        requestOptions({ contentType: 'application/json' })
+        {
+          ...requestOptions({ contentType: 'application/json' }),
+          withCredentials: true
+        }
       )
       .pipe(
         concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
@@ -103,7 +106,10 @@ export class UserService {
           email,
           password
         },
-        requestOptions({ contentType: 'application/json' })
+        {
+          ...requestOptions({ contentType: 'application/json' }),
+          withCredentials: true
+        }
       )
       .pipe(
         concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
@@ -114,7 +120,9 @@ export class UserService {
     payload: GoogleAuthResponse
   ): Observable<ApiResponse<UserSignedIn>> {
     return this.http
-      .post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload)
+      .post<ApiResponse<UserSignedIn>>(url + 'auth/google', payload, {
+        withCredentials: true
+      })
       .pipe(
         concatMap((res) => from(this.setUser(res.data)).pipe(map(() => res)))
       );
