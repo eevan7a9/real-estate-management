@@ -1,23 +1,31 @@
 [
   {
     "user_id": "u01",
-    "fullName": "Tessa Reyes",
+    "fullName": "Tester",
     "email": "test@email.com",
     "password": "$argon2id$v=19$m=65536,t=3,p=4$b23ZmLWHZTmNgixCERRvFA$hfR0Wa6ORCfzYzPgQLChGq7hN7s5s8n1693THBZlbOQ",
     "authProvider": "local",
     "role": "owner",
-    "businessName": "Konoha Laundry Solutions",
-    "about": "Owner-operator of a neighborhood laundry and garment-care business serving Central Konoha.",
-    "address": "Central Market District, Konoha, Hidden City of Fantasy",
-    "publicLocation": { "city": "Konoha", "region": "Hidden City of Fantasy", "country": "Philippines" },
-    "phone": "+63 917 555 0101",
+    "businessName": "Tester Properties",
+    "about": "Main test user for development and QA.",
+    "address": "Test Address, Konoha, Hidden City of Fantasy",
+    "publicLocation": {
+      "city": "Konoha",
+      "region": "Hidden City of Fantasy",
+      "country": "Philippines"
+    },
+    "phone": "+63 917 555 0001",
     "showPhone": true,
     "showEmail": true,
-    "properties": ["106ab526-72af-4446-9550-998a48d98c0c"],
+    "properties": [
+      "106ab526-72af-4446-9550-998a48d98c0c",
+      "test-property-001",
+      "test-property-002"
+    ],
     "activities": [
       {
         "action": "ENQUIRY_NEW",
-        "description": "Enquiry sent to property [Konoha S.E...] regarding a topic about sales.",
+        "description": "Enquiry sent to property [Southeaste...] regarding a topic about sales.",
         "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa"
       },
       {
@@ -26,8 +34,8 @@
       },
       {
         "action": "ENQUIRY_NEW",
-        "description": "Enquiry sent to property [Storage Fa...] regarding a topic about information.",
-        "enquiry_id": "bfe4fd29-863c-4740-9155-a36bb2de101c"
+        "description": "Enquiry sent to property [Konoha Ind...] regarding a topic about information.",
+        "enquiry_id": "5d2f21fd-ae71-49f1-9364-35d4c21b4c04"
       }
     ],
     "notifications": []
@@ -43,7 +51,11 @@
     "licenseNumber": "HLR-BRK-2026-0184",
     "about": "Broker specializing in residential, commercial, and land listings across Konoha.",
     "address": "18 Commerce Boulevard, Konoha, Hidden City of Fantasy",
-    "publicLocation": { "city": "Konoha", "region": "Hidden City of Fantasy", "country": "Philippines" },
+    "publicLocation": {
+      "city": "Konoha",
+      "region": "Hidden City of Fantasy",
+      "country": "Philippines"
+    },
     "phone": "+63 917 555 0102",
     "showPhone": true,
     "showEmail": true,
@@ -59,7 +71,18 @@
       "b6af25b9-bbc8-4f4a-a297-9f02ca43089d",
       "4b58df58-3e8d-453e-9802-7537a514453e"
     ],
-    "activities": [],
+    "activities": [
+      {
+        "action": "ENQUIRY_NEW",
+        "description": "Enquiry sent to property [Southeaste...] regarding a topic about information.",
+        "enquiry_id": "df4673c7-0989-4e73-a7d9-a6e6cca482ad"
+      },
+      {
+        "action": "ENQUIRY_NEW",
+        "description": "Enquiry sent to property [Southeaste...] regarding a topic about schedule.",
+        "enquiry_id": "43376608-37cb-4015-ad09-95e074c4d1a3"
+      }
+    ],
     "notifications": []
   },
   {
@@ -73,7 +96,11 @@
     "licenseNumber": "KIP-AGT-2026-042",
     "about": "Property agent focused on warehouses, storage facilities, and industrial sites.",
     "address": "7 Riverside Drive, Konoha, Hidden City of Fantasy",
-    "publicLocation": { "city": "Konoha", "region": "Hidden City of Fantasy", "country": "Philippines" },
+    "publicLocation": {
+      "city": "Konoha",
+      "region": "Hidden City of Fantasy",
+      "country": "Philippines"
+    },
     "phone": "+63 917 555 0103",
     "showPhone": true,
     "showEmail": false,
@@ -94,7 +121,11 @@
     "businessName": "Doe Home Holdings",
     "about": "Independent property owner preparing a small residential portfolio for listing.",
     "address": "12 East Garden Lane, Konoha, Hidden City of Fantasy",
-    "publicLocation": { "city": "Konoha", "region": "Hidden City of Fantasy", "country": "Philippines" },
+    "publicLocation": {
+      "city": "Konoha",
+      "region": "Hidden City of Fantasy",
+      "country": "Philippines"
+    },
     "phone": "+63 917 555 0104",
     "showPhone": false,
     "showEmail": false,

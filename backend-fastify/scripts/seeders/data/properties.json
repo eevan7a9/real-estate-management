@@ -69,7 +69,12 @@
       "coordinates": [125.54535808264038, 8.94753663904503]
     },
     "price": 100000,
-    "features": ["Newly Renovated", "Move-In Ready", "Two Bedrooms", "One Bathroom"],
+    "features": [
+      "Newly Renovated",
+      "Move-In Ready",
+      "Two Bedrooms",
+      "One Bathroom"
+    ],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
@@ -150,7 +155,13 @@
       "coordinates": [125.54676748310783, 8.949726468110553]
     },
     "price": 10000000,
-    "features": ["Loading Bay", "High Ceiling", "Three-Phase Power", "Secure Yard", "Truck Access"],
+    "features": [
+      "Loading Bay",
+      "High Ceiling",
+      "Three-Phase Power",
+      "Secure Yard",
+      "Truck Access"
+    ],
     "images": [
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/kitchen-1_xFVTMo7NP.jpg",
       "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/store-1_iWCxD16NUTB.jpg",
@@ -353,5 +364,54 @@
     "contactEmail": "john_doe@email.com",
     "user_id": "u02",
     "transactionType": "sale"
+  },
+  {
+    "property_id": "test-property-001",
+    "isActive": true,
+    "name": "Tester Sample House",
+    "address": "101 Test Avenue, Konoha, Hidden City of Fantasy",
+    "description": "A sample residential property for testing property listings and related user flows.",
+    "type": "residential",
+    "position": {
+      "type": "Point",
+      "coordinates": [125.5471, 8.9491]
+    },
+    "price": 1500000,
+    "features": ["Test Listing", "Two Bedrooms"],
+    "images": [
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-3_GIokyDxR2.jpg",
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-2_IJ5AqBskb.jpg",
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/appart-1_Eh9Th-5QS-.jpg"
+    ],
+    "currency": "PHP",
+    "contactNumber": "+63 917 555 0001",
+    "contactEmail": "test@email.com",
+    "user_id": "u01",
+    "transactionType": "sale"
+  },
+  {
+    "property_id": "test-property-002",
+    "isActive": true,
+    "name": "Tester Sample Office",
+    "address": "102 Test Avenue, Konoha, Hidden City of Fantasy",
+    "description": "A sample commercial property for testing property listings and related user flows.",
+    "type": "commercial",
+    "position": {
+      "type": "Point",
+      "coordinates": [125.5421, 8.9463]
+    },
+    "price": 25000,
+    "features": ["Test Listing", "Open Layout"],
+    "images": [
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-1_NJJ4gcca1.jpg",
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/commerc-3_01aSuZUYu.jpg",
+      "https://ik.imagekit.io/wr5lnrww0q8/REM_Folder/house-7609267_1280_j-iNs6SHx.jpg"
+    ],
+    "currency": "PHP",
+    "contactNumber": "+63 917 555 0001",
+    "contactEmail": "test@email.com",
+    "user_id": "u01",
+    "transactionType": "rent",
+    "paymentFrequency": "monthly"
   }
 ]

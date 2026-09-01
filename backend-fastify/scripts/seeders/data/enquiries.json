@@ -3,12 +3,12 @@
     "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
     "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mi orci, finibus non lorem eu, sollicitudin feugiat nulla. Aliquam erat volutpat. Etiam id malesuada dolor. Praesent iaculis luctus risus. Aliquam efficitur, tellus at euismod mollis, risus eros ultrices massa, a finibus sem elit ultricies metus?</p><p>&nbsp;</p><p>Etiam id malesuada dolor?</p>",
     "email": "test@email.com",
-    "title": "How much is added for reservation",
+    "title": "What is the reservation fee?",
     "topic": "sales",
     "read": true,
     "property": {
       "property_id": "ap133488-sad-5a85d4247196",
-      "name": "Konoha S.Eastern Appartment"
+      "name": "Southeastern Konoha Apartments"
     },
     "users": {
       "from": {
@@ -19,7 +19,9 @@
         "user_id": "u02",
         "keep": true
       }
-    }
+    },
+    "createdAt": "2026-08-14T09:30:00.000Z",
+    "updatedAt": "2026-08-14T10:05:00.000Z"
   },
   {
     "enquiry_id": "5d2f21fd-ae71-49f1-9364-35d4c21b4c04",
@@ -30,7 +32,7 @@
     "read": true,
     "property": {
       "property_id": "62130ae8-de7c-47f0-afa6-4f19828b5d23",
-      "name": "Industrial building - Dummy"
+      "name": "Konoha Industrial Building"
     },
     "users": {
       "from": {
@@ -41,22 +43,24 @@
         "user_id": "u03",
         "keep": true
       }
-    }
+    },
+    "createdAt": "2026-08-16T03:15:00.000Z",
+    "updatedAt": "2026-08-16T04:20:00.000Z"
   },
   {
     "enquiry_id": "df4673c7-0989-4e73-a7d9-a6e6cca482ad",
     "content": "<p>Duis posuere, nulla sit amet pellentesque convallis, mauris lacus malesuada sem, sed eleifend elit purus molestie ex. Duis vel luctus risus, sit amet viverra risus</p>",
     "email": "john_doe@email.com",
-    "title": "There are No extra charge",
+    "title": "There is no additional charge",
     "topic": "information",
     "read": true,
     "property": {
       "property_id": "ap133488-sad-5a85d4247196",
-      "name": "Konoha S.Eastern Appartment"
+      "name": "Southeastern Konoha Apartments"
     },
     "replyTo": {
       "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
-      "title": "How much is added for reservation",
+      "title": "What is the reservation fee?",
       "topic": "sales"
     },
     "users": {
@@ -68,22 +72,24 @@
         "user_id": "u01",
         "keep": true
       }
-    }
+    },
+    "createdAt": "2026-08-14T10:05:00.000Z",
+    "updatedAt": "2026-08-14T10:05:00.000Z"
   },
   {
     "enquiry_id": "43376608-37cb-4015-ad09-95e074c4d1a3",
     "content": "<p>+639909123</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>&nbsp;</p>",
     "email": "john_doe@email.com",
-    "title": "Lets Schedule a call?",
-    "topic": "information",
-    "read": true,
+    "title": "Let’s schedule a call",
+    "topic": "schedule",
+    "read": false,
     "property": {
       "property_id": "ap133488-sad-5a85d4247196",
-      "name": "Konoha S.Eastern Appartment"
+      "name": "Southeastern Konoha Apartments"
     },
     "replyTo": {
       "enquiry_id": "2445564b-7a58-4c15-b141-7a3b70bbedaa",
-      "title": "How much is added for reservation",
+      "title": "What is the reservation fee?",
       "topic": "sales"
     },
     "users": {
@@ -95,6 +101,8 @@
         "user_id": "u01",
         "keep": true
       }
-    }
+    },
+    "createdAt": "2026-08-15T01:45:00.000Z",
+    "updatedAt": "2026-08-15T01:45:00.000Z"
   }
 ]
