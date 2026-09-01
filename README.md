@@ -236,3 +236,19 @@ dummy user:
 /properties/
 /enquiries/
 ```
+
+## Running with Docker
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### Steps
+
+1. Clone the repo
+2. Run:
+   docker-compose up --build
+
+3. Open:
+   Frontend: http://localhost:8100
+   Backend: http://localhost:8000

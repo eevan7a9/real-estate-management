@@ -1,0 +1,29 @@
+services:
+  backend:
+    build: ./backend-fastify
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017/realestate
+    env_file:
+      - ./backend-fastify/.env.docker
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8100:80"
+    depends_on:
+      - backend
+
+  db:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
