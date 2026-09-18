@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class MapService {
   constructor() {}
 
-  addTiles(map: L.Map, isDark = false) {
+  addTiles(map: L.Map, isDark = false): L.TileLayer {
     const mapTiles = isDark
       ? environment.map.tiles.dark
       : environment.map.tiles.default;
@@ -23,6 +23,13 @@ export class MapService {
       `
     });
     tiles.addTo(map);
+    return tiles;
+  }
+
+  updateTileTheme(tiles: L.TileLayer, isDark: boolean): void {
+    tiles.setUrl(
+      isDark ? environment.map.tiles.dark : environment.map.tiles.default
+    );
   }
 
   addMarker(

@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -43,6 +44,9 @@ export class MapLeafletComponent
 
   private properties: PropertyMap[] = [];
   private map!: L.Map;
+  private tiles: L.TileLayer | undefined;
+  private themeObserver: MutationObserver | undefined;
+  private isDarkTheme = false;
   private mapGroupMarkers: Record<string, L.LayerGroup | undefined> = {
     [PropertyType.residential]: undefined,
     [PropertyType.commercial]: undefined,
@@ -63,6 +67,7 @@ export class MapLeafletComponent
   private mapElement!: ElementRef<HTMLDivElement>;
 
   private mapService = inject(MapService);
+  private document = inject(DOCUMENT);
   private propertiesService = inject(PropertiesService);
   private containerRef = inject(ViewContainerRef);
   private storage = inject(StorageService);
@@ -70,6 +75,7 @@ export class MapLeafletComponent
 
   private moveEndTimeout: ReturnType<typeof setTimeout> | undefined;
   private popupOpenTimeout: ReturnType<typeof setTimeout> | undefined;
+  private mapReadyTimeout: ReturnType<typeof setTimeout> | undefined;
 
   constructor() {
     this.activatedRoutes.queryParamMap
@@ -222,14 +228,26 @@ export class MapLeafletComponent
       .addTo(this.map);
 
     this.map.whenReady(() => {
-      setTimeout(() => {
+      this.mapReadyTimeout = setTimeout(() => {
         this.map.invalidateSize();
       }, 1000);
     });
 
-    const isDark = await this.storage.getDartTheme();
-    if (this.destroyed) return;
-    this.mapService.addTiles(this.map, isDark);
+    this.isDarkTheme = this.document.body.classList.contains('dark');
+    this.tiles = this.mapService.addTiles(this.map, this.isDarkTheme);
+
+    this.themeObserver = new MutationObserver(() => {
+      if (this.destroyed || !this.tiles) return;
+      const isDark = this.document.body.classList.contains('dark');
+      if (isDark === this.isDarkTheme) return;
+      this.isDarkTheme = isDark;
+      this.mapService.updateTileTheme(this.tiles, isDark);
+    });
+
+    this.themeObserver.observe(this.document.body, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
 
     this.configureMapInteractions();
 
@@ -429,6 +447,8 @@ export class MapLeafletComponent
   }
   ngOnDestroy(): void {
     this.destroyed = true;
+    this.themeObserver?.disconnect();
+    if (this.mapReadyTimeout) clearTimeout(this.mapReadyTimeout);
     if (this.moveEndTimeout) clearTimeout(this.moveEndTimeout);
     if (this.popupOpenTimeout) clearTimeout(this.popupOpenTimeout);
     this.pendingMarker.forEach((marker) => marker.remove());

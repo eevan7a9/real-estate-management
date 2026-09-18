@@ -1,16 +1,17 @@
-import { TestBed } from '@angular/core/testing';
-
+import * as L from 'leaflet';
+import { environment } from 'src/environments/environment';
 import { MapService } from './map.service';
 
-describe('MapService', () => {
-  let service: MapService;
+describe('MapService tile theme', () => {
+  it('redraws the existing layer with the configured dark and light URLs', () => {
+    const service = new MapService();
+    const tiles = L.tileLayer(environment.map.tiles.default);
+    const setUrl = spyOn(tiles, 'setUrl').and.callThrough();
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(MapService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    service.updateTileTheme(tiles, true);
+    expect(setUrl).toHaveBeenCalledWith(environment.map.tiles.dark);
+    service.updateTileTheme(tiles, false);
+    expect(setUrl).toHaveBeenCalledWith(environment.map.tiles.default);
+    expect(setUrl).toHaveBeenCalledTimes(2);
   });
 });
