@@ -45,14 +45,13 @@
               </ion-input>
             </ion-item>
 
-            <div
-              style="margin: 6px 0 0 0"
-              *ngIf="mortgageForm.errors?.paymentIsGreater"
-            >
-              <app-alert-card
-                content="Down payment must be less than the Price"
-              ></app-alert-card>
-            </div>
+            @if (mortgageForm.errors?.paymentIsGreater) {
+              <div style="margin: 6px 0 0 0">
+                <app-alert-card
+                  content="Down payment must be less than the Price"
+                ></app-alert-card>
+              </div>
+            }
           </ion-col>
 
           <ion-col size="6">
@@ -98,41 +97,43 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="!simpleMode()">
-          <ion-col size="12">
-            <ion-item>
-              <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-              <ion-input
-                class="py-1!"
-                debounce="1000"
-                type="text"
-                min="0"
-                formControlName="propertyTax"
-                labelPlacement="stacked"
-                label="Property tax :"
-                (ionChange)="formatValue($event, 'propertyTax')"
-              >
-              </ion-input>
-            </ion-item>
-          </ion-col>
+        @if (!simpleMode()) {
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                <ion-input
+                  class="py-1!"
+                  debounce="1000"
+                  type="text"
+                  min="0"
+                  formControlName="propertyTax"
+                  labelPlacement="stacked"
+                  label="Property tax :"
+                  (ionChange)="formatValue($event, 'propertyTax')"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
 
-          <ion-col size="12">
-            <ion-item>
-              <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
-              <ion-input
-                class="py-1!"
-                type="text"
-                min="0"
-                debounce="1000"
-                formControlName="insurance"
-                labelPlacement="stacked"
-                label="Property Insurance :"
-                (ionChange)="formatValue($event, 'insurance')"
-              >
-              </ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-icon class="ion-margin-end" name="cash-outline"></ion-icon>
+                <ion-input
+                  class="py-1!"
+                  type="text"
+                  min="0"
+                  debounce="1000"
+                  formControlName="insurance"
+                  labelPlacement="stacked"
+                  label="Property Insurance :"
+                  (ionChange)="formatValue($event, 'insurance')"
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        }
 
         <ion-row class="ion-align-items-center">
           <ion-col size="12" [sizeMd]="simpleMode() ? 12 : 6">
@@ -160,30 +161,35 @@
             </ion-list>
           </ion-col>
 
-          <ion-col size="12" sizeMd="6" *ngIf="!simpleMode()">
-            <ion-item lines="none" class="total-lifetime">
-              <ion-icon
-                aria-hidden="true"
-                name="cash-outline"
-                slot="start"
-                class="mr-2"
-              ></ion-icon>
-              <ion-input
-                class="py-1! font-bold md:text-[20px]!"
-                [value]="lifetimePayment()"
-                labelPlacement="stacked"
-                label="Total lifetime"
-                readonly
-              >
-              </ion-input>
-            </ion-item>
-          </ion-col>
+          @if (!simpleMode()) {
+            <ion-col size="12" sizeMd="6">
+              <ion-item lines="none" class="total-lifetime">
+                <ion-icon
+                  aria-hidden="true"
+                  name="cash-outline"
+                  slot="start"
+                  class="mr-2"
+                ></ion-icon>
+                <ion-input
+                  class="py-1! font-bold md:text-[20px]!"
+                  [value]="lifetimePayment()"
+                  labelPlacement="stacked"
+                  label="Total lifetime"
+                  readonly
+                >
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          }
 
           @if (simpleMode()) {
             <ion-col
               class="flex justify-center border-t border-slate-200 dark:border-slate-800 pt-3"
             >
-              <a routerLink="/mortgage-calc" class="text-[18px]"
+              <a
+                routerLink="/mortgage-calc"
+                [queryParams]="{ price: priceQueryParam }"
+                class="text-[18px]"
                 >Mortgage Calculator</a
               >
             </ion-col>

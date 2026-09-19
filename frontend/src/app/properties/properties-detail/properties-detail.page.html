@@ -127,11 +127,9 @@
             </ion-card-content>
           </ion-card>
 
+          @if (property()?.price !== undefined && property()?.price !== null) {
           <ion-card
             class="shadow-none mt-4 border border-slate-200 dark:border-slate-800"
-            *ngIf="
-              property()?.price !== undefined && property()?.price !== null
-            "
           >
             <ion-card-header class="px-4 py-2"> Price </ion-card-header>
             <ion-card-content class="price">
@@ -140,16 +138,14 @@
                 }}
               </span>
 
-              <span
-                class="capitalize text-[18px]"
-                *ngIf="property()?.transactionType === transactionType.forRent"
-              >
+              @if (property()?.transactionType === transactionType.forRent) {
+              <span class="capitalize text-[18px]">
                 | {{ property()?.paymentFrequency }}
               </span>
+              }
             </ion-card-content>
           </ion-card>
-
-          @if (isOwner()) {
+          } @if (isOwner()) {
           <div class="max-h-150 mt-3 xl:mt-5">
             <app-enquiries-related-list
               [propertyId]="property()?.property_id"
@@ -224,6 +220,7 @@
             <app-mortgage-core-calc
               [simpleMode]="true"
               [boxShadow]="false"
+              [price]="property()?.price"
             ></app-mortgage-core-calc>
           </div>
 
@@ -265,7 +262,8 @@
     </ion-grid>
   </div>
 
-  <div class="p-4" *ngIf="!property() && ready() && loadError()">
+  @if (!property() && ready() && loadError()) {
+  <div class="p-4">
     <ion-card color="danger" class="shadow-none py-4">
       <ion-card-header class="px-4 py-2">
         <ion-card-title>Unable to load property</ion-card-title>
@@ -278,8 +276,8 @@
       </ion-card-content>
     </ion-card>
   </div>
-
-  <div class="p-4" *ngIf="!property() && ready() && !loadError()">
+  } @if (!property() && ready() && !loadError()) {
+  <div class="p-4">
     <ion-card class="border-2 shadow-none py-8">
       <ion-card-header class="px-4 py-2">
         <h1 class="text-[42px] text-center">Error 404</h1>
@@ -292,14 +290,14 @@
       </ion-card-content>
     </ion-card>
   </div>
-
-  <div class="py-16 flex flex-col items-center justify-center" *ngIf="!ready()">
+  } @if (!ready()) {
+  <div class="py-16 flex flex-col items-center justify-center">
     <ion-spinner name="menu-outline"></ion-spinner>
     <ion-text class="mt-5">
       Fetching Property Details, this won't take long...
     </ion-text>
   </div>
+  } } @if (property()) {
+  <app-footer />
   }
-
-  <app-footer *ngIf="property()" />
 </ion-content>

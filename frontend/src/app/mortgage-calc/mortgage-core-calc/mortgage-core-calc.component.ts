@@ -1,4 +1,11 @@
-import { Component, AfterViewInit, input, output, signal } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  effect,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   UntypedFormGroup,
@@ -19,6 +26,7 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
   public payPerYear = input<number>(12);
   public simpleMode = input<boolean>(false);
   public boxShadow = input<boolean>(true);
+  public price = input<number>();
 
   public onCalculateMonthly = output<{
     totalMonth: number;
@@ -95,6 +103,30 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
             .then((toast) => toast.present());
         }
       });
+
+    effect(() => {
+      const price = this.price();
+      const hasPriceOverride =
+        price !== undefined && Number.isSafeInteger(price) && price > 0;
+
+      const formPrice = hasPriceOverride ? price : 300000;
+
+      const downPayment = hasPriceOverride
+        ? Math.max(1, Math.floor(formPrice * 0.2))
+        : 100000;
+
+      this.mortgageForm.patchValue({
+        price: this.formatCurrency(formPrice),
+        downPayment: this.formatCurrency(downPayment)
+      });
+    });
+  }
+
+  public get priceQueryParam(): number | null {
+    const price = Number(
+      String(this.mortgageForm.controls.price.value ?? '').replace(/,/g, '')
+    );
+    return Number.isSafeInteger(price) && price > 0 ? price : null;
   }
 
   ngAfterViewInit(): void {
@@ -115,6 +147,10 @@ export class MortgageCoreCalcComponent implements AfterViewInit {
       { [property]: formatted },
       { emitEvent: true }
     );
+  }
+
+  private formatCurrency(value: number): string {
+    return value.toLocaleString('en-US', { maximumFractionDigits: 0 });
   }
 
   public calculateAmortizationSchedule(): void {
